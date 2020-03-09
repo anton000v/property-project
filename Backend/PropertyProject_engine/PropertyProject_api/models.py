@@ -22,7 +22,7 @@ class Streets(models.Model):
 
     def __str__(self):
         return self.street_ru
-        
+
 class NewBuilding(models.Model):
     class Meta():
         db_table = 'NewBuildings'
@@ -108,7 +108,7 @@ class NewBuilding(models.Model):
     #     super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.address
+        return self.slug
 
 
 class buildingImages(models.Model):

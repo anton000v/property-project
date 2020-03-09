@@ -2,9 +2,12 @@
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Article
+from .models import NewBuilding
+from .serializers import NewBuildingSerializer
 
-class ArticleView(APIView):
+class NewBuildingView(APIView):
     def get(self, request):
-        articles = Article.objects.all()
-        return Response({"articles": articles})
+        buildings = NewBuilding.objects.all()
+        serializer = NewBuildingSerializer(buildings,many=True)
+        print(serializer)
+        return Response({"buildings": serializer.data})
