@@ -1,5 +1,7 @@
 from rest_framework import serializers,fields
 from . import choices
+from .fields import ParkingChoiceField
+
 class NewBuildingSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=200)
     # messageG = forms.CharField(widget=forms.Textarea, label='lolkek')
@@ -57,9 +59,9 @@ class NewBuildingSerializer(serializers.Serializer):
                               )
     gasification = serializers.BooleanField(default=1)
     elevator = serializers.CharField(max_length=50,default=1)  #
-    parking = fields.MultipleChoiceField(choices=choices.THE_PARKING_CHOICES,default=choices.NOT_COMPLETED,
-                                source='get_parking_display'
-                              )
+    parking = serializers.MultipleChoiceField(choices=choices.THE_PARKING_CHOICES,default=choices.NOT_COMPLETED,)
+                                # source='parking'
+    parking = ParkingChoiceField(choices=choices.THE_PARKING_CHOICES,default=choices.NOT_COMPLETED)
     numberOfParkingSpaces = serializers.IntegerField(default=1)
     price = serializers.IntegerField(default=1)
     completionDate = serializers.IntegerField(default=1)
