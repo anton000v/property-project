@@ -7,7 +7,7 @@ from django.utils.text import slugify
 import PropertyProject_api.choices as choices
 
 
-class Districts(models.Model):
+class District(models.Model):
     dist_ru = models.CharField(max_length=150)
     dist_ukr = models.CharField(max_length=150)
     old_dist_ru = models.CharField(max_length=150, null=True,blank=True)
@@ -16,13 +16,16 @@ class Districts(models.Model):
     def __str__(self):
         return "{} - {}".format(self.dist_ru,self.dist_ukr)
 
-class Streets(models.Model):
+class Street(models.Model):
     street_ru = models.CharField(max_length=150)
     street_uk = models.CharField(max_length=150)
 
     def __str__(self):
         return self.street_ru
-        
+
+    # def natural_key(self):
+    #     return (self.id)
+
 class NewBuilding(models.Model):
     class Meta():
         db_table = 'NewBuildings'
@@ -31,7 +34,7 @@ class NewBuilding(models.Model):
     name = models.CharField(max_length=200, verbose_name=u'Название', default=1)
     # messageG = forms.CharField(widget=forms.Textarea, label='lolkek')
     # address = models.CharField(max_length=200, verbose_name=u"Адрес", default=1)  # адресс
-    street = models.ForeignKey(Streets,on_delete=models.CASCADE)
+    street = models.ForeignKey(Street,on_delete=models.CASCADE)
     house_number = models.CharField(max_length=10)
     house_letter = models.CharField(max_length=1)
     administrativeDistrict = models.CharField(max_length=2, choices=choices.THE_ADMINISTRATIVE_DISTRICT_CHOICES,
@@ -49,8 +52,7 @@ class NewBuilding(models.Model):
                                 verbose_name=u"Класс")
     numberOfStoreys = models.PositiveSmallIntegerField(verbose_name=u"Этажность", default=1)  #
     numberOfBuildings = models.PositiveSmallIntegerField(verbose_name=u"Количество домов", default=1)  #
-    numberOfSectionsOrEntrances = models.CharField(max_length=100, verbose_name=u"Количество секций/подьездов",
-                                                   default=1)
+    numberOfSectionsOrEntrances = models.IntegerField(verbose_name=u"Количество секций/подьездов",default=1)
     constructionTechnology = models.CharField(max_length=2, choices=choices.THE_CONSTRUCTION_TECHNOLOGY_CHOICES,
                                               default=choices.NOT_COMPLETED,
                                               verbose_name=u"Технология строительства")
@@ -108,7 +110,7 @@ class NewBuilding(models.Model):
     #     super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.address
+        return self.slug
 
 
 class buildingImages(models.Model):

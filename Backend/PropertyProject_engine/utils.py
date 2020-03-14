@@ -1,5 +1,5 @@
 from . import models
-from local_settings import GOOGLE_PERSONAL_KEY
+from .local_settings import GOOGLE_PERSONAL_KEY
 # from django.utils.text import slugify
 from pytils.translit import slugify
 import requests
@@ -20,14 +20,14 @@ def fill_districts_todb():
     [['Немышлянский', 'Немишлянський'],['Фрунзенский','Фрунзенський']],
     ]
     for dist in districts:
-        record = models.District()
+        record = models.Districts()
         if(dist[1]):
             record.old_dist_ru = dist[1][0]
             record.old_dist_urk = dist[1][1]
         record.dist_ru = dist[0][0]
         record.dist_ukr = dist[0][1]
         record.save()
-    print("Districts are filled!")
+        print("Districts are filled!")
 
 def parse_streets(path):
     streets = []
@@ -40,11 +40,11 @@ def parse_streets(path):
     return streets
 
 def fill_streets_todb():
-    streets = parse_streets('PropertyProject_api/static/txt/streets.txt')
+    streets = parse_streets('propertyInfo/static/Txt/streets.txt')
 
     print("Try to filled streets...")
     for street in streets:
-        record = models.Street()
+        record = models.Streets()
         record.street_uk = street[0]
         record.street_ru = street[1]
         record.save()
