@@ -7,12 +7,12 @@ admin.site.unregister(Group)
 
 class DistrictsModelAdmin(admin.ModelAdmin):
     class Meta:
-        model = models.Districts
+        model = models.District
        # js = ('admin/test.js',)
 
 class StreetsModelAdmin(admin.ModelAdmin):
     class Meta:
-        model = models.Streets
+        model = models.Street
 
 
 class newBuildingsTabularInLine(admin.TabularInline):
@@ -99,5 +99,5 @@ class NewBuildingModelAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.NewBuilding, NewBuildingModelAdmin)
-admin.site.register(models.Districts, DistrictsModelAdmin)
-admin.site.register(models.Streets, StreetsModelAdmin)
+admin.site.register(models.District, DistrictsModelAdmin)
+admin.site.register(models.Street, StreetsModelAdmin)

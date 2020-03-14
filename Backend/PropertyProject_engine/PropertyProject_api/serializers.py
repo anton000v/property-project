@@ -1,42 +1,51 @@
 from rest_framework import serializers,fields
 from . import choices
-from .fields import ParkingChoiceField
+from . import fields
+from .models import NewBuilding
+from .models import Street
+
+# class StreetField(serializers.StringRelatedField):
+#     pass
+    # def to_internal_value(self, value):
+    #     return value
 
 class NewBuildingSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=200)
     # messageG = forms.CharField(widget=forms.Textarea, label='lolkek')
     # address = models.CharField(max_length=200, verbose_name=u"Адрес", default=1)  # адресс
-    street = serializers.StringRelatedField()
+    # street = StreetField(read_only=False,queryset=Streets.objects.all())
+    street = serializers.SlugRelatedField(slug_field="street_ru",queryset=Street.objects.all())
     house_number = serializers.CharField(max_length=10)
     house_letter = serializers.CharField(max_length=1)
-    administrativeDistrict = serializers.ChoiceField(choices=choices.THE_ADMINISTRATIVE_DISTRICT_CHOICES,
-                                              default=choices.NOT_COMPLETED, source='get_administrativeDistrict_display',
+    administrativeDistrict = fields.ChoiceFieldCustomDisplay(choices=choices.THE_ADMINISTRATIVE_DISTRICT_CHOICES,
+                                              default=choices.NOT_COMPLETED,
+                                              # source='get_administrativeDistrict_display',
                                               )  #
-    district = serializers.ChoiceField(choices=choices.DISTRICT_CHOICES,
+    district = fields.ChoiceFieldCustomDisplay(choices=choices.DISTRICT_CHOICES,
                                 default=choices.NOT_COMPLETED,
-                                source='get_district_display'
+                                # source='get_district_display'
                                 )  # )
-    micro_district = serializers.ChoiceField(choices=choices.FULL_MICRO_DISTRICT_CHOICES,
+    micro_district = fields.ChoiceFieldCustomDisplay(choices=choices.FULL_MICRO_DISTRICT_CHOICES,
                                       default=choices.NOT_COMPLETED,
-                                      source='get_micro_district_display'
+                                      # source='get_micro_district_display'
                                       )  # микрорайон
     location = serializers.CharField(max_length=200, default=1)  #
     developer = serializers.CharField(max_length=100, default=1)  #
-    theClass = serializers.ChoiceField(choices=choices.THE_CLASS_CHOICES, default=choices.NOT_COMPLETED,
-                                source='get_theClass_display')
+    theClass = fields.ChoiceFieldCustomDisplay(choices=choices.THE_CLASS_CHOICES, default=choices.NOT_COMPLETED,
+                                # source='get_theClass_display'
+                                )
     numberOfStoreys = serializers.IntegerField(default=1)  #
     numberOfBuildings = serializers.IntegerField(default=1)  #
-    numberOfSectionsOrEntrances = serializers.CharField(max_length=100,
-                                                   default=1)
-    constructionTechnology = serializers.ChoiceField(choices=choices.THE_CONSTRUCTION_TECHNOLOGY_CHOICES,
+    numberOfSectionsOrEntrances = serializers.IntegerField(default=1)
+    constructionTechnology = fields.ChoiceFieldCustomDisplay(choices=choices.THE_CONSTRUCTION_TECHNOLOGY_CHOICES,
                                               default=choices.NOT_COMPLETED,
-                                              source='get_constructionTechnology_display'
+                                              # source='get_constructionTechnology_display'
                                               )
-    wallsType = serializers.ChoiceField(choices=choices.THE_WALLS_TYPE_CHOICES,  default=choices.NOT_COMPLETED,
-                                source='get_wallsType_display'
+    wallsType = fields.ChoiceFieldCustomDisplay(choices=choices.THE_WALLS_TYPE_CHOICES,  default=choices.NOT_COMPLETED,
+                                # source='get_wallsType_display'
                                  )
-    warming = serializers.ChoiceField(choices=choices.THE_WARMING_CHOICES, default=choices.NOT_COMPLETED,
-                                source='get_warming_display'
+    warming = fields.ChoiceFieldCustomDisplay(choices=choices.THE_WARMING_CHOICES, default=choices.NOT_COMPLETED,
+                                # source='get_warming_display'
                                )  #
     roomHeight = serializers.IntegerField(default=1)  #
     numberOfApartmentsInTheHouse = serializers.IntegerField(default=1)  #
@@ -54,17 +63,22 @@ class NewBuildingSerializer(serializers.Serializer):
 
     numberOfApartmensPerFloor = serializers.IntegerField(default=1)  #
     commercialPremises = serializers.IntegerField(default=1)  # пишешь только этаж
-    heating = serializers.ChoiceField(choices=choices.THE_HEATING_CHOICES, default=choices.NOT_COMPLETED,
-                                source='get_heating_display'
+    heating = fields.ChoiceFieldCustomDisplay(choices=choices.THE_HEATING_CHOICES, default=choices.NOT_COMPLETED,
+                                # source='get_heating_display'
                               )
     gasification = serializers.BooleanField(default=1)
     elevator = serializers.CharField(max_length=50,default=1)  #
-    parking = serializers.MultipleChoiceField(choices=choices.THE_PARKING_CHOICES,default=choices.NOT_COMPLETED,)
+    parking = fields.ChoiceFieldCustomDisplay(choices=choices.THE_PARKING_CHOICES,default=choices.NOT_COMPLETED,)
                                 # source='parking'
-    parking = ParkingChoiceField(choices=choices.THE_PARKING_CHOICES,default=choices.NOT_COMPLETED)
+    parking = fields.MultipleChoiceFieldCustomDisplay(choices=choices.THE_PARKING_CHOICES,default=choices.NOT_COMPLETED)
     numberOfParkingSpaces = serializers.IntegerField(default=1)
     price = serializers.IntegerField(default=1)
     completionDate = serializers.IntegerField(default=1)
     description = serializers.CharField(default=1)
 
-    slug = serializers.SlugField(max_length=150, read_only=True)
+    slug = serializers.SlugField(max_length=150)
+
+
+    def create(self, validated_data):
+        print("VALIDATED DATA:  ",validated_data)
+        return NewBuilding.objects.create(**validated_data)
