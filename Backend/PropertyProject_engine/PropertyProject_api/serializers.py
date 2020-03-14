@@ -78,7 +78,7 @@ class NewBuildingSerializer(serializers.Serializer):
 
     slug = serializers.SlugField(max_length=150)
 
-
-    def create(self, validated_data):
-        print("VALIDATED DATA:  ",validated_data)
-        return NewBuilding.objects.create(**validated_data)
+    # 
+    # def create(self, validated_data):
+    #     print("VALIDATED DATA:  ",validated_data)
+    #     return NewBuilding.objects.create(**validated_data)
