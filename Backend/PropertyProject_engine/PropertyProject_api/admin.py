@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from . import models
+from . forms import NewBuildingForm
 
-admin.site.site_header = 'My site'
+admin.site.site_header = 'Property-project'
 admin.site.unregister(Group)
 
 class DistrictsModelAdmin(admin.ModelAdmin):
@@ -34,12 +35,6 @@ class WayFromMetroTabularInLine(admin.TabularInline):
 
 
 class NewBuildingModelAdmin(admin.ModelAdmin):
-    class Meta:
-        model = models.NewBuilding
-       # js = ('admin/test.js',)
-
-
-    # list_display = ('name', 'address', 'district', 'developer',)
     fieldsets = (
         (None, {
             'fields': (
@@ -95,8 +90,17 @@ class NewBuildingModelAdmin(admin.ModelAdmin):
         }),
     )
     inlines = [newBuildingsTabularInLine, newLayoutsTabularInLine, WayFromMetroTabularInLine]
+    change_list_template="admin/PropertyProject_api/property_change_list.html"
+    change_form_template="admin/PropertyProject_api/change_forms.html"
+    # autocomplete_fields = ['street', ]
+    form = NewBuildingForm
+    class Meta:
+        model = models.NewBuilding
 
-
+    class Media:
+        css = {
+             'all': ('admin/css/PropertyProject_api/admin.css',)
+        }
 
 admin.site.register(models.NewBuilding, NewBuildingModelAdmin)
 admin.site.register(models.District, DistrictsModelAdmin)
