@@ -101,6 +101,7 @@ class NewBuildingModelAdmin(admin.ModelAdmin):
         css = {
              'all': ('admin/css/PropertyProject_api/admin.css',)
         }
+        js = ('admin/js/micro-districts-filter.js', )
 
 admin.site.register(models.NewBuilding, NewBuildingModelAdmin)
 admin.site.register(models.District, DistrictsModelAdmin)
