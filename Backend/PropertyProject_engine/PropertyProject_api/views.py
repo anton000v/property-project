@@ -12,6 +12,9 @@ class NewBuildingView(APIView):
         # print(serializer)
         return Response({"buildings": serializer.data})
 
+class GetMicroDistricts(APIView):
+    def get(self,request):
+        pass
     # def post(self, request):
     #     building = request.data.get('building')
     #     print(building)
