@@ -1,6 +1,6 @@
 from django import forms
 from .models import NewBuilding
-from .widgets import ChoiceDistrictWidget, ChoiceStreetWidget
+from .widgets import SearchableChoiceWidget
 from . import choices
 
 class NewBuildingForm(forms.ModelForm):
@@ -13,6 +13,6 @@ class NewBuildingForm(forms.ModelForm):
         model = NewBuilding
         fields = '__all__'
         widgets = {
-            'district': ChoiceDistrictWidget(),
-            'street' : ChoiceStreetWidget(),
+            'district': SearchableChoiceWidget(widget_title="Выберите район"),
+            'street' : SearchableChoiceWidget(widget_title='Выберите улицу'),
         }

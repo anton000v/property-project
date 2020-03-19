@@ -91,17 +91,27 @@ class NewBuildingModelAdmin(admin.ModelAdmin):
     )
     inlines = [newBuildingsTabularInLine, newLayoutsTabularInLine, WayFromMetroTabularInLine]
     change_list_template="admin/PropertyProject_api/property_change_list.html"
-    change_form_template="admin/PropertyProject_api/change_forms.html"
+    # change_form_template="admin/PropertyProject_api/change_forms.html"
     # autocomplete_fields = ['street', ]
     form = NewBuildingForm
+
+    # exclude_add = [ 'street', ]
+
     class Meta:
         model = models.NewBuilding
 
     class Media:
         css = {
-             'all': ('admin/css/PropertyProject_api/admin.css',)
+             'all': ('admin/css/PropertyProject_api/admin.css',
+             "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css",
+             "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css",
+             )
         }
-        js = ('admin/js/micro-districts-filter.js', )
+        js = ("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js",
+            'admin/js/PropertyProject_api/micro-districts-filter.js',
+             )
 
 admin.site.register(models.NewBuilding, NewBuildingModelAdmin)
 admin.site.register(models.District, DistrictsModelAdmin)
