@@ -4,6 +4,8 @@ from local_settings import GOOGLE_PERSONAL_KEY
 from pytils.translit import slugify
 import requests
 
+rus_alphabet = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'
+
 def generate_slug(address):
     return slugify(address)
 
@@ -69,7 +71,6 @@ class Houses():
 
     def fill_all_letters(self):
         # ukr_alphabet = 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюя'
-        rus_alphabet = 'абвгдежзийклмнопрстуфхцчшщъыьэюя'
         for l in rus_alphabet:
             if not self.is_house_exist(l):
                 break
@@ -80,7 +81,7 @@ class Houses():
             for d in json_answer['results'][0]['address_components']:
                 if d['types'][0] == 'street_number':
                     # print("AAAAAAA")
-                    if d['long_name'].lower() == "{}{}".format(self.house_number,letter).lower():
+                    if d['long_name'] == "{}{}".format(self.house_number,letter):
                         print("{}{}".format(self.house_number,letter), ' exist')
                         if letter:
                             self.house_letters.append(letter)

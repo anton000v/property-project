@@ -5,7 +5,8 @@ from rest_framework.views import APIView
 from .models import NewBuilding
 from .serializers import NewBuildingSerializer
 from . import choices
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, Http404
+from .utils import Houses
 import json
 
 class NewBuildingView(APIView):
@@ -24,7 +25,7 @@ def json_response(something):
         content_type = 'application/javascript; charset=utf8'
     )
 
-class GetMicroDistrictChoices(APIView):
+class MicroDistrictChoices(APIView):
     def get(self,request):
         # district_choices = json.dumps(FULL_MICRO_DISTRICT_CHOICES,ensure_ascii=False)
         micro_district_choices = {}
@@ -44,11 +45,29 @@ class GetMicroDistrictChoices(APIView):
         #     content_type = 'application/javascript; charset=utf8'
         # )
         return JsonResponse({'micro_district_choices':micro_district_choices, 'db_values':db_values})
-    # def post(self, request):
-    #     building = request.data.get('building')
-    #     print(building)
-    #     # Create an article from the above data
-    #     serializer = NewBuildingSerializer(data=building)
-    #     if serializer.is_valid(raise_exception=True):
-    #         building_saved = serializer.save()
-    #     return Response({"success": "building '{}' created successfully".format(building_saved.name)})
+
+
+class AddressChecker(APIView):
+    def get(self,request):
+        print("Ajax request is accepted")
+        if request.is_ajax():
+            street = request.GET.get('street', None)
+            house_number = request.GET.get('house_number', None)
+            houses = Houses(street=street, house_number=house_number)
+            if houses.is_house_exist():
+                houses.fill_all_letters()
+                response = {
+                'without_letter': choices.WITHOUT_LETTER ,
+                'without_letter_for_humans':choices.WITHOUT_LETTER_FOR_HUMANS,
+                'houses': houses.house_letters
+                }
+                return JsonResponse(response)
+            else:
+                response = JsonResponse({"error": '"{}, {}" не найдено в Харькове'.format(street,house_number)})
+                response.status_code = 403 # To announce that the user isn't allowed to publish
+                return response
+        else:
+            raise Http404
+#
+# class UpdateHouseLetterValidChoices(APIView):
+#     def post(self,request):

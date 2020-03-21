@@ -1,6 +1,6 @@
 {% load static %}
 
-<select name="{{ widget.name }}" id="{{ widget.name }}" class="selectpicker" data-live-search="true"
+<select name="{{ widget.name }}" id="id_{{ widget.name }}" class="selectpicker" data-live-search="true"
         data-display="static" data-size="6" data-header="{{ widget.title }}" data-container="body" style="width:auto;">
     {% for name, value in widget.attrs.items %}{% if value is not False %}
         {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}

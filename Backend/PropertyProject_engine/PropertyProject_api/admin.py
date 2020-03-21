@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from . import models
-from . forms import NewBuildingForm
+from . forms import NewBuildingForm,TestForm
 
 admin.site.site_header = 'Property-project'
 admin.site.unregister(Group)
@@ -33,6 +33,14 @@ class WayFromMetroTabularInLine(admin.TabularInline):
     model = models.wayFromMetro
     extra = 1
 
+# class HouseAddressInline(admin.TabularInline):
+#     model = models.HouseAddress
+#     extra = 1
+
+class TestAdmin(admin.ModelAdmin):
+    class Meta:
+        model = models.Test
+    form = TestForm
 
 class NewBuildingModelAdmin(admin.ModelAdmin):
     fieldsets = (
@@ -43,6 +51,7 @@ class NewBuildingModelAdmin(admin.ModelAdmin):
                 'street',
                 'house_number',
                 'house_letter',
+                # 'address',
                 'administrativeDistrict',
                 'district',
                 'micro_district',
@@ -103,16 +112,28 @@ class NewBuildingModelAdmin(admin.ModelAdmin):
     class Media:
         css = {
              'all': ('admin/css/PropertyProject_api/admin.css',
-             "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css",
-             "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css",
              )
         }
         js = ("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js",
-            "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js",
-            "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js",
-            'admin/js/PropertyProject_api/micro-districts-filter.js',
+             "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js",
+             "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js",
              )
+
+
+    def formfield_for_choice_field(self, db_field, request, **kwargs):
+        # if db_field.name == "status":
+        #     kwargs['choices'] = (
+        #         ('accepted', 'Accepted'),
+        #         ('denied', 'Denied'),
+        #     )
+        #
+        #     if request.user.is_superuser:
+        #         kwargs['choices'] += (('ready', 'Ready for deployment'),)
+        print("FORM_FIELD FOR CHOICE FIELD IS ACTIVATED")
+        return super().formfield_for_choice_field(db_field, request, **kwargs)
+
 
 admin.site.register(models.NewBuilding, NewBuildingModelAdmin)
 admin.site.register(models.District, DistrictsModelAdmin)
 admin.site.register(models.Street, StreetsModelAdmin)
+admin.site.register(models.Test,TestAdmin)

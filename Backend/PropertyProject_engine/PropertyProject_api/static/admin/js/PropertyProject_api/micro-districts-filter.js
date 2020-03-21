@@ -61,14 +61,14 @@ $(document).ready(function () {
        }
 
      function MicroDistrictHandler() {
-           var districtSelect = $('#district');
+           var districtSelect = $('#id_district');
            var districtSelectedValue = districtSelect.val();
            var microDistrictSelect = $('#id_micro_district');
            currentMicroDistrict = microDistrictSelect.val();
            UpdateMicroDistrictValues(districtSelectedValue, microDistrictSelect,currentMicroDistrict);
        }
 
-       $("#district").change(function () {
+       $("#id_district").change(function () {
            MicroDistrictHandler();
        });
 });

@@ -1,3 +1,5 @@
+from .utils import rus_alphabet
+
 # ----------Default values:
 NOT_COMPLETED = 'nc'
 DEFAULT = 'Не заполнено'
@@ -440,4 +442,7 @@ THE_TYPE_OF_MOVEMENT_CHOICES = (
 
 
 #---------------------- House letter CHOICES
+
 WITHOUT_LETTER = '-'
+WITHOUT_LETTER_FOR_HUMANS = 'Без бувы'
+HOUSE_LETTER_CHOICES = [(WITHOUT_LETTER, WITHOUT_LETTER_FOR_HUMANS)] + [(k,k) for k in rus_alphabet]

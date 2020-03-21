@@ -4,8 +4,10 @@ from multiselectfield import MultiSelectField
 from django.contrib.auth.models import User
 from django.shortcuts import reverse
 from django.utils.text import slugify
-import PropertyProject_api.choices as choices
+from django.core.validators import MinValueValidator
+from decimal import Decimal
 
+import PropertyProject_api.choices as choices
 
 class District(models.Model):
     dist_ru = models.CharField(max_length=150)
@@ -23,20 +25,37 @@ class Street(models.Model):
     def __str__(self):
         return self.street_ru
 
+
+class Test(models.Model):
+    choice = models.CharField(max_length=20)
+
     # def natural_key(self):
     #     return (self.id)
 
+# class ValidAddresses(models.Model):
+#     street = models.ForeignKey(Street,on_delete=models.CASCADE)
+#     house_number = models.PositiveSmallIntegerField()
+#     house_letter = models.CharField(max_length=2)
+#
+#     lat = models.DecimalField(decimal_places=2, max_digits=12, validators=[MinValueValidator(Decimal('0.01'))])
+#     lon = models.DecimalField(decimal_places=2, max_digits=12, validators=[MinValueValidator(Decimal('0.01'))])
+#
+#
+#     def __str__(self):
+#         return "{} {}{}".format(self.street, self.house_number, self.house_letter)
+
 class NewBuilding(models.Model):
     class Meta():
-        db_table = 'NewBuildings'
+        db_table = 'Новострои'
         ordering = ['name']
 
     name = models.CharField(max_length=200, verbose_name=u'Название', default=1)
-    # messageG = forms.CharField(widget=forms.Textarea, label='lolkek')
-    # address = models.CharField(max_length=200, verbose_name=u"Адрес", default=1)  # адресс
+
     street = models.ForeignKey(Street,on_delete=models.CASCADE)
     house_number = models.CharField(max_length=10)
     house_letter = models.CharField(max_length=1)
+
+    # address = models.OneToOneField(HouseAddress, on_delete=models.CASCADE)
     administrativeDistrict = models.CharField(max_length=2, choices=choices.THE_ADMINISTRATIVE_DISTRICT_CHOICES,
                                               default=choices.NOT_COMPLETED,
                                               verbose_name=u"Административный район")  #
