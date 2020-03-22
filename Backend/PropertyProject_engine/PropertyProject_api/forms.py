@@ -1,6 +1,6 @@
 from django import forms
 from .models import NewBuilding, Test
-from .widgets import SearchableChoiceWidget
+from .widgets import SearchableChoiceWidget, MultipleChoiceWidget
 from . import choices
 
 
@@ -40,12 +40,16 @@ class NewBuildingForm(forms.ModelForm):
             'district': SearchableChoiceWidget(widget_title="Выберите район"),
             # 'address' : AddressChoiceWidget(widget_title="Выберите адресс")
             'street' : SearchableChoiceWidget(widget_title='Выберите улицу'),
+            'parking' : MultipleChoiceWidget(
+            default_choice=(choices.NOT_COMPLETED)
+            ),
             # 'house_letter' : forms.Select(),
         }
 
     class Media:
             js = ( 'admin/js/PropertyProject_api/micro-districts-filter.js',
                    'admin/js/PropertyProject_api/address-control.js',
+                   # 'admin/js/PropertyProject_api/parking-switch-control.js'
                    )
 
     # def clean_house_letter(self):

@@ -20,5 +20,19 @@ class SearchableChoiceWidget(forms.widgets.Select):
 
         return context
 
-# class AddressChoiceWidget(SearchableChoiceWidget):
-#     template_name = 'admin/PropertyProject_api/widgets/AddressChoice.html'
+
+class MultipleChoiceWidget(forms.CheckboxSelectMultiple):
+    template_name = 'admin/PropertyProject_api/widgets/multiple_choice.html'
+
+    def __init__(self, attrs=None, choices=(), default_choice=tuple()):
+        super().__init__(attrs,choices)
+        self.default_choice = default_choice
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        if self.default_choice:
+            context['widget']['default_choice_value'] = self.default_choice
+        return context
+
+    class Media:
+        js = ('admin/js/PropertyProject_api/parking-switch-control.js',)
