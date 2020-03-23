@@ -15,7 +15,10 @@ class NewBuildingForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'district': SearchableChoiceWidget(widget_title="Выберите район"),
-            'street' : SearchableChoiceWidget(widget_title='Выберите улицу'),
+            'street' : SearchableChoiceWidget(widget_title='Выберите улицу',
+            enable_empty_choice_view = True,
+            attrs={'empty_label':"(Select here)"},
+            ),
             'parking' : MultipleChoiceWidget(
             not_comleted_choice=(choices.NOT_COMPLETED)
             ),
@@ -23,34 +26,36 @@ class NewBuildingForm(forms.ModelForm):
 
     class Media:
             js = ( 'admin/js/PropertyProject_api/micro-districts-filter.js',
-                   'admin/js/PropertyProject_api/address-control.js',
+                   # 'admin/js/PropertyProject_api/address-control.js',
                    )
 
-    def clean_slug(self):
-        print(self.cleaned_data)
-        form_address = "{} {}{}".format(
-            self.cleaned_data['street'],
-            self.cleaned_data['house_number'],
-            self.cleaned_data['house_letter'],
-            )
-        old_slug = self.cleaned_data['slug']
-        new_slug = generate_slug(address=form_address)
-        print("SLUG: "+new_slug)
-        if new_slug != old_slug:
-            if new_slug == 'new':
-                raise ValidationError('Slug не может быть "new".')
-            if new_slug == '':
-                raise ValidationError('Slug не может быть пустым.')
-            try:
-                building = NewBuilding.objects.get(slug=new_slug)
-                # raise ValidationError(mark_safe(('''Такой новострой уже существует.'''
-                # <a href="{0}">Открыть</a>''').format(building.get_absolute_url())?
-                # ))
-                raise ValidationError('Такой новострой уже существует.')
-            except NewBuilding.DoesNotExist:
-                return new_slug
-        else:
-            return old_slug
+    def clean(self):
+        cleaned_data = super(NewBuildingForm, self).clean()
+        if street and house_number and house_letter:
+            form_address = "{} {}{}".format(
+                    cleaned_data.get("street"),
+                    cleaned_data.get("house_number"),
+                    cleaned_data.get("house_letter")
+                )
+            old_slug = cleaned_data.get('slug')
+            new_slug = generate_slug(address=form_address)
+            # print("SLUG: "+new_slug)
+            if new_slug != old_slug:
+                if new_slug == 'new':
+                    raise ValidationError('Slug не может быть "new".')
+                if new_slug == '':
+                    raise ValidationError('Slug не может быть пустым.')
+                try:
+                    building = NewBuilding.objects.get(slug=new_slug)
+                    # raise ValidationError(mark_safe(('''Такой новострой уже существует.'''
+                    # <a href="{0}">Открыть</a>''').format(building.get_absolute_url())?
+                    # ))
+                    raise ValidationError('Такой новострой уже существует.')
+                except NewBuilding.DoesNotExist:
+                    cleaned_data['slug'] = new_slug
+            else:
+                cleaned_data['slug'] = old_slug
+        return cleaned_data
 
 class WayFromMetroForm(forms.ModelForm):
     class Meta:
