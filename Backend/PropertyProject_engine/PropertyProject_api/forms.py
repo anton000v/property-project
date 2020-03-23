@@ -15,10 +15,7 @@ class NewBuildingForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'district': SearchableChoiceWidget(widget_title="Выберите район"),
-            'street' : SearchableChoiceWidget(widget_title='Выберите улицу',
-            enable_empty_choice_view = True,
-            attrs={'empty_label':"(Select here)"},
-            ),
+            'street' : SearchableChoiceWidget(widget_title='Выберите улицу'),
             'parking' : MultipleChoiceWidget(
             not_comleted_choice=(choices.NOT_COMPLETED)
             ),
@@ -26,17 +23,15 @@ class NewBuildingForm(forms.ModelForm):
 
     class Media:
             js = ( 'admin/js/PropertyProject_api/micro-districts-filter.js',
-                   # 'admin/js/PropertyProject_api/address-control.js',
                    )
 
     def clean(self):
         cleaned_data = super(NewBuildingForm, self).clean()
+        street = cleaned_data.get("street")
+        house_number = cleaned_data.get("house_number")
+        house_letter = cleaned_data.get("house_letter")
         if street and house_number and house_letter:
-            form_address = "{} {}{}".format(
-                    cleaned_data.get("street"),
-                    cleaned_data.get("house_number"),
-                    cleaned_data.get("house_letter")
-                )
+            form_address = "{} {}{}".format(street, house_number, house_letter)
             old_slug = cleaned_data.get('slug')
             new_slug = generate_slug(address=form_address)
             # print("SLUG: "+new_slug)
@@ -56,6 +51,7 @@ class NewBuildingForm(forms.ModelForm):
             else:
                 cleaned_data['slug'] = old_slug
         return cleaned_data
+
 
 class WayFromMetroForm(forms.ModelForm):
     class Meta:
