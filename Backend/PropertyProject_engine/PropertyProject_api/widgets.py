@@ -24,15 +24,23 @@ class SearchableChoiceWidget(forms.widgets.Select):
 class MultipleChoiceWidget(forms.CheckboxSelectMultiple):
     template_name = 'admin/PropertyProject_api/widgets/multiple_choice.html'
 
-    def __init__(self, attrs=None, choices=(), default_choice=tuple()):
+    def __init__(self, attrs=None, choices=(), not_comleted_choice=""):
         super().__init__(attrs,choices)
-        self.default_choice = default_choice
+        self.not_comleted_choice = not_comleted_choice
 
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
-        if self.default_choice:
-            context['widget']['default_choice_value'] = self.default_choice
+        context['widget']['not_comleted_choice_value'] = self.not_comleted_choice
         return context
 
-    class Media:
-        js = ('admin/js/PropertyProject_api/parking-switch-control.js',)
+
+    def _media(self):
+        if(self.not_comleted_choice):
+            return forms.Media(
+            js = ('admin/js/PropertyProject_api/parking-switch-control.js',)
+            )
+        return forms.Media()
+
+    media = property(_media)
+    # class Media:
+    #     js = ('admin/js/PropertyProject_api/parking-switch-control.js',)

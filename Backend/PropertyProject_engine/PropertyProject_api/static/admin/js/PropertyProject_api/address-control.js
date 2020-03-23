@@ -10,7 +10,7 @@
       if($('#invalid_house_number_error').length){
         $('#invalid_house_number_error').remove();
       }
-      console.log(street + " " + house_number);
+      // console.log(street + " " + house_number);
       $.ajax({
         type: 'GET',
         async: true,
@@ -18,7 +18,7 @@
         data: `street=${street}&house_number=${house_number};`,
         success: function(data) {
             var houses_list = data['houses'];
-            console.log(houses_list);
+            // console.log(houses_list);
             house_letter_field.append(`<option value="${data['without_letter']}" selected>${data['without_letter_for_humans']}</option>`);
             houses_list.forEach(function(item) {
               house_letter_field.append(`<option value="${item}">${item}</option>`);

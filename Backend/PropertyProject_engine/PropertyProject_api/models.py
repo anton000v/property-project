@@ -4,8 +4,8 @@ from multiselectfield import MultiSelectField
 from django.contrib.auth.models import User
 from django.shortcuts import reverse
 from django.utils.text import slugify
-from django.core.validators import MinValueValidator
-from decimal import Decimal
+# from django.core.validators import MinValueValidator
+# from decimal import Decimal
 
 import PropertyProject_api.choices as choices
 
@@ -25,25 +25,6 @@ class Street(models.Model):
     def __str__(self):
         return self.street_ru
 
-
-class Test(models.Model):
-    choice = models.CharField(max_length=20)
-
-    # def natural_key(self):
-    #     return (self.id)
-
-# class ValidAddresses(models.Model):
-#     street = models.ForeignKey(Street,on_delete=models.CASCADE)
-#     house_number = models.PositiveSmallIntegerField()
-#     house_letter = models.CharField(max_length=2)
-#
-#     lat = models.DecimalField(decimal_places=2, max_digits=12, validators=[MinValueValidator(Decimal('0.01'))])
-#     lon = models.DecimalField(decimal_places=2, max_digits=12, validators=[MinValueValidator(Decimal('0.01'))])
-#
-#
-#     def __str__(self):
-#         return "{} {}{}".format(self.street, self.house_number, self.house_letter)
-
 class NewBuilding(models.Model):
     class Meta():
         db_table = 'Новострои'
@@ -51,11 +32,11 @@ class NewBuilding(models.Model):
 
     name = models.CharField(max_length=200, verbose_name=u'Название', default=1)
 
-    street = models.ForeignKey(Street,on_delete=models.CASCADE)
-    house_number = models.CharField(max_length=10)
-    house_letter = models.CharField(max_length=1)
-
-    # address = models.OneToOneField(HouseAddress, on_delete=models.CASCADE)
+    street = models.ForeignKey(Street,on_delete=models.CASCADE, verbose_name='Улица')
+    house_number = models.CharField(max_length=10, verbose_name='Номер дома')
+    house_letter = models.CharField(max_length=2, verbose_name='Буква дома',
+                                    choices=choices.HOUSE_LETTER_CHOICES
+                                    )
     administrativeDistrict = models.CharField(max_length=2, choices=choices.THE_ADMINISTRATIVE_DISTRICT_CHOICES,
                                               default=choices.NOT_COMPLETED,
                                               verbose_name=u"Административный район")  #
@@ -109,30 +90,20 @@ class NewBuilding(models.Model):
 
     slug = models.SlugField(max_length=150, unique=True, blank=True, )  # editable = False
 
-    # def save(self, *args, **kwargs):
-    #     self.slug = generate_slug(name=self.name, developer=self.developer, address=self.address)
-    #     super().save(*args, **kwargs)
 
-    # def save(self, *args, **kwargs):
-    #     _slug = '%s-%s' % (self.name, self.address)
-    #     self.slug = slugify(_slug)
-    #     super(NewBuilding, self).save(*args, **kwargs)
-
+    # SEE HOW DOES IT WORK WITH VUEJS
     def get_absolute_url(self):
         return reverse('property_detail', kwargs={'slug': self.slug})
 
     def get_update_url(self):
         return reverse('property_edit', kwargs={'slug': self.slug})
 
-    # def save(self, *args, **kwargs):
-    #     self.slug = generate_slug(name=self.name, developer=self.developer, address=self.address)
-    #     super().save(*args, **kwargs)
 
     def __str__(self):
         return self.slug
 
 
-class buildingImages(models.Model):
+class BuildingImage(models.Model):
     building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name='buildingImages')
     buildingImage = models.ImageField(verbose_name='Фото', blank=True, null=True, editable=True)
 
@@ -140,7 +111,7 @@ class buildingImages(models.Model):
         return '%s - %s' % (self.building, self.buildingImage)
 
 
-class layoutImages(models.Model):
+class LayoutImage(models.Model):
     building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name='layoutImages')
     layoutImage = models.ImageField(verbose_name='Планировки', blank=True, null=True)
 
@@ -148,52 +119,9 @@ class layoutImages(models.Model):
         return '%s - %s' % (self.building, self.layoutImage)
 
 
-class wayFromMetro(models.Model):
-    THE_METRO_CHOICES = [
-        (choices.NOT_COMPLETED, choices.DEFAULT),
-        ('Салтовская линия', (
-            (choices.GEROYEV_TRUDA, 'Героев Труда'),
-            (choices.STUDENCHESKAYA, 'Студенческая'),
-            (choices.AKADEMINA_PAVLOVA, 'Академика Павлова'),
-            (choices.AKADEMINA_BARABASHOVA, 'Академика Барабашова'),
-            (choices.KIEVSKAYA, 'Киевская'),
-            (choices.PUSHKINSKAYA, 'Пушкинская'),
-            (choices.UNIVERSITET, 'Университет'),
-            (choices.ISTORICHESKII_MUZEI, 'Исторический Музей'),
-        )
-         ),
-        ('Алексеевская линия', (
-            (choices.POBEDA, 'Победа'),
-            (choices.ALEXEEVSKAYA, 'Алексеевская'),
-            (choices.AVGUSTA_23, '23 Августа'),
-            (choices.BOTANICHESKII_SAD, 'Ботанический сад'),
-            (choices.NAUCHNAYA, 'Научная'),
-            (choices.GOSPROM, 'Госпром'),
-            (choices.ARCHITECTORA_BIKETOVA, 'Архитектора Бикетова'),
-            (choices.ZASCHITNIKOV_UKRAINI, 'Защитников Украины'),
-            (choices.METROSTROITELEY, 'Метростроителей'),
-        )
-         ),
-        ('Холодногорско-Заводская линия', (
-            (choices.HOLODNAYA_GORA, 'Холодная Гора'),
-            (choices.UJNII_VOKZAL, 'Южный Вокзал'),
-            (choices.CENTRALNII_RINOK, 'Центральный рынок'),
-            (choices.PLOSHAD_KONSTITUCII, 'Площадь Конституции'),
-            (choices.PROSPECT_GAGARINA, 'Проспект Гагарина'),
-            (choices.SPORTIVNAYA, 'Спортинвая'),
-            (choices.ZAVOD_IMENI_MALISHEVA, 'Завод имени Малышева'),
-            (choices.MOSKOVSKII_PROSPECT, 'Московский Проспект'),
-            (choices.DVOREC_SPORTA, 'Дворец Спорта'),
-            (choices.ARMEISKAYA, 'Армейская'),
-            (choices.IMENI_MASELSKOGO, 'Имени А.С. Масельского'),
-            (choices.TRAKTORNII_ZAVOD, 'Тракторный Завод'),
-            (choices.INDUSTRIALNAYA, 'Индустриальная'),
-        )
-         ),
-    ]
-
+class WayFromMetro(models.Model):
     building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name='wayFromMetro', )
-    metroChoices = models.CharField(max_length=3, choices=THE_METRO_CHOICES, default=choices.NOT_COMPLETED,
+    metroChoices = models.CharField(max_length=3, choices=choices.THE_METRO_CHOICES, default=choices.NOT_COMPLETED,
                                     verbose_name=u"Метро")
     time = models.SmallIntegerField(verbose_name=u"Время", default=1)
     typeOfMovement = models.CharField(max_length=2, choices=choices.THE_TYPE_OF_MOVEMENT_CHOICES,

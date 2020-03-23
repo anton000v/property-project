@@ -430,6 +430,48 @@ IMENI_MASELSKOGO = 'imm'
 TRAKTORNII_ZAVOD = 'trz'
 INDUSTRIALNAYA = 'ind'
 
+THE_METRO_CHOICES = [
+    (NOT_COMPLETED, DEFAULT),
+    ('Салтовская линия', (
+        (GEROYEV_TRUDA, 'Героев Труда'),
+        (STUDENCHESKAYA, 'Студенческая'),
+        (AKADEMINA_PAVLOVA, 'Академика Павлова'),
+        (AKADEMINA_BARABASHOVA, 'Академика Барабашова'),
+        (KIEVSKAYA, 'Киевская'),
+        (PUSHKINSKAYA, 'Пушкинская'),
+        (UNIVERSITET, 'Университет'),
+        (ISTORICHESKII_MUZEI, 'Исторический Музей'),
+    )
+     ),
+    ('Алексеевская линия', (
+        (POBEDA, 'Победа'),
+        (ALEXEEVSKAYA, 'Алексеевская'),
+        (AVGUSTA_23, '23 Августа'),
+        (BOTANICHESKII_SAD, 'Ботанический сад'),
+        (NAUCHNAYA, 'Научная'),
+        (GOSPROM, 'Госпром'),
+        (ARCHITECTORA_BIKETOVA, 'Архитектора Бикетова'),
+        (ZASCHITNIKOV_UKRAINI, 'Защитников Украины'),
+        (METROSTROITELEY, 'Метростроителей'),
+    )
+     ),
+    ('Холодногорско-Заводская линия', (
+        (HOLODNAYA_GORA, 'Холодная Гора'),
+        (UJNII_VOKZAL, 'Южный Вокзал'),
+        (CENTRALNII_RINOK, 'Центральный рынок'),
+        (PLOSHAD_KONSTITUCII, 'Площадь Конституции'),
+        (PROSPECT_GAGARINA, 'Проспект Гагарина'),
+        (SPORTIVNAYA, 'Спортинвая'),
+        (ZAVOD_IMENI_MALISHEVA, 'Завод имени Малышева'),
+        (MOSKOVSKII_PROSPECT, 'Московский Проспект'),
+        (DVOREC_SPORTA, 'Дворец Спорта'),
+        (ARMEISKAYA, 'Армейская'),
+        (IMENI_MASELSKOGO, 'Имени А.С. Масельского'),
+        (TRAKTORNII_ZAVOD, 'Тракторный Завод'),
+        (INDUSTRIALNAYA, 'Индустриальная'),
+    )
+     ),
+]
 # --------------------- Type of movement choices
 ON_FOOT = 'of'
 BY_CAR = 'bc'

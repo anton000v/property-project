@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     $('#id_parking li').find(`input[value=${parking_default_choice_value}]`).click(function () {
       if($(this).prop('checked'))
       {
@@ -16,5 +15,4 @@ $(document).ready(function () {
     $('#id_parking li input').not(`input[value=${parking_default_choice_value}]`).click(function () {
       $('#id_parking li').find(`input[value=${parking_default_choice_value}]`).prop('checked' , !'checked');
     });
-
 });

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from . import models
-from . forms import NewBuildingForm,TestForm
+from . forms import NewBuildingForm, WayFromMetroForm
 
 admin.site.site_header = 'Property-project'
 admin.site.unregister(Group)
@@ -16,37 +16,37 @@ class StreetsModelAdmin(admin.ModelAdmin):
         model = models.Street
 
 
-class newBuildingsTabularInLine(admin.TabularInline):
-    model = models.buildingImages
+class BuildingImageTabularInline(admin.TabularInline):
+    model = models.BuildingImage
     extra = 1
 
 
-class newLayoutsTabularInLine(admin.TabularInline):
+class LayoutImageTabularInLine(admin.TabularInline):
     class Meta:
         verbose_name = 'Планировки'
         verbose_name_plural = 'Items i18n'
 
-    model = models.layoutImages
+    model = models.LayoutImage
     extra = 1
 
 class WayFromMetroTabularInLine(admin.TabularInline):
-    model = models.wayFromMetro
+    model = models.WayFromMetro
+    form = WayFromMetroForm
     extra = 1
 
 # class HouseAddressInline(admin.TabularInline):
 #     model = models.HouseAddress
 #     extra = 1
 
-class TestAdmin(admin.ModelAdmin):
-    class Meta:
-        model = models.Test
-    form = TestForm
+# class TestAdmin(admin.ModelAdmin):
+#     class Meta:
+#         model = models.Test
+#     form = TestForm
 
 class NewBuildingModelAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': (
-                'slug',
                 'name',
                 'street',
                 'house_number',
@@ -66,6 +66,7 @@ class NewBuildingModelAdmin(admin.ModelAdmin):
                 'warming',
                 'roomHeight',
                 'numberOfApartmentsInTheHouse',
+                'slug',
             )
         }),
         ('Типы квартир', {
@@ -98,7 +99,7 @@ class NewBuildingModelAdmin(admin.ModelAdmin):
                 'description'),
         }),
     )
-    inlines = [newBuildingsTabularInLine, newLayoutsTabularInLine, WayFromMetroTabularInLine]
+    inlines = [BuildingImageTabularInline, LayoutImageTabularInLine, WayFromMetroTabularInLine]
     change_list_template="admin/PropertyProject_api/property_change_list.html"
     # change_form_template="admin/PropertyProject_api/change_forms.html"
     # autocomplete_fields = ['street', ]
@@ -136,4 +137,4 @@ class NewBuildingModelAdmin(admin.ModelAdmin):
 admin.site.register(models.NewBuilding, NewBuildingModelAdmin)
 admin.site.register(models.District, DistrictsModelAdmin)
 admin.site.register(models.Street, StreetsModelAdmin)
-admin.site.register(models.Test,TestAdmin)
+# admin.site.register(models.Test,TestAdmin)
