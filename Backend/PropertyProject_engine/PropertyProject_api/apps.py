@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
-
-class PropertyinfoApiConfig(AppConfig):
-    name = 'PropertyInfo_api'
+class PropertyProjectApiConfig(AppConfig):
+    name = 'PropertyProject_api'
+    verbose_name = "Базы данных"

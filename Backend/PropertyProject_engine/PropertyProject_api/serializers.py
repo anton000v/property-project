@@ -9,6 +9,24 @@ from .models import Street
     # def to_internal_value(self, value):
     #     return value
 
+# class MicroDistrictSerializer(serializers.Serializer):
+#     type = serializers.CharField(max_length=200)
+
+
+# class JSONSerializerField(serializers.Field):
+#     """ Serializer for JSONField -- required to make field writable"""
+#     def to_internal_value(self, data):
+#         return data
+#     def to_representation(self, value):
+#         return value
+#
+# class MySerializer(serializers.Serializer):
+#     json = JSONSerializerField()
+#
+# class MicroDistrictSerializer(serializers.Serializer):
+#     json = serializers.JSONField()
+
+
 class NewBuildingSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=200)
     # messageG = forms.CharField(widget=forms.Textarea, label='lolkek')
@@ -78,7 +96,7 @@ class NewBuildingSerializer(serializers.Serializer):
 
     slug = serializers.SlugField(max_length=150)
 
-    # 
+    #
     # def create(self, validated_data):
     #     print("VALIDATED DATA:  ",validated_data)
     #     return NewBuilding.objects.create(**validated_data)

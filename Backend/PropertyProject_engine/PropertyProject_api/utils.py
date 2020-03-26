@@ -4,6 +4,8 @@ from local_settings import GOOGLE_PERSONAL_KEY
 from pytils.translit import slugify
 import requests
 
+rus_alphabet = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'
+
 def generate_slug(address):
     return slugify(address)
 
@@ -50,14 +52,20 @@ def fill_streets_todb():
         record.save()
     print("Streets are filled!")
 
-class Houses():
-    country = 'Украина'
-    city = 'Харьков'
-    # key = GOOGLE_PERSONAL_KEY
-    def __init__(self,street,house_number):
+
+class House():
+    key = GOOGLE_PERSONAL_KEY
+    def __init__(self,street, house_number, house_letter='', city='Харьков',country='Украина'):
         self.street = street
         self.house_number = house_number
-        self.house_letters = []
+        self.house_letter = house_letter
+        self.house_district = ''
+        self.city = city
+        self.country = country
+        self.lat = ''
+        self.lng = ''
+        self.address_components = ''
+        self.google_geometry= ''
 
 
     def send_request(self, letter):
@@ -67,27 +75,31 @@ class Houses():
         return answer
 
 
-    def fill_all_letters(self):
-        # ukr_alphabet = 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюя'
-        rus_alphabet = 'абвгдежзийклмнопрстуфхцчшщъыьэюя'
-        for l in rus_alphabet:
-            if not self.is_house_exist(l):
-                break
+    def fill_district(self):
+        for d in self.address_components:
+            if 'sublocality_level_1' in d['types']:
+                self.house_district = d['long_name']
 
-    def is_house_exist(self,letter=""):
-        json_answer = self.send_request(letter).json()
+
+    def fill_location(self):
+        lat_lng_dict = self.google_geometry['location']
+        self.lat = lat_lng_dict['lat']
+        self.lng = lat_lng_dict['lng']
+
+
+    def is_exist(self, with_letter=True):
+        if with_letter:
+            letter = self.house_letter
+        else:
+            letter = ''
+        json_answer = self.send_request(self.house_letter).json()
         if json_answer['status'] == 'OK':
-            for d in json_answer['results'][0]['address_components']:
-                if d['types'][0] == 'street_number':
-                    # print("AAAAAAA")
-                    if d['long_name'].lower() == "{}{}".format(self.house_number,letter).lower():
-                        print("{}{}".format(self.house_number,letter), ' exist')
-                        if letter:
-                            self.house_letters.append(letter)
+            for address_component in (results:=json_answer['results'][0])['address_components']:
+                if address_component['types'][0] == 'street_number':
+                    if address_component['long_name'] == "{}{}".format(self.house_number,self.house_letter):
+                        self.address_components = results['address_components']
+                        self.google_geometry = results['geometry']
                         return True
-                    # else:
-                    #     # print("{}{}".format(self.house_number,letter), ' does not exist')
-                    #     return False
                 else:
                     continue
         print("{}{}".format(self.house_number,letter), ' does not exist')
