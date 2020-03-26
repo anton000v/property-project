@@ -8,7 +8,6 @@ from django.core.exceptions import ValidationError
 
 
 class NewBuildingForm(forms.ModelForm):
-    # house_letter = forms.ChoiceField(choices=choices.HOUSE_LETTER_CHOICES,)
     slug = forms.SlugField(widget=forms.TextInput(attrs={'readonly': True}), required=False)
     class Meta:
         model = NewBuilding
@@ -23,6 +22,7 @@ class NewBuildingForm(forms.ModelForm):
 
     class Media:
             js = ( 'admin/js/PropertyProject_api/micro-districts-filter.js',
+                    'admin/js/PropertyProject_api/address-control.js'
                    )
 
     def clean(self):
@@ -30,7 +30,9 @@ class NewBuildingForm(forms.ModelForm):
         street = cleaned_data.get("street")
         house_number = cleaned_data.get("house_number")
         house_letter = cleaned_data.get("house_letter")
-        if street and house_number and house_letter:
+        if street and house_number:
+            if not house_letter:
+                house_letter = ''
             form_address = "{} {}{}".format(street, house_number, house_letter)
             old_slug = cleaned_data.get('slug')
             new_slug = generate_slug(address=form_address)

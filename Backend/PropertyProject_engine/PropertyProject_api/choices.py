@@ -485,6 +485,12 @@ THE_TYPE_OF_MOVEMENT_CHOICES = (
 
 #---------------------- House letter CHOICES
 
-WITHOUT_LETTER = '-'
+WITHOUT_LETTER = ''
 WITHOUT_LETTER_FOR_HUMANS = 'Без бувы'
 HOUSE_LETTER_CHOICES = [(WITHOUT_LETTER, WITHOUT_LETTER_FOR_HUMANS)] + [(k,k) for k in rus_alphabet]
+
+
+
+#---------------------- HOUSING NUMBER choices
+NOT_DIVIDED = ''
+HOUSING_NUMBER_CHOICES = [(WITHOUT_LETTER, 'Не делится на корпуса')] + [(i,i) for i in range(1, 11)]
