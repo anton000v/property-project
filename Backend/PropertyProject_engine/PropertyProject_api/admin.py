@@ -73,9 +73,9 @@ class NewBuildingModelAdmin(admin.ModelAdmin):
                 'warming',
                 'room_height',
                 'number_of_apartments_in_house',
-                'slug',
-                'lat',
-                'lng',
+                # 'slug',
+                # 'lat',
+                # 'lng',
             )
         }),
         ('Типы квартир', {
@@ -107,6 +107,15 @@ class NewBuildingModelAdmin(admin.ModelAdmin):
                 'completion_date',
                 'description'),
         }),
+        ('Системная информация. Заполняется автоматически',{
+            'fields' : (
+                'slug',
+                'lat',
+                'lng',
+            ),
+        }
+
+        )
     )
     inlines = [BuildingImageTabularInline, LayoutImageTabularInLine, WayFromMetroTabularInLine]
     change_list_template="admin/PropertyProject_api/property_change_list.html"
