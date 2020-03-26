@@ -54,8 +54,6 @@ def fill_streets_todb():
 
 
 class House():
-    # country = 'Украина'
-    # city = 'Харьков'
     key = GOOGLE_PERSONAL_KEY
     def __init__(self,street, house_number, house_letter='', city='Харьков',country='Украина'):
         self.street = street
@@ -69,8 +67,6 @@ class House():
         self.address_components = ''
         self.google_geometry= ''
 
-        # self.houses_info = {}
-
 
     def send_request(self, letter):
         url = "https://maps.googleapis.com/maps/api/geocode/json"
@@ -79,21 +75,13 @@ class House():
         return answer
 
 
-    # def fill_all_letters(self):
-    #     # ukr_alphabet = 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюя'
-    #     for l in rus_alphabet:
-    #         if not self.is_house_exist(l):
-    #             break
-
     def fill_district(self):
         for d in self.address_components:
             if 'sublocality_level_1' in d['types']:
-                # self.house_administrative_district = d['long_name']
                 self.house_district = d['long_name']
 
 
     def fill_location(self):
-        # for d in location_dict:
         lat_lng_dict = self.google_geometry['location']
         self.lat = lat_lng_dict['lat']
         self.lng = lat_lng_dict['lng']
@@ -108,62 +96,11 @@ class House():
         if json_answer['status'] == 'OK':
             for address_component in (results:=json_answer['results'][0])['address_components']:
                 if address_component['types'][0] == 'street_number':
-                    # print("AAAAAAA")
                     if address_component['long_name'] == "{}{}".format(self.house_number,self.house_letter):
-                        # print("{}{}".format(self.house_number,self.house_letter), ' exist')
                         self.address_components = results['address_components']
                         self.google_geometry = results['geometry']
-                        # if letter:
-                        #     self.house_letters.append(letter)
-                        # self.__fill_district__(address_components)
                         return True
-                    # else:
-                    #     # print("{}{}".format(self.house_number,letter), ' does not exist')
-                    #     return False
                 else:
                     continue
         print("{}{}".format(self.house_number,letter), ' does not exist')
         return False
-
-#
-# class Houses():
-#     country = 'Украина'
-#     city = 'Харьков'
-#     # key = GOOGLE_PERSONAL_KEY
-#     def __init__(self,street,house_number):
-#         self.street = street
-#         self.house_number = house_number
-#         self.house_letters = []
-#
-#
-#     def send_request(self, letter):
-#         url = "https://maps.googleapis.com/maps/api/geocode/json"
-#         params = {'address': '{} {} {} {}{}'.format(self.country,self.city,self.street,self.house_number,letter),'key':GOOGLE_PERSONAL_KEY,'language':'ru'}
-#         answer = requests.request(method='GET',url=url,params=params)
-#         return answer
-#
-#
-#     def fill_all_letters(self):
-#         # ukr_alphabet = 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюя'
-#         for l in rus_alphabet:
-#             if not self.is_house_exist(l):
-#                 break
-#
-#     def is_house_exist(self,letter=""):
-#         json_answer = self.send_request(letter).json()
-#         if json_answer['status'] == 'OK':
-#             for d in json_answer['results'][0]['address_components']:
-#                 if d['types'][0] == 'street_number':
-#                     # print("AAAAAAA")
-#                     if d['long_name'] == "{}{}".format(self.house_number,letter):
-#                         print("{}{}".format(self.house_number,letter), ' exist')
-#                         if letter:
-#                             self.house_letters.append(letter)
-#                         return True
-#                     # else:
-#                     #     # print("{}{}".format(self.house_number,letter), ' does not exist')
-#                     #     return False
-#                 else:
-#                     continue
-#         print("{}{}".format(self.house_number,letter), ' does not exist')
-#         return False
