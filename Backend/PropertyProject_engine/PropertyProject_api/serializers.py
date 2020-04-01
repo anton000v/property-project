@@ -70,13 +70,13 @@ class NewBuildingSerializer(serializers.Serializer):
 
     # ----------------------------------------------------
     numberOfOneRoom = serializers.IntegerField(default=1)
-    squareOfOneRoom = serializers.IntegerField(default=1)
+    squareOfOneRoom = serializers.FloatField(default=1)
     numberOfTwoRoom = serializers.IntegerField(default=1)
-    squareOfTwoRoom = serializers.IntegerField(default=1)
+    squareOfTwoRoom = serializers.FloatField(default=1)
     numberOfThreeRoom = serializers.IntegerField(default=1)
-    squareOfThreeRoom = serializers.IntegerField(default=1)
+    squareOfThreeRoom = serializers.FloatField(default=1)
     numberOfFourRoom = serializers.IntegerField(default=1)
-    squareOfFourRoom = serializers.IntegerField(default=1)
+    squareOfFourRoom = serializers.FloatField(default=1)
     # ----------------------------------------------------
 
     numberOfApartmensPerFloor = serializers.IntegerField(default=1)  #
@@ -95,7 +95,8 @@ class NewBuildingSerializer(serializers.Serializer):
     description = serializers.CharField(default=1)
 
     slug = serializers.SlugField(max_length=150)
-
+    lat = serializers.FloatField()
+    lng = serializers.FloatField()
     #
     # def create(self, validated_data):
     #     print("VALIDATED DATA:  ",validated_data)
