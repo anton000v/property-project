@@ -7,14 +7,14 @@ from django.http import JsonResponse, HttpResponse, Http404
 from .utils import House
 import json
 
-class NewBuildingView(APIView):
-    def get(self, request):
-        buildings = NewBuilding.objects.all()
-        serializer = NewBuildingSerializer(buildings,many=True)
-        print("Data: ",serializer.data)
-        print("Type of data: ", type(serializer.data))
-        print("Serializer: ", serializer)
-        return Response({"buildings": serializer.data})
+# class NewBuildingView(APIView):
+#     def get(self, request):
+#         buildings = NewBuilding.objects.all()
+#         serializer = NewBuildingSerializer(buildings,many=True)
+#         print("Data: ",serializer.data)
+#         print("Type of data: ", type(serializer.data))
+#         print("Serializer: ", serializer)
+#         return Response({"buildings": serializer.data})
 
 class MicroDistrictChoices(APIView):
     def get(self,request):
@@ -25,6 +25,37 @@ class MicroDistrictChoices(APIView):
         json_choices = json.dumps(micro_district_choices, ensure_ascii=False)
         db_values = {'saltovka_dbvalue' : choices.SALTOVKA, 'severnaya_saltovka_dbvalue': choices.SEVERNAYA_SALTOVKA}
         return JsonResponse({'micro_district_choices':micro_district_choices, 'db_values':db_values})
+
+class FindBuildings(APIView):
+    def get(self,request):
+        buildings = NewBuilding.objects.all()
+        name_contains_query = request.GET.get('name_contains')
+        address_contains_query = request.GET.get('address_contains')
+        district_contains_query = request.GET.get('district_contains-select')
+        developer_contains_query = request.GET.get('developer_contains-select')
+
+        if name_contains_query != '' and name_contains_query is not None:
+            buildings = buildings.filter(name__icontains=name_contains_query)
+        else:
+            name_contains_query = ''
+        if address_contains_query != '' and address_contains_query is not None:
+            buildings &= buildings.filter(address__icontains=address_contains_query)
+        else:
+            address_contains_query = ''
+        if district_contains_query != '' and district_contains_query is not None and district_contains_query != choices.NOT_COMPLETED:
+            buildings &= buildings.filter(
+                district__icontains=district_contains_query)
+        else:
+            district_contains_query = ''
+        if developer_contains_query != '' and developer_contains_query is not None:
+            buildings &= buildings.filter(developer__icontains=developer_contains_query)
+        else:
+            developer_contains_query = ''
+
+        serializer = NewBuildingSerializer(buildings,many=True)
+
+        return Response({'buildings':serializer.data})
+
 
 
 class AddressChecker(APIView):
