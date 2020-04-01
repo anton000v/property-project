@@ -39,6 +39,11 @@ DEBUG = local_settings.DEBUG
 ALLOWED_HOSTS = []
 
 
+# Django corsheaders
+CORS_ORIGIN_WHITELIST = (
+    '127.0.0.1:8080'
+)
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -50,12 +55,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'PropertyProject_api',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
