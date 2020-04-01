@@ -1,10 +1,11 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import NewBuilding, District
-from .serializers import NewBuildingSerializer
+from .serializers import NewBuildingSerializer, NewBuildingSerializerForSearch
 from . import choices
 from django.http import JsonResponse, HttpResponse, Http404
 from .utils import House
+from django.http import Http404
 import json
 
 # class NewBuildingView(APIView):
@@ -25,6 +26,17 @@ class MicroDistrictChoices(APIView):
         json_choices = json.dumps(micro_district_choices, ensure_ascii=False)
         db_values = {'saltovka_dbvalue' : choices.SALTOVKA, 'severnaya_saltovka_dbvalue': choices.SEVERNAYA_SALTOVKA}
         return JsonResponse({'micro_district_choices':micro_district_choices, 'db_values':db_values})
+
+
+class GetBuilding(APIView):
+    def get(self,request):
+        slug = request.GET.get('slug')
+        try:
+            building = NewBuilding.objects.get(slug=slug)
+            serializer = NewBuildingSerializer(building)
+            return Response({'building':serializer.data})
+        except NewBuilding.DoesNotExist:
+            raise Http404
 
 class FindBuildings(APIView):
     def get(self,request):
@@ -52,11 +64,9 @@ class FindBuildings(APIView):
         else:
             developer_contains_query = ''
 
-        serializer = NewBuildingSerializer(buildings,many=True)
+        serializer = NewBuildingSerializerForSearch(buildings,many=True)
 
         return Response({'buildings':serializer.data})
-
-
 
 class AddressChecker(APIView):
     def get(self,request):

@@ -26,6 +26,19 @@ from .models import Street
 # class MicroDistrictSerializer(serializers.Serializer):
 #     json = serializers.JSONField()
 
+class NewBuildingSerializerForSearch(serializers.Serializer):
+    name = serializers.CharField(max_length=200)
+    street = serializers.SlugRelatedField(slug_field="street_ru",queryset=Street.objects.all())
+    house_number = serializers.CharField(max_length=10)
+    house_letter = serializers.CharField(max_length=1)
+    district = fields.ChoiceFieldCustomDisplay(choices=choices.DISTRICT_CHOICES,
+                                default=choices.NOT_COMPLETED,
+                                # source='get_district_display'
+                                )  # )
+    developer = serializers.CharField(max_length=100, default=1)  #
+    slug = serializers.SlugField(max_length=150)
+
+    
 
 class NewBuildingSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=200)
