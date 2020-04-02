@@ -48,6 +48,8 @@ $(document).ready(function () {
       error: function(data, status) {
       $("#id_house_number").after(`<p id="house_number_message">${data.responseJSON.error}</p>`);
       var letter_choices = data.responseJSON.choices;
+
+      // alert('lol');
       letter_choices.forEach(function(item) {
         house_letter_field.append(`<option value="${item[0]}">${item[1]}</option>`);
     });
@@ -102,7 +104,8 @@ $(document).ready(function () {
   $( "#id_house_number" ).change(function() {
 
         $('#id_house_letter').empty();
-        $('#id_administrative_district').val(0);
+        // $('#id_administrative_district').val(0);
+
         $('#id_lat').val('');
         $('#id_lng').val('');
         clear_message('house_number_message');
@@ -141,9 +144,15 @@ $(document).ready(function () {
   is_house_letter_field_filled = false;
 
   selected_house_letter = $("#id_house_letter option:selected").text();
+  selected_administrative_district = $("#id_administrative_district option:selected").text();
+  current_lat = $('#id_lat').val();
+  current_lng = $('#id_lng').val();
   $( "#id_street" ).trigger('change');
   $('#id_house_number').trigger('change');
   if(!is_street_field_filled && !is_house_numb_field_filled){
     $('#id_house_letter').empty();
   }
+  $('#id_administrative_district').find(`option:contains('${selected_administrative_district}')`).attr("selected", "selected");
+  $('#id_lat').val(current_lat);
+  $('#id_lng').val(current_lng);
 });

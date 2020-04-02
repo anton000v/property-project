@@ -104,9 +104,9 @@ class NewBuilding(models.Model):
     completion_date = models.SmallIntegerField(verbose_name=u"Сдан и принят в эксплуатацию", default=1)
     description = models.TextField(verbose_name=u"Описание", default=1)
 
-    slug = models.SlugField(max_length=150, unique=True, blank=True, ) 
-    lat = models.FloatField(verbose_name='Широта', default=0)
-    lng = models.FloatField(verbose_name='Долгота', default=0)
+    slug = models.SlugField(max_length=150, unique=True, blank=True, )
+    lat = models.FloatField(verbose_name='Широта', default=0, null=True, blank=True)
+    lng = models.FloatField(verbose_name='Долгота', default=0, null=True, blank=True)
 
 
     # SEE HOW DOES IT WORK WITH VUEJS
