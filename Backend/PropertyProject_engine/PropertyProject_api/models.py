@@ -104,7 +104,7 @@ class NewBuilding(models.Model):
     completion_date = models.SmallIntegerField(verbose_name=u"Сдан и принят в эксплуатацию", default=1)
     description = models.TextField(verbose_name=u"Описание", default=1)
 
-    slug = models.SlugField(max_length=150, unique=True, blank=True, )  # editable = False
+    slug = models.SlugField(max_length=150, unique=True, blank=True, ) 
     lat = models.FloatField(verbose_name='Широта', default=0)
     lng = models.FloatField(verbose_name='Долгота', default=0)
 
@@ -127,30 +127,29 @@ class NewBuilding(models.Model):
 
 
 class BuildingImage(models.Model):
-    building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name='buildingImages')
-    buildingImage = models.ImageField(verbose_name='Фото', blank=True, null=True, editable=True)
+    building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name='building_images', to_field='slug')
+    building_image = models.ImageField(verbose_name='Фото', blank=True, null=True, editable=True)
 
     def __str__(self):
         return '%s - %s' % (self.building, self.buildingImage)
 
 
 class LayoutImage(models.Model):
-    building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name='layoutImages')
-    layoutImage = models.ImageField(verbose_name='Планировки', blank=True, null=True)
+    building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name='layout_images', to_field='slug')
+    layout_image = models.ImageField(verbose_name='Планировки', blank=True, null=True)
 
     def __str__(self):
         return '%s - %s' % (self.building, self.layoutImage)
 
-
 class WayFromMetro(models.Model):
-    building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name='wayFromMetro', )
-    metroChoices = models.CharField(max_length=3, choices=choices.THE_METRO_CHOICES, default=choices.NOT_COMPLETED,
+    building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name='ways_from_metro', to_field='slug')
+    metro_choices = models.CharField(max_length=3, choices=choices.THE_METRO_CHOICES, default=choices.NOT_COMPLETED,
                                     verbose_name=u"Метро")
     time = models.SmallIntegerField(verbose_name=u"Время", default=1)
-    typeOfMovement = models.CharField(max_length=2, choices=choices.THE_TYPE_OF_MOVEMENT_CHOICES,
+    type_of_movement = models.CharField(max_length=2, choices=choices.THE_TYPE_OF_MOVEMENT_CHOICES,
                                       default=choices.NOT_COMPLETED,
                                       verbose_name=u"Как")
-    numberOfMeters = models.SmallIntegerField(verbose_name=u"Расстояние", default=1)
+    number_of_meters = models.SmallIntegerField(verbose_name=u"Расстояние", default=1)
 
     def __str__(self):
         return '%s - %s' % (self.building, self.metroChoices)

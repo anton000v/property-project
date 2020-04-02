@@ -1,30 +1,30 @@
 from rest_framework import serializers,fields
 from . import choices
 from . import fields
-from .models import NewBuilding
+# from .models import NewBuilding, BuildingImage, WayFromMetro
 from .models import Street
 
-# class StreetField(serializers.StringRelatedField):
-#     pass
-    # def to_internal_value(self, value):
-    #     return value
 
-# class MicroDistrictSerializer(serializers.Serializer):
-#     type = serializers.CharField(max_length=200)
+class BuildingImageSerializer(serializers.Serializer):
+    building_image = serializers.ImageField()
 
 
-# class JSONSerializerField(serializers.Field):
-#     """ Serializer for JSONField -- required to make field writable"""
-#     def to_internal_value(self, data):
-#         return data
-#     def to_representation(self, value):
-#         return value
-#
-# class MySerializer(serializers.Serializer):
-#     json = JSONSerializerField()
-#
-# class MicroDistrictSerializer(serializers.Serializer):
-#     json = serializers.JSONField()
+class LayoutImageSerializer(serializers.Serializer):
+    layout_image = serializers.ImageField()
+
+
+class WayFromMetroSerializer(serializers.Serializer):
+    metro_choices = fields.ChoiceFieldCustomDisplay(choices=choices.THE_METRO_CHOICES,
+                                                    default=choices.NOT_COMPLETED,
+                                              # source='get_administrativeDistrict_display',
+                                              )  #
+    time = serializers.IntegerField(default=1)
+    type_of_movement = fields.ChoiceFieldCustomDisplay(choices=choices.THE_TYPE_OF_MOVEMENT_CHOICES,
+                                                    default=choices.NOT_COMPLETED,
+                                              # source='get_administrativeDistrict_display',
+                                              )  #
+    number_of_meters = serializers.IntegerField(default=1)
+
 
 class NewBuildingSerializerForSearch(serializers.Serializer):
     name = serializers.CharField(max_length=200)
@@ -35,10 +35,11 @@ class NewBuildingSerializerForSearch(serializers.Serializer):
                                 default=choices.NOT_COMPLETED,
                                 # source='get_district_display'
                                 )  # )
-    developer = serializers.CharField(max_length=100, default=1)  #
+    developer = serializers.CharField(max_length=100, default=1)
     slug = serializers.SlugField(max_length=150)
-
-    
+    building_images = BuildingImageSerializer(many=True)
+    layout_images = LayoutImageSerializer(many=True)
+    ways_from_metro = WayFromMetroSerializer(many=True)
 
 class NewBuildingSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=200)
@@ -110,6 +111,10 @@ class NewBuildingSerializer(serializers.Serializer):
     slug = serializers.SlugField(max_length=150)
     lat = serializers.FloatField()
     lng = serializers.FloatField()
+
+    building_images = BuildingImageSerializer(many=True)
+    layout_images = LayoutImageSerializer(many=True)
+    ways_from_metro = WayFromMetroSerializer(many=True)
     #
     # def create(self, validated_data):
     #     print("VALIDATED DATA:  ",validated_data)
