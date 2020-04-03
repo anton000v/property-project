@@ -131,15 +131,36 @@ class BuildingImage(models.Model):
     building_image = models.ImageField(verbose_name='Фото', blank=True, null=True, editable=True)
 
     def __str__(self):
-        return '%s - %s' % (self.building, self.buildingImage)
+        return '%s - %s' % (self.building, self.building_image)
 
+    # def url(self):
+    #     # returns a URL for either internal stored or external image url
+    #     if self.externalURL:
+    #         return self.externalURL
+    #     else:
+    #         # is this the best way to do this??
+    #         return os.path.join('/',settings.MEDIA_URL, os.path.basename(str(self.building_image)))
+
+    # def image_tag(self):
+    #     # used in the admin site model as a "thumbnail"
+    #     return mark_safe('<img src="{}" width="150" height="150" />'.format(self.building_image) )
+    # image_tag.short_description = 'Image'
+    # def image_tag(self):
+    #     return '<img src="{}" />'.format(building_image)
+    # image_tag.short_description = 'Изображение'
+    # image_tag.allow_tags = True
 
 class LayoutImage(models.Model):
     building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name='layout_images', to_field='slug')
     layout_image = models.ImageField(verbose_name='Планировки', blank=True, null=True)
 
     def __str__(self):
-        return '%s - %s' % (self.building, self.layoutImage)
+        return '%s - %s' % (self.building, self.layout_image)
+
+    # def image_tag(self):
+    #     return '<img src="{}" />'.format(layout_image)
+    # image_tag.short_description = 'Планировка'
+    # image_tag.allow_tags = True
 
 class WayFromMetro(models.Model):
     building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name='ways_from_metro', to_field='slug')
@@ -152,4 +173,4 @@ class WayFromMetro(models.Model):
     number_of_meters = models.SmallIntegerField(verbose_name=u"Расстояние", default=1)
 
     def __str__(self):
-        return '%s - %s' % (self.building, self.metroChoices)
+        return '%s - %s' % (self.building, self.metro_choices)

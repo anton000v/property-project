@@ -23,6 +23,13 @@ class BuildingImageTabularInline(admin.TabularInline):
     extra = 1
     verbose_name = "Изображение"
     verbose_name_plural = "Изображения"
+    # def headshot_image(self, obj):
+    #     return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+    #         url = obj.headshot.url,
+    #         width=obj.headshot.width,
+    #         height=obj.headshot.height,
+    #         )
+    #     )
 
 
 class LayoutImageTabularInLine(admin.TabularInline):
@@ -104,7 +111,6 @@ class NewBuildingModelAdmin(admin.ModelAdmin):
     )
     inlines = [BuildingImageTabularInline, LayoutImageTabularInLine, WayFromMetroTabularInLine]
     change_list_template="admin/PropertyProject_api/property_change_list.html"
-
     form = NewBuildingForm
 
     class Meta:
@@ -113,12 +119,17 @@ class NewBuildingModelAdmin(admin.ModelAdmin):
     class Media:
         css = {
              'all': ('admin/css/PropertyProject_api/admin.css',
+             "https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css",
              )
         }
-        js = ("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js",
-             "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js",
-             "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js",
-             )
+
+        js = (
+        # "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js",
+        "https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
+        "https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js",
+        # "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
+        # "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js",
+        )
 
 admin.site.register(models.NewBuilding, NewBuildingModelAdmin)
 admin.site.register(models.District, DistrictsModelAdmin)

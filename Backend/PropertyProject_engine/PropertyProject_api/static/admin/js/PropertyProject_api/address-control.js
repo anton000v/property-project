@@ -10,7 +10,7 @@ $(document).ready(function () {
   function fill_administrative_district(administrative_district_id){
     administrative_district_field =  $("#id_administrative_district");
     administrative_district_field.val(administrative_district_id);
-    administrative_district_field.after('<p id="administrative_district_message">Заполнено автоматически</p>');
+    administrative_district_field.after('<span id="administrative_district_message" class="success-message">Заполнено автоматически</span>');
   }
 
   function fill_lat_and_lng(lat,lng){
@@ -18,8 +18,8 @@ $(document).ready(function () {
     lng_field = $('#id_lng');
     lat_field.val(lat);
     lng_field.val(lng)
-    lat_field.after('<p id="lat_message">Заполнено автоматически</p>');
-    lng_field.after('<p id="lng_message">Заполнено автоматически</p>');
+    lat_field.after('<span id="lat_message" class="success-message">Заполнено автоматически</span>');
+    lng_field.after('<span id="lng_message" class="success-message">Заполнено автоматически</span>');
   }
 
   function check_house_number(){
@@ -42,11 +42,11 @@ $(document).ready(function () {
 
         house_letter_field.find(`option:contains('${selected_house_letter}')`).attr("selected", "selected");
 
-        $("#id_house_number").after(`<p id="house_number_message">${data['success_message']}</p>`);
+        $("#id_house_number").after(`<span id="house_number_message" class="success-message">${data['success_message']}</span>`);
         check_house_letter();
       },
       error: function(data, status) {
-      $("#id_house_number").after(`<p id="house_number_message">${data.responseJSON.error}</p>`);
+      $("#id_house_number").after(`<p id="house_number_message" class="error-message">${data.responseJSON.error}</p>`);
       var letter_choices = data.responseJSON.choices;
 
       // alert('lol');
@@ -77,12 +77,12 @@ $(document).ready(function () {
         var administrative_district_id = data['administrative_district_id'];
         var lat = data['lat'];
         var lng = data['lng'];
-        $("#id_house_letter").after(`<p id="house_letter_message">${data['success_message']}</p>`);
+        $("#id_house_letter").after(`<span id="house_letter_message" class="success-message">${data['success_message']}</span>`);
         fill_administrative_district(administrative_district_id);
         fill_lat_and_lng(lat,lng);
       },
       error: function(data, status) {
-      $("#id_house_letter").after(`<p id="house_letter_message">${data.responseJSON.error}</p>`);
+      $("#id_house_letter").after(`<p id="house_letter_message" class="error-message">${data.responseJSON.error}</p>`);
      },
       dataType: 'json',
     });

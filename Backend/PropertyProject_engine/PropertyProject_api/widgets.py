@@ -3,12 +3,12 @@ from django import forms
 class SearchableChoiceWidget(forms.widgets.Select):
     template_name = 'admin/PropertyProject_api/widgets/SearchableChoice.html'
 
-    class Media:
-        css = {
-            'all': ( "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css",
-                      "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css",
-                      )
-        }
+    # class Media:
+    #     css = {
+    #         'all': (
+    #                 "https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css",
+    #                   )
+    #     }
 
     def __init__(self, attrs=None, choices=(),widget_title=''):
         super().__init__(attrs,choices)
