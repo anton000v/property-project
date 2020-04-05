@@ -1,0 +1,41 @@
+
+@media only screen and (min-width: 320px) {
+  /* For tablets and phones: */
+
+  .related-widget-wrapper .selectize-input {
+    display: table !important;
+    table-layout: fixed;
+    width: 90%;
+  }
+  .selectize-input {
+    display: table !important;
+    table-layout: fixed;
+    width: 85%;
+  }
+
+}
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .related-widget-wrapper{
+    width:70%;
+  }
+  .related-widget-wrapper .selectize-input {
+    display: table !important;
+    table-layout: fixed;
+    width: 300px;
+  }
+  .selectize-input {
+    display: table !important;
+    table-layout: fixed;
+    width: 300px;
+  }
+  .selectize-input > * {
+    vertical-align: middle;
+  }
+  .selectize-input .item {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 80%;
+  }
+}

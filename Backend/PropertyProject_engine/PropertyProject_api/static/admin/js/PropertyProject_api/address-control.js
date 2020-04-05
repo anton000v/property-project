@@ -10,16 +10,18 @@ $(document).ready(function () {
   function fill_administrative_district(administrative_district_id){
     administrative_district_field =  $("#id_administrative_district");
     administrative_district_field.val(administrative_district_id);
-    administrative_district_field.after('<p id="administrative_district_message">Заполнено автоматически</p>');
+    administrative_district_field.after('<span id="administrative_district_message" class="success-message">Заполнено автоматически</span>');
   }
 
   function fill_lat_and_lng(lat,lng){
     lat_field = $("#id_lat");
     lng_field = $('#id_lng');
+    clear_message('lat_message');
+    clear_message('lng_message');
     lat_field.val(lat);
     lng_field.val(lng)
-    lat_field.after('<p id="lat_message">Заполнено автоматически</p>');
-    lng_field.after('<p id="lng_message">Заполнено автоматически</p>');
+    lat_field.after('<span id="lat_message" class="success-message">Заполнено автоматически</span>');
+    lng_field.after('<span id="lng_message" class="success-message">Заполнено автоматически</span>');
   }
 
   function check_house_number(){
@@ -42,12 +44,14 @@ $(document).ready(function () {
 
         house_letter_field.find(`option:contains('${selected_house_letter}')`).attr("selected", "selected");
 
-        $("#id_house_number").after(`<p id="house_number_message">${data['success_message']}</p>`);
+        $("#id_house_number").after(`<span id="house_number_message" class="success-message">${data['success_message']}</span>`);
         check_house_letter();
       },
       error: function(data, status) {
-      $("#id_house_number").after(`<p id="house_number_message">${data.responseJSON.error}</p>`);
+      $("#id_house_number").after(`<p id="house_number_message" class="error-message">${data.responseJSON.error}</p>`);
       var letter_choices = data.responseJSON.choices;
+
+      // alert('lol');
       letter_choices.forEach(function(item) {
         house_letter_field.append(`<option value="${item[0]}">${item[1]}</option>`);
     });
@@ -75,12 +79,12 @@ $(document).ready(function () {
         var administrative_district_id = data['administrative_district_id'];
         var lat = data['lat'];
         var lng = data['lng'];
-        $("#id_house_letter").after(`<p id="house_letter_message">${data['success_message']}</p>`);
+        $("#id_house_letter").after(`<span id="house_letter_message" class="success-message">${data['success_message']}</span>`);
         fill_administrative_district(administrative_district_id);
         fill_lat_and_lng(lat,lng);
       },
       error: function(data, status) {
-      $("#id_house_letter").after(`<p id="house_letter_message">${data.responseJSON.error}</p>`);
+      $("#id_house_letter").after(`<p id="house_letter_message" class="error-message">${data.responseJSON.error}</p>`);
      },
       dataType: 'json',
     });
@@ -102,7 +106,8 @@ $(document).ready(function () {
   $( "#id_house_number" ).change(function() {
 
         $('#id_house_letter').empty();
-        $('#id_administrative_district').val(0);
+        // $('#id_administrative_district').val(0);
+
         $('#id_lat').val('');
         $('#id_lng').val('');
         clear_message('house_number_message');
@@ -141,9 +146,15 @@ $(document).ready(function () {
   is_house_letter_field_filled = false;
 
   selected_house_letter = $("#id_house_letter option:selected").text();
+  selected_administrative_district = $("#id_administrative_district option:selected").text();
+  current_lat = $('#id_lat').val();
+  current_lng = $('#id_lng').val();
   $( "#id_street" ).trigger('change');
   $('#id_house_number').trigger('change');
   if(!is_street_field_filled && !is_house_numb_field_filled){
     $('#id_house_letter').empty();
   }
+  $('#id_administrative_district').find(`option:contains('${selected_administrative_district}')`).attr("selected", "selected");
+  $('#id_lat').val(current_lat);
+  $('#id_lng').val(current_lng);
 });

@@ -4,6 +4,7 @@ from multiselectfield import MultiSelectField
 from django.contrib.auth.models import User
 from django.shortcuts import reverse
 from django.utils.text import slugify
+from django.utils.safestring import mark_safe
 # from django.core.validators import MinValueValidator
 # from decimal import Decimal
 
@@ -90,7 +91,7 @@ class NewBuilding(models.Model):
     square_of_four_room = models.FloatField(verbose_name=u"Площадь 4к.кв.", default=1)
     # ----------------------------------------------------
 
-    number_of_apartments_per_floor = models.PositiveSmallIntegerField(verbose_name=u"Кол-во квартир на этаже", default=1)  #
+    number_of_apartments_per_floor = models.PositiveSmallIntegerField(verbose_name=u"Кол-во квартир на этаже", default=1)
     commercial_premises = models.PositiveSmallIntegerField(verbose_name=u"Коммерческие помещения",
                                                           null=True, default=1)  # пишешь только этаж
     heating = models.CharField(max_length=2, choices=choices.THE_HEATING_CHOICES, default=choices.NOT_COMPLETED,
@@ -104,9 +105,9 @@ class NewBuilding(models.Model):
     completion_date = models.SmallIntegerField(verbose_name=u"Сдан и принят в эксплуатацию", default=1)
     description = models.TextField(verbose_name=u"Описание", default=1)
 
-    slug = models.SlugField(max_length=150, unique=True, blank=True, )  # editable = False
-    lat = models.FloatField(verbose_name='Широта', default=0)
-    lng = models.FloatField(verbose_name='Долгота', default=0)
+    slug = models.SlugField(max_length=150, unique=True, blank=True, )
+    lat = models.FloatField(verbose_name='Широта', default=0, null=True, blank=True)
+    lng = models.FloatField(verbose_name='Долгота', default=0, null=True, blank=True)
 
 
     # SEE HOW DOES IT WORK WITH VUEJS
@@ -127,30 +128,55 @@ class NewBuilding(models.Model):
 
 
 class BuildingImage(models.Model):
-    building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name='buildingImages')
-    buildingImage = models.ImageField(verbose_name='Фото', blank=True, null=True, editable=True)
+    building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name='building_images', to_field='slug')
+    building_image = models.ImageField(verbose_name='Фото', blank=True, null=True, editable=True)
 
     def __str__(self):
-        return '%s - %s' % (self.building, self.buildingImage)
+        return '%s - %s' % (self.building, self.building_image)
 
+    def image_tag(self):
+        return mark_safe('<img src="%s" width="150" height="150" />' % (self.building_image.url))
+
+    image_tag.short_description = 'Image'
+
+    # def url(self):
+    #     # returns a URL for either internal stored or external image url
+    #     if self.externalURL:
+    #         return self.externalURL
+    #     else:
+    #         # is this the best way to do this??
+    #         return os.path.join('/',settings.MEDIA_URL, os.path.basename(str(self.building_image)))
+
+    # def image_tag(self):
+    #     # used in the admin site model as a "thumbnail"
+    #     return mark_safe('<img src="{}" width="150" height="150" />'.format(self.building_image) )
+    # image_tag.short_description = 'Image'
+    # def image_tag(self):
+    #     return '<img src="{}" />'.format(building_image)
+    # image_tag.short_description = 'Изображение'
+    # image_tag.allow_tags = True
 
 class LayoutImage(models.Model):
-    building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name='layoutImages')
-    layoutImage = models.ImageField(verbose_name='Планировки', blank=True, null=True)
+    building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name='layout_images', to_field='slug')
+    layout_image = models.ImageField(verbose_name='Планировки', blank=True, null=True)
 
     def __str__(self):
-        return '%s - %s' % (self.building, self.layoutImage)
+        return '%s - %s' % (self.building, self.layout_image)
 
+    # def image_tag(self):
+    #     return '<img src="{}" />'.format(layout_image)
+    # image_tag.short_description = 'Планировка'
+    # image_tag.allow_tags = True
 
 class WayFromMetro(models.Model):
-    building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name='wayFromMetro', )
-    metroChoices = models.CharField(max_length=3, choices=choices.THE_METRO_CHOICES, default=choices.NOT_COMPLETED,
+    building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name='ways_from_metro', to_field='slug')
+    metro_choices = models.CharField(max_length=3, choices=choices.THE_METRO_CHOICES, default=choices.NOT_COMPLETED,
                                     verbose_name=u"Метро")
     time = models.SmallIntegerField(verbose_name=u"Время", default=1)
-    typeOfMovement = models.CharField(max_length=2, choices=choices.THE_TYPE_OF_MOVEMENT_CHOICES,
+    type_of_movement = models.CharField(max_length=2, choices=choices.THE_TYPE_OF_MOVEMENT_CHOICES,
                                       default=choices.NOT_COMPLETED,
                                       verbose_name=u"Как")
-    numberOfMeters = models.SmallIntegerField(verbose_name=u"Расстояние", default=1)
+    number_of_meters = models.SmallIntegerField(verbose_name=u"Расстояние", default=1)
 
     def __str__(self):
-        return '%s - %s' % (self.building, self.metroChoices)
+        return '%s - %s' % (self.building, self.metro_choices)

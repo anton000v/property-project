@@ -1,24 +1,23 @@
 {% load static %}
 
-<select name="{{ widget.name }}" id="id_{{ widget.name }}" class="selectpicker" data-live-search="true"
-        data-display="static" data-size="6" data-header="{{ widget.title }}" data-container="body" style="width:auto;" required>
-    <!-- {% for name, value in widget.attrs.items %}{% if value is not False %}
-        {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}
-    {% endfor %} -->
-
-    <!-- {% if widget.enable_empty_choice_view %}
-      <option value=""selected></option>
-    {% endif %} -->
-
-    {% for group_name, group_choices, group_index in widget.optgroups %}
-        {% if group_name %}
-            <optgroup label="{{ group_name }}">
-        {% endif %}
-    {% for option in group_choices %}
-        {% include option.template_name with widget=option %}
-    {% endfor %}
-    {% if group_name %}
-        </optgroup>
-    {% endif %}
-    {% endfor %}
+<select name="{{ widget.name }}" id="id_{{ widget.name }}" placeholder="{{ widget.title }}">
+  {% for group_name, group_choices, group_index in widget.optgroups %}
+      {% if group_name %}
+          <optgroup label="{{ group_name }}">
+      {% endif %}
+  {% for option in group_choices %}
+      {% include option.template_name with widget=option %}
+  {% endfor %}
+  {% if group_name %}
+      </optgroup>
+  {% endif %}
+  {% endfor %}
 </select>
+
+<script>
+   $('#id_{{ widget.name }}').selectize({
+       sortField: 'text',
+       inputClass: 'form-control selectize-input',
+       dropdownParent: "body"
+   });
+</script>

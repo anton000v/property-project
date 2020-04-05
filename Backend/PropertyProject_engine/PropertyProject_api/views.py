@@ -1,20 +1,21 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import NewBuilding, District
-from .serializers import NewBuildingSerializer
+from .serializers import NewBuildingSerializer, NewBuildingSerializerForSearch
 from . import choices
 from django.http import JsonResponse, HttpResponse, Http404
 from .utils import House
+from django.http import Http404
 import json
 
-class NewBuildingView(APIView):
-    def get(self, request):
-        buildings = NewBuilding.objects.all()
-        serializer = NewBuildingSerializer(buildings,many=True)
-        print("Data: ",serializer.data)
-        print("Type of data: ", type(serializer.data))
-        print("Serializer: ", serializer)
-        return Response({"buildings": serializer.data})
+# class NewBuildingView(APIView):
+#     def get(self, request):
+#         buildings = NewBuilding.objects.all()
+#         serializer = NewBuildingSerializer(buildings,many=True)
+#         print("Data: ",serializer.data)
+#         print("Type of data: ", type(serializer.data))
+#         print("Serializer: ", serializer)
+#         return Response({"buildings": serializer.data})
 
 class MicroDistrictChoices(APIView):
     def get(self,request):
@@ -26,6 +27,46 @@ class MicroDistrictChoices(APIView):
         db_values = {'saltovka_dbvalue' : choices.SALTOVKA, 'severnaya_saltovka_dbvalue': choices.SEVERNAYA_SALTOVKA}
         return JsonResponse({'micro_district_choices':micro_district_choices, 'db_values':db_values})
 
+
+class GetBuilding(APIView):
+    def get(self,request):
+        slug = request.GET.get('slug')
+        try:
+            building = NewBuilding.objects.get(slug=slug)
+            serializer = NewBuildingSerializer(building)
+            return Response({'building':serializer.data})
+        except NewBuilding.DoesNotExist:
+            raise Http404
+
+class FindBuildings(APIView):
+    def get(self,request):
+        buildings = NewBuilding.objects.all()
+        name_contains_query = request.GET.get('name_contains')
+        address_contains_query = request.GET.get('address_contains')
+        district_contains_query = request.GET.get('district_contains-select')
+        developer_contains_query = request.GET.get('developer_contains-select')
+
+        if name_contains_query != '' and name_contains_query is not None:
+            buildings = buildings.filter(name__icontains=name_contains_query)
+        else:
+            name_contains_query = ''
+        if address_contains_query != '' and address_contains_query is not None:
+            buildings &= buildings.filter(address__icontains=address_contains_query)
+        else:
+            address_contains_query = ''
+        if district_contains_query != '' and district_contains_query is not None and district_contains_query != choices.NOT_COMPLETED:
+            buildings &= buildings.filter(
+                district__icontains=district_contains_query)
+        else:
+            district_contains_query = ''
+        if developer_contains_query != '' and developer_contains_query is not None:
+            buildings &= buildings.filter(developer__icontains=developer_contains_query)
+        else:
+            developer_contains_query = ''
+
+        serializer = NewBuildingSerializerForSearch(buildings,many=True)
+
+        return Response({'buildings':serializer.data})
 
 class AddressChecker(APIView):
     def get(self,request):
