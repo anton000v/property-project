@@ -122,6 +122,7 @@ class NewBuildingModelAdmin(admin.ModelAdmin):
         css = {
              'all': ('admin/css/PropertyProject_api/admin.css',
                     "https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css",
+                    "admin/css/PropertyProject_api/SearchableChoice.css",
              )
         }
 

@@ -319,7 +319,7 @@ div[class^='widget_type'] .form-group, div[class*=' widget_type'] .form-group {
   margin-left: 0 !important;
 }
 
-/* autocomplete select2 */
+/* autocomplete select2
 .related-widget-wrapper .select2-container--admin-autocomplete.select2-container {
   width: 100% !important;
 }
@@ -334,6 +334,7 @@ div[class^='widget_type'] .form-group, div[class*=' widget_type'] .form-group {
 .has-error .select2-container--admin-autocomplete .select2-selection--single {
   border-color: #843534;
 }
+*/
 
 /* EDIT INLINE */
 
