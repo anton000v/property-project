@@ -16,6 +16,8 @@ $(document).ready(function () {
   function fill_lat_and_lng(lat,lng){
     lat_field = $("#id_lat");
     lng_field = $('#id_lng');
+    clear_message('lat_message');
+    clear_message('lng_message');
     lat_field.val(lat);
     lng_field.val(lng)
     lat_field.after('<span id="lat_message" class="success-message">Заполнено автоматически</span>');
