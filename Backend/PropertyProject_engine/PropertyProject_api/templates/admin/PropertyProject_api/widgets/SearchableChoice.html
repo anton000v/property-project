@@ -24,8 +24,31 @@
       {% endfor %}
   </select> -->
 <!-- </div> -->
+<style>
 
-<select id="id_{{ widget.name }}" required>
+.related-widget-wrapper{
+  width:80%;
+  background-color:black;
+}
+.selectize-input {
+  display: table !important;
+  table-layout: fixed;
+  width: 40%;
+}
+.selectize-input > * {
+  vertical-align: middle;
+}
+.selectize-input .item {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 80%;
+}
+
+</style>
+
+<!-- <div> -->
+<select name="{{ widget.name }}" id="id_{{ widget.name }}" placeholder="{{ widget.title }}" style="line-height: 14px; " >
   {% for group_name, group_choices, group_index in widget.optgroups %}
       {% if group_name %}
           <optgroup label="{{ group_name }}">
@@ -38,9 +61,11 @@
   {% endif %}
   {% endfor %}
 </select>
-
+<!-- </div> -->
 <script>
-  $('#id_{{ widget.name }}').select2({
-    placeholder: "{{ widget.title }}"
-  });
+   $('#id_{{ widget.name }}').selectize({
+       sortField: 'text',
+       inputClass: 'form-control selectize-input',
+       dropdownParent: "body"
+   });
 </script>

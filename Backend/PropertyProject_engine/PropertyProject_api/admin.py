@@ -23,6 +23,8 @@ class BuildingImageTabularInline(admin.TabularInline):
     extra = 1
     verbose_name = "Изображение"
     verbose_name_plural = "Изображения"
+    # fields = ['image_tag']
+    readonly_fields = ['image_tag']
     # def headshot_image(self, obj):
     #     return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
     #         url = obj.headshot.url,
@@ -119,14 +121,14 @@ class NewBuildingModelAdmin(admin.ModelAdmin):
     class Media:
         css = {
              'all': ('admin/css/PropertyProject_api/admin.css',
-             "https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css",
+                    "https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css",
              )
         }
 
         js = (
         # "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js",
-        "https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
-        "https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js",
+        "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"
         # "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
         # "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js",
         )

@@ -4,6 +4,7 @@ from multiselectfield import MultiSelectField
 from django.contrib.auth.models import User
 from django.shortcuts import reverse
 from django.utils.text import slugify
+from django.utils.safestring import mark_safe
 # from django.core.validators import MinValueValidator
 # from decimal import Decimal
 
@@ -90,7 +91,7 @@ class NewBuilding(models.Model):
     square_of_four_room = models.FloatField(verbose_name=u"Площадь 4к.кв.", default=1)
     # ----------------------------------------------------
 
-    number_of_apartments_per_floor = models.PositiveSmallIntegerField(verbose_name=u"Кол-во квартир на этаже", default=1)  #
+    number_of_apartments_per_floor = models.PositiveSmallIntegerField(verbose_name=u"Кол-во квартир на этаже", default=1)
     commercial_premises = models.PositiveSmallIntegerField(verbose_name=u"Коммерческие помещения",
                                                           null=True, default=1)  # пишешь только этаж
     heating = models.CharField(max_length=2, choices=choices.THE_HEATING_CHOICES, default=choices.NOT_COMPLETED,
@@ -132,6 +133,11 @@ class BuildingImage(models.Model):
 
     def __str__(self):
         return '%s - %s' % (self.building, self.building_image)
+
+    def image_tag(self):
+        return mark_safe('<img src="%s" width="150" height="150" />' % (self.building_image.url))
+
+    image_tag.short_description = 'Image'
 
     # def url(self):
     #     # returns a URL for either internal stored or external image url
