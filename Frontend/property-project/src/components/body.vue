@@ -3,13 +3,14 @@
     <TodoList v-bind:todo-list="todos" @delete-todo="deleteTodo"/>
     <br>
     <Testapi/>
+  <Button/>
   </div>
 </template>
 
 <script>
 import TodoList from './TodoList.vue';
 import Testapi from './testapi.vue';
-
+import Button from './button.vue';
 export default{
   props: ['Body'],
   data(){
@@ -19,7 +20,8 @@ export default{
   },
   components: {
     TodoList,
-    Testapi
+    Testapi,
+    Button
   },
   methods: {
     deleteTodo(index){
