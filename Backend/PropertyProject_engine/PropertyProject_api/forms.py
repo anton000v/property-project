@@ -4,7 +4,13 @@ from .widgets import SearchableChoiceWidget, MultipleChoiceWidget
 from .utils import generate_slug
 from . import choices
 from django.core.exceptions import ValidationError
-# from django.utils.safestring import mark_safe
+from datetime import datetime
+
+# import the logging library
+import logging
+
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 
 
 class NewBuildingForm(forms.ModelForm):
@@ -47,6 +53,7 @@ class NewBuildingForm(forms.ModelForm):
                     # raise ValidationError(mark_safe(('''Такой новострой уже существует.'''
                     # <a href="{0}">Открыть</a>''').format(building.get_absolute_url())?
                     # ))
+                    logger.error('[{}]Попытка создания новостроя {}. Такой новострой существует!'.format(datetime.now().strftime("%d/%m/%Y %H:%M"),new_slug))
                     raise ValidationError('Такой новострой уже существует.')
                 except NewBuilding.DoesNotExist:
                     cleaned_data['slug'] = new_slug
