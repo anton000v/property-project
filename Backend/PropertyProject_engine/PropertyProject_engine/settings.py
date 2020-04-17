@@ -147,8 +147,27 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'PropertyProject_api/static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'PropertyProject_api/media')
 
-# STATIC_URL = '/static/'
-
-# TEMPLATE_DIRS = (
-#     os.path.join(os.path.dirname(__file__), 'PropertyProject_api/templates'),
-# )
+#----------- LOGGING:
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename':  os.path.join(BASE_DIR,'logs/main.log'),
+        },
+    },
+    'loggers': {
+        'PropertyProject_api': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'django': {
+            'handlers': ['file'],
+            'propagate': True,
+            'level': 'INFO',
+        },
+    },
+}
