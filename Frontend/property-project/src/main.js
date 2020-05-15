@@ -3,6 +3,8 @@ import App from './App.vue'
 // import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 // import '@/assets/css/main.css'
 import './assets/css/main.css'
+import 'vue-search-select/dist/VueSearchSelect.css'
+import VueKinesis from 'vue-kinesis'
 // import 'bootstrap/dist/css/bootstrap.css'
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -14,7 +16,7 @@ import './assets/css/main.css'
 // Vue.use(IconsPlugin)
 
 Vue.config.productionTip = false
-
+Vue.use(VueKinesis)
 // console.log(App);
 new Vue({
   // router,

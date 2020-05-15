@@ -1,6 +1,7 @@
 <template>
 
 <div>
+  <!-- {{ info }} -->
   <h2>Micro districts choices </h2>
   <p>{{ microDistrictsChoices }} </p>
   <h2>buildings</h2>
@@ -12,11 +13,12 @@
 // import axios from 'axios'
 
 export default{
-  props: ['Testapi'],
+  // props: ['Testapi'],
   data() {
     return {
       microDistrictsChoices: null,
       allBuildingsList: null,
+      info: null,
     };
   },
   mounted() {
@@ -27,7 +29,11 @@ export default{
       });
       axios.get('http://127.0.0.1:8000/api/find-buildings/').then(resp => {
           this.allBuildingsList = resp.data;
-      })
+          // console.log(this.allBuildingsList);
+      });
+      // axios
+      // .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+      // .then(response => (this.info = response));
 
     // axios
     //   .get('http://127.0.0.1:8000/api/get-micro-districts/')

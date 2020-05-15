@@ -9,8 +9,8 @@ rus_alphabet = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮ
 def generate_slug(address):
     return slugify(address)
 
-def fill_districts_todb():
-    districts = [
+def fill_administrative_districts_todb():
+    administrative_districts = [
     [['Шевченковский', 'Шевченківський'],[]],
     [['Киевский', 'Київський'],[]],
     [['Слободской', 'Слобідський'],['Коминтерновский','Комінтернівський']],
@@ -21,15 +21,15 @@ def fill_districts_todb():
     [['Индустриальный', 'Індустріальний'],[]],
     [['Немышлянский', 'Немишлянський'],['Фрунзенский','Фрунзенський']],
     ]
-    for dist in districts:
-        record = models.District()
+    for dist in administrative_districts:
+        record = models.AdministrativeDistrict()
         if(dist[1]):
-            record.old_dist_ru = dist[1][0]
-            record.old_dist_urk = dist[1][1]
-        record.dist_ru = dist[0][0]
-        record.dist_ukr = dist[0][1]
+            record.administrative_old_dist_ru = dist[1][0]
+            record.administrative_old_dist_urk = dist[1][1]
+        record.administrative_dist_ru = dist[0][0]
+        record.administrative_dist_ukr = dist[0][1]
         record.save()
-    print("Districts are filled!")
+    print("Administrative districts are filled!")
 
 def parse_streets(path):
     streets = []

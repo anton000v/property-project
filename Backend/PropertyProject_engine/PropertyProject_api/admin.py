@@ -11,7 +11,7 @@ admin.site.site_title = 'Новострои'
 
 class DistrictsModelAdmin(admin.ModelAdmin):
     class Meta:
-        model = models.District
+        model = models.AdministrativeDistrict
 
 class StreetsModelAdmin(admin.ModelAdmin):
     class Meta:
@@ -135,6 +135,6 @@ class NewBuildingModelAdmin(admin.ModelAdmin):
         )
 
 admin.site.register(models.NewBuilding, NewBuildingModelAdmin)
-admin.site.register(models.District, DistrictsModelAdmin)
+admin.site.register(models.AdministrativeDistrict, DistrictsModelAdmin)
 admin.site.register(models.Street, StreetsModelAdmin)
 # admin.site.register(models.Test,TestAdmin)
