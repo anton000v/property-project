@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-sm transition duration-500 ease-in-out hover:opacity-40 transform hover:-translate-y-1 hover:scale-110 hover:shadow-2xl rounded-circle overflow-hidden shadow-lg">
+    <div class="max-w-sm transition rounded-lg duration-500 ease-in-out hover:rounded-none hover:opacity-40 transform hover:-translate-y-1 hover:scale-110 hover:shadow-2xl overflow-hidden shadow-lg">
       <img v-if="building.building_images[0]" :src="getSrc(building.building_images[0].building_image)" alt="">
       <p v-else>Нету изображения :р</p>
       <div class="flex items-center px-6 py-3 bg-gray-900">

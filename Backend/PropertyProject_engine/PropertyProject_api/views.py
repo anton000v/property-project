@@ -52,7 +52,7 @@ class FindBuildings(APIView):
         districts_query_list = request.GET.getlist('district', '')
         streets_query_list = request.GET.getlist('street', '')
         administrative_districts_query_list = request.GET.getlist('administrative_district', '')
-        
+        house_number = request.GET.getlist('house_number', '')
 
         print(streets_query_list)
         

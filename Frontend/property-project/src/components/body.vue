@@ -30,19 +30,21 @@
                         />
                       </div>
                     </div>
-                    <!-- <div class="w-full md:w-1/2 md:flex md:items-center px-3 mb-6 md:mb-0">
+                    <div class="w-full md:w-1/2 md:flex md:items-center px-3 mb-6 md:mb-0">
                       <div class="w-full md:w-full md:flex md:items-center px-3 mb-6 md:mb-0">
                         <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="inline-full-name">
-                          Дом
+                         Номера домов
                         </label>
                         <div class="w-full">
                          
                         <MultipleTaggingSelect
-   
+                          :searchKey="houseNumberSearchKey"
+                          tagPlaceHolder="enter чтобы добавить к поиску"
+                          placeholder="Номера домов"
                         />
                         </div>
                       </div>
-                    </div> -->
+                    </div>
                   </div>
                   <div class="flex flex-wrap -mx-3 mb-6">
                   <div class="w-full md:w-full md:flex md:items-center px-3 mb-6 md:mb-0">
@@ -176,13 +178,13 @@
 // import Testapi from './testapi.vue';
 // import Button from './button.vue';
 import MultipleSelect from './multipleSelect';
-// import MultipleTaggingSelect from './multipleTaggingSelect';
+import MultipleTaggingSelect from './multipleTaggingSelect';
 import PropertyCard from './PropertyCard.vue';
 import { baseApiAddress } from '../variables.js';
 // import Property from './PropertyCard.vue';
 
 export default{
-  props: ['Body'],
+  // props: ['Body'],
   data(){
     return {
       // district:'',
@@ -206,6 +208,8 @@ export default{
       administrativeDistrictsChoiceText:'administrative_dist_ru',
       administrativeDistrictsSearchKey:'id',
 
+      houseNumberSearchKey: 'house_number',
+
       isSaltovkaChoices:false,
       isSevernayaSaltovkaChoices:false,
 
@@ -225,7 +229,7 @@ export default{
     // Button,
     MultipleSelect,
     PropertyCard,
-    // MultipleTaggingSelect,
+    MultipleTaggingSelect,
   },
   mounted() {
     const axios = require('axios');
