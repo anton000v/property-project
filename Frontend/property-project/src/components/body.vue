@@ -15,13 +15,83 @@
                     <i class="fas fa-retweet"></i>
                   </div>
                   <div class="flex flex-wrap -mx-3 mb-6">
-                    <div class="w-full md:w-1/2 md:flex md:items-center px-3 mb-6 md:mb-0">
-                      <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="inline-full-name">
-                        Улицы
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                      <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                        Выберите административные районы
                       </label>
                       <div name="field" class="w-full">
                         <MultipleSelect 
-                        @update = "updateBuildings" 
+                        @selectClose = "updateBuildings" 
+                        :searchKey="administrativeDistrictsSearchKey"
+                        :fieldChoiceText="administrativeDistrictsChoiceText" 
+                        :dictKey="administrativeDistrictsDictKey" 
+                        :apiAddress="getAdministrativeDistrictsApiAddress" 
+                        placeholder="Административные районы" 
+                        />
+                      </div>
+                    </div>
+                    <div class="w-full md:w-1/2 px-3">
+                      <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="inline-full-name">
+                        Выберите районы
+                      </label>
+                      <div class="w-full">
+                        <div name="field" class="w-full">
+                          <MultipleSelect 
+                          @selectClose = "updateBuildings" 
+                          @select = "checkToShowMicroDistricts"
+                          @remove = "checkToHideMicroDistricts"
+                          :searchKey="districtsSearchKey"
+                          :extraInformationField="districtExtraInformation"
+                          :fieldChoiceText="districtChoiceText" 
+                          :dictKey="districtDictKey" 
+                          :apiAddress="getDistrictsApiAddress" 
+                          :trackEveryUpdate="true"
+                          placeholder="Районы" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                   <div class="flex flex-wrap -mx-3 mb-6" v-if="isSaltovkaDistrictChoosen || isSevernayaSaltovkaDistrictChoosen">
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0" v-if="isSaltovkaDistrictChoosen">
+                      <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                        Выберите микрорайоны Салтовки
+                      </label>
+                      <div name="field" class="w-full">
+                        <MultipleSelect 
+                        @selectClose = "updateBuildings" 
+                        :searchKey="microDistrictsSearchKey"
+                        :fieldChoiceText="microDistrictsChoiceText" 
+                        :dictKey="saltovkaMicroDistrictsDictKey" 
+                        :apiAddress="getSaltovkaMicroDistrictsApiAddress" 
+                        placeholder="Микрорайоны Салтовки" 
+                        />
+                      </div>
+                    </div>
+                    <div class="w-full md:w-1/2 px-3" v-if="isSevernayaSaltovkaDistrictChoosen">
+                      <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                        Выберите микрорайоны Северной Салтовки
+                      </label>
+                      <div class="w-full">    
+                        <MultipleSelect 
+                          @selectClose = "updateBuildings" 
+                          :searchKey="microDistrictsSearchKey"
+                          :fieldChoiceText="microDistrictsChoiceText" 
+                          :dictKey="severnayaSaltovkaMicroDistrictsDictKey" 
+                          :apiAddress="getSevernayaSaltovkaMicroDistrictsApiAddress" 
+                          placeholder="Микрорайоны Северной Салтовки" 
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                      <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                        Выберите улицы
+                      </label>
+                      <div name="field" class="w-full">
+                        <MultipleSelect 
+                        @selectClose = "updateBuildings" 
                         :searchKey="streetsSearchKey"
                         :fieldChoiceText="streetsChoiceText" 
                         :dictKey="streetsDictKey" 
@@ -30,102 +100,16 @@
                         />
                       </div>
                     </div>
-                    <div class="w-full md:w-1/2 md:flex md:items-center px-3 mb-6 md:mb-0">
-                      <div class="w-full md:w-full md:flex md:items-center px-3 mb-6 md:mb-0">
-                        <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="inline-full-name">
-                         Номера домов
-                        </label>
-                        <div class="w-full">
-                         
+                    <div class="w-full md:w-1/2 px-3">
+                      <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                        Введите номера домов на выбранных улицах
+                      </label>
+                      <div class="w-full">    
                         <MultipleTaggingSelect
+                          @selectClose = "updateBuildings" 
                           :searchKey="houseNumberSearchKey"
                           tagPlaceHolder="enter чтобы добавить к поиску"
                           placeholder="Номера домов"
-                        />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="flex flex-wrap -mx-3 mb-6">
-                  <div class="w-full md:w-full md:flex md:items-center px-3 mb-6 md:mb-0">
-                      <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
-                        Административные районы
-                      </label>
-                        <div name="field" class="w-full">
-                          <MultipleSelect 
-                          @update = "updateBuildings" 
-                          :searchKey="administrativeDistrictsSearchKey"
-                          :fieldChoiceText="administrativeDistrictsChoiceText" 
-                          :dictKey="administrativeDistrictsDictKey" 
-                          :apiAddress="getAdministrativeDistrictsApiAddress" 
-                          placeholder="Административные районы" 
-                          />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="flex flex-wrap -mx-3 mb-6">
-                    <div class="w-full md:w-full md:flex md:items-center px-3 mb-6 md:mb-0">
-                      <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="inline-full-name">
-                        Районы
-                      </label>
-                      <div class="w-full">
-                        <div name="field" class="w-full">
-                          <MultipleSelect 
-                          @update = "updateBuildings" 
-                          :searchKey="districtsSearchKey"
-                          :extraInformationField="districtExtraInformation"
-                          :fieldChoiceText="districtChoiceText" 
-                          :dictKey="districtDictKey" 
-                          :apiAddress="getDistrictsApiAddress" 
-                          placeholder="Районы" 
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <!-- <div class="w-full md:w-1/2 md:flex md:items-center px-3 mb-6 md:mb-0">
-                      <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
-                        Микрорайон
-                      </label>
-                      <div name="field" class="w-full"> 
-                        <MultipleSelect 
-                          :fieldChoiceText="microDistrictChoiceText" 
-                          :dictKey="microDistrictDictKey" 
-                          :apiAddress="getMicroDistrictsApiAddress" 
-                          :nestedKeys="microDistrictNestedKeys"
-                          placeholder="Микрорайоны" 
-                        />
-                      </div>
-                    </div> -->
-                  </div>
-                  <!-- <div class="flex flex-wrap -mx-3 mb-6" v-if="isSaltovkaChoices">
-                    <div class="w-full md:w-1/2 md:flex md:items-center px-3 mb-6 md:mb-0">
-                      <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="inline-full-name">
-                        Микрорайоны Салтовки
-                      </label>
-                      <div class="w-full">
-                        <div name="field" class="w-full">
-                          <MultipleSelect 
-                          v-model = "district" 
-                          :extraInformationField="districtExtraInformation"
-                          :fieldChoiceText="districtChoiceText" 
-                          :dictKey="districtDictKey" 
-                          :apiAddress="getDistrictsApiAddress" 
-                          placedictkholder="Районы" 
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="w-full md:w-1/2 md:flex md:items-center px-3 mb-6 md:mb-0">
-                      <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
-                        Микрорайоны Северной Салтовки
-                      </label>
-                      <div name="field" class="w-full"> 
-                        <MultipleSelect 
-                          :fieldChoiceText="microDistrictChoiceText" 
-                          :dictKey="microDistrictDictKey" 
-                          :apiAddress="getMicroDistrictsApiAddress" 
-                          :nestedKeys="microDistrictNestedKeys"
-                          placeholder="Микрорайоны" 
                         />
                       </div>
                     </div>
@@ -149,7 +133,7 @@
 
                 <!-- <section v-if="errored">
           <p>We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
-        </section>
+        </section>selectedValue
 
         <section v-else>
           <div v-if="loading">Loading...</div>
@@ -178,19 +162,19 @@
 // import Testapi from './testapi.vue';
 // import Button from './button.vue';
 import MultipleSelect from './multipleSelect';
-import MultipleTaggingSelect from './multipleTaggingSelect';
+// import MultipleTaggingSelect from './multipleTaggingSelect';
 import PropertyCard from './PropertyCard.vue';
 import { baseApiAddress } from '../variables.js';
-// import Property from './PropertyCard.vue';
 
 export default{
-  // props: ['Body'],
   data(){
     return {
-      // district:'',
-      // todos: ['Ремонт', 'Something else', 'lalala'],
-      // microDistrictsChoices: null,
       allBuildingsList: null,
+
+      saltovkaDBValue: null,
+      severnayaSaltovkaDBValue: null,
+      saltovkaDBKey:'saltovka_db_value',
+      severnayaSaltovkaDBKey:'severnaya_saltovka_db_value',
 
       getStreetsApiAddress:"get-streets/" ,
       streetsDictKey:'streets',
@@ -210,12 +194,20 @@ export default{
 
       houseNumberSearchKey: 'house_number',
 
-      isSaltovkaChoices:false,
-      isSevernayaSaltovkaChoices:false,
+      isSaltovkaDistrictChoosen: false,
+      isSevernayaSaltovkaDistrictChoosen: false,
+
+      microDistrictsChoiceText: 'text_value',
+      microDistrictsSearchKey: 'db_value',
+      getSaltovkaMicroDistrictsApiAddress: 'get-saltovka-micro-districts/',
+      saltovkaMicroDistrictsDictKey: 'saltovka_micro_districts',
+      getSevernayaSaltovkaMicroDistrictsApiAddress: 'get-severnaya-saltovka-micro-districts/',
+      severnayaSaltovkaMicroDistrictsDictKey: 'severnaya_saltovka_micro_districts',
 
       streets:null,
       districts: null,
       administrativeDistricts:null,
+      houseNumbers:null,
 
       searchBuildingUrl: 'find-buildings/'
       // getMicroDistrictsApiAddress:"get-micro-districts/",
@@ -229,15 +221,19 @@ export default{
     // Button,
     MultipleSelect,
     PropertyCard,
-    MultipleTaggingSelect,
+    // MultipleTaggingSelect,
   },
   mounted() {
     const axios = require('axios');
-      axios.get(baseApiAddress + 'get-micro-districts/').then(resp => {
-          this.microDistrictsChoices = resp.data.micro_district_choices;
-      });
+      // axios.get(baseApiAddress + 'get-micro-districts/').then(resp => {
+      //     this.microDistrictsChoices = resp.data.micro_district_choices;
+      // })
       axios.get(baseApiAddress + 'find-buildings/').then(resp => {
           this.allBuildingsList = resp.data;
+      })
+      axios.get(baseApiAddress + 'get-saltovka-severnaya-saltovka-db-values/').then(resp => {
+          this.saltovkaDBValue = resp.data[this.saltovkaDBKey];
+          this.severnayaSaltovkaDBValue = resp.data[this.severnayaSaltovkaDBKey];
       })
       // axios.get(baseApiAddress + 'find-buildings/').then(resp => {
       //     this.allBuildingsList = resp.data;
@@ -285,15 +281,15 @@ export default{
           case this.administrativeDistrictsDictKey:
             this.administrativeDistricts = value
             break
+
+          case this.houseNumberSearchKey:
+            this.houseNumbers = value
+            break
         }
       },
       updateBuildings(dictk, value){
         this.updateSearchValues(dictk, value)
         const axios = require('axios');
-
-      // axios.get(baseApiAddress + 'find-buildings/').then(resp => {
-      //     this.allBuildingsList = resp.data;
-      // })
         const findParams = {}
         if(this.streets){
           findParams['street'] = this.streets
@@ -304,8 +300,11 @@ export default{
         if(this.administrativeDistricts){
           findParams['administrative_district'] = this.administrativeDistricts
         }
+        if(this.houseNumbers){
+          findParams[this.houseNumberSearchKey] = this.houseNumbers
+        }
         // findParams[1] = 2
-        console.log(findParams)
+        // console.log(findParams)
         const qs = require('qs');
         axios.get(baseApiAddress + this.searchBuildingUrl, {
           params: findParams,
@@ -318,8 +317,58 @@ export default{
           this.allBuildingsList = resp.data;
         })
       },
-
+      // checkToShowSaltovkaMicroDistricts(value){
+      //   if(value.includes('sal')){
+      //     if(!this.isSaltovkaChoosen){
+      //       alert('Салтовка выбрана!')
+      //       this.isSaltovkaChoosen = true
+      //     }
+      //   }
+      //   else{
+      //     if(this.isSaltovkaChoosen){
+      //       alert('Салтовка выключена!')
+      //       this.isSaltovkaChoosen = false
+      //     }
+      //   }
+      // },
+      checkToShowMicroDistricts(selectedValue){
+        if(selectedValue == this.saltovkaDBValue){
+          if(!this.isSaltovkaDistrictChoosen){
+            // alert('Салтовка выбрана!')
+            this.isSaltovkaDistrictChoosen = true
+          }
+        }
+        else if(selectedValue == this.severnayaSaltovkaDBValue){
+          if(!this.isSevernayaSaltovkaDistrictChoosen){
+            // alert('Северная салтовка выбрана!')
+            this.isSevernayaSaltovkaDistrictChoosen = true
+          }
+        }
+        // else{
+        //   if(this.isSaltovkaDistrictChoosen){
+        //     alert('Салтовка выключена!')
+        //     this.isSaltovkaDistrictChoosen = false
+        //   }
+        //   if(this.isSevernayaSaltovkaDistrictChoosen){
+        //     alert('Северная салтовка выключена')
+        //     this.isSevernayaSaltovkaDistrictChoosen = false
+        //   }
+        // }
+    },
+    checkToHideMicroDistricts(removedValue){
+        if(removedValue == this.saltovkaDBValue){
+          if(this.isSaltovkaDistrictChoosen){
+            // alert('Салтовка выключена!')
+            this.isSaltovkaDistrictChoosen = false
+          }
+        }
+        else if(removedValue == this.severnayaSaltovkaDBValue){
+          if(this.isSevernayaSaltovkaDistrictChoosen){
+            // alert('Северная салтовка выключена!')
+            this.isSevernayaSaltovkaDistrictChoosen = false
+          }
+        }
     }
+  }
 }
 </script>
-change

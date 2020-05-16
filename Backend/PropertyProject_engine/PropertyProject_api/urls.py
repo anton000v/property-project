@@ -14,10 +14,13 @@ urlpatterns = [
     path('api/check-address/', views.AddressChecker.as_view()),
     path('api/get-building/', views.GetBuilding.as_view()),
 
-    path('api/get-micro-districts/', views.APIGetMicroDistrictsChoices.as_view()),
+    # path('api/get-micro-districts/', views.APIGetMicroDistrictsChoices.as_view()),
     path('api/get-streets/', views.APIGetStreetsChoices.as_view()),
     path('api/get-districts/', views.APIGetDistrictsChoices.as_view()),
-    path('api/get-administrative-districts/', views.APIGetAdministrativeDistrictsChoices.as_view())
+    path('api/get-administrative-districts/', views.APIGetAdministrativeDistrictsChoices.as_view()),
+    path('api/get-saltovka-micro-districts/', views.APIGetSaltovkaMicroDistrictsChoices.as_view()),
+    path('api/get-severnaya-saltovka-micro-districts/', views.APIGetSevernayaSaltovkaMicroDistrictsChoices.as_view()),
+    path('api/get-saltovka-severnaya-saltovka-db-values/', views.APIGetSaltovkaSevernayaSaltovkaDBValues.as_view()),
     ]
 if settings.DEBUG:
     urlpatterns += staticfiles_urlpatterns() + static(

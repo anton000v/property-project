@@ -52,26 +52,34 @@ class FindBuildings(APIView):
         districts_query_list = request.GET.getlist('district', '')
         streets_query_list = request.GET.getlist('street', '')
         administrative_districts_query_list = request.GET.getlist('administrative_district', '')
-        house_number = request.GET.getlist('house_number', '')
-
-        print(streets_query_list)
+        house_numbers_query_list = request.GET.getlist('house_number', '')
         
-        if districts_query_list or streets_query_list or administrative_districts_query_list:
+        if (
+            districts_query_list or 
+            streets_query_list or 
+            administrative_districts_query_list
+            ):
             if districts_query_list:
                 for district_db_value in districts_query_list:
                     print('District db value for filter: ', district_db_value)
                     found_buildings = found_buildings.union(buildings.filter(district=district_db_value))
 
             if streets_query_list:
-                for street_id in streets_query_list:
-                    print('Street id for filter: ', street_id)
-                    found_buildings = found_buildings.union(buildings.filter(street__id=street_id)) 
+                for street_id in streets_query_list:   
+                    if house_numbers_query_list:
+                        for house_number in house_numbers_query_list:
+                            print('Street id for filter: {} | house number: {}'.format(street_id, house_number))
+                            found_buildings = found_buildings.union(buildings.filter(street__id=street_id,house_number=house_number))
+                    else:
+                        print('Street id for filter: ', street_id)        
+                        found_buildings = found_buildings.union(buildings.filter(street__id=street_id)) 
 
             if administrative_districts_query_list:
                 for administrative_district_id in administrative_districts_query_list:
                     print('Administrative district id for filter: ', administrative_district_id)
                     found_buildings = found_buildings.union(buildings.filter(administrative_district__id=administrative_district_id)) 
-
+            
+           
         else:
             found_buildings = buildings
 
@@ -139,35 +147,61 @@ class APIGetStreetsChoices(APIView):
         return Response({'streets':serializer.data})
 
 
-class APIGetMicroDistrictsChoices(APIView):
+# class APIGetMicroDistrictsChoices(APIView):
+#     def get(self, request):
+#         db_value_field = 'db_value'
+#         text_value_field = 'text_value'
+#         if not len(choices.MICRO_DISTRICT_DOES_NOT_EXIST_CHOICE) == 1:
+#             raise Exception("Micro district default choice has more than 1 element!")
+#         def_choices = {
+#             db_value_field:choices.MICRO_DISTRICT_DOES_NOT_EXIST_CHOICE[0][0],
+#             text_value_field:choices.MICRO_DISTRICT_DOES_NOT_EXIST_CHOICE[0][1],
+#             }
+#         saltovka_micro_district_choices = [
+#              {db_value_field:element[0], text_value_field:element[1]} 
+#              for element in choices.MICRO_DISTRICT_SALTOVKA_CHOICES
+#              if len(element) == 2
+#              ]
+#         severnaya_saltovka_micro_district_choices = [
+#             {db_value_field:element[0], text_value_field:element[1]} 
+#              for element in choices.MICRO_DISTRICT_SEVERNAYA_SALTOVKA_CHOICES
+#              if len(element) == 2
+#         ]
+#         if not def_choices or not saltovka_micro_district_choices or not severnaya_saltovka_micro_district_choices:
+#             raise Exception("Micro district choices are empty")
+#         return Response({
+#             'micro_districts':{
+#             'not_divided':def_choices,
+#             'saltovka_micro_districts':saltovka_micro_district_choices,
+#             'severnaya_saltovka_micro_districts':severnaya_saltovka_micro_district_choices,
+#             }
+#         })
+
+class APIGetSaltovkaMicroDistrictsChoices(APIView):
     def get(self, request):
         db_value_field = 'db_value'
         text_value_field = 'text_value'
-        if not len(choices.MICRO_DISTRICT_DOES_NOT_EXIST_CHOICE) == 1:
-            raise Exception("Micro district default choice has more than 1 element!")
-        def_choices = {
-            db_value_field:choices.MICRO_DISTRICT_DOES_NOT_EXIST_CHOICE[0][0],
-            text_value_field:choices.MICRO_DISTRICT_DOES_NOT_EXIST_CHOICE[0][1],
-            }
         saltovka_micro_district_choices = [
              {db_value_field:element[0], text_value_field:element[1]} 
              for element in choices.MICRO_DISTRICT_SALTOVKA_CHOICES
              if len(element) == 2
-             ]
+             ]  
+        if not saltovka_micro_district_choices:
+            raise Exception("Saltovka micro district choices are empty")
+        return Response({'saltovka_micro_districts':saltovka_micro_district_choices})
+
+class APIGetSevernayaSaltovkaMicroDistrictsChoices(APIView):
+    def get(self, request):
+        db_value_field = 'db_value'
+        text_value_field = 'text_value'
         severnaya_saltovka_micro_district_choices = [
             {db_value_field:element[0], text_value_field:element[1]} 
              for element in choices.MICRO_DISTRICT_SEVERNAYA_SALTOVKA_CHOICES
              if len(element) == 2
         ]
-        if not def_choices or not saltovka_micro_district_choices or not severnaya_saltovka_micro_district_choices:
-            raise Exception("Micro district choices are empty")
-        return Response({
-            'micro_districts':{
-            'not_divided':def_choices,
-            'saltovka_micro_districts':saltovka_micro_district_choices,
-            'severnaya_saltovka_micro_districts':severnaya_saltovka_micro_district_choices,
-            }
-        })
+        if not severnaya_saltovka_micro_district_choices:
+            raise Exception("Saltovka micro district choices are empty")
+        return Response({'severnaya_saltovka_micro_districts':severnaya_saltovka_micro_district_choices})
 
 class APIGetDistrictsChoices(APIView):
     def get(self, request):
@@ -208,4 +242,9 @@ class APIGetAdministrativeDistrictsChoices(APIView):
         # print('Send administrative districts choices')
         # return Response({'administrative_districts':adm_districts})
 
-        
+class APIGetSaltovkaSevernayaSaltovkaDBValues(APIView):
+    def get(self, request):
+        return Response({
+            'saltovka_db_value':choices.SALTOVKA,
+            'severnaya_saltovka_db_value':choices.SEVERNAYA_SALTOVKA,
+        })

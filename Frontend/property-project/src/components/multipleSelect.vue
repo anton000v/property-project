@@ -1,11 +1,11 @@
 <template>
   <div> 
-          
       <!-- <label class="typo__label">Simple select / dropdown</label> -->
         <multiselect 
           v-model="value" 
-          @input="updateValueAction"
-          @close="updateBuildingsAction"
+          @select="SelectValueAction"
+          @close="SelectCloseAction"
+          @remove="removeValueAction"
           :options="options" 
           :multiple="true" 
           :close-on-select="false" 
@@ -73,6 +73,10 @@
         type: String,
         default:'',
       },
+      trackEveryUpdate:{
+        type:Boolean,
+        default:false,
+      },
       // receivedOptions:{
       //   type: Array,
       //   default: () => [],
@@ -137,14 +141,29 @@
           return option[this.fieldChoiceText]
         }
       },
-      updateValueAction () {
-        this.$emit('change', this.value)
+      // updateValueAction () {
+      //   this.$emit('change', this.value)
+      //   // console.log(this.value[this.searchKey])
+      // },
+      SelectValueAction(selectedValue){
+        if(this.trackEveryUpdate){
+          // alert(selectedValue)
+          this.$emit('select', selectedValue[this.searchKey])
+          // const selectedValues = []
+          // this.value.forEach(element => selectedValues.push(element[this.searchKey]));
+          // this.$emit('input', selectedValues)
+        }
       },
-      updateBuildingsAction() {
+      removeValueAction(removedValue){
+        if(this.trackEveryUpdate){
+          // alert(removedValue)
+          this.$emit('remove', removedValue[this.searchKey])
+         }
+      },
+      SelectCloseAction() {
         this.searchValues = []
         this.value.forEach(element => this.searchValues.push(element[this.searchKey]));
-        console.log(this.searchValues)
-        this.$emit('update', this.dictKey , this.searchValues)
+        this.$emit('selectClose', this.dictKey , this.searchValues)
       }
     },
   }

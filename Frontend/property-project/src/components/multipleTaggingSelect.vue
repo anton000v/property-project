@@ -2,7 +2,8 @@
   <div>
     
     <!-- <label class="typo__label">{{ searchKey }}</label> -->
-    <multiselect v-model="value" 
+    <multiselect 
+    v-model="value" 
     :tag-placeholder="tagPlaceHolder" 
     :placeholder="placeholder" 
     :label="searchKey" 
@@ -11,13 +12,12 @@
     :multiple="true" 
     :taggable="true" 
     @tag="addTag"
-    @close="updateBuildingsAction"
     >
     <template v-slot:noOptions>
         начните ввод
     </template>
     </multiselect>
-    <pre class="language-json"><code>{{ value  }}</code></pre>
+    <!-- <pre class="language-json"><code>{{ value  }}</code></pre> -->
 
   </div>
 </template>
@@ -87,12 +87,14 @@ export default {
         // }
         // this.options.push(tag)
         this.value.push(tag)
+        this.updateBuildingsAction()
         },
         updateBuildingsAction() {
-          this.searchValues = []
-          this.value.forEach(element => this.searchValues.push(element[this.searchKey]));
-          console.log(this.searchValues)
-          this.$emit('update', this.dictKey , this.searchValues)
+            this.searchValues = []
+            this.value.forEach(element => this.searchValues.push(element[this.searchKey]));
+            // console.log(this.searchValues)
+            // alert(this.searchValues)
+            this.$emit('update', this.searchKey , this.searchValues)
       }
     }
 }
