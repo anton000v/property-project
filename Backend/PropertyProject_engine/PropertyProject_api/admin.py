@@ -9,6 +9,10 @@ admin.site.index_title = 'Панель администратора'
 admin.site.site_header = 'Новострои Харькова'
 admin.site.site_title = 'Новострои'
 
+class DeveloperAdmin(admin.ModelAdmin):
+    class Meta:
+        model = models.Developer
+
 class DistrictsModelAdmin(admin.ModelAdmin):
     class Meta:
         model = models.AdministrativeDistrict
@@ -137,4 +141,5 @@ class NewBuildingModelAdmin(admin.ModelAdmin):
 admin.site.register(models.NewBuilding, NewBuildingModelAdmin)
 admin.site.register(models.AdministrativeDistrict, DistrictsModelAdmin)
 admin.site.register(models.Street, StreetsModelAdmin)
+admin.site.register(models.Developer, DeveloperAdmin)
 # admin.site.register(models.Test,TestAdmin)

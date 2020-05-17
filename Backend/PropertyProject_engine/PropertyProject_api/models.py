@@ -10,6 +10,16 @@ from django.utils.safestring import mark_safe
 
 import PropertyProject_api.choices as choices
 
+class Developer(models.Model):
+    developer_name = models.CharField(max_length=150, verbose_name= "Застройщик",)
+
+    class Meta:
+        verbose_name = 'Застройщик'
+        verbose_name_plural = 'Застройщики'
+
+    def __str__(self):
+        return self.developer_name
+
 class AdministrativeDistrict(models.Model):
     administrative_dist_ru = models.CharField(max_length=150)
     administrative_dist_ukr = models.CharField(max_length=150)
@@ -67,7 +77,8 @@ class NewBuilding(models.Model):
                                       null=True, blank=True)
 
     location = models.CharField(max_length=200, verbose_name=u"Расположение", default=1)  #
-    developer = models.CharField(max_length=100, verbose_name=u"Застройщик", default=1)  #
+    # developer = models.CharField(max_length=100, verbose_name=u"Застройщик", default=1)  #
+    developer = models.ForeignKey(Developer, on_delete=models.CASCADE, verbose_name = 'Застройщик')
     the_class = models.CharField(max_length=2, choices=choices.THE_CLASS_CHOICES, default=choices.NOT_COMPLETED,
                                 verbose_name=u"Класс")
     number_of_storeys = models.PositiveSmallIntegerField(verbose_name=u"Этажность", default=1)  #

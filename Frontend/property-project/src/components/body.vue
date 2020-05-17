@@ -120,6 +120,36 @@
                       </div>
                     </div>
                   </div>
+                  <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                      <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                        Фильтр по застройщикам
+                      </label>
+                      <div name="field" class="w-full">
+                        <MultipleSelect 
+                        @selectClose = "updateBuildings" 
+                        :searchKey="streetsSearchKey"
+                        :fieldChoiceText="streetsChoiceText" 
+                        :dictKey="streetsDictKey" 
+                        :apiAddress="getStreetsApiAddress" 
+                        placeholder="застройщики" 
+                        />
+                      </div>
+                    </div>
+                    <!-- <div class="w-full md:w-1/2 px-3">
+                      <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                        Введите номера домов на выбранных улицах
+                      </label>
+                      <div class="w-full">    
+                        <MultipleTaggingSelect
+                          @selectClose = "updateBuildings" 
+                          :searchKey="houseNumberSearchKey"
+                          tagPlaceHolder="enter чтобы добавить к поиску"
+                          placeholder="Номера домов"
+                        />
+                      </div>
+                    </div> -->
+                  </div>
                 </div>
                 <button v-on:click="updateBuildings" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                   п о и с к
