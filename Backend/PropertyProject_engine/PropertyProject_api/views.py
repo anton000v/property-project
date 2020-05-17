@@ -44,22 +44,40 @@ class FindBuildings(APIView):
         # print("FIND BUILDINGS!!!!!!!!")
         buildings = NewBuilding.objects.all()
         found_buildings = set()
-        # name_contains_query = request.GET.get('name')
-        # address_contains_query = request.GET.get('address')
-        # district_contains_query = request.GET.get('district')
-        # developer_contains_query = request.GET.get('developer')
-
         districts_query_list = request.GET.getlist('district', '')
         streets_query_list = request.GET.getlist('street', '')
         administrative_districts_query_list = request.GET.getlist('administrative_district', '')
         house_numbers_query_list = request.GET.getlist('house_number', '')
-        
+        saltovka_microdistricts_query_list = request.GET.getlist('saltovka_microdistrict', '')
+        severnaya_saltovka_microdistricts_query_list = request.GET.getlist('severnaya_saltovka_microdistrict', '')
+
         if (
             districts_query_list or 
             streets_query_list or 
             administrative_districts_query_list
             ):
-            if districts_query_list:
+            if districts_query_list:       
+                if saltovka_microdistricts_query_list:
+                    for microdistrict in saltovka_microdistricts_query_list:
+                        try:
+                            found_buildings = found_buildings.union(buildings.filter(
+                                district=districts_query_list.pop(districts_query_list.index(choices.SALTOVKA)),
+                                micro_district=microdistrict)
+                                )
+                        except (IndexError, ValueError) as e:
+                            print(e)
+                            break 
+                if severnaya_saltovka_microdistricts_query_list:
+                    for microdistrict in severnaya_saltovka_microdistricts_query_list:
+                        try:
+                            found_buildings = found_buildings.union(buildings.filter(
+                                district=districts_query_list.pop(districts_query_list.index(choices.SEVERNAYA_SALTOVKA)),
+                                micro_district=microdistrict)
+                                )
+                        except (IndexError, ValueError) as e:
+                            print(e)
+                            break 
+
                 for district_db_value in districts_query_list:
                     print('District db value for filter: ', district_db_value)
                     found_buildings = found_buildings.union(buildings.filter(district=district_db_value))
