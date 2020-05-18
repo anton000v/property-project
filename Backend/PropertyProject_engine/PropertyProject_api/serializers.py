@@ -2,7 +2,7 @@ from rest_framework import serializers,fields
 from . import choices
 from . import fields
 # from .models import NewBuilding, BuildingImage, WayFromMetro
-from .models import Street, AdministrativeDistrict
+from .models import Street, AdministrativeDistrict, Developer
 
 
 class BuildingImageSerializer(serializers.Serializer):
@@ -60,7 +60,8 @@ class NewBuildingSerializer(serializers.Serializer):
                                       # source='get_micro_district_display'
                                       )  # микрорайон
     location = serializers.CharField(max_length=200, default=1)  #
-    developer = serializers.CharField(max_length=100, default=1)  #
+    developer = serializers.SlugRelatedField(slug_field="developer_name",queryset=Developer.objects.all()) 
+    # developer = serializers.CharField(max_length=100, default=1)  #
     theClass = fields.ChoiceFieldCustomDisplay(choices=choices.THE_CLASS_CHOICES, default=choices.NOT_COMPLETED,
                                 # source='get_theClass_display'
                                 )
@@ -129,3 +130,8 @@ class AdministrativeDistrictsSerializer(serializers.Serializer):
     administrative_dist_ukr = serializers.CharField(max_length=150)
     administrative_old_dist_ru = serializers.CharField(max_length=150)
     administrative_old_dist_urk = serializers.CharField(max_length=150)
+
+class DevelopersSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    developer_name = serializers.CharField(max_length=150)
+

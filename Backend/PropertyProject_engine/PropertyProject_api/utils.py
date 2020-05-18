@@ -2,6 +2,7 @@ from . import models
 from local_settings import GOOGLE_PERSONAL_KEY
 # from django.utils.text import slugify
 from pytils.translit import slugify
+from itertools import product
 import requests
 
 rus_alphabet = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'
@@ -52,6 +53,13 @@ def fill_streets_todb():
         record.save()
     print("Streets are filled!")
 
+def cartesian_product_dict(**kwargs):
+    keys = kwargs.keys()
+    vals = kwargs.values()
+    
+    # print(vals)
+    for instance in product(*vals):
+        yield dict(zip(keys, instance))
 
 class House():
     key = GOOGLE_PERSONAL_KEY

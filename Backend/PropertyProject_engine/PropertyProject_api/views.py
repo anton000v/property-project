@@ -1,11 +1,18 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import NewBuilding, AdministrativeDistrict, Street
-from .serializers import NewBuildingSerializer, NewBuildingSerializerForSearch, StreetsSerializer, AdministrativeDistrictsSerializer
+from .models import NewBuilding 
+from .models import AdministrativeDistrict 
+from .models import Street 
+from .models import Developer
+from .serializers import NewBuildingSerializer
+from .serializers import NewBuildingSerializerForSearch 
+from .serializers import StreetsSerializer 
+from .serializers import AdministrativeDistrictsSerializer
+from .serializers import DevelopersSerializer
 from . import choices
 from django.http import JsonResponse, HttpResponse, Http404
 from .utils import House
-from django.http import Http404
+from .utils import cartesian_product_dict
 import json
 
 # class NewBuildingView(APIView):
@@ -29,7 +36,7 @@ class MicroDistrictChoices(APIView):
 
 
 
-class GetBuilding(APIView):
+class APIGetBuilding(APIView):
     def get(self,request):
         slug = request.GET.get('slug')
         try:
@@ -39,10 +46,29 @@ class GetBuilding(APIView):
         except NewBuilding.DoesNotExist:
             raise Http404
 
-class FindBuildings(APIView):
-    def get(self,request):
-        # print("FIND BUILDINGS!!!!!!!!")
-        buildings = NewBuilding.objects.all()
+#Version 3 (wanted using Q)
+# class APIFindBuildings(APIView):
+#     def get(self, request):
+#         print('OK. Get buidings begin')
+#         found_buildings = set()
+#         districts_query_list = request.GET.getlist('district', '')
+#         streets_query_list = request.GET.getlist('street', '')
+#         administrative_districts_query_list = request.GET.getlist('administrative_district', '')
+#         house_numbers_query_list = request.GET.getlist('house_number', '')
+#         saltovka_microdistricts_query_list = request.GET.getlist('saltovka_microdistrict', '')
+#         severnaya_saltovka_microdistricts_query_list = request.GET.getlist('severnaya_saltovka_microdistrict', '')
+#         developers_query_list = request.GET.getlist('developer', '')
+
+ 
+#     def get_buildings_by(self, **kwargs):
+#         for query in cartesian_product_dict(**kwargs):
+#             print('Запрос: ', query)
+#             yield NewBuilding.objects.filter(**query)       
+
+# VERSION 2
+class APIFindBuildings(APIView):
+    def get(self, request):
+        print('OK. Get buidings begin')
         found_buildings = set()
         districts_query_list = request.GET.getlist('district', '')
         streets_query_list = request.GET.getlist('street', '')
@@ -50,59 +76,134 @@ class FindBuildings(APIView):
         house_numbers_query_list = request.GET.getlist('house_number', '')
         saltovka_microdistricts_query_list = request.GET.getlist('saltovka_microdistrict', '')
         severnaya_saltovka_microdistricts_query_list = request.GET.getlist('severnaya_saltovka_microdistrict', '')
+        developers_query_list = request.GET.getlist('developer', '')
 
-        if (
-            districts_query_list or 
-            streets_query_list or 
-            administrative_districts_query_list
-            ):
-            if districts_query_list:       
-                if saltovka_microdistricts_query_list:
-                    for microdistrict in saltovka_microdistricts_query_list:
-                        try:
-                            found_buildings = found_buildings.union(buildings.filter(
-                                district=districts_query_list.pop(districts_query_list.index(choices.SALTOVKA)),
-                                micro_district=microdistrict)
-                                )
-                        except (IndexError, ValueError) as e:
-                            print(e)
-                            break 
-                if severnaya_saltovka_microdistricts_query_list:
-                    for microdistrict in severnaya_saltovka_microdistricts_query_list:
-                        try:
-                            found_buildings = found_buildings.union(buildings.filter(
-                                district=districts_query_list.pop(districts_query_list.index(choices.SEVERNAYA_SALTOVKA)),
-                                micro_district=microdistrict)
-                                )
-                        except (IndexError, ValueError) as e:
-                            print(e)
-                            break 
-
-                for district_db_value in districts_query_list:
-                    print('District db value for filter: ', district_db_value)
-                    found_buildings = found_buildings.union(buildings.filter(district=district_db_value))
-
+        # Searchable block
+        if districts_query_list or streets_query_list or administrative_districts_query_list:
             if streets_query_list:
-                for street_id in streets_query_list:   
-                    if house_numbers_query_list:
-                        for house_number in house_numbers_query_list:
-                            print('Street id for filter: {} | house number: {}'.format(street_id, house_number))
-                            found_buildings = found_buildings.union(buildings.filter(street__id=street_id,house_number=house_number))
-                    else:
-                        print('Street id for filter: ', street_id)        
-                        found_buildings = found_buildings.union(buildings.filter(street__id=street_id)) 
+                if house_numbers_query_list:
+                    print(house_numbers_query_list)
+                    for result in self.get_buildings_by(
+                        street=streets_query_list,
+                        house_number=house_numbers_query_list
+                        ):
+                        found_buildings = found_buildings.union(result)   
+                else:
+                    for result in self.get_buildings_by(street=streets_query_list):
+                        found_buildings = found_buildings.union(result)   
 
+
+            if districts_query_list:
+                if saltovka_microdistricts_query_list:
+                    for result in self.get_buildings_by(
+                        district=choices.SALTOVKA.split(),
+                        micro_district=saltovka_microdistricts_query_list
+                        ):
+                        districts_query_list.remove(choices.SALTOVKA)
+                        found_buildings = found_buildings.union(result) 
+                if severnaya_saltovka_microdistricts_query_list:
+                    for result in self.get_buildings_by(
+                        district=choices.SEVERNAYA_SALTOVKA.split(),
+                        micro_district=severnaya_saltovka_microdistricts_query_list
+                        ):
+                        districts_query_list.remove(choices.SEVERNAYA_SALTOVKA)
+                        found_buildings = found_buildings.union(result) 
+                for result in self.get_buildings_by(district=districts_query_list):
+                    found_buildings = found_buildings.union(result)
+    
             if administrative_districts_query_list:
-                for administrative_district_id in administrative_districts_query_list:
-                    print('Administrative district id for filter: ', administrative_district_id)
-                    found_buildings = found_buildings.union(buildings.filter(administrative_district__id=administrative_district_id)) 
-            
-           
+                for result in self.get_buildings_by(administrative_district=administrative_districts_query_list):
+                    found_buildings = found_buildings.union(result) 
         else:
-            found_buildings = buildings
+            found_buildings = NewBuilding.objects.all()
 
-        serializer = NewBuildingSerializerForSearch(found_buildings,many=True)
-        return Response({'buildings':serializer.data})
+        # Filtering block
+        # if developers_query_list:
+
+        serializer = NewBuildingSerializerForSearch(found_buildings, many = True)
+        return Response({"buildings":serializer.data})
+
+
+    def get_buildings_by(self, **kwargs):
+        for query in cartesian_product_dict(**kwargs):
+            print('Поисковой Запрос: ', query)
+            yield NewBuilding.objects.filter(**query)
+
+    # def filter_buildings_by(self, found_buildings ,field_name, query_list):
+    #     for element in query_list:
+    #         print('Фильтр запрос:({} = {})'.format(field_name, element))
+    #         yield found_buildings.filter(**{field_name:element})
+
+# Version 1
+# class FindBuildings(APIView):
+#     def get(self,request):
+#         print("FIND BUILDINGS!!!!!!!!")
+#         buildings = NewBuilding.objects.all()
+#         found_buildings = set()
+#         districts_query_list = request.GET.getlist('district', '')
+#         streets_query_list = request.GET.getlist('street', '')
+#         administrative_districts_query_list = request.GET.getlist('administrative_district', '')
+#         house_numbers_query_list = request.GET.getlist('house_number', '')
+#         saltovka_microdistricts_query_list = request.GET.getlist('saltovka_microdistrict', '')
+#         severnaya_saltovka_microdistricts_query_list = request.GET.getlist('severnaya_saltovka_microdistrict', '')
+#         # developers_query_list = request.GET.getlist('developer', '')
+
+#         if (
+#             districts_query_list or 
+#             streets_query_list or 
+#             administrative_districts_query_list
+#             # developers_query_list
+#             ):
+#             if districts_query_list:       
+#                 if saltovka_microdistricts_query_list:
+#                     for microdistrict in saltovka_microdistricts_query_list:
+#                         try:
+#                             found_buildings = found_buildings.union(buildings.filter(
+#                                 district=districts_query_list.pop(districts_query_list.index(choices.SALTOVKA)),
+#                                 micro_district=microdistrict)
+#                                 )
+#                         except (IndexError, ValueError) as e:
+#                             print(e)
+#                             break 
+#                 if severnaya_saltovka_microdistricts_query_list:
+#                     for microdistrict in severnaya_saltovka_microdistricts_query_list:
+#                         try:
+#                             found_buildings = found_buildings.union(buildings.filter(
+#                                 district=districts_query_list.pop(districts_query_list.index(choices.SEVERNAYA_SALTOVKA)),
+#                                 micro_district=microdistrict)
+#                                 )
+#                         except (IndexError, ValueError) as e:
+#                             print(e)
+#                             break 
+
+#                 for district_db_value in districts_query_list:
+#                     print('District db value for filter: ', district_db_value)
+#                     found_buildings = found_buildings.union(buildings.filter(district=district_db_value))
+
+#             if streets_query_list:
+#                 for street_id in streets_query_list:   
+#                     if house_numbers_query_list:
+#                         for house_number in house_numbers_query_list:
+#                             print('Street id for filter: {} | house number: {}'.format(street_id, house_number))
+#                             found_buildings = found_buildings.union(buildings.filter(street__id=street_id,house_number=house_number))
+#                     else:
+#                         print('Street id for filter: ', street_id)        
+#                         found_buildings = found_buildings.union(buildings.filter(street__id=street_id)) 
+
+#             if administrative_districts_query_list:
+#                 for administrative_district_id in administrative_districts_query_list:
+#                     print('Administrative district id for filter: ', administrative_district_id)
+#                     found_buildings = found_buildings.union(buildings.filter(administrative_district__id=administrative_district_id)) 
+            
+#             # if developers_query_list:
+#             #     for developer_id in developers_query_list:
+#             #         print('Developers id for filter: ', developer_id)
+#             #         found_buildings = found_buildings.union(buildings.filter(administrative_district__id=administrative_district_id))
+#         else:
+#             found_buildings = buildings
+
+#         serializer = NewBuildingSerializerForSearch(found_buildings,many=True)
+#         return Response({'buildings':serializer.data})
 
 class AddressChecker(APIView):
     def get(self,request):
@@ -266,3 +367,9 @@ class APIGetSaltovkaSevernayaSaltovkaDBValues(APIView):
             'saltovka_db_value':choices.SALTOVKA,
             'severnaya_saltovka_db_value':choices.SEVERNAYA_SALTOVKA,
         })
+
+class APIGetDevelopersChoices(APIView):
+    def get(self, request):
+        all_developers = Developer.objects.all()
+        serializer = DevelopersSerializer(all_developers, many = True)
+        return Response({'developers':serializer.data})

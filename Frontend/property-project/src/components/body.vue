@@ -112,7 +112,8 @@
                       </label>
                       <div class="w-full">    
                         <MultipleTaggingSelect
-                          @selectClose = "updateBuildings" 
+                          @addTag = "updateBuildings" 
+                          @removeTag = "updateBuildings"
                           :searchKey="houseNumberSearchKey"
                           tagPlaceHolder="enter чтобы добавить к поиску"
                           placeholder="Номера домов"
@@ -128,10 +129,10 @@
                       <div name="field" class="w-full">
                         <MultipleSelect 
                         @selectClose = "updateBuildings" 
-                        :searchKey="streetsSearchKey"
-                        :fieldChoiceText="streetsChoiceText" 
-                        :dictKey="streetsDictKey" 
-                        :apiAddress="getStreetsApiAddress" 
+                        :searchKey="developersSearchKey"
+                        :fieldChoiceText="developersChoiceText" 
+                        :dictKey="developersDictKey" 
+                        :apiAddress="getDevelopersApiAddress" 
                         placeholder="застройщики" 
                         />
                       </div>
@@ -241,12 +242,18 @@ export default{
       getSevernayaSaltovkaMicroDistrictsApiAddress: 'get-severnaya-saltovka-micro-districts/',
       severnayaSaltovkaMicroDistrictsDictKey: 'severnaya_saltovka_micro_districts',
 
+      getDevelopersApiAddress: 'get-developers/',
+      developersDictKey: 'developers',
+      developersChoiceText: 'developer_name',
+      developersSearchKey: 'id',
+
       streets:null,
       districts: null,
       administrativeDistricts:null,
       houseNumbers:null,
       saltovkaMicroDistricts:null,
       severnayaSaltovkaMicroDistricts:null,
+      developers:null,
 
       searchBuildingUrl: 'find-buildings/'
       // getMicroDistrictsApiAddress:"get-micro-districts/",
@@ -330,6 +337,10 @@ export default{
             break
           case this.severnayaSaltovkaMicroDistrictsDictKey:
             this.severnayaSaltovkaMicroDistricts = value
+            break
+          case this.developersDictKey:
+            this.developers = value
+            break
         }
       },
       updateBuildings(dictk, value){
@@ -346,13 +357,18 @@ export default{
           findParams['administrative_district'] = this.administrativeDistricts
         }
         if(this.houseNumbers){
+          alert('house_numbers update')
           findParams[this.houseNumberSearchKey] = this.houseNumbers
+          alert(findParams[this.houseNumberSearchKey])
         }
         if(this.saltovkaMicroDistricts){
           findParams['saltovka_microdistrict'] = this.saltovkaMicroDistricts
         }
         if(this.severnayaSaltovkaMicroDistricts){
           findParams['severnaya_saltovka_microdistrict'] = this.severnayaSaltovkaMicroDistricts
+        }
+        if(this.developers){
+          findParams['developer'] = this.developers
         }
         const qs = require('qs');
         axios.get(baseApiAddress + this.searchBuildingUrl, {

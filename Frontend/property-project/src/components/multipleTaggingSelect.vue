@@ -1,6 +1,6 @@
 <template>
   <div>
-    
+    {{ value }}
     <!-- <label class="typo__label">{{ searchKey }}</label> -->
     <multiselect 
     v-model="value" 
@@ -12,6 +12,7 @@
     :multiple="true" 
     :taggable="true" 
     @tag="addTag"
+    @remove="removeTagAction"
     >
     <template v-slot:noOptions>
         начните ввод
@@ -74,28 +75,46 @@ export default {
     data () {
         return {
         value: [],
-        options: []
+        options: [],
+        regularExpr: /\d+[а-я]?/g,
         }
     },
     methods: {
         addTag (newTag) {
-        const tag = {}
-        tag[this.searchKey] = newTag
-            // label: newTag
-            // name: newTag,
-            // code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
+        const matches = newTag.match(this.regularExpr)
+        // console.log(matches)
+        matches.forEach((tagVal) => {
+            console.log(this.value.some((elem) => elem[this.searchKey] == tagVal))
+            if(!(this.value.some((elem) => elem[this.searchKey] == tagVal))){
+                const tag = {}
+                tag[this.searchKey] = tagVal
+                this.value.push(tag)
+            }
+            })
+
+        // for(tag in matches){
+        //     const tag = {}
+        //     tag[this.searchKey] = newTag
+        //     this.value.push(tag)
         // }
-        // this.options.push(tag)
-        this.value.push(tag)
-        this.updateBuildingsAction()
+        // const tag = {}
+        // tag[this.searchKey] = newTag
+        // this.value.push(tag)
+        this.addTagAction()
         },
-        updateBuildingsAction() {
+
+        addTagAction() {
             this.searchValues = []
             this.value.forEach(element => this.searchValues.push(element[this.searchKey]));
-            // console.log(this.searchValues)
-            // alert(this.searchValues)
-            this.$emit('update', this.searchKey , this.searchValues)
-      }
+            this.$emit('addTag', this.searchKey , this.searchValues)
+       },
+        removeTagAction(){
+            this.searchValues = []
+            this.value.forEach(element => this.searchValues.push(element[this.searchKey]));
+            // alert(this.searchValues[tag])
+            this.$emit('removeTag', this.searchKey , this.searchValues)
+        }
+    //   removeTag(tag)
     }
 }
 </script>

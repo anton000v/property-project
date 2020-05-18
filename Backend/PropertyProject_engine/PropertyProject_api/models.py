@@ -11,7 +11,7 @@ from django.utils.safestring import mark_safe
 import PropertyProject_api.choices as choices
 
 class Developer(models.Model):
-    developer_name = models.CharField(max_length=150, verbose_name= "Застройщик",)
+    developer_name = models.CharField(max_length=150, verbose_name= "Название застройщика", unique=True)
 
     class Meta:
         verbose_name = 'Застройщик'
