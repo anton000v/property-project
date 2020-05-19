@@ -27,28 +27,28 @@ THE_CLASS_CHOICES = (
 
 # -------------selection items for field 'administrativeDistrict'
 
-MOSCOVSKII = 'mo'
-KIEVSKII = 'ki'
-SHEVCHENCOVSKII = 'sh'
-SLOBODSKOI = 'sl'
-OSNOVYANSKII = 'os'
-NEMISHLYANSKII = 'ne'
-HOLODNOGORSKII = 'ho'
-NOVOBAVARSKII = 'no'
-INDUSTRIALNII = 'in'
+# MOSCOVSKII = 'mo'
+# KIEVSKII = 'ki'
+# SHEVCHENCOVSKII = 'sh'
+# SLOBODSKOI = 'sl'
+# OSNOVYANSKII = 'os'
+# NEMISHLYANSKII = 'ne'
+# HOLODNOGORSKII = 'ho'
+# NOVOBAVARSKII = 'no'
+# INDUSTRIALNII = 'in'
 
-THE_ADMINISTRATIVE_DISTRICT_CHOICES = (
-    (NOT_COMPLETED, DEFAULT),
-    (MOSCOVSKII, 'Московский'),
-    (KIEVSKII, 'Киевский'),
-    (SHEVCHENCOVSKII, 'Шевченковский'),
-    (SLOBODSKOI, 'Слободской'),
-    (OSNOVYANSKII, 'Основянский'),
-    (NEMISHLYANSKII, 'Немышлянский'),
-    (HOLODNOGORSKII, 'Холодногорский'),
-    (NOVOBAVARSKII, 'Новобоварский'),
-    (INDUSTRIALNII, 'Индустриальный')
-)
+# THE_ADMINISTRATIVE_DISTRICT_CHOICES = (
+#     (NOT_COMPLETED, DEFAULT),
+#     (MOSCOVSKII, 'Московский'),
+#     (KIEVSKII, 'Киевский'),
+#     (SHEVCHENCOVSKII, 'Шевченковский'),
+#     (SLOBODSKOI, 'Слободской'),
+#     (OSNOVYANSKII, 'Основянский'),
+#     (NEMISHLYANSKII, 'Немышлянский'),
+#     (HOLODNOGORSKII, 'Холодногорский'),
+#     (NOVOBAVARSKII, 'Новобоварский'),
+#     (INDUSTRIALNII, 'Индустриальный')
+# )
 
 # -------------Selection items for field 'heating':
 CENTRAL = 'ce'

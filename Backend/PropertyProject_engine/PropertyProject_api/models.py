@@ -10,18 +10,31 @@ from django.utils.safestring import mark_safe
 
 import PropertyProject_api.choices as choices
 
-class District(models.Model):
-    dist_ru = models.CharField(max_length=150)
-    dist_ukr = models.CharField(max_length=150)
-    old_dist_ru = models.CharField(max_length=150, null=True,blank=True)
-    old_dist_urk = models.CharField(max_length=150, null=True,blank=True)
-
-    def __str__(self):
-        return "{} - {}".format(self.dist_ru,self.dist_ukr)
+class Developer(models.Model):
+    developer_name = models.CharField(max_length=150, verbose_name= "Название застройщика", unique=True)
 
     class Meta:
-        verbose_name = 'Район'
-        verbose_name_plural = 'Районы'
+        verbose_name = 'Застройщик'
+        verbose_name_plural = 'Застройщики'
+
+    def __str__(self):
+        return self.developer_name
+
+class AdministrativeDistrict(models.Model):
+    administrative_dist_ru = models.CharField(max_length=150)
+    administrative_dist_ukr = models.CharField(max_length=150)
+    administrative_old_dist_ru = models.CharField(max_length=150, null=True,blank=True)
+    administrative_old_dist_urk = models.CharField(max_length=150, null=True,blank=True)
+
+    def __str__(self):
+        if self.administrative_old_dist_urk:
+            return "{} - бывший {}".format(self.administrative_dist_ru, self.administrative_old_dist_ru)
+        else:
+            return "{}".format(self.administrative_dist_ru)
+
+    class Meta:
+        verbose_name = 'Административный район'
+        verbose_name_plural = 'Административные районы'
 
 class Street(models.Model):
     street_ru = models.CharField(max_length=150, verbose_name="Улица на русском")
@@ -48,7 +61,7 @@ class NewBuilding(models.Model):
                                     null=True, blank=True,
                                     )
 
-    administrative_district = models.ForeignKey(District,on_delete=models.CASCADE, verbose_name="Административный район")
+    administrative_district = models.ForeignKey(AdministrativeDistrict,on_delete=models.CASCADE, verbose_name="Административный район")
     # administrativeDistrict = models.CharField(max_length=2, choices=choices.THE_ADMINISTRATIVE_DISTRICT_CHOICES,
     #                                           default=choices.NOT_COMPLETED,
     #                                           verbose_name=u"Административный район")  #
@@ -64,7 +77,8 @@ class NewBuilding(models.Model):
                                       null=True, blank=True)
 
     location = models.CharField(max_length=200, verbose_name=u"Расположение", default=1)  #
-    developer = models.CharField(max_length=100, verbose_name=u"Застройщик", default=1)  #
+    # developer = models.CharField(max_length=100, verbose_name=u"Застройщик", default=1)  #
+    developer = models.ForeignKey(Developer, on_delete=models.CASCADE, verbose_name = 'Застройщик')
     the_class = models.CharField(max_length=2, choices=choices.THE_CLASS_CHOICES, default=choices.NOT_COMPLETED,
                                 verbose_name=u"Класс")
     number_of_storeys = models.PositiveSmallIntegerField(verbose_name=u"Этажность", default=1)  #

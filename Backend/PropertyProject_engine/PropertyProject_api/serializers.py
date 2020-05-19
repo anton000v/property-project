@@ -2,7 +2,7 @@ from rest_framework import serializers,fields
 from . import choices
 from . import fields
 # from .models import NewBuilding, BuildingImage, WayFromMetro
-from .models import Street
+from .models import Street, AdministrativeDistrict, Developer
 
 
 class BuildingImageSerializer(serializers.Serializer):
@@ -29,6 +29,7 @@ class WayFromMetroSerializer(serializers.Serializer):
 class NewBuildingSerializerForSearch(serializers.Serializer):
     name = serializers.CharField(max_length=200)
     street = serializers.SlugRelatedField(slug_field="street_ru",queryset=Street.objects.all())
+    administrative_district = serializers.SlugRelatedField(slug_field="administrative_dist_ru",queryset=AdministrativeDistrict.objects.all())
     house_number = serializers.CharField(max_length=10)
     house_letter = serializers.CharField(max_length=1)
     district = fields.ChoiceFieldCustomDisplay(choices=choices.DISTRICT_CHOICES,
@@ -49,10 +50,7 @@ class NewBuildingSerializer(serializers.Serializer):
     street = serializers.SlugRelatedField(slug_field="street_ru",queryset=Street.objects.all())
     house_number = serializers.CharField(max_length=10)
     house_letter = serializers.CharField(max_length=1)
-    administrativeDistrict = fields.ChoiceFieldCustomDisplay(choices=choices.THE_ADMINISTRATIVE_DISTRICT_CHOICES,
-                                              default=choices.NOT_COMPLETED,
-                                              # source='get_administrativeDistrict_display',
-                                              )  #
+    administrativeDistrict = serializers.SlugRelatedField(slug_field="administrative_dist_ru",queryset=AdministrativeDistrict.objects.all()) # ВОЗМОЖНЫ ОШИБКИ СЕРИАЛИЗАЦИИ из-за разницы в именах модели и админ района сериализатора!!!!!!!!!!
     district = fields.ChoiceFieldCustomDisplay(choices=choices.DISTRICT_CHOICES,
                                 default=choices.NOT_COMPLETED,
                                 # source='get_district_display'
@@ -62,7 +60,8 @@ class NewBuildingSerializer(serializers.Serializer):
                                       # source='get_micro_district_display'
                                       )  # микрорайон
     location = serializers.CharField(max_length=200, default=1)  #
-    developer = serializers.CharField(max_length=100, default=1)  #
+    developer = serializers.SlugRelatedField(slug_field="developer_name",queryset=Developer.objects.all()) 
+    # developer = serializers.CharField(max_length=100, default=1)  #
     theClass = fields.ChoiceFieldCustomDisplay(choices=choices.THE_CLASS_CHOICES, default=choices.NOT_COMPLETED,
                                 # source='get_theClass_display'
                                 )
@@ -119,3 +118,20 @@ class NewBuildingSerializer(serializers.Serializer):
     # def create(self, validated_data):
     #     print("VALIDATED DATA:  ",validated_data)
     #     return NewBuilding.objects.create(**validated_data)
+
+class StreetsSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    street_ru = serializers.CharField(max_length=200)
+    street_uk = serializers.CharField(max_length=200)
+
+class AdministrativeDistrictsSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    administrative_dist_ru = serializers.CharField(max_length=150)
+    administrative_dist_ukr = serializers.CharField(max_length=150)
+    administrative_old_dist_ru = serializers.CharField(max_length=150)
+    administrative_old_dist_urk = serializers.CharField(max_length=150)
+
+class DevelopersSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    developer_name = serializers.CharField(max_length=150)
+

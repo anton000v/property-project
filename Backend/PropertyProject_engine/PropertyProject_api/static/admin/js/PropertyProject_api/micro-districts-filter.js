@@ -8,11 +8,12 @@ $(document).ready(function () {
       $.ajax({
         type: 'GET',
         async: false,
-        url: '/api/get-micro-districts/',
+        url: '/get-micro-districts/',
         success: function(data) {
             // micro_district_choices = JSON.parse(data['micro_district_choices']);
             micro_district_choices = data['micro_district_choices'];
             db_values = data['db_values']
+            console.log(data);
         },
         error: function(data, status) {
         console.log(`Error: ${data.responseJSON}`)

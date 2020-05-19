@@ -21,6 +21,7 @@ class NewBuildingForm(forms.ModelForm):
         widgets = {
             'district': SearchableChoiceWidget(widget_title="Выберите район"),
             'street' : SearchableChoiceWidget(widget_title='Выберите улицу'),
+            'developer' : SearchableChoiceWidget(widget_title='Выберите застройщика'),
             'parking' : MultipleChoiceWidget(
             not_comleted_choice=(choices.NOT_COMPLETED)
             ),
