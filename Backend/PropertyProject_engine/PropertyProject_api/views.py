@@ -78,7 +78,8 @@ class APIFindBuildings(APIView):
         severnaya_saltovka_microdistricts_query_list = request.GET.getlist('severnaya_saltovka_microdistrict', '')
         developers_query_list = request.GET.getlist('developer', '')
 
-        # Searchable block
+
+        #---------- Searchable block
         if districts_query_list or streets_query_list or administrative_districts_query_list:
             if streets_query_list:
                 if house_numbers_query_list:
@@ -117,8 +118,13 @@ class APIFindBuildings(APIView):
         else:
             found_buildings = NewBuilding.objects.all()
 
-        # Filtering block
+        #------- Filtering block
         # if developers_query_list:
+        #     temp_found_buildings = set()
+        #     for result in self.filter_buildings_by(found_buildings, developer=developers_query_list):
+        #         temp_found_buildings = found_buildings.intersection(result)
+
+        #     found_buildings = temp_found_buildings
 
         serializer = NewBuildingSerializerForSearch(found_buildings, many = True)
         return Response({"buildings":serializer.data})
@@ -129,10 +135,10 @@ class APIFindBuildings(APIView):
             print('Поисковой Запрос: ', query)
             yield NewBuilding.objects.filter(**query)
 
-    # def filter_buildings_by(self, found_buildings ,field_name, query_list):
-    #     for element in query_list:
-    #         print('Фильтр запрос:({} = {})'.format(field_name, element))
-    #         yield found_buildings.filter(**{field_name:element})
+    def filter_buildings_by(self, found_buildings , **kwargs):
+       for query in cartesian_product_dict(**kwargs):
+            print('Фильтр запрос: ', query)
+            yield found_buildings.filter(**query)
 
 # Version 1
 # class FindBuildings(APIView):

@@ -1,6 +1,7 @@
 <template>
   <div>
-    {{ value }}
+    <!-- <p>{{ value }}</p>
+    <p>{{ searchValues }}</p> -->
     <!-- <label class="typo__label">{{ searchKey }}</label> -->
     <multiselect 
     v-model="value" 
@@ -12,7 +13,7 @@
     :multiple="true" 
     :taggable="true" 
     @tag="addTag"
-    @remove="removeTagAction"
+    @remove="deleteTagAction"
     >
     <template v-slot:noOptions>
         начните ввод
@@ -74,24 +75,28 @@ export default {
 
     data () {
         return {
-        value: [],
-        options: [],
-        regularExpr: /\d+[а-я]?/g,
+            value: [],
+            options: [],
+            searchValues: [],
+            regularExpr: /\d+[а-я]?/g,
         }
     },
     methods: {
         addTag (newTag) {
-        const matches = newTag.match(this.regularExpr)
-        // console.log(matches)
-        matches.forEach((tagVal) => {
-            console.log(this.value.some((elem) => elem[this.searchKey] == tagVal))
-            if(!(this.value.some((elem) => elem[this.searchKey] == tagVal))){
-                const tag = {}
-                tag[this.searchKey] = tagVal
-                this.value.push(tag)
-            }
-            })
-
+            let vm = this;
+            const matches = newTag.match(vm.regularExpr) 
+            matches.forEach((tagVal) => {
+                // console.log(vm.value.some((elem) => elem[vm.searchKey] == tagVal))
+                if(!(vm.value.some((elem) => elem[vm.searchKey] == tagVal))){
+                    const tag = {}
+                    tag[vm.searchKey] = tagVal
+                    // alert(tag)
+                    vm.value.push(tag)
+                    vm.searchValues.push(tagVal);
+                }
+                })
+            vm.changeTagAction()
+        // this.value.forEach(element => this.searchValues.push(element[this.searchKey]));
         // for(tag in matches){
         //     const tag = {}
         //     tag[this.searchKey] = newTag
@@ -100,20 +105,31 @@ export default {
         // const tag = {}
         // tag[this.searchKey] = newTag
         // this.value.push(tag)
-        this.addTagAction()
+        // this.changeTagAction()
         },
 
-        addTagAction() {
-            this.searchValues = []
-            this.value.forEach(element => this.searchValues.push(element[this.searchKey]));
-            this.$emit('addTag', this.searchKey , this.searchValues)
+        deleteTagAction(deletedTag){
+            let index = this.searchValues.indexOf(deletedTag[this.searchKey]);
+            // console.log(deletedTag)
+            // console.log(this.searchValues)
+            // alert(index)
+            if (index > -1) {
+                this.searchValues.splice(index, 1);
+            }
+        // this.value.forEach(element => this.searchValues.push(element[this.searchKey]));
+            this.changeTagAction()
+        },
+
+        changeTagAction() {
+            // this.value.forEach(element => this.searchValues.push(element[this.searchKey]));
+            this.$emit('tagsChange', this.searchKey , this.searchValues)
        },
-        removeTagAction(){
-            this.searchValues = []
-            this.value.forEach(element => this.searchValues.push(element[this.searchKey]));
-            // alert(this.searchValues[tag])
-            this.$emit('removeTag', this.searchKey , this.searchValues)
-        }
+        // removeTagAction(){
+        //     this.searchValues = []
+        //     this.value.forEach(element => this.searchValues.push(element[this.searchKey]));
+        //     // alert(this.searchValues[tag])
+        //     this.$emit('removeTag', this.searchKey , this.searchValues)
+        // }
     //   removeTag(tag)
     }
 }

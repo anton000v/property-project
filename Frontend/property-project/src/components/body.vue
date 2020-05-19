@@ -112,8 +112,7 @@
                       </label>
                       <div class="w-full">    
                         <MultipleTaggingSelect
-                          @addTag = "updateBuildings" 
-                          @removeTag = "updateBuildings"
+                          @tagsChange = "updateBuildings" 
                           :searchKey="houseNumberSearchKey"
                           tagPlaceHolder="enter чтобы добавить к поиску"
                           placeholder="Номера домов"
@@ -159,13 +158,14 @@
             </div>
           </div>
 
+          <div v-if="allBuildingsList">
             <div v-if="Object.keys(allBuildingsList.buildings).length > 0" class="grid m-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center gap-4 my-20">
               <PropertyCard v-for="building in allBuildingsList.buildings" :key="building.slug" :building="building"/>    
             </div>          
             <div v-else class="grid justify-center"> 
               <h2>По вашему запросу ничего не найдено :с</h2>
             </div>
-
+          </div>
 
 
                 <!-- <section v-if="errored">
@@ -207,6 +207,7 @@ export default{
   data(){
     return {
       allBuildingsList: null,
+      findParams: {},
 
       saltovkaDBValue: null,
       severnayaSaltovkaDBValue: null,
@@ -315,64 +316,99 @@ export default{
     //   alert(text);
     //   }
       updateSearchValues(dictk, value){
-        switch (dictk){
-          case this.streetsDictKey:
-            this.streets = value
-            break
+        // if(value){
+          switch (dictk){
+            case this.streetsDictKey:
+              this.streets = value
+              break
 
-          case this.districtDictKey:
-            this.districts = value
-            break
+            case this.districtDictKey:
+              this.districts = value
+              break
 
-          case this.administrativeDistrictsDictKey:
-            this.administrativeDistricts = value
-            break
+            case this.administrativeDistrictsDictKey:
+              this.administrativeDistricts = value
+              break
 
-          case this.houseNumberSearchKey:
-            this.houseNumbers = value
-            break
+            case this.houseNumberSearchKey:
+              this.houseNumbers = value
+              break
 
-          case this.saltovkaMicroDistrictsDictKey:
-            this.saltovkaMicroDistricts = value
-            break
-          case this.severnayaSaltovkaMicroDistrictsDictKey:
-            this.severnayaSaltovkaMicroDistricts = value
-            break
-          case this.developersDictKey:
-            this.developers = value
-            break
+            case this.saltovkaMicroDistrictsDictKey:
+              this.saltovkaMicroDistricts = value
+              break
+            case this.severnayaSaltovkaMicroDistrictsDictKey:
+              this.severnayaSaltovkaMicroDistricts = value
+              break
+            case this.developersDictKey:
+              this.developers = value
+              break
+          // }
         }
+      },
+      arrCompareForSearch(a1,a2){
+        // alert(a2.length)
+        if(typeof a2 === 'undefined' || a2.length == 0){
+          // alert('here!')
+          return true
+        }
+        if(typeof a1 === 'undefined'){
+          // alert(a1 + ' - FALSE!')
+          return false
+        }
+        
+        return a1.length == a2.length && a1.every((v,i)=>v === a2[i])
       },
       updateBuildings(dictk, value){
         this.updateSearchValues(dictk, value)
         const axios = require('axios');
-        const findParams = {}
+        // const findParams = {}
         if(this.streets){
-          findParams['street'] = this.streets
+          if(!this.arrCompareForSearch(this.findParams['street'], this.streets)){
+            this.findParams['street'] = this.streets
+            // alert('streets')
+          }
         }
         if(this.districts){
-          findParams['district'] = this.districts
+          // console.log(this.arrCompare(this.findParams['district'], this.districts))
+          if(!this.arrCompareForSearch(this.findParams['district'], this.districts)){
+            this.findParams['district'] = this.districts
+            // alert('districts')
+          }
         }
         if(this.administrativeDistricts){
-          findParams['administrative_district'] = this.administrativeDistricts
+          if(!this.arrCompareForSearch(this.findParams['administrative_district'], this.administrativeDistricts)){
+            this.findParams['administrative_district'] = this.administrativeDistricts
+            // alert('administrative_district')
+          }
         }
         if(this.houseNumbers){
-          alert('house_numbers update')
-          findParams[this.houseNumberSearchKey] = this.houseNumbers
-          alert(findParams[this.houseNumberSearchKey])
+          if(!this.arrCompareForSearch(this.findParams[this.houseNumberSearchKey], this.houseNumbers)){
+            this.findParams[this.houseNumberSearchKey] = this.houseNumbers
+            // alert('houseNumbers')
+          }
         }
         if(this.saltovkaMicroDistricts){
-          findParams['saltovka_microdistrict'] = this.saltovkaMicroDistricts
+          if(!this.arrCompareForSearch(this.findParams['saltovka_microdistrict'], this.saltovkaMicroDistricts)){
+            this.findParams['saltovka_microdistrict'] = this.saltovkaMicroDistricts
+            // alert('saltovka_microdistrict')
+          }
         }
         if(this.severnayaSaltovkaMicroDistricts){
-          findParams['severnaya_saltovka_microdistrict'] = this.severnayaSaltovkaMicroDistricts
+          if(!this.arrCompareForSearch(this.findParams['severnaya_saltovka_microdistrict'], this.severnayaSaltovkaMicroDistricts)){
+            this.findParams['severnaya_saltovka_microdistrict'] = this.severnayaSaltovkaMicroDistricts
+            // alert('severnaya_saltovka_microdistrict')
+          }
         }
         if(this.developers){
-          findParams['developer'] = this.developers
+          if(!this.arrCompareForSearch(this.findParams['developer'], this.developers)){
+            this.findParams['developer'] = this.developers
+            // alert('developer')
+          }
         }
         const qs = require('qs');
         axios.get(baseApiAddress + this.searchBuildingUrl, {
-          params: findParams,
+          params: this.findParams,
           paramsSerializer: params => {
             console.log(' PARAMS: ')
             console.log(qs.stringify(params, {arrayFormat: 'repeat'}))  

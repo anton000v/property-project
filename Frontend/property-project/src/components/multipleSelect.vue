@@ -13,7 +13,7 @@
           :preserve-search="true" 
           :placeholder="placeholder" 
           :label="fieldChoiceText"
-          :custom-label="nameWithExtraInformation"
+
           :track-by="fieldChoiceText" 
           :preselect-first="true" 
           
@@ -28,6 +28,9 @@
           <template slot="option" slot-scope="props">
             <div class="option">{{ props.option[fieldChoiceText] }}<span v-if="props.option[extraInformationField]" class="text-sm leading-tight text-gray-600"><br>{{ props.option[extraInformationField] }}</span></div>
           </template>
+          <template v-slot:noOptions>
+            Загружаем...
+         </template>
           <!-- <template slot="tag" slot-scope="{ option, remove }">
               <span >
                 <span>{{ option[extraInformationField] }}
@@ -89,12 +92,12 @@
     data () {
       return {
         value: [],
-        options: [
-                { id: -1},
-              ][0][this.choiceText] = 'Пожалуйста, подождите...',  
+        options: [],
+        // options: [
+        //         { id: -1},
+        //       ][0][this.choiceText] = 'Пожалуйста, подождите...',  
           // apiAddress:apiAddress,
         searchValues: [],
-          
       }
     },
     components: {
@@ -116,7 +119,7 @@
             //  console.log(resp.data[this.dictKey])
               // console.log(this.nestedKeys)
               // console.log(resp.data[this.dictKey]['not_divided'])
-              // this.options = []
+              // this.options searchValues: [],= []
               this.nestedKeys.forEach((element) => {
               this.options.push(resp.data[this.dictKey][element])
               // numCallbackRuns++
@@ -129,23 +132,27 @@
         });
     },
     methods: {
-          clearAll () {
+      clearAll () {
         this.value = []
       },
-      nameWithExtraInformation(option){
-        if(this.extraInformationField) {
-          // console.log(this.extraInformationField)
-          return `${option[this.fieldChoiceText]} (${option[this.extraInformationField]})`
-        }
-        else{
-          return option[this.fieldChoiceText]
-        }
-      },
+      // nameWithExtraInformation(option){
+      //   if(this.extraInformationField) {
+      //     // console.log(this.extraInformationField)
+      //     return `${option[this.fieldChoiceText]} (${option[this.extraInformationField]})`
+      //   }
+      //   else{
+      //     return option[this.fieldChoiceText]
+      //   }
+      // },
+
       // updateValueAction () {
       //   this.$emit('change', this.value)
       //   // console.log(this.value[this.searchKey])
       // },
       SelectValueAction(selectedValue){
+        this.searchValues.push(selectedValue[this.searchKey]);
+        // console.log('Pushed value')
+
         if(this.trackEveryUpdate){
           // alert(selectedValue)
           this.$emit('select', selectedValue[this.searchKey])
@@ -155,14 +162,19 @@
         }
       },
       removeValueAction(removedValue){
+        let index = this.searchValues.indexOf(removedValue[this.searchKey]);
+        // console.log(index)
+        if (index > -1) {
+            this.searchValues.splice(index, 1);
+        }
         if(this.trackEveryUpdate){
           // alert(removedValue)
           this.$emit('remove', removedValue[this.searchKey])
-         }
+        }
       },
       SelectCloseAction() {
-        this.searchValues = []
-        this.value.forEach(element => this.searchValues.push(element[this.searchKey]));
+        // this.searchValues = []
+        // this.value.forEach(element => this.searchValues.push(element[this.searchKey]));
         this.$emit('selectClose', this.dictKey , this.searchValues)
       }
     },
