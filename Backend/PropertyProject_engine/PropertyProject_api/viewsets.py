@@ -1,12 +1,11 @@
 from PropertyProject_api.models import Street, AdministrativeDistrict, Developer, NewBuilding
-from .serializers import NewBuildingSerializer
+from .serializers import NewBuildingSerializer, NewBuildingSerializerForSearch
 from rest_framework import viewsets
 from django_filters import rest_framework as filters
 from django.db.models import Q
 import re 
 import operator
 from functools import reduce
-# from itertools import izip
 
 BOOLEAN_CHOICES = (('false', 'False'), ('true', 'True'),)
 
@@ -46,21 +45,35 @@ class NewBuildingFilter(filters.FilterSet):
 
 class NewBuildingViewSet(viewsets.ReadOnlyModelViewSet):
     #list create retrieve update partial_update destroy
-    # queryset = NewBuilding.objects.all()
+
     model = NewBuilding
-    serializer_class = NewBuildingSerializer
-    # filter_backends = (DjangoFilterBackend,)
+    serializer_class = NewBuildingSerializerForSearch
     filterset_class = NewBuildingFilter
     lookup_field = 'slug'
-    # lookup_url_kwarg='street'
-    # search_fields = ['district', 'street']
 
-    # def list(self,request, *args, **kwargs):
-    #     print("!!!!!!LOL!!!!!")
-    #     return Response(serializer.data)
+    action_serializers = {
+        'retrieve': NewBuildingSerializer,
+        # 'list': MyModelListSerializer,
+        # 'create': MyModelCreateSerializer
+    }
     
+    def get_serializer_class(self):
+        '''
+        Метод, который возвращает класс сериализатора. 
+        Переопределяем, чтобы для разных действий были разные сериализаторы
+        '''
+
+        if hasattr(self, 'action_serializers'):
+            return self.action_serializers.get(self.action, self.serializer_class)
+
+        return super(MyModelViewSet, self).get_serializer_class()
+
     def get_queryset(self):
-        # Генерация первоначального queryset 
+        '''
+        Метод генерирующий первоначальный queryset.
+        Переопределяем, добавляя возможность генерации с условиями поиска с помощью данных в GET запросе.
+        '''
+
         districts_query_list = self.request.query_params.getlist('district', '')
         streets_query_list = self.request.query_params.getlist('street', '')
         administrative_districts_query_list = self.request.query_params.getlist('administrative_district', '')
