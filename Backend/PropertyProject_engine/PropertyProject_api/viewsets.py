@@ -1,6 +1,7 @@
 from PropertyProject_api.models import Street, AdministrativeDistrict, Developer, NewBuilding
 from .serializers import NewBuildingSerializer, NewBuildingSerializerForSearch
 from rest_framework import viewsets
+from rest_framework.pagination import PageNumberPagination
 from django_filters import rest_framework as filters
 from django.db.models import Q
 import re 
@@ -50,12 +51,12 @@ class NewBuildingViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = NewBuildingSerializerForSearch
     filterset_class = NewBuildingFilter
     lookup_field = 'slug'
-
     action_serializers = {
         'retrieve': NewBuildingSerializer,
         # 'list': MyModelListSerializer,
         # 'create': MyModelCreateSerializer
     }
+    pagination_class =  PageNumberPagination
     
     def get_serializer_class(self):
         '''
@@ -120,7 +121,7 @@ class NewBuildingViewSet(viewsets.ReadOnlyModelViewSet):
             q_saltovka_microdistricts = Q(micro_district__in=saltovka_microdistricts_query_list)
         if severnaya_saltovka_microdistricts_query_list:
             q_severnaya_saltovka_microdistricts = Q(micro_district__in=severnaya_saltovka_microdistricts_query_list)
-
+            
         found_buildings = NewBuilding.objects.filter(
             (q_streets & q_house_numbers) |  
             (q_districts & q_saltovka_microdistricts & q_severnaya_saltovka_microdistricts) | 
