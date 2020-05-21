@@ -54,7 +54,7 @@ class NewBuilding(models.Model):
 
     name = models.CharField(max_length=200, verbose_name=u'Название', default=1)
 
-    street = models.ForeignKey(Street,on_delete=models.CASCADE, verbose_name='Улица')
+    street = models.ForeignKey(Street,on_delete=models.CASCADE, verbose_name='Улица', related_name='street')
     house_number = models.CharField(max_length=10, verbose_name='Номер дома')
     house_letter = models.CharField(max_length=2, verbose_name='Буква дома',
                                     choices=choices.HOUSE_LETTER_CHOICES,

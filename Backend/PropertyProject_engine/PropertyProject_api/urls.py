@@ -1,19 +1,19 @@
-from django.urls import path
+from django.urls import path, include
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from . import views
+from .router import router
 
 app_name = "property project"
 # app_name will help us do a reverse look-up latter.
 urlpatterns = [
     path('get-micro-districts/', views.MicroDistrictChoices.as_view()), # for old admin panel js script
+    path('api/', include(router.urls)),
     path('api/check-address/', views.AddressChecker.as_view()),
-
-    path('api/find-buildings/',views.APIFindBuildings.as_view()),
-    path('api/get-building/', views.APIGetBuilding.as_view()),
-    # path('api/get-micro-districts/', views.APIGetMicroDistrictsChoices.as_view()),
+    # path('api/find-buildings/',views.APIFindBuildings.as_view()),
+    # path('api/get-building/', views.APIGetBuilding.as_view()),
     path('api/get-streets/', views.APIGetStreetsChoices.as_view()),
     path('api/get-districts/', views.APIGetDistrictsChoices.as_view()),
     path('api/get-administrative-districts/', views.APIGetAdministrativeDistrictsChoices.as_view()),
