@@ -10,9 +10,6 @@ from functools import reduce
 
 BOOLEAN_CHOICES = (('false', 'False'), ('true', 'True'),)
 
-# class NumberInFilter(filters.BaseInFilter, filters.NumberFilter):
-#     pass
-
 class NewBuildingFilter(filters.FilterSet):
     developer = filters.ModelMultipleChoiceFilter(
         field_name = 'developer',

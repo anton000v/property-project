@@ -158,9 +158,9 @@
             </div>
           </div>
 
-          <div v-if="allBuildingsList">
-            <div v-if="Object.keys(allBuildingsList.buildings).length > 0" class="grid m-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center gap-4 my-20">
-              <PropertyCard v-for="building in allBuildingsList.buildings" :key="building.slug" :building="building"/>    
+          <div v-if="foundBuildings">
+            <div v-if="Object.keys(foundBuildings.results).length > 0" class="grid m-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center gap-4 my-20">
+              <PropertyCard v-for="building in foundBuildings.results" :key="building.slug" :building="building"/>    
             </div>          
             <div v-else class="grid justify-center"> 
               <h2>По вашему запросу ничего не найдено :с</h2>
@@ -206,7 +206,8 @@ import { baseApiAddress } from '../variables.js';
 export default{
   data(){
     return {
-      allBuildingsList: null,
+      // allBuildingsList: null,
+      foundBuildings: null,
       findParams: {},
 
       saltovkaDBValue: null,
@@ -256,7 +257,7 @@ export default{
       severnayaSaltovkaMicroDistricts:null,
       developers:null,
 
-      searchBuildingUrl: 'find-buildings/'
+      searchBuildingUrl: 'buildings/'
       // getMicroDistrictsApiAddress:"get-micro-districts/",
       // microDistrictDictKey:'micro_districts',
       // microDistrictNestedKeys:['not_divided'],
@@ -275,8 +276,9 @@ export default{
       // axios.get(baseApiAddress + 'get-micro-districts/').then(resp => {
       //     this.microDistrictsChoices = resp.data.micro_district_choices;
       // })
-      axios.get(baseApiAddress + 'find-buildings/').then(resp => {
-          this.allBuildingsList = resp.data;
+      axios.get(baseApiAddress + this.searchBuildingUrl).then(resp => {
+          this.foundBuildings = resp.data;
+          console.log(this.foundBuildings)
       })
       axios.get(baseApiAddress + 'get-saltovka-severnaya-saltovka-db-values/').then(resp => {
           this.saltovkaDBValue = resp.data[this.saltovkaDBKey];
@@ -415,7 +417,7 @@ export default{
             return qs.stringify(params, {arrayFormat: 'repeat'})
           }
           }).then(resp => {
-          this.allBuildingsList = resp.data;
+          this.foundBuildings = resp.data;
         })
       },
       // checkToShowSaltovkaMicroDistricts(value){
