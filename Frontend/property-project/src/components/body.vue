@@ -273,20 +273,14 @@ export default{
   },
   mounted() {
     const axios = require('axios');
-      // axios.get(baseApiAddress + 'get-micro-districts/').then(resp => {
-      //     this.microDistrictsChoices = resp.data.micro_district_choices;
-      // })
       axios.get(baseApiAddress + this.searchBuildingUrl).then(resp => {
           this.foundBuildings = resp.data;
-          console.log(this.foundBuildings)
+          // console.log(this.foundBuildings)
       })
       axios.get(baseApiAddress + 'get-saltovka-severnaya-saltovka-db-values/').then(resp => {
           this.saltovkaDBValue = resp.data[this.saltovkaDBKey];
           this.severnayaSaltovkaDBValue = resp.data[this.severnayaSaltovkaDBKey];
       })
-      // axios.get(baseApiAddress + 'find-buildings/').then(resp => {
-      //     this.allBuildingsList = resp.data;
-      // })
   },
   // watch: {
     // эта функция запускается при любом изменении района

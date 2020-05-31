@@ -1,8 +1,5 @@
 <template>
   <div>
-    <!-- <p>{{ value }}</p>
-    <p>{{ searchValues }}</p> -->
-    <!-- <label class="typo__label">{{ searchKey }}</label> -->
     <multiselect 
     v-model="value" 
     :tag-placeholder="tagPlaceHolder" 
@@ -11,49 +8,20 @@
     :track-by="searchKey" 
     :options="options" 
     :multiple="true" 
-    :taggable="true" 
+    :taggable="true"
     @tag="addTag"
     @remove="deleteTagAction"
     >
     <template v-slot:noOptions>
-        начните ввод
+        просто вводите
     </template>
     </multiselect>
-    <!-- <pre class="language-json"><code>{{ value  }}</code></pre> -->
 
   </div>
 </template>
 
 <script>
 import Multiselect from 'vue-multiselect'
-
-// export default {
-//   components: {
-//     Multiselect
-//   },
-//   data () {
-//     return {
-//       value: [
-//         { name: 'Javascript', code: 'js' }
-//       ],
-//       options: [
-//         { name: 'Vue.js', code: 'vu' },
-//         { name: 'Javascript', code: 'js' },
-//         { name: 'Open Source', code: 'os' }
-//       ]
-//     }
-//   },
-//   methods: {
-//     addTag (newTag) {
-//       const tag = {
-//         name: newTag,
-//         code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
-//       }
-//       this.options.push(tag)
-//       this.value.push(tag)
-//     }
-//   }
-// }
 export default {
     props: {
         placeholder: {
@@ -65,9 +33,12 @@ export default {
         searchKey: {
             type: String,
         },
-        // searchKey: {
-        //   type: String,
-        // }
+        addAction: {
+            type: Function
+        },
+        removeAction:{
+            type: Function
+        },
     },
     components: {
         Multiselect
@@ -77,7 +48,6 @@ export default {
         return {
             value: [],
             options: [],
-            searchValues: [],
             regularExpr: /\d+[а-я]?/g,
         }
     },
@@ -92,45 +62,21 @@ export default {
                     tag[vm.searchKey] = tagVal
                     // alert(tag)
                     vm.value.push(tag)
-                    vm.searchValues.push(tagVal);
+                    // vm.searchValues.push(tagVal);
+                    vm.addAction({'key': vm.searchKey, 'value':tagVal})
                 }
                 })
             vm.changeTagAction()
-        // this.value.forEach(element => this.searchValues.push(element[this.searchKey]));
-        // for(tag in matches){
-        //     const tag = {}
-        //     tag[this.searchKey] = newTag
-        //     this.value.push(tag)
-        // }
-        // const tag = {}
-        // tag[this.searchKey] = newTag
-        // this.value.push(tag)
-        // this.changeTagAction()
         },
 
         deleteTagAction(deletedTag){
-            let index = this.searchValues.indexOf(deletedTag[this.searchKey]);
-            // console.log(deletedTag)
-            // console.log(this.searchValues)
-            // alert(index)
-            if (index > -1) {
-                this.searchValues.splice(index, 1);
-            }
-        // this.value.forEach(element => this.searchValues.push(element[this.searchKey]));
+            this.removeAction({'key':this.searchkey, 'value':deletedTag[this.searchKey]})
             this.changeTagAction()
         },
 
         changeTagAction() {
-            // this.value.forEach(element => this.searchValues.push(element[this.searchKey]));
-            this.$emit('tagsChange', this.searchKey , this.searchValues)
+            this.$emit('tagsChange')
        },
-        // removeTagAction(){
-        //     this.searchValues = []
-        //     this.value.forEach(element => this.searchValues.push(element[this.searchKey]));
-        //     // alert(this.searchValues[tag])
-        //     this.$emit('removeTag', this.searchKey , this.searchValues)
-        // }
-    //   removeTag(tag)
     }
 }
 </script>

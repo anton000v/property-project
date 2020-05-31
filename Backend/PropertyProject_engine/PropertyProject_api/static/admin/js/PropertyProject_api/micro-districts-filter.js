@@ -13,7 +13,7 @@ $(document).ready(function () {
             // micro_district_choices = JSON.parse(data['micro_district_choices']);
             micro_district_choices = data['micro_district_choices'];
             db_values = data['db_values']
-            console.log(data);
+            // console.log(data);
         },
         error: function(data, status) {
         console.log(`Error: ${data.responseJSON}`)

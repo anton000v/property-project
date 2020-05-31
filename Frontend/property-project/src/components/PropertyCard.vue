@@ -1,6 +1,6 @@
 <template>
     <div class="max-w-sm transition rounded-lg duration-500 ease-in-out hover:rounded-none hover:opacity-40 transform hover:-translate-y-1 hover:scale-110 hover:shadow-2xl overflow-hidden shadow-lg">
-      <img v-if="building.building_images[0]" :src="getSrc(building.building_images[0].building_image)" alt="">
+      <img v-if="building.building_images[0]" :src="building.building_images[0].building_image" alt="">
       <p v-else>Нету изображения :р</p>
       <div class="flex items-center px-6 py-3 bg-gray-900">
           <!-- <svg class="h-6 w-6 text-white fill-current" viewBox="0 0 512 512">
@@ -74,22 +74,21 @@
 </template>
 
 <script>
-import { baseBackendAddress } from '../variables.js';
-console.log(baseBackendAddress);
+// import { baseBackendAddress } from '../variables.js';
+// console.log(baseBackendAddress);
 export default {
   props: ['building'],
   data(){
     return {
       // djangoImagesPathInComponentsFolder:djangoImagesPathInComponentsFolder,
       // testPath:"../../../../Backend/PropertyProject_engine/PropertyProject_api/media/126403.jpg",
-      baseBackendAddress,
+      // baseBackendAddress,
     }
   },
-  methods: {
-    getSrc(imgPath) {
-        // var images = require.context('../../assets/plants/', false, /\.jpg$/);
-        return this.baseBackendAddress + imgPath
-    }
-  }
+  // methods: {
+  //   getSrc(imgPath) {
+  //       return this.baseBackendAddress + imgPath
+  //   }
+  // }
 }
 </script>

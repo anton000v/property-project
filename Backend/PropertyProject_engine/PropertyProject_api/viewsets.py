@@ -72,12 +72,12 @@ class NewBuildingViewSet(viewsets.ReadOnlyModelViewSet):
         Переопределяем, добавляя возможность генерации с условиями поиска с помощью данных в GET запросе.
         '''
 
-        districts_query_list = self.request.query_params.getlist('district', '')
-        streets_query_list = self.request.query_params.getlist('street', '')
-        administrative_districts_query_list = self.request.query_params.getlist('administrative_district', '')
-        house_numbers_query_list = self.request.query_params.getlist('house_number', '')
-        saltovka_microdistricts_query_list = self.request.query_params.getlist('saltovka_microdistrict', '')
-        severnaya_saltovka_microdistricts_query_list = self.request.query_params.getlist('severnaya_saltovka_microdistrict', '')
+        districts_query_list = self.request.query_params.getlist('districts', '')
+        streets_query_list = self.request.query_params.getlist('streets', '')
+        administrative_districts_query_list = self.request.query_params.getlist('administrative_districts', '')
+        house_numbers_query_list = self.request.query_params.getlist('house_numbers', '')
+        saltovka_microdistricts_query_list = self.request.query_params.getlist('saltovka_microdistricts', '')
+        severnaya_saltovka_microdistricts_query_list = self.request.query_params.getlist('severnaya_saltovka_microdistricts', '')
 
         q_administrative_districts = Q()
         if administrative_districts_query_list:
@@ -102,15 +102,20 @@ class NewBuildingViewSet(viewsets.ReadOnlyModelViewSet):
                 item in house_numbers_query_list
                 if (match := re.match('\d+', item))
             )
+            letter_or_none = lambda x: x or None
+            # q_house_numbers = Q()
+            # for number, letter in house_numbers_and_letters_generator:
+            #     if letter:=letter_or_none(letter):
+            #         q_house_numbers
             # Совмещение sql запросов с помощью оператора or
             q_house_numbers = reduce(
                 operator.or_,
-                (Q(house_number = number, house_letter=letter) for
+                (Q(house_number = number, house_letter=letter_or_none(letter)) for
                 number, letter in 
                 house_numbers_and_letters_generator
                 )
             )
-            print('Номера домов: ', house_numbers_and_letters_generator)
+            print('Номера домов: ', house_numbers_query_list)
 
         q_saltovka_microdistricts = Q()
         q_severnaya_saltovka_microdistricts = Q()
@@ -121,7 +126,7 @@ class NewBuildingViewSet(viewsets.ReadOnlyModelViewSet):
             
         found_buildings = NewBuilding.objects.filter(
             (q_streets & q_house_numbers) |  
-            (q_districts & q_saltovka_microdistricts & q_severnaya_saltovka_microdistricts) | 
+            (q_districts & q_saltovka_microdistricts & q_severnaya_saltovka_microdistricts & q_house_numbers) | 
             q_administrative_districts
             )
 
