@@ -5,6 +5,10 @@ import App from './App.vue'
 import './assets/css/main.css'
 import 'vue-search-select/dist/VueSearchSelect.css'
 import store from './store/index.js'
+import router from './router/router.js'
+import VModal from 'vue-js-modal'
+ 
+Vue.use(VModal)
 
 // import 'bootstrap/dist/css/bootstrap.css'
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -20,6 +24,7 @@ Vue.config.productionTip = false
 // console.log(App);
 new Vue({
   store: store,
+  router:router,
   // router,
   render: h => h(App),
 }).$mount('#app')

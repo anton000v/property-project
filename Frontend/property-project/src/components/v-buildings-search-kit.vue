@@ -1,8 +1,8 @@
 <template>
 
-  <div class="container mx-auto px-8">
+  <!-- <div class="container mx-auto px-8"> -->
     <div class="flex flex-wrap">
-      <div class="w-full text-center">
+      <div class="w-full text-center"> 
         <div
           class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg"
         >
@@ -19,11 +19,12 @@
                 </label>
                 <div name="field" class="w-full">
                   <MultipleSelect 
-                  @selectClose="searchBuildings(activeFindParams)"
+                  @selectClose="search"
                   :dbValueKey="administrativeDistrictsBaseVariables.dbValueKey"
                   :fieldChoiceText="administrativeDistrictsBaseVariables.choiceText" 
                   :dictKey="administrativeDistrictsBaseVariables.dictKey" 
                   :apiAddress="administrativeDistrictsBaseVariables.fullApiAddress" 
+                  :sendParamName="administrativeDistrictsBaseVariables.sendParamName"
                   :addAction="addFindParam"
                   :removeAction="removeFindParam"
                   placeholder="Административные районы" 
@@ -37,13 +38,14 @@
                 <div class="w-full">
                   <div name="field" class="w-full">
                     <MultipleSelect 
-                    @selectClose="searchBuildings(activeFindParams)" 
+                    @selectClose="search" 
                     @select="checkToShowMicroDistricts"
                     @remove="checkToHideMicroDistricts"
                     :dbValueKey="districtsBaseVariables.dbValueKey"
                     :extraInformationField="districtsBaseVariables.extraInformationText"
                     :fieldChoiceText="districtsBaseVariables.choiceText" 
                     :dictKey="districtsBaseVariables.dictKey" 
+                    :sendParamName="districtsBaseVariables.sendParamName"
                     :apiAddress="districtsBaseVariables.fullApiAddress" 
                     :trackEveryUpdate="true"
                     :addAction="addFindParam"
@@ -63,11 +65,12 @@
                   </label>
                   <div name="field" class="w-full">
                     <MultipleSelect 
-                    @selectClose="searchBuildings(activeFindParams)"
+                    @selectClose="search"
                     :dbValueKey="saltovkaMicroDistrictsBaseVariables.dbValueKey"
                     :fieldChoiceText="saltovkaMicroDistrictsBaseVariables.choiceText" 
                     :dictKey="saltovkaMicroDistrictsBaseVariables.dictKey" 
                     :apiAddress="saltovkaMicroDistrictsBaseVariables.fullApiAddress" 
+                    :sendParamName="saltovkaMicroDistrictsBaseVariables.sendParamName"
                     :addAction="addFindParam"
                     :removeAction="removeFindParam"
                     placeholder="Микрорайоны" 
@@ -80,11 +83,12 @@
                   </label>
                   <div class="w-full">    
                     <MultipleSelect 
-                      @selectClose="searchBuildings(activeFindParams)"
+                      @selectClose="search"
                       :dbValueKey="severnayaSaltovkaMicroDistrictsBaseVariables.dbValueKey"
                       :fieldChoiceText="severnayaSaltovkaMicroDistrictsBaseVariables.fieldChoiceText" 
                       :dictKey="severnayaSaltovkaMicroDistrictsBaseVariables.dictKey" 
                       :apiAddress="severnayaSaltovkaMicroDistrictsBaseVariables.fullApiAddress" 
+                      :sendParamName="severnayaSaltovkaMicroDistrictsBaseVariables.sendParamName"
                       :addAction="addFindParam"
                       :removeAction="removeFindParam"
                       placeholder="Микрорайоны" 
@@ -100,11 +104,12 @@
                 </label>
                 <div name="field" class="w-full">
                   <MultipleSelect 
-                  @selectClose="searchBuildings(activeFindParams)"
+                  @selectClose="search"
                   :dbValueKey="streetsBaseVariables.dbValueKey"
                   :fieldChoiceText="streetsBaseVariables.choiceText" 
                   :dictKey="streetsBaseVariables.dictKey" 
                   :apiAddress="streetsBaseVariables.fullApiAddress" 
+                  :sendParamName="streetsBaseVariables.sendParamName"
                   :addAction="addFindParam"
                   :removeAction="removeFindParam"
                   placeholder="Улицы" 
@@ -117,10 +122,10 @@
                 </label>
                 <div class="w-full">    
                   <MultipleTaggingSelect
-                    @tagsChange="searchBuildings(activeFindParams)"
+                    @tagsChange="search"
                     :addAction="addFindParam"
                     :removeAction="removeFindParam"
-                    :searchKey="houseNumberSearchKey"
+                    :sendParamName="houseNumberSendParamName"
                     tagPlaceHolder="enter чтобы добавить к поиску"
                     placeholder="Номера домов"
                   />
@@ -128,39 +133,42 @@
               </div>
             </div>
             <div class="flex flex-wrap -mx-3 mb-6">
-              <!-- <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Фильтр по застройщикам
                 </label>
                 <div name="field" class="w-full">
                   <MultipleSelect 
-                  @selectClose="searchBuildings(activeFindParams)"
-                  :searchKey="developersSearchKey"
-                  :fieldChoiceText="developersChoiceText" 
-                  :dictKey="developersDictKey" 
-                  :apiAddress="getDevelopersApiAddress" 
+                  @selectClose="search"
+                  :dbValueKey="developersBaseVariables.dbValueKey"
+                  :fieldChoiceText="developersBaseVariables.choiceText" 
+                  :dictKey="developersBaseVariables.dictKey" 
+                  :apiAddress="developersBaseVariables.fullApiAddress" 
+                  :sendParamName="developersBaseVariables.sendParamName"
+                  :addAction="addFindParam"
+                  :removeAction="removeFindParam"
                   placeholder="застройщики" 
                   />
                 </div>
-              </div> -->
+              </div>
             </div>
           </div>
           <button v-on:click="searchBuildings" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
             п о и с к
           </button>
         </div>
-      </div>
+     </div> 
     </div>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script>
-import MultipleSelect from './multipleSelect';
-import MultipleTaggingSelect from './multipleTaggingSelect';
+import MultipleSelect from './v-multiple-select';
+import MultipleTaggingSelect from './v-multiple-tagging-select';
 import { 
   saltovkaDBKey,
   severnayaSaltovkaDBKey,
-  houseNumberSearchKey,
+  houseNumberSendParamName,
   streetsBaseVariables,
   districtsBaseVariables,
   administrativeDistrictsBaseVariables,
@@ -179,7 +187,7 @@ export default{
       return{
         saltovkaDBKey:saltovkaDBKey,
         severnayaSaltovkaDBKey:severnayaSaltovkaDBKey,
-        houseNumberSearchKey:houseNumberSearchKey,
+        houseNumberSendParamName:houseNumberSendParamName,
         streetsBaseVariables:streetsBaseVariables,
         districtsBaseVariables:districtsBaseVariables,
         administrativeDistrictsBaseVariables:administrativeDistrictsBaseVariables,
@@ -197,6 +205,9 @@ export default{
     // computed: {
     //     ...mapGetters(['allBuildings','buildingsCount'])
     //     },
+    watch:{
+      $route:"updateBuildings"
+    },
     methods:{ 
       ...mapMutations([
         // 'removeStreet',
@@ -205,15 +216,21 @@ export default{
         'removeFindParam'
       ]),
       ...mapActions([
-        'searchBuildings', 
+        'searchBuildings',
         'checkToShowMicroDistricts',
         'checkToHideMicroDistricts',
         // 'addStreet',
         // 'removeStreet',
-        ])
-    },
-    async mounted() {
-      this.searchBuildings();
+        ]),
+        search(){
+          // alert(findParams)
+          // const qs = require('qs')
+          // this.searchBuildings(findParams)
+          this.$router.replace({name: 'search-page', query:this.activeFindParams})
+        },
+        updateBuildings(){
+          this.searchBuildings(this.activeFindParams)
+        }
     },
     computed: {
       ...mapGetters([
@@ -222,6 +239,7 @@ export default{
         'isSevernayaSaltovkaDistrictChoosen',
         ])
     },
+
 }
 
 </script>

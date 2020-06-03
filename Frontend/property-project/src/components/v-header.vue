@@ -56,7 +56,7 @@
 // import { KinesisContainer, KinesisElement} from 'vue-kinesis'
 
 export default{
-  props: ['Header'],
+  // props: ['Header'],
   data(){
     return {
       // djangoImagesPathInComponentsFolder:djangoImagesPathInComponentsFolder,

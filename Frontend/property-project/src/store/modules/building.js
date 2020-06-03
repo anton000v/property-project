@@ -39,6 +39,7 @@ export default {
     state: {
         buildings: [],
         buildingsCount: 0,
+        // loadedBuildings: [],
         // currentFindParams: {},
     },
     getters: {
@@ -47,6 +48,10 @@ export default {
         },
         buildingsCount(state){
             return state.buildingsCount
-        } 
+        } ,
+        // getLoadedBuilding(state, slug){
+        //     return state.loadedBuildings[]
+        // }
+
     },
 }

@@ -1,26 +1,15 @@
 <template>
   <div id="app">
-
-      <Header/>
-      <!-- <Body/> -->
-      <BuildingsSearchKit/>
-      <BuildingsList/>
+      <vMainWrapper/>
   </div>
 </template>
 
 <script>
-
-import Header from './components/header.vue';
-// import Body from './components/body.vue';
-import BuildingsList from './components/buildingsList'
-import BuildingsSearchKit from './components/buildingsSearchKit'
+import vMainWrapper from './pages/v-main-wrapper'
 export default {
   name: 'App',
   components: {
-    Header,
-    // Body,
-    BuildingsList,
-    BuildingsSearchKit,
+    vMainWrapper,
   },
 
 }

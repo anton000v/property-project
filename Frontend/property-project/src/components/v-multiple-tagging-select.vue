@@ -33,6 +33,9 @@ export default {
         searchKey: {
             type: String,
         },
+        sendParamName: {
+            type: String
+        },
         addAction: {
             type: Function
         },
@@ -56,21 +59,21 @@ export default {
             let vm = this;
             const matches = newTag.match(vm.regularExpr) 
             matches.forEach((tagVal) => {
-                // console.log(vm.value.some((elem) => elem[vm.searchKey] == tagVal))
-                if(!(vm.value.some((elem) => elem[vm.searchKey] == tagVal))){
-                    const tag = {}
-                    tag[vm.searchKey] = tagVal
-                    // alert(tag)
-                    vm.value.push(tag)
-                    // vm.searchValues.push(tagVal);
-                    vm.addAction({'key': vm.searchKey, 'value':tagVal})
+                console.log(tagVal in  vm.value)
+                // console.log(vm.value)
+                // if(!(tagVal in vm.value)){
+                if(vm.value.indexOf(tagVal) == -1){
+                    // const tag = {}
+                    // tag[vm.sendParamName] = tagVal
+                    vm.value.push(tagVal)
+                    vm.addAction({'key': vm.sendParamName, 'value':tagVal})
                 }
                 })
             vm.changeTagAction()
         },
 
         deleteTagAction(deletedTag){
-            this.removeAction({'key':this.searchkey, 'value':deletedTag[this.searchKey]})
+            this.removeAction({'key':this.sendParamName, 'value':deletedTag})
             this.changeTagAction()
         },
 

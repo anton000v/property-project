@@ -67,6 +67,9 @@
         type: Array,
         default: () => [],
       },
+      sendParamName: {
+        type: String
+      },
       addAction: {
         type: Function
       },
@@ -118,14 +121,14 @@
       },
       SelectValueAction(selectedValue){
         // this.searchValues.push(selectedValue[this.dbValueKey]);
-        this.addAction({'key':this.dictKey, 'value':selectedValue[this.dbValueKey]})
+        this.addAction({'key':this.sendParamName, 'value':selectedValue[this.dbValueKey]})
         // alert()
         if(this.trackEveryUpdate){
           this.$emit('select', selectedValue[this.dbValueKey])
         }
       },
       removeValueAction(removedValue){
-        this.removeAction({'key':this.dictKey , 'value':removedValue[this.dbValueKey]})
+        this.removeAction({'key':this.sendParamName , 'value':removedValue[this.dbValueKey]})
         // let index = this.selectedArr.indexOf(removedValue[this.searchKey]);
         // if (index > -1) {
         //     this.searchValues.splice(index, 1);

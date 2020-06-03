@@ -72,12 +72,12 @@ class NewBuildingViewSet(viewsets.ReadOnlyModelViewSet):
         Переопределяем, добавляя возможность генерации с условиями поиска с помощью данных в GET запросе.
         '''
 
-        districts_query_list = self.request.query_params.getlist('districts', '')
-        streets_query_list = self.request.query_params.getlist('streets', '')
-        administrative_districts_query_list = self.request.query_params.getlist('administrative_districts', '')
-        house_numbers_query_list = self.request.query_params.getlist('house_numbers', '')
-        saltovka_microdistricts_query_list = self.request.query_params.getlist('saltovka_microdistricts', '')
-        severnaya_saltovka_microdistricts_query_list = self.request.query_params.getlist('severnaya_saltovka_microdistricts', '')
+        districts_query_list = self.request.query_params.getlist('district', '')
+        streets_query_list = self.request.query_params.getlist('street', '')
+        administrative_districts_query_list = self.request.query_params.getlist('administrative_district', '')
+        house_numbers_query_list = self.request.query_params.getlist('house_number', '')
+        saltovka_microdistricts_query_list = self.request.query_params.getlist('saltovka_microdistrict', '')
+        severnaya_saltovka_microdistricts_query_list = self.request.query_params.getlist('severnaya_saltovka_microdistrict', '')
 
         q_administrative_districts = Q()
         if administrative_districts_query_list:

@@ -198,9 +198,9 @@
 // import TodoList from './TodoList.vue';
 // import Testapi from './testapi.vue';
 // import Button from './button.vue';
-import MultipleSelect from './multipleSelect';
-import MultipleTaggingSelect from './multipleTaggingSelect';
-import PropertyCard from './PropertyCard.vue';
+import MultipleSelect from './v-multiple-select';
+import MultipleTaggingSelect from './v-multiple-tagging-select';
+import PropertyCard from './v-building-card.vue';
 import { baseApiAddress } from '../variables.js';
 
 export default{

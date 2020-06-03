@@ -110,6 +110,9 @@ export default {
                 state.findParams[dictVal.key].splice(index, 1);
             }
         },
+        updateFindParam(state, findParams){
+            state.findParams = findParams
+        },
         updateIsSaltovkaDistrictChoosen(state, value){
             state.isSaltovkaDistrictChoosen = Boolean(value)
         },

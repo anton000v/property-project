@@ -5,13 +5,25 @@ export const severnayaSaltovkaDBValue = 'ses'
 
 export const saltovkaDBKey = 'saltovka_db_value'
 export const severnayaSaltovkaDBKey = 'severnaya_saltovka_db_value'
-export const houseNumberSearchKey = 'house_numbers'
+export const houseNumberSendParamName = 'house_number'
+
+
+// export const houseNumberBaseVariables = {
+//     fullApiAddress: baseApiAddress + "get-streets/" ,
+//     dictKey:'streets',
+//     choiceText:'street_ru',
+//     dbValueKey:'id',
+//     sendParamName: 'street',
+// }
+
+
 
 export const streetsBaseVariables = {
     fullApiAddress: baseApiAddress + "get-streets/" ,
     dictKey:'streets',
     choiceText:'street_ru',
     dbValueKey:'id',
+    sendParamName: 'street',
 }
 
 export const districtsBaseVariables = {
@@ -19,6 +31,7 @@ export const districtsBaseVariables = {
     dictKey:'districts',
     choiceText:'text_value',
     dbValueKey:'db_value',
+    sendParamName: 'district',
     // Дополнительный
     extraInformationText:'direction',
 }
@@ -28,6 +41,7 @@ export const administrativeDistrictsBaseVariables = {
     dictKey:'administrative_districts',
     choiceText:'administrative_dist_ru',
     dbValueKey:'id',
+    sendParamName: 'administrative_district'
 }
 
 export const saltovkaMicroDistrictsBaseVariables = {
@@ -35,6 +49,7 @@ export const saltovkaMicroDistrictsBaseVariables = {
     dictKey: 'saltovka_micro_districts',
     choiceText: 'text_value',
     dbValueKey: 'db_value',
+    sendParamName: 'saltovka_micro_district'
 }
 
 export const severnayaSaltovkaMicroDistrictsBaseVariables = {
@@ -42,6 +57,7 @@ export const severnayaSaltovkaMicroDistrictsBaseVariables = {
     dictKey: 'severnaya_saltovka_micro_districts',
     choiceText: 'text_value',
     dbValueKey: 'db_value',
+    sendParamName: 'severnaya_saltovka_micro_district'
 }
 
 export const developersBaseVariables = {
@@ -49,6 +65,7 @@ export const developersBaseVariables = {
     dictKey: 'developers',
     choiceText: 'developer_name',
     dbValueKey: 'id',
+    sendParamName: 'developer'
 }
 
 // saltovkaDBKey:'saltovka_db_value',
