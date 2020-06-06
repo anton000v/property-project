@@ -14,8 +14,8 @@ export default {
             axios.get('http://127.0.0.1:8000/api/buildings/', {
             params: findParams,
             paramsSerializer: params => {
-                console.log('Find params while searching: ')
-                console.log(qs.stringify(params, {arrayFormat: 'repeat'}))  
+                // console.log('Find params while searching: ')
+                // console.log(qs.stringify(params, {arrayFormat: 'repeat'}))  
                 return qs.stringify(params, {arrayFormat: 'repeat'})
             }
             }).then(resp => {

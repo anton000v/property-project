@@ -232,12 +232,12 @@ export default{
         search(){
           // alert('se')
           // alert(this.activeFindParams)
-          console.log('\tSEARCH')
+          // console.log('\tSEARCH')
           // alert(findParams)
           // const qs = require('qs')
           // this.searchBuildings(findParams)
-          console.log('ACTIVE FIND PARAMS BEFORE ROUTER REPLACE')
-          console.log(this.activeFindParams)
+          // console.log('ACTIVE FIND PARAMS BEFORE ROUTER REPLACE')
+          // console.log(this.activeFindParams)
           
           // const template = {distict:["2",1]}
           // this.$store.dispatch('updateFindParams')
@@ -254,8 +254,8 @@ export default{
     mounted(){
       // alert(this.$route.query)
       this.updateFindParams(JSON.parse(JSON.stringify(this.$route.query)))
-      console.log("  [from mounted]  Find param:")
-      console.log(this.activeFindParams)
+      // console.log("  [from mounted]  Find param:")
+      // console.log(this.activeFindParams)
       this.updateBuildings()
     },
     computed: {

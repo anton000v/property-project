@@ -1,7 +1,8 @@
 <template>
   <div> 
     <!-- {{ fieldChoiceText }} {{ searchKey }} {{ apiAddress }} {{ dictKey }} -->
-    {{ activeFindParams }}
+    <p>{{ activeFindParams }}</p>
+    <p>{{ value }}</p>
         <multiselect 
           v-model="value" 
           @select="SelectValueAction"
@@ -103,7 +104,7 @@
         //         console.log(resp)
         // });
         axios.get(this.apiAddress).then(resp => {
-          
+
             if(this.nestedKeys.length == 0){
               // this.setActiveValues()
               this.options = resp.data[this.dictKey];
@@ -119,19 +120,54 @@
               this.options.push(resp.data[this.dictKey][element])
             })
             }
+            if(this.sendParamName in this.activeFindParams){
+              console.log('INITIAL!!!!!')
+              this.setIntitialActiveValues()
+            }
         });
     },
     methods: {
-      setActiveValues(){
-        if(this.sendParamName in this.activeFindParams){
-          for(const opt in this.activeFindParams[this.sendParamName]){
-            // console.log(opt)
-            const index = this.options[this.dbValueKey].indexOf(opt)
-            if(index != -1){
-              this.value.push(this.options[index])
-            }
-          }
-        }
+      setIntitialActiveValues(){
+          this.activeFindParams[this.sendParamName].forEach(activeParam => {
+            this.options.forEach(element => {
+              if(activeParam === element[this.dbValueKey]){
+                this.value.push(element)
+              }
+            })
+          })
+          // for(const opt in this.activeFindParams[this.sendParamName]){
+          //   this.options.forEach(element => {
+          //   // for(const opt in this.activeFindParams[this.sendParamName]){
+          //   //   console.log(opt)
+          //   // console.log(element[this.dbValueKey])
+          //   if(opt === element[this.dbValueKey]){
+          //     this.value.push(element)
+          //   }
+          //   // const index = element[this.dbValueKey].indexOf(opt)
+          //   // if(index != -1){
+          //   //   this.value.push(element)
+          //   // }
+          //   })
+          // }
+            // }
+
+          // this.options.forEach(element => {
+          //   // for(const opt in this.activeFindParams[this.sendParamName]){
+          //   //   console.log(opt)
+          //     const index = this.options[this.dbValueKey].indexOf(opt)
+          //   if(index != -1){
+          //     this.value.push(this.options[index])
+          //   }
+          // }
+          // });
+          // for(const opt in this.activeFindParams[this.sendParamName]){
+          //   console.log(opt)
+          //   const index = this.options[this.dbValueKey].indexOf(opt)
+          //   if(index != -1){
+          //     this.value.push(this.options[index])
+          //   }
+          // }
+        // }
       },
       clearAll () {
         this.value = []
@@ -163,9 +199,9 @@
         
         this.$emit('selectClose', this.dictKey , this.searchValues)
       },
-      setInitialData(){
-        console.log(this.initialDbData)
-      }
+      // setInitialData(){
+      //   console.log(this.initialDbData)
+      // }
     },
     computed: {
       ...mapGetters([

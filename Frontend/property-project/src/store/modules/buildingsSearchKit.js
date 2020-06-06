@@ -8,7 +8,17 @@
 //     return a1.length == a2.length && a1.every((v,i)=>v === a2[i])
 // }
 // let session = context.rootState.instance.session;
+
+function stringToInt(n) {
+    let num = parseInt(n)
+    if(isNaN(num)){
+        return -1
+    }
+    return num
+}
+
 import { saltovkaDBValue, severnayaSaltovkaDBValue } from '../../variables.js'
+
 export default {
     actions: {
         // addStreet(ctx, selectedStreet){
@@ -110,8 +120,8 @@ export default {
                 else{
                     state.findParams[dictVal.key] = [dictVal.value,]
                 }  
-                console.log('!! PARAMS')
-                console.log(state.findParams)
+                // console.log('!! PARAMS')
+                // console.log(state.findParams)
             }
         },
         removeFindParam(state, dictVal){
@@ -122,9 +132,18 @@ export default {
         },
         updateFindParams(state, findParams){
             for(const key in findParams){
-                if(typeof(findParams[key]) === 'string'){
+                if(!Array.isArray(findParams[key])){
                     findParams[key] = Array(findParams[key])
                 }
+                else { 
+                    findParams[key].forEach((element,index) => {
+                        const num = stringToInt(element)
+                        if(num != -1){
+                            findParams[key][index] = num
+                        }
+                    });
+                }
+               
                 // else{
                 //     // findParams[key].forEach((element) => {
                 //     //     element = Number.parseInt(element)

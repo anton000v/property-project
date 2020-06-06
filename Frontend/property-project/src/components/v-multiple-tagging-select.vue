@@ -59,7 +59,7 @@ export default {
             let vm = this;
             const matches = newTag.match(vm.regularExpr) 
             matches.forEach((tagVal) => {
-                console.log(tagVal in  vm.value)
+                // console.log(tagVal in  vm.value)
                 // console.log(vm.value)
                 // if(!(tagVal in vm.value)){
                 if(vm.value.indexOf(tagVal) == -1){
