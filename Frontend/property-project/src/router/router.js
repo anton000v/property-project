@@ -11,24 +11,21 @@ export default new Router({
         {
             path: '/',
             name: 'home',
-            component: vSearchPage
+            component: vSearchPage,
         },
         {
             path: '/buildings',
             name: 'search-page',
             component: vSearchPage,
-            props: (route) => ({ findParams: route.query }),
-            meta: {
-                showModal: false
-            }
+            // props: (route) => ({ findParams: route.query }),
+            // meta: {
+            //     showModal: false
+            // }
         },
         {
             path: '/buildings/:slug',
             name: 'building-page',
-            components: {
-                page: vSearchPage,
-                building: vBuildingPage
-            }
+            component: vBuildingPage
         },
         { path: '*', component: vNotFoundPage }
     ]

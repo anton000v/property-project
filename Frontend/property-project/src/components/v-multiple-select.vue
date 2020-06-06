@@ -1,6 +1,7 @@
 <template>
   <div> 
     <!-- {{ fieldChoiceText }} {{ searchKey }} {{ apiAddress }} {{ dictKey }} -->
+    {{ activeFindParams }}
         <multiselect 
           v-model="value" 
           @select="SelectValueAction"
@@ -37,7 +38,7 @@
 
 <script>
   import Multiselect from 'vue-multiselect';
-
+  import { mapGetters } from 'vuex'
   export default {
     props: {
       placeholder: {
@@ -76,14 +77,16 @@
       removeAction:{
         type: Function
       },
-      // selectedArr:{
-      //   type: Array
-      // }
+      initialDbData:{
+        type: Object,
+        default: () => {},
+      }
     },
     data () {
       return {
         value: [],
         options: [],
+        // localStorageValues: [],
         // searchValues: [],
       }
     },
@@ -91,6 +94,7 @@
       Multiselect
     },
     mounted() {
+      // alert(1)
         const axios = require('axios');
         // console.log("NESTED KEYS:")
         // console.log(this.nestedKeys)
@@ -101,7 +105,9 @@
         axios.get(this.apiAddress).then(resp => {
           
             if(this.nestedKeys.length == 0){
+              // this.setActiveValues()
               this.options = resp.data[this.dictKey];
+              // this.setActiveValues()
               // console.log('OPTIONS: ')
               // console.log(this.options)
               console.log('RESPONSE DATA: ')
@@ -116,12 +122,24 @@
         });
     },
     methods: {
+      setActiveValues(){
+        if(this.sendParamName in this.activeFindParams){
+          for(const opt in this.activeFindParams[this.sendParamName]){
+            // console.log(opt)
+            const index = this.options[this.dbValueKey].indexOf(opt)
+            if(index != -1){
+              this.value.push(this.options[index])
+            }
+          }
+        }
+      },
       clearAll () {
         this.value = []
       },
       SelectValueAction(selectedValue){
         // this.searchValues.push(selectedValue[this.dbValueKey]);
         this.addAction({'key':this.sendParamName, 'value':selectedValue[this.dbValueKey]})
+        // this.localStorageValues.push(selectedValue[this.dbValueKey])
         // alert()
         if(this.trackEveryUpdate){
           this.$emit('select', selectedValue[this.dbValueKey])
@@ -138,8 +156,21 @@
         }
       },
       SelectCloseAction() {
+        // const local_value = []
+        // this.value.forEach((element) => {
+
+        // })
+        
         this.$emit('selectClose', this.dictKey , this.searchValues)
+      },
+      setInitialData(){
+        console.log(this.initialDbData)
       }
+    },
+    computed: {
+      ...mapGetters([
+        'activeFindParams'
+      ]),
     },
   }
 </script>

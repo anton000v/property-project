@@ -24,7 +24,9 @@
         </div>
 
         <div class="absolute inset-x-0 bottom-0 items-center text-center bg-gray-300 py-6">
+            <router-link :to="{name:'building-page', params:{slug:slug}}">
             <p class=""> Открыть полностью </p>
+            </router-link>
         </div>
     </modal>
 </template>

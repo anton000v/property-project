@@ -153,7 +153,7 @@
               </div>
             </div>
           </div>
-          <button v-on:click="searchBuildings" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+          <button v-on:click="search" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
             п о и с к
           </button>
         </div>
@@ -206,37 +206,71 @@ export default{
     //     ...mapGetters(['allBuildings','buildingsCount'])
     //     },
     watch:{
+      
       $route:"updateBuildings"
     },
+    // beforeRouteUpdate(){
+    //   this.updateBuildings()
+    // },
     methods:{ 
       ...mapMutations([
         // 'removeStreet',
         // 'addStreet'
         'addFindParam',
-        'removeFindParam'
+        'removeFindParam',
+        'updateFindParams',
+
       ]),
       ...mapActions([
         'searchBuildings',
         'checkToShowMicroDistricts',
         'checkToHideMicroDistricts',
+        
         // 'addStreet',
         // 'removeStreet',
         ]),
         search(){
+          // alert('se')
+          // alert(this.activeFindParams)
+          console.log('\tSEARCH')
           // alert(findParams)
           // const qs = require('qs')
           // this.searchBuildings(findParams)
-          this.$router.replace({name: 'search-page', query:this.activeFindParams})
-        },
+          console.log('ACTIVE FIND PARAMS BEFORE ROUTER REPLACE')
+          console.log(this.activeFindParams)
+          
+          // const template = {distict:["2",1]}
+          // this.$store.dispatch('updateFindParams')
+          // .then(() => 
+          // this.$router.replace({name: 'search-page', query:this.activeFindParams})
+          this.$router.replace({query:this.activeFindParams})
+          // this.$router.replace({name:'search-page', query:})
+          // this.$router.replace({name: 'search-page', query:template})
+        }, 
         updateBuildings(){
           this.searchBuildings(this.activeFindParams)
         }
+    },
+    mounted(){
+      // alert(this.$route.query)
+      this.updateFindParams(JSON.parse(JSON.stringify(this.$route.query)))
+      console.log("  [from mounted]  Find param:")
+      console.log(this.activeFindParams)
+      this.updateBuildings()
     },
     computed: {
       ...mapGetters([
         'activeFindParams', 
         'isSaltovkaDistrictChoosen', 
         'isSevernayaSaltovkaDistrictChoosen',
+
+        'selectedStreets',
+        'selectedDistricts',
+        'selectedAdministrativeDistricts',
+        'selectedHouseNumbers',
+        'selectedDevelopers',
+        'selectedSaltovkaMicroDistricts',
+        'selectedSevernayaSaltovkaMicroDistricts',
         ])
     },
 

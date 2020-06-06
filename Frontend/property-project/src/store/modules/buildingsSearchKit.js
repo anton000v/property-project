@@ -14,7 +14,10 @@ export default {
         // addStreet(ctx, selectedStreet){
         //     ctx.commit('addStreet', selectedStreet)
         // },
-
+        // getFindParamsFromLocalStorage(ctx){
+        //     const findParams = localStorage.getItem('findParams');
+        //     ctx.commit('updateFindParams',findParams)
+        // },
         checkToShowMicroDistricts(ctx, selectedValue){
             if(selectedValue == saltovkaDBValue){
               if(!ctx.getters.isSaltovkaDistrictChoosen){
@@ -46,7 +49,7 @@ export default {
                 ctx.commit('updateIsSevernayaSaltovkaDistrictChoosen', false)
               }
             }
-        }
+        },
     },
     mutations: {
         // addStreet(state, streets){
@@ -60,6 +63,11 @@ export default {
         //     if (index > -1) {
         //         state.streets.splice(index, 1);
         //     }
+        // },
+
+        // Для сохранения состояния при обновлении страницы
+        // updateStreets(state, streets){
+        //     state.streets = streets
         // },
         // updateDistricts(state, districts){
         //     // if(arrCompareForSearch(state.districts, districts)){
@@ -76,6 +84,11 @@ export default {
         //         state.houseNumbers = houseNumbers
         //     // }
         // },
+        // updateDevelopers(state,developers){
+        //     // if(arrCompareForSearch(state.developers, developers)){
+        //         state.developers = developers
+        //     // }
+        // },
         // updateSaltovkaMicroDistricts(state, saltovkaMicroDistricts){
         //     // if(arrCompareForSearch(state.saltovkaMicroDistricts, saltovkaMicroDistricts)){
         //         state.saltovkaMicroDistricts = saltovkaMicroDistricts
@@ -86,11 +99,8 @@ export default {
         //         state.severnayaSaltovkaMicroDistricts = severnayaSaltovkaMicroDistricts
         //     // }
         // },
-        // updateDevelopers(state,developers){
-        //     // if(arrCompareForSearch(state.developers, developers)){
-        //         state.developers = developers
-        //     // }
-        // },
+
+
         addFindParam(state, dictVal){
             // alert(dictVal.value)
             if('key' in dictVal && 'value' in dictVal){
@@ -110,7 +120,26 @@ export default {
                 state.findParams[dictVal.key].splice(index, 1);
             }
         },
-        updateFindParam(state, findParams){
+        updateFindParams(state, findParams){
+            for(const key in findParams){
+                if(typeof(findParams[key]) === 'string'){
+                    findParams[key] = Array(findParams[key])
+                }
+                // else{
+                //     // findParams[key].forEach((element) => {
+                //     //     element = Number.parseInt(element)
+                //     //     // console.log(element)
+                //     //     // numCallbackRuns++
+                //     //   })
+                //     for(var i in findParams[key]){
+                //         findParams[key][i] = Number.parseInt(findParams[key][i])
+                //     }
+                // }
+                
+                // if(typeOf(findParams[key]) === 'string'){
+                //     findParams[key] = 
+                // }
+            }
             state.findParams = findParams
         },
         updateIsSaltovkaDistrictChoosen(state, value){
@@ -118,16 +147,21 @@ export default {
         },
         updateIsSevernayaSaltovkaDistrictChoosen(state, value){
             state.isSevernayaSaltovkaDistrictChoosen = Boolean(value)
-        }
+        },
+        // writeFindParamsToLocalStorage(state){
+        //     localStorage.setItem('findParams', JSON.stringify(state.findParams));
+        // },
+
     },
     state: {
-        streets:[],
-        districts: [],
-        administrativeDistricts:[],
-        houseNumbers:[],
-        saltovkaMicroDistricts:[],
-        severnayaSaltovkaMicroDistricts:[],
-        developers:[],
+        // streets:[],
+        // districts: [],
+        // administrativeDistricts:[],
+        // houseNumbers:[],
+        // saltovkaMicroDistricts:[],
+        // severnayaSaltovkaMicroDistricts:[],
+        // developers:[],
+
         findParams:{},
   
         isSaltovkaDistrictChoosen: false,
@@ -135,9 +169,28 @@ export default {
   
     },
     getters: {
-        selectedStreets(state){
-            return state.streets
-        },
+        // selectedStreets(state){
+        //     return state.selectedStreets 
+        // },  
+        // selectedDistricts(state){
+        //     return state.districts
+        // },
+        // selectedAdministrativeDistricts(state){
+        //     return state.administrativeDistricts
+        // },
+        // selectedHouseNumbers(state){
+        //     return state.houseNumbers
+        // },
+        // selectedDevelopers(state){
+        //     return state.developers
+        // },
+        // selectedSaltovkaMicroDistricts(state){
+        //     return state.saltovkaMicroDistricts
+        // },
+        // selectedSevernayaSaltovkaMicroDistricts(state){
+        //     return state.severnayaSaltovkaMicroDistricts
+        // },
+
         activeFindParams(state){
             return state.findParams
         },

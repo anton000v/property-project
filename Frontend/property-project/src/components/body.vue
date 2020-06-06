@@ -406,8 +406,8 @@ export default{
         axios.get(baseApiAddress + this.searchBuildingUrl, {
           params: this.findParams,
           paramsSerializer: params => {
-            console.log(' PARAMS: ')
-            console.log(qs.stringify(params, {arrayFormat: 'repeat'}))  
+            // console.log(' PARAMS: ')
+            // console.log(qs.stringify(params, {arrayFormat: 'repeat'}))  
             return qs.stringify(params, {arrayFormat: 'repeat'})
           }
           }).then(resp => {
