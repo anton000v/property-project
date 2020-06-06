@@ -1,6 +1,6 @@
 <template>
 
-  <!-- <div class="container mx-auto px-8"> -->
+    <!-- <div :if="dataReady"> -->
     <div class="flex flex-wrap">
       <div class="w-full text-center"> 
         <div
@@ -12,6 +12,7 @@
             >
               <i class="fas fa-retweet">III</i>
             </div>
+            {{ dataReady }}
             <div class="flex flex-wrap -mx-3 mb-6">
               <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
@@ -194,6 +195,7 @@ export default{
         saltovkaMicroDistrictsBaseVariables:saltovkaMicroDistrictsBaseVariables,
         severnayaSaltovkaMicroDistrictsBaseVariables:severnayaSaltovkaMicroDistrictsBaseVariables,
         developersBaseVariables:developersBaseVariables,
+        dataReady: false,
       }
    },
     // computed: {
@@ -206,12 +208,14 @@ export default{
     //     ...mapGetters(['allBuildings','buildingsCount'])
     //     },
     watch:{
-      
       $route:"updateBuildings"
     },
     // beforeRouteUpdate(){
     //   this.updateBuildings()
     // },
+    created () {
+       this.setInitialData()
+     },
     methods:{ 
       ...mapMutations([
         // 'removeStreet',
@@ -249,14 +253,18 @@ export default{
         }, 
         updateBuildings(){
           this.searchBuildings(this.activeFindParams)
+        },
+        setInitialData(){
+          this.updateFindParams(JSON.parse(JSON.stringify(this.$route.query)))
         }
     },
     mounted(){
       // alert(this.$route.query)
-      this.updateFindParams(JSON.parse(JSON.stringify(this.$route.query)))
-      // console.log("  [from mounted]  Find param:")
+      // this.updateFindParams(JSON.parse(JSON.stringify(this.$route.query)))
+      // console.log("  [from mounted]  Find param:") 
       // console.log(this.activeFindParams)
-      this.updateBuildings()
+      // this.dataReady = true
+      this.updateBuildings()   
     },
     computed: {
       ...mapGetters([

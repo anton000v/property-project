@@ -1,5 +1,7 @@
 <template>
   <div>
+      {{ activeFindParams }}
+      {{ value }}
     <multiselect 
     v-model="value" 
     :tag-placeholder="tagPlaceHolder" 
@@ -22,6 +24,8 @@
 
 <script>
 import Multiselect from 'vue-multiselect'
+import { mapGetters } from 'vuex'
+
 export default {
     props: {
         placeholder: {
@@ -42,6 +46,10 @@ export default {
         removeAction:{
             type: Function
         },
+        // initialDbData: {
+        //     type: Array,
+        //     default: () => undefined,
+        // }
     },
     components: {
         Multiselect
@@ -54,22 +62,52 @@ export default {
             regularExpr: /\d+[а-я]?/g,
         }
     },
+    mounted(){
+        // alert(1)
+        if(this.sendParamName in this.activeFindParams){
+            // alert()
+            // console.log(this.activeFindParams[this.sendParamName])
+            // this.setIntitialActiveValues()
+            this.value = this.activeFindParams[this.sendParamName]
+        }
+    },
     methods: {
+        // setIntitialActiveValues(){
+        //     console.log('AAA')
+        //     console.log(this.activeFindParams[this.sendParamName])
+        //     this.activeFindParams[this.sendParamName].forEach(activeParam => {
+        //         this.value.push(activeParam)
+
+        //         // this.options.forEach(element => {
+        //         // if(activeParam === element[this.dbValueKey]){
+        //         //     this.value.push(element)
+        //         // }
+        //         // })
+        //     })
+        // },
         addTag (newTag) {
             let vm = this;
-            const matches = newTag.match(vm.regularExpr) 
+            const matches = newTag.match(vm.regularExpr)
+            let isUnique = false 
             matches.forEach((tagVal) => {
                 // console.log(tagVal in  vm.value)
                 // console.log(vm.value)
                 // if(!(tagVal in vm.value)){
+                tagVal = parseInt(tagVal)
                 if(vm.value.indexOf(tagVal) == -1){
                     // const tag = {}
                     // tag[vm.sendParamName] = tagVal
+                    if(!isUnique){
+                        isUnique = true
+                    }
                     vm.value.push(tagVal)
                     vm.addAction({'key': vm.sendParamName, 'value':tagVal})
                 }
                 })
-            vm.changeTagAction()
+            if(isUnique){
+                this.changeTagAction()
+            }
+            
         },
 
         deleteTagAction(deletedTag){
@@ -80,6 +118,12 @@ export default {
         changeTagAction() {
             this.$emit('tagsChange')
        },
-    }
+
+    },
+    computed: {
+    ...mapGetters([
+        'activeFindParams'
+        ])
+       },
 }
 </script>

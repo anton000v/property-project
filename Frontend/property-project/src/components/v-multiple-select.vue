@@ -87,6 +87,7 @@
       return {
         value: [],
         options: [],
+        hasChange: false,
         // localStorageValues: [],
         // searchValues: [],
       }
@@ -135,39 +136,7 @@
               }
             })
           })
-          // for(const opt in this.activeFindParams[this.sendParamName]){
-          //   this.options.forEach(element => {
-          //   // for(const opt in this.activeFindParams[this.sendParamName]){
-          //   //   console.log(opt)
-          //   // console.log(element[this.dbValueKey])
-          //   if(opt === element[this.dbValueKey]){
-          //     this.value.push(element)
-          //   }
-          //   // const index = element[this.dbValueKey].indexOf(opt)
-          //   // if(index != -1){
-          //   //   this.value.push(element)
-          //   // }
-          //   })
-          // }
-            // }
-
-          // this.options.forEach(element => {
-          //   // for(const opt in this.activeFindParams[this.sendParamName]){
-          //   //   console.log(opt)
-          //     const index = this.options[this.dbValueKey].indexOf(opt)
-          //   if(index != -1){
-          //     this.value.push(this.options[index])
-          //   }
-          // }
-          // });
-          // for(const opt in this.activeFindParams[this.sendParamName]){
-          //   console.log(opt)
-          //   const index = this.options[this.dbValueKey].indexOf(opt)
-          //   if(index != -1){
-          //     this.value.push(this.options[index])
-          //   }
-          // }
-        // }
+          
       },
       clearAll () {
         this.value = []
@@ -175,6 +144,7 @@
       SelectValueAction(selectedValue){
         // this.searchValues.push(selectedValue[this.dbValueKey]);
         this.addAction({'key':this.sendParamName, 'value':selectedValue[this.dbValueKey]})
+        this.hasChange = true
         // this.localStorageValues.push(selectedValue[this.dbValueKey])
         // alert()
         if(this.trackEveryUpdate){
@@ -182,6 +152,7 @@
         }
       },
       removeValueAction(removedValue){
+        this.hasChange = true
         this.removeAction({'key':this.sendParamName , 'value':removedValue[this.dbValueKey]})
         // let index = this.selectedArr.indexOf(removedValue[this.searchKey]);
         // if (index > -1) {
@@ -196,8 +167,10 @@
         // this.value.forEach((element) => {
 
         // })
-        
-        this.$emit('selectClose', this.dictKey , this.searchValues)
+        if(this.hasChange){
+          this.hasChange = false
+          this.$emit('selectClose', this.dictKey , this.searchValues)
+        }
       },
       // setInitialData(){
       //   console.log(this.initialDbData)

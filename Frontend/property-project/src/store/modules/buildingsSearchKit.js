@@ -60,6 +60,13 @@ export default {
               }
             }
         },
+        // fetchActiveFindParams ({ commit }, id) {
+        //     // возвращаем Promise через `store.dispatch()`
+        //     // чтобы могли определять когда данные будут загружены
+        //     return fetchActiveFindParams(id).then(item => {
+        //       commit('setItem', { id, item })
+        //     })
+        //   }
     },
     mutations: {
         // addStreet(state, streets){
