@@ -7,9 +7,10 @@ import 'vue-search-select/dist/VueSearchSelect.css'
 import store from './store/index.js'
 import router from './router/router.js'
 import VModal from 'vue-js-modal'
- 
-Vue.use(VModal)
+// import VueTabs from 'vue-nav-tabs' 
 
+Vue.use(VModal)
+// Vue.use(VueTabs)
 // import 'bootstrap/dist/css/bootstrap.css'
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
 

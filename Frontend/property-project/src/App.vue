@@ -11,10 +11,8 @@ export default {
   components: {
     vMainWrapper,
   },
-
 }
 </script>
 
 <style>
-
 </style>

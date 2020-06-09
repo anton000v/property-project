@@ -1,19 +1,24 @@
 
+
+
 <template>
-  <swiper class="swiper" :options="swiperOption">
-    <swiper-slide>Slide 1</swiper-slide>
-    <swiper-slide>Slide 2</swiper-slide>
-    <swiper-slide>Slide 3</swiper-slide>
-    <swiper-slide>Slide 4</swiper-slide>
-    <swiper-slide>Slide 5</swiper-slide>
-    <swiper-slide>Slide 6</swiper-slide>
-    <swiper-slide>Slide 7</swiper-slide>
-    <swiper-slide>Slide 8</swiper-slide>
-    <swiper-slide>Slide 9</swiper-slide>
-    <swiper-slide>Slide 10</swiper-slide>
-    <div class="swiper-button-prev" slot="button-prev"></div>
-    <div class="swiper-button-next" slot="button-next"></div>
+<!-- <div :class="'swiper-container '+field_name" > -->
+  
+  <swiper :id="'swiper-'+uniqueStr" :class="'swiper '+uniqueStr" :options="swiperOption">
+   
+        <swiper-slide 
+      v-for="image in images"
+      :key="image.id"
+      >
+    <div class="swiper-zoom-container">
+      <img :src="image[field_name]">
+    </div>
+    </swiper-slide>
+    <div :class="'swiper-pagination-'+uniqueStr" slot="pagination"></div>
+    <div  :class="'button-prev-'+uniqueStr" slot="button-prev"></div>
+    <div  :class="'button-next-'+uniqueStr" slot="button-next"></div>
   </swiper>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -21,18 +26,37 @@
   import 'swiper/css/swiper.css'
 
   export default {
-    name: 'swiper-example-navigation',
-    title: 'Navigation',
+    // name: this.uniqueStr,
+    title: 'Progress pagination',
+    props:{
+      images:{
+        type:Array
+      },
+      field_name:{
+        type:String
+      },
+      slug:{
+        type:String
+      }
+
+    },
     components: {
       Swiper,
       SwiperSlide
     },
     data() {
       return {
+        uniqueStr:this.slug+'-'+this.field_name,
         swiperOption: {
+          pagination: {
+            el: '.swiper-pagination '+this.uniqueStr,
+            type: 'progressbar'
+          },
           navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev'
+            // nextEl: '#button-next-'+this.uniqueStr,
+            // prevEl: '#button-prev-'+this.uniqueStr,
+              nextEl: '.button-next-'+this.uniqueStr,
+              prevEl: '.button-prev-'+this.uniqueStr,
           }
         }
       }
@@ -40,6 +64,4 @@
   }
 </script>
 
-// <style lang="scss" scoped>
-//   @import './base.scss';
-// </style>
+

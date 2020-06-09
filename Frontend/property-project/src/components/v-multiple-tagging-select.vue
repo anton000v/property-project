@@ -1,7 +1,7 @@
 <template>
   <div>
-      {{ activeFindParams }}
-      {{ value }}
+      <!-- {{ activeFindParams }}
+      {{ value }} -->
     <multiselect 
     v-model="value" 
     :tag-placeholder="tagPlaceHolder" 

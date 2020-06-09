@@ -1,8 +1,8 @@
 <template>
     <modal 
     :name="'building-preview:'+building.slug"
-    :width="900"
-    :height="600"
+    :width="1000"
+    :height="700"
     :adaptive="true"
     :draggable="true"
     >
@@ -23,9 +23,46 @@
             </button>
         </div>
 
-        <div class='h-20'>
-            <vPreviewSlider/>
-        </div>
+<!-- <div :class="'wrapper' "> -->
+    <vue-tabs
+    active-tab-color="#e74c3c" 
+    active-text-color="white"
+    type="pills"
+    text-position="bottom"
+    centered
+    :name="slug"
+    >
+
+    <!-- <vPreviewSlider :images="building.building_images" field_name="building_image"/> -->
+
+        <v-tab :id="slug+'-images'" title="Изображения">
+            
+            <!-- lalalala -->
+            <vPreviewSlider :images="building.building_images" :slug="slug" field_name="building_image"/>
+        </v-tab>
+
+        <v-tab :id="slug+'-layouts'" title="Планировки">
+            tratataa
+            <vPreviewSlider :images="building.layout_images" :slug="slug" field_name="layout_image"/>
+        </v-tab> 
+
+    <!-- <v-tab title="Third tab">
+      Third tab content
+    </v-tab> -->
+    </vue-tabs>
+<!-- </div> -->
+
+        <!-- <v-tab :prefix="building.slug+'-'" title="Изображения">
+            <vPreviewSlider :images="building.building_images" field_name="building_image"/>
+        </v-tab>
+
+        <v-tab :prefix="building.slug+'-'" title="Планировки">
+            tratataa
+            <vPreviewSlider :images="building.layout_images" field_name="layout_image"/>
+        </v-tab>  -->
+        <!-- <div>
+            <vPreviewSlider :images="building.building_images" field_name="building_image"/>
+        </div> -->
 
         <div class="absolute inset-x-0 bottom-0 items-center text-center bg-gray-300 py-6">
             <router-link :to="{name:'building-page', params:{slug:slug}}">
@@ -37,9 +74,15 @@
 
 <script>
 import vPreviewSlider from './v-preview-slider'
+//local registration
+import {VueTabs, VTab} from 'vue-nav-tabs/dist/vue-tabs.js'
+//you can also import this in your style tag
+import 'vue-nav-tabs/themes/vue-tabs.css'
 export default {
     components:{
-        vPreviewSlider
+        vPreviewSlider,
+        VueTabs,
+        VTab
     },
     props:{
         slug: {
@@ -54,3 +97,7 @@ export default {
     },
 }
 </script>
+
+<style scoped >
+
+</style>

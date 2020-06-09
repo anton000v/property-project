@@ -1,8 +1,8 @@
 <template>
   <div> 
     <!-- {{ fieldChoiceText }} {{ searchKey }} {{ apiAddress }} {{ dictKey }} -->
-    <p>{{ activeFindParams }}</p>
-    <p>{{ value }}</p>
+    <!-- <p>{{ activeFindParams }}</p>
+    <p>{{ value }}</p> -->
         <multiselect 
           v-model="value" 
           @select="SelectValueAction"

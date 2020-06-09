@@ -247,7 +247,7 @@ export default{
           // this.$store.dispatch('updateFindParams')
           // .then(() => 
           // this.$router.replace({name: 'search-page', query:this.activeFindParams})
-          this.$router.replace({query:this.activeFindParams})
+          this.$router.replace({name:'search-page', query:this.activeFindParams})
           // this.$router.replace({name:'search-page', query:})
           // this.$router.replace({name: 'search-page', query:template})
         }, 
