@@ -1,44 +1,51 @@
 
-
-
 <template>
-<!-- <div :class="'swiper-container '+field_name" > -->
-  
-  <swiper :id="'swiper-'+uniqueStr" :class="'swiper '+uniqueStr" :options="swiperOption">
-   
-        <swiper-slide 
+  <swiper class="swiper h-full" :options="swiperOption">
+    <!-- <swiper-slide>
+      <div class="swiper-zoom-container">
+        <img src="/images/example/4.jpg">
+      </div>
+    </swiper-slide> -->
+    <swiper-slide 
       v-for="image in images"
-      :key="image.id"
+      :key="image"
       >
-    <div class="swiper-zoom-container">
-      <img :src="image[field_name]">
-    </div>
+          <div class="swiper-zoom-container">
+        <img :src="image">
+      </div>
     </swiper-slide>
-    <div :class="'swiper-pagination-'+uniqueStr" slot="pagination"></div>
-    <div  :class="'button-prev-'+uniqueStr" slot="button-prev"></div>
-    <div  :class="'button-next-'+uniqueStr" slot="button-next"></div>
+
+    <!-- <swiper-slide>
+      <div class="swiper-zoom-container">
+        <img src="/images/example/8.jpg">
+      </div>
+    </swiper-slide> -->
+    <div class="swiper-pagination swiper-pagination-white" slot="pagination"></div>
+    <div class="swiper-button-prev" slot="button-prev"></div>
+    <div class="swiper-button-next" slot="button-next"></div>
   </swiper>
-  <!-- </div> -->
 </template>
+
+
+
 
 <script>
   import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
   import 'swiper/css/swiper.css'
-
   export default {
     // name: this.uniqueStr,
-    title: 'Progress pagination',
+    // title: 'Progress pagination',
+    title: 'Zoom',
     props:{
       images:{
         type:Array
       },
-      field_name:{
-        type:String
-      },
       slug:{
         type:String
+      },
+      height:{
+          type:Number
       }
-
     },
     components: {
       Swiper,
@@ -46,22 +53,37 @@
     },
     data() {
       return {
-        uniqueStr:this.slug+'-'+this.field_name,
         swiperOption: {
+          zoom: true,
           pagination: {
-            el: '.swiper-pagination '+this.uniqueStr,
-            type: 'progressbar'
+            el: '.swiper-pagination'
           },
           navigation: {
-            // nextEl: '#button-next-'+this.uniqueStr,
-            // prevEl: '#button-prev-'+this.uniqueStr,
-              nextEl: '.button-next-'+this.uniqueStr,
-              prevEl: '.button-prev-'+this.uniqueStr,
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
           }
+         }
         }
-      }
+    },
+    computed: {
+        swiperCss() {
+            return {
+                '--height': this.height + 'px',
+                // '--height': this.height + 'px'
+            }
+        }
     }
+
   }
 </script>
 
+<style lang="scss" scoped>
 
+
+  .swiper {
+      
+    .swiper-slide {
+      background: #444;
+    }
+  }
+</style>
