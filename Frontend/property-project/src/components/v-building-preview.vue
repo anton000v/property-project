@@ -30,27 +30,42 @@
             </div>
         </div>
         <!-- <div class=''>   -->
-            <div id='preview-slider' class='h-screen/2'>
+            <div id='preview-slider' class='h-screen/2' v-if="sliderImages.length">
                 <vPreviewSlider 
                 :images="sliderImages" 
 
                 />
             </div>
+            <div v-else>
+                <p>Пока нет фотографий!</p>
+            </div>
             <div>  
                 <div class= 'h-full w-full px-10 py-4'>
-                    <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center gap-4">
-                        <div>
+                    <!-- <div class='flex justify-center'> -->
+                    <div class="flex justify-center text-center">
+                        <!-- <div>
                             <highway-icon :size="48" />
+                        </div> -->
+                        <div class="flex-1 flex-col bg-gray-200 ">
+                            <div class="flex-1 text-gray-700 font-bold text-center bg-gray-400 px-4 py-2 m-2">Административный район</div>
+                            <div class="flex-1 text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">1</div>
                         </div>
-                        <div>
-                            asdasd
+                        <div class="flex-1 flex-col bg-gray-200 ">
+                                <div class="flex-1 text-gray-700 font-bold  text-center bg-gray-400 px-4 py-2 m-2">Район</div>
+                                <div class="flex-1 text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">1</div>
                         </div>
-                        <div>
-                            asfsdgsdgdsfh
+                        <div v-if="building.micro_district !== 'Не делится на микрорайоны'" class="flex-1 flex-col bg-gray-200 ">
+                                <div class="flex-1 text-gray-700 font-bold  text-center bg-gray-400 px-4 py-2 m-2">Застройщик</div>
+                                <div class="flex-1 text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">1</div>
                         </div>
-                        <div>
-                            asfdasdfsadfsdfds
+                        <div class="flex-1 flex-col bg-gray-200 ">
+                                <div class="flex-1 text-gray-700 font-bold  text-center bg-gray-400 px-4 py-2 m-2">Застройщик</div>
+                                <div class="flex-1 text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">1</div>
                         </div>
+                    </div>
+                     <div class="flex flex-col bg-gray-200 my-3">
+                          <div class="flex-1 text-gray-700 text-center font-bold  bg-gray-400 px-4 py-2 m-2">Пути от метро <span><highway-icon :size="40" /></span> </div>
+                        <div class="flex-1 text-gray-700 text-center bg-gray-400 px-4 py-2 m-2"></div>
                     </div>
                 </div>
             </div>

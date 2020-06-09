@@ -25,7 +25,8 @@ export default new Router({
         {
             path: '/buildings/:slug',
             name: 'building-page',
-            component: vBuildingPage
+            component: vBuildingPage,
+            meta: { transitionName: 'zoom' },
         },
         { path: '*', component: vNotFoundPage }
     ]

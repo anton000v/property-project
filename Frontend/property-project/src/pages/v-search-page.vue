@@ -1,7 +1,7 @@
 <template>  
     <div>
         <Header/>
-        <section class="pb-20 bg-gray-300 -mt-32">
+        <section class="pb-20 -mt-32">
             <div class="container mx-auto px-8">
                 <BuildingsSearchKit/>
                 <BuildingsList/>

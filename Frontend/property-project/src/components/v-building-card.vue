@@ -9,7 +9,7 @@
     <div id='modal-wrapper'>
       <!-- {{ isMouseOver }} -->
       <div @mouseover="isMouseOver=true" @mouseleave="isMouseOver = false" >
-        <div class="hover:flex max-w-sm transition rounded-lg duration-500 ease-in-out hover:rounded-none hover:opacity-40 transform hover:-translate-y-1 hover:scale-110 hover:shadow-2xl overflow-hidden shadow-lg">
+        <div class="hover:flex max-w-sm transition rounded-lg duration-500 ease-in-out hover:rounded-none hover:opacity-40 transform hover:-translate-y-1 sm:hover-scale-100 md:hover:scale-105 hover:shadow-2xl overflow-hidden shadow-lg">
           <img v-if="building.building_images[0]" :src="building.building_images[0].building_image" alt="">
           <p v-else>Нету изображения :р</p>
           <div class="flex items-center px-6 py-3 bg-gray-900">
@@ -42,20 +42,32 @@
           </div>
           
           <!-- <div v-show="isMouseOver"> -->
+          <div class="invisible md:visible">
             <transition name="preview">
               <div v-show="isMouseOver">
-
                 <div class="flex flex-wrap opacity-75 absolute bottom-0 w-full left-0 bg-gray-200 h-full">
-                  <div class="w-full h-1/2 bg-gray-500 hover:bg-gray-600 text-white">Открыть полностью</div>
-                  <div class="w-full h-1/2 bg-gray-500 hover:bg-gray-600 text-white cursor-pointer" @click.prevent="show">Предпросмотр</div>
+                    <div class="w-full h-1/2 bg-gray-500 hover:bg-gray-600 text-white">
+                      <router-link :to="{name:'building-page', params:{slug:building.slug}}">
+                        <div class='bg-black h-full'>     
+                            Открыть полностью
+                        </div>
+                      </router-link>
+                    </div>
+                    <div class="w-full h-1/2 bg-gray-500 hover:bg-gray-600 text-white cursor-pointer" @click.prevent="show">Предпросмотр</div>
                 </div>
-
+              </div>
                 <!-- <button class="object w-full">Предпросмотр</button> -->
                 <!-- <button :class="[isMouseOver? 'visible' : '' , ' object w-full']">Предпросмотр</button> -->
-              </div>
+              
             </transition>
 
-          <!-- </div> -->
+          </div>
+          <div class="visible md:invisible ">
+            <router-link :to="{name:'building-page', params:{slug:building.slug}}">
+              <div class="flex flex-wrap absolute bottom-0 w-full left-0 h-full cursor-pointer">
+              </div>
+            </router-link>
+          </div>
         </div>
       </div>
       <!-- <modal :name="'building-preview:'+building.slug"> -->

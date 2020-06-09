@@ -188,8 +188,12 @@ class NewBuildingSerializerForSearch(serializers.Serializer):
                                 default=choices.NOT_COMPLETED,
                                 # source='get_district_display'
                                 )  # )
+    micro_district = fields.ChoiceFieldCustomDisplay(choices=choices.FULL_MICRO_DISTRICT_CHOICES,
+                                default=choices.MICRO_DISTRICT_DOES_NOT_EXIST,
+                                # source='get_district_display'
+                                )  # )
     developer = serializers.CharField(max_length=100, default=1)
-    slug = serializers.SlugField(max_length=150)
+    slug = serializers.CharField()
     building_images = BuildingImageSerializer(many=True)
     layout_images = LayoutImageSerializer(many=True)
     ways_from_metro = WayFromMetroSerializer(many=True)
