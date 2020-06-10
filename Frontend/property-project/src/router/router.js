@@ -24,11 +24,12 @@ export default new Router({
         },
         {
             path: '/buildings/:slug',
+            // props: true,
             name: 'building-page',
             component: vBuildingPage,
-            meta: { transitionName: 'zoom' },
+            // meta: { transitionName: 'zoom' },
         },
-        { path: '*', component: vNotFoundPage }
+        { path: '*', name:'page-404',component: vNotFoundPage }
     ]
 })
 

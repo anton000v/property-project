@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="bg-gray-300">
       <vMainWrapper/>
   </div>
 </template>
@@ -16,4 +16,9 @@ export default {
 </script>
 
 <style>
+
+/* body{
+  background-color:black;
+} */
+
 </style>

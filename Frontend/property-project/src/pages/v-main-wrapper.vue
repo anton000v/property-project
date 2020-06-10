@@ -1,10 +1,10 @@
 <template>  
     <div class="main-wrapper">
-        <div class="bg-gray-300">
+        <div>
         <!-- <vue-page-transition name="overlay-left-right"> -->
-            <md-transition>
+            <!-- <md-transition> -->
                 <router-view/>
-            </md-transition>
+            <!-- </md-transition> -->
             </div>
         <!-- </vue-page-transition> -->
     </div>
