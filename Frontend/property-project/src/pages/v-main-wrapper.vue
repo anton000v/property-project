@@ -3,9 +3,12 @@
         <div>
         <!-- <vue-page-transition name="overlay-left-right"> -->
             <!-- <md-transition> -->
-                <router-view/>
+                <div class='min-h-screen'>
+                    <router-view/>
+                </div>
+                <Footer/>
             <!-- </md-transition> -->
-            </div>
+        </div>
         <!-- </vue-page-transition> -->
     </div>
 </template>
@@ -13,11 +16,12 @@
 <script>
 
 
+import Footer from '../components/v-footer'
 // import TransitionPage from '../transitions/v-transition-page';
 export default {
-    // components: {
-    //     TransitionPage,
-    // },
+    components: {
+        Footer,
+    },
 }
 
 </script>

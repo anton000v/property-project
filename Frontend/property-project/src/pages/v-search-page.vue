@@ -1,6 +1,6 @@
 <template>  
     <div>
-        <Header/>
+        <vHeaderMain/>
         <section class="pb-20 -mt-32">
             <div class="container mx-auto px-8">
                 <BuildingsSearchKit/>
@@ -12,7 +12,7 @@
 
 <script>
 
-import Header from '../components/v-header'
+import vHeaderMain from '../components/v-header-main'
 import BuildingsList from '../components/v-buildings-list'
 import BuildingsSearchKit from '../components/v-buildings-search-kit'
 import { mapActions, mapGetters ,mapMutations } from 'vuex'
@@ -27,7 +27,7 @@ export default {
     components: {
         BuildingsList,
         BuildingsSearchKit,
-        Header
+        vHeaderMain
     },
     methods: {
         // parseFindParams(){

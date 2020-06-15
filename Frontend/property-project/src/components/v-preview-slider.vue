@@ -85,5 +85,10 @@
     .swiper-slide {
       background: #444;
     }
+    div.swiper-button-prev,
+    div.swiper-button-next {
+    color: #ff9b9d;
+    }
   }
+  
 </style>

@@ -1,7 +1,7 @@
 from .utils import rus_alphabet
 
 # ----------Default values:
-NOT_COMPLETED = 'nc'
+NOT_COMPLETED = ''
 DEFAULT = 'Не заполнено'
 HUMAN_ORIENTED_DEFAULT = 'Упс, пока не можем найти'
 
@@ -493,4 +493,4 @@ HOUSE_LETTER_CHOICES = [(WITHOUT_LETTER, WITHOUT_LETTER_FOR_HUMANS)] + [(k,k) fo
 
 #---------------------- HOUSING NUMBER choices
 NOT_DIVIDED = ''
-HOUSING_NUMBER_CHOICES = [(WITHOUT_LETTER, 'Не делится на корпуса')] + [(i,i) for i in range(1, 11)]
+HOUSING_NUMBER_CHOICES = [(WITHOUT_LETTER, 'Не делится на корпуса')] + [(str(i),str(i)) for i in range(1, 11)]

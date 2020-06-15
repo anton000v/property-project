@@ -19,6 +19,8 @@
           :track-by="fieldChoiceText" 
           :preselect-first="true" 
           
+         
+
           selectLabel="enter чтобы выбрать" 
           deselectLabel="enter чтобы удалить" 
           selectedLabel="выбрано"
@@ -184,3 +186,11 @@
   }
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
+<style scoped>
+  .multiselect .multiselect__tags,
+  .multiselect .multiselect__tags span,
+  .multiselect .multiselect__tags input {
+    /* background:red; */
+  }
+</style>

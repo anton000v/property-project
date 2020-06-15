@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="bg-gray-300">
+  <div id="app" class="bg-myPageBackground">
       <vMainWrapper/>
   </div>
 </template>

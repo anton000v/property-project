@@ -5,7 +5,6 @@
     >
       <div
         class="absolute top-0 w-full h-full bg-center bg-cover"
-        style='background-image: url("https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1267&amp;q=80");'
         :style="{ backgroundImage: 'url(' + require('@/assets/images/header.png') + ')' }">
       
         <span
@@ -41,7 +40,7 @@
           y="0"
         >
           <polygon
-            class="text-gray-300 fill-current"
+            class="text-myPageBackground fill-current"
             points="2560 0 2560 100 0 100"
           ></polygon>
         </svg>

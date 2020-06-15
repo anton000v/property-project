@@ -66,31 +66,32 @@ class NewBuilding(models.Model):
     #                                           default=choices.NOT_COMPLETED,
     #                                           verbose_name=u"Административный район")  #
     district = models.CharField(max_length=4, choices=choices.DISTRICT_CHOICES,
-                                default=choices.NOT_COMPLETED,
-                                verbose_name=u"Район")  # )
+                                verbose_name=u"Район",
+                                )  # )
     micro_district = models.CharField(max_length=4, choices=choices.FULL_MICRO_DISTRICT_CHOICES,
                                       default=choices.NOT_COMPLETED,
-                                      verbose_name="Микрорайон")  # микрорайон
-    houising_number = models.CharField(max_length = 1, choices = choices.HOUSING_NUMBER_CHOICES,
+                                      verbose_name="Микрорайон",
+                                      null=True, blank=True)  # микрорайон
+    houising_number = models.CharField(max_length = 2, choices = choices.HOUSING_NUMBER_CHOICES,
                                       default=choices.NOT_DIVIDED,
                                       verbose_name='Номер корпуса',
                                       null=True, blank=True)
 
-    location = models.CharField(max_length=200, verbose_name=u"Расположение", default=1)  #
+    location = models.CharField(max_length=200, verbose_name=u"Расположение", default=1, null=True, blank=True)  #
     # developer = models.CharField(max_length=100, verbose_name=u"Застройщик", default=1)  #
-    developer = models.ForeignKey(Developer, on_delete=models.CASCADE, verbose_name = 'Застройщик')
+    developer = models.ForeignKey(Developer, on_delete=models.CASCADE, verbose_name = 'Застройщик', null=True, blank=True)
     the_class = models.CharField(max_length=2, choices=choices.THE_CLASS_CHOICES, default=choices.NOT_COMPLETED,
-                                verbose_name=u"Класс")
+                                verbose_name=u"Класс", null=True, blank=True)
     number_of_storeys = models.PositiveSmallIntegerField(verbose_name=u"Этажность", default=1)  #
     number_of_buildings = models.PositiveSmallIntegerField(verbose_name=u"Количество домов", default=1)  #
     number_of_sections_or_entrances = models.IntegerField(verbose_name=u"Количество секций/подьездов",default=1)
     construction_technology = models.CharField(max_length=2, choices=choices.THE_CONSTRUCTION_TECHNOLOGY_CHOICES,
                                               default=choices.NOT_COMPLETED,
-                                              verbose_name=u"Технология строительства")
+                                              verbose_name=u"Технология строительства", null=True, blank=True)
     walls_type = models.CharField(max_length=2, choices=choices.THE_WALLS_TYPE_CHOICES, default=choices.NOT_COMPLETED,
-                                 verbose_name=u"Стены")
+                                 verbose_name=u"Стены", null=True, blank=True)
     warming = models.CharField(max_length=2, choices=choices.THE_WARMING_CHOICES, default=choices.NOT_COMPLETED,
-                               verbose_name=u"Утепление")  #
+                               verbose_name=u"Утепление", null=True, blank=True)  #
     room_height = models.PositiveSmallIntegerField(verbose_name=u"Высота помещений", default=1)  #
     number_of_apartments_in_house = models.PositiveSmallIntegerField(verbose_name=u"Кол-во квартир в доме", default=1)  #
 
@@ -109,11 +110,11 @@ class NewBuilding(models.Model):
     commercial_premises = models.PositiveSmallIntegerField(verbose_name=u"Коммерческие помещения",
                                                           null=True, default=1)  # пишешь только этаж
     heating = models.CharField(max_length=2, choices=choices.THE_HEATING_CHOICES, default=choices.NOT_COMPLETED,
-                               verbose_name=u"Отопление")
+                               verbose_name=u"Отопление", null=True, blank=True)
     gasification = models.BooleanField(verbose_name=u"Газификация", default=1)
     elevator = models.CharField(max_length=50, verbose_name=u"Лифт", default=1)  #
     parking = MultiSelectField(choices=choices.THE_PARKING_CHOICES, default=choices.NOT_COMPLETED,
-                               verbose_name=u"Паркинг")
+                               verbose_name=u"Паркинг", null=True, blank=True)
     number_of_parking_spaces = models.SmallIntegerField(verbose_name=u"Кол-во машиномест", default=1)
     price = models.SmallIntegerField(verbose_name=u"Цена за м2 у застройщика", default=1)
     completion_date = models.SmallIntegerField(verbose_name=u"Сдан и принят в эксплуатацию", default=1)

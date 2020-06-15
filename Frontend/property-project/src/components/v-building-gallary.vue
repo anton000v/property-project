@@ -1,8 +1,9 @@
 <template>
     <div>
-        <vue-picture-swipe :options="{shareEl: false, history:false, captionEl:true}" :items="preparedImages"
+        <vue-picture-swipe :ref="gallaryRef" :options="{shareEl: false, history:false, captionEl:true}" :items="preparedImages"
         >
         </vue-picture-swipe>
+        <!-- <button @onclick="sh">safdsfdf</button> -->
     </div>
 </template>
 
@@ -16,6 +17,10 @@ export default {
         },
         caption: {
             type: String
+        },
+        gallaryRef:{
+            type:String,
+            default: ''
         }
     },
     components:{
@@ -23,7 +28,7 @@ export default {
     },
     data(){
         return{
-             
+        //     pswp: Object 
         }
     },
     computed: {
@@ -38,11 +43,18 @@ export default {
                     title: this.caption
                 })
             });
+            console.log(imgs)
             return imgs
         },
 
        
     },
+    // methods: {
+    //     al(){
+    //         // alert()
+    //         //  console.log(this.pswp)
+    //     }
+    // },
 }
 </script>
 
@@ -50,5 +62,12 @@ export default {
 img[itemprop="thumbnail"]{
     padding: 5px;
     width: 500px;
+    height:auto;
+    display: inline-block;
 }
+
+/* a[itemprop="contentUrl"]{
+    padding: 5px;
+    width: 500px;
+} */
 </style>

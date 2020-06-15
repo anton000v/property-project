@@ -8,7 +8,8 @@
         >
           <div class="px-4 py-5 flex-auto">
             <div
-              class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-blue-400"
+              class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-mySecondDark hover:bg-myFirstLight cursor-pointer"
+              v-on:click="search"
             >
               <i class="fas fa-retweet">III</i>
             </div>
@@ -154,9 +155,9 @@
               </div>
             </div>
           </div>
-          <button v-on:click="search" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+          <!-- <button v-on:click="search" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
             п о и с к
-          </button>
+          </button> -->
         </div>
      </div> 
     </div>
