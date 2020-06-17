@@ -22,12 +22,12 @@
                         </div> -->
                     
                         <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
-                            <div class="px-4 py-5 flex-auto">
+                            <div class="px-1 md:px-4 py-5 flex-auto">
                                 <div class="text-2xl">
                                     <p class="uppercase font-bold  text-myMint-400">ЖК {{ building.name }}</p>
                                     <p>{{ building.street }} {{ building.house_number }}{{ building.house_letter }}</p>
                                 </div>
-                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-6">
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-6 pt-6">
                                     <div class="cursor-pointer" @click="openMainImage">
                                         <img v-if="building.building_images[0]" :src="building.building_images[0].building_image" alt="Главное фото">
                                         <img v-else-if="building.layout_images[0]" :src="building.layout_images[0].layout_image" alt="Главное фото">
@@ -36,64 +36,67 @@
                                     <div class="col-span-1">
                                         <div class= 'h-full w-full'>
 
-                                            <div class="grid grid-cols-2 justify-center text-center justify-center gap-2">
+                                            <div v-if="building.administrative_district.length > 0" class="grid grid-cols-2 justify-center text-center justify-center gap-2">
                                                 <div class="flex-1 flex-col bg-gray-200 ">
-                                                    <div class="text-gray-700 font-bold text-center bg-gray-400 px-4 py-2 m-2">
+                                                    <div class="text-gray-700 font-bold text-center bg-gray-400 px-4 py-2 m-1 md:m-2">
                                                         <div class="inline-flex items-center">
                                                             <HomeCityIcon fillColor="#1F7B67" :size="25" />
-                                                            <div class="flex-1 px-2 text-sm lg:text-base">
+                                                            <div class="block md:hidden flex-1 sm:px-1 text-sm lg:text-base">
+                                                                Админ. район
+                                                            </div>
+                                                            <div class="hidden md:block flex-1 px-2 text-sm lg:text-base">
                                                                 Административный район
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="flex-1 text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">{{ building.administrative_district }}</div>
+                                                    <div class="flex-1 text-gray-700 text-center bg-gray-400 md:px-4 py-2 m-2">{{ building.administrative_district }}</div>
                                                 </div>
-                                                <div class="flex-1 flex-col bg-gray-200 ">
-                                                    <div class="text-gray-700 font-bold  text-center bg-gray-400 px-4 py-2 m-2">
+                                                <div v-if="building.district.length > 0" class="flex-1 flex-col bg-gray-200 ">
+                                                    <div class="text-gray-700 font-bold  text-center bg-gray-400 px-4 py-2 m-1 md:m-2">
                                                         <div class="inline-flex items-center">
                                                             <HomeGroupIcon fillColor="#1F7B67" :size="25" />
-                                                            <div class="flex-1 px-2">
+                                                            <div class="flex-1 sm:px-1 px-2 text-sm lg:text-base">
                                                                 Район
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="flex-1 text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">{{ building.district }}</div>
+                                                    <div class="flex-1 text-gray-700 text-center bg-gray-400 md:px-4 py-2 m-2">{{ building.district }}</div>
                                                 </div>
                                                 <div v-if="building.micro_district !== 'Не делится на микрорайоны'" class="flex-1 flex-col bg-gray-200 ">
-                                                    <div class="text-gray-700 font-bold  text-center bg-gray-400 px-4 py-2 m-2">
+                                                    <div class="text-gray-700 font-bold  text-center bg-gray-400 px-4 py-2 m-1 md:m-2">
                                                         <div class="inline-flex items-center">
                                                             <DomainIcon fillColor="#1F7B67" :size="25" />
-                                                            <div class="flex-1 px-2">
+                                                            <div class="flex-1 sm:px-1 px-2 text-sm lg:text-base">
                                                                 Микрорайон
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="flex-1 text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">{{ building.micro_district }}</div>
+                                                    <div class="flex-1 text-gray-700 text-center bg-gray-400 md:px-4 py-2 m-1 md:m-2">{{ building.micro_district }}</div>
                                                 </div>
-                                                <div class="flex-1 flex-col bg-gray-200 ">
-                                                    <div class="text-gray-700 font-bold  text-center bg-gray-400 px-4 py-2 m-2">
+                                                <div v-if="building.developer.length > 0" class="flex-1 flex-col bg-gray-200 ">
+                                                    <div class="text-gray-700 font-bold  text-center bg-gray-400 px-4 py-2 m-1 md:m-2">
                                                         <div class="inline-flex items-center">
                                                             <HouseEditIcon fillColor="#1F7B67" :size="25" />
-                                                            <div class="flex-1 px-2">
+                                                            <div class="flex-1 sm:px-1 px-2 text-sm lg:text-base">
                                                                 Застройщик
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">{{ building.developer }}</div>
+                                                    <div class="text-gray-700 text-center bg-gray-400 md:px-4 py-2 m-2">{{ building.developer }}</div>
                                                 </div>
                                             </div>
-                                            <div class="flex1 bg-gray-200 mt-5" v-if="building.ways_from_metro.length">
+                                            <div v-if="building.ways_from_metro.length > 0" class="flex1 bg-gray-200 mt-5" >
                                                 <div class="px-2 py-2">
                                                     <div class="text-gray-700 font-bold  text-center bg-gray-400">
                                                         <div class="inline-flex items-center">
                                                             <highway-icon fillColor="#1F7B67" :size="30" />
-                                                            <div class="flex-1 my-2 px-4 py-2">
+                                                            <div class="flex-1 m-1 md:m-2 px-4 p-2 text-sm lg:text-base">
                                                                 Пути от метро
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="flex-1 text-gray-700 text-center bg-gray-400 ">
-                                                        <div class="w-full flex text-sm lg:text-base justify-center lg:my-2 lg:px-4 lg:py-2" v-for="way in building.ways_from_metro" :key="way.metro">
+                                                        <div class="w-full flex text-sm lg:text-base justify-center mt-2 lg:px-4 pb-2 pt-2" v-for="way in building.ways_from_metro" :key="way.metro">
                                                             <div class="w-2/5"> {{ way.metro }} </div>
                                                             <div class="w-1/5"> {{ way.type_of_movement }} </div>
                                                             <div class="w-1/5"> {{ way.time }} мин. </div>
@@ -102,16 +105,16 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="flex1 bg-gray-200 mt-5" v-if="building.ways_from_metro.length">
+                                            <div v-if="building.completion_date.length > 0" class="flex1 bg-gray-200 mt-5" >
                                                <div class="text-gray-700 font-bold  text-center bg-gray-400 px-4 py-2 m-2">
-                                                            <div class="inline-flex items-center">
-                                                                <ClipboardCheckMultipleIcon fillColor="#1F7B67" :size="25" />
-                                                                <div class="flex-1 px-2">
-                                                                    Сдан в эксплуатацию
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">{{ building.completion_date }}</div>
+                                                <div class="inline-flex items-center">
+                                                    <ClipboardCheckMultipleIcon fillColor="#1F7B67" :size="25" />
+                                                    <div class="flex-1 px-2 text-sm lg:text-base">
+                                                        Сдан в эксплуатацию
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-gray-700 text-center bg-gray-400 md:px-4 py-2 m-2">{{ building.completion_date }}</div>
                                             </div>
                                          </div>
                                     </div>
@@ -119,34 +122,47 @@
                             </div>
                         </div>
 
+<!-- <div class='p-10'> -->
+    <div ref="anchors-default-position" class="invisible"> </div>
+    <div ref="anchors" class="sticky text-center left-0 top-0 z-50 bg-myPageBackground relative flex flex-col min-w-0 shadow-md ">
+        <div class="hidden md:block">
+            <transition name="fade">
+                    <div v-if="anchorsInfo.showAncorsTitle" class='flex-1 '>
+                        <p class='text-center text-myMint-400 text-base text-gray-700'>Property-project Харьков | {{ building.street }} {{ building.house_number }}{{ building.house_letter }}</p>
+                    </div>
+                    <!-- <div v-else class='h-4'>
+                    </div> -->
+            </transition>
+        </div>
+        <scrollactive  active-class="bg-myMint-100" :modifyUrl="false">
+            <!-- <a href="#images" class="">Фото</a>
+            <a href="#layouts" class="">Планировки</a> -->
 
-<div ref="anchors-default-position" class="invisible"> </div>
-<div ref="anchors" class="sticky text-center  left-0 top-0 z-50 bg-myPageBackground relative flex flex-col min-w-0 shadow-md ">
-    <transition name="fade">
-            <div v-if="anchorsInfo.showAncorsTitle" class='flex-1'>
-                <p class='text-center text-myMint-400 text-base text-gray-700'>Property-project Харьков | {{ building.street }} {{ building.house_number }}{{ building.house_letter }}</p>
-            </div>
-            <!-- <div v-else class='h-4'>
-            </div> -->
-    </transition>
-    <scrollactive  active-class="bg-myMint-100" :modifyUrl="false">
-        <!-- <a href="#images" class="">Фото</a>
-        <a href="#layouts" class="">Планировки</a> -->
-
-         <ul class="flex">
-            <li class="flex-1">
-                <a href="#images" class="scrollactive-item transition duration-500 transform hover:translate-y-1 ease-in-out text-center block hover:bg-myMint-100 font-bold text-gray-700 hover:text-white  hover:shadow-xl py-2 ">
-                    Изображения дома
-                </a>
-            </li>
-            <li class="flex-1">
-                <a href="#layouts" class="scrollactive-item transition duration-500 transform hover:translate-y-1 ease-in-out text-center block hover:bg-myMint-100 font-bold text-gray-700 hover:text-white hover:shadow-xl py-2 ">
-                    Планировки
-                </a>
-            </li>
-        </ul>
-    </scrollactive>
-</div>
+            <ul class="flex text-sm md:text-base">
+                <li class="flex-1">
+                    <a href="#building-full-info" class="scrollactive-item md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-100 font-bold text-gray-700 md:hover:text-white md:hover:shadow-xl py-2 ">
+                        Об обьекте
+                    </a>
+                </li>
+                <li class="flex-1">
+                    <a href="#images" class="scrollactive-item md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-100 font-bold text-gray-700 md:hover:text-white  md:hover:shadow-xl py-2 ">
+                        Изображения дома
+                    </a>
+                </li>
+                <li class="flex-1">
+                    <a href="#layouts" class="scrollactive-item md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-100 font-bold text-gray-700 md:hover:text-white md:hover:shadow-xl py-2 ">
+                        Планировки
+                    </a>
+                </li>
+                <li class="flex-1">
+                    <a href="#buildings-for-sale" class="scrollactive-item md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-100 font-bold text-gray-700 md:hover:text-white md:hover:shadow-xl py-2 ">
+                        Обьекты в продаже
+                    </a>
+                </li>
+            </ul>
+        </scrollactive>
+    </div>
+<!-- </div> -->
   <!-- <div class="flex h-16 bg-myMint-400 text-white hover:bg-myMint-100 hover:text-black transition duration-500 ease-in-out hover:rounded-none hover:opacity-40 transform hover:translate-y-1 hover:shadow-2xl overflow-hidden shadow-md">  
                         <p class="m-auto text-xl"> Открыть полностью </p>
                     </div> -->
@@ -159,49 +175,92 @@
                         <div
                             class="relative flex flex-col min-w-0 w-full pt-8 mb-8 rounded-lg"
                         >
-                            <div class="flex-auto" v-if="building_images.length > 0 || layout_images.length > 0">
+                            <div class="flex-auto">
                                 <div>
-                                    <div id="images" class="py-5" v-if="building_images.length > 0">
+                                    <div id="building-full-info" class="pt-20" >
+                                        <h2 class="text-3xl font-bold pt-10 lg:pt-0 text-gray-700 text-center">Характеристики ЖК</h2>
+                                        <!-- <div class="flex w-full"> -->
+                                        <div class="m-auto w-3/5 pt-3 mb-3 border-b-2 border-myMint-100 opacity-25"></div>
+                                        <!-- </div> -->
+                                        <div class='grid py-2 grid-cols-2'>
+                                            <div v-if="building.the_class">Класс:<span class="px-4 font-bold text-myMint-400">{{ building.the_class }}</span></div>
+                                            <div v-if="building.construction_technology">Технология строительства:<span class="px-4 font-bold text-myMint-400">{{ building.construction_technology }}</span></div>
+                                            <div v-if="building.number_of_storeys">Этажность:<span class="px-4 font-bold text-myMint-400">{{ building.number_of_storeys }}</span></div>
+                                            <div v-if="building.walls_type">Стены:<span class="px-4 font-bold text-myMint-400">{{ building.walls_type }}</span></div>
+                                            <div v-if="building.number_of_buildings">Кол-во домов:<span class="px-4 font-bold text-myMint-400">{{ building.number_of_buildings }}</span></div>
+                                            <div v-if="building.warming">Утепление:<span class="px-4 font-bold text-myMint-400">{{ building.warming }}</span></div>
+                                            <div v-if="building.number_of_sections_or_entrances">Кол-во секций / подьездов:<span class="px-4 font-bold text-myMint-400">{{ building.number_of_sections_or_entrances }}</span></div>
+                                            <div v-if="building.room_height">Высота помещений:<span class="px-4 font-bold text-myMint-400">{{ building.room_height }}</span></div>
+                                            <div v-if="building.the_class" class="mt-5 col-span-2">Кол-во квартир в доме:<span class="px-4 font-bold text-myMint-400">{{ building.room_height }}</span></div>
+                                            <div v-if="building.the_class" class="col-span-2">Кол-во квартир на этаж:<span class="px-4 font-bold text-myMint-400">{{ building.room_height }}</span></div>
+                                            <div v-if="building.the_class" class="mt-5 col-span-2">Типы квартир:</div>
+                                            <div v-if="building.the_class" class="mt-5 col-span-2">Коммерческие помещения:</div>
+
+                                            <div class="">Коммуникации:</div>
+                                            <div class="">Лифт:</div>
+                                        </div>
+                                    </div>
+                                    <div id="images" class="pt-20" >
                                         <h2 class="text-3xl font-bold pt-10 lg:pt-0 text-gray-700 text-center">Изображения дома</h2>
                                         <!-- <div class="flex w-full"> -->
-                                        <div class="m-auto w-1/2 pt-3 mb-3 border-b-2 border-myMint-100 opacity-25"></div>
+                                        <div class="m-auto w-3/5 pt-3 mb-3 border-b-2 border-myMint-100 opacity-25"></div>
                                         <!-- </div> -->
                                         <div>
                                             <building-gallary 
+                                                v-if="building.building_images.length > 0"
                                                 ref="buildings" 
                                                 gallaryRef="buildingsGallary" 
                                                 :images_src="building_images" 
                                                 caption="Изображение дома"
                                             >
                                             </building-gallary>
+
+                                            <building-gallary 
+                                                v-else
+                                                ref="buildings" 
+                                                gallaryRef="buildingsGallary" 
+                                                :images_src="[require('@/assets/images/cat-no-photo-yet-green-2.jpg')]" 
+                                                caption="Кошечка лучше, чем ничего"
+                                            >
+                                            </building-gallary>
                                         </div>
                                     </div>
-                                    <div id="layouts" class="py-6" v-if="layout_images.length > 0">
+                                    <div id="layouts" class="pt-20">
                                         <h2 class="text-3xl font-bold pt-10 lg:pt-0 text-gray-700 text-center">Планировки</h2>
                                         <!-- <div class="flex w-full"> -->
-                                            <div class="m-auto w-1/2 pt-3 mb-3 border-b-2 border-myMint-100 opacity-25"></div>
+                                            <div class="m-auto w-3/5 pt-3 mb-3 border-b-2 border-myMint-100 opacity-25"></div>
                                         <!-- </div> -->
                                         <div>
-                                            <building-gallary :images_src="layout_images" caption="Планировка"></building-gallary>
+                                            <building-gallary 
+                                            v-if="building.layout_images.length > 0"
+                                            ref="layouts"
+                                            gallaryRef="layoutsGallary" 
+                                            :images_src="layout_images" 
+                                            caption="Планировка">
+                                            </building-gallary>
+
+                                            <building-gallary 
+                                                v-else
+                                                ref="layouts" 
+                                                gallaryRef="layoutsGallary" 
+                                                :images_src="[require('@/assets/images/cat-no-photo-yet-green-2.jpg')]" 
+                                                caption="Кошечка лучше, чем ничего"
+                                            >
+                                            </building-gallary>
                                         </div>
                                     </div>
-                                    <p>asdfdsf</p>
-                                    <p>asdfdsf</p>
-                                    <p>asdfdsf</p>
-                                    <p>asdfdsf</p>
-                                    <p>asdfdsf</p>
-                                    <p>asdfdsf</p>
-                                    <p>asdfdsf</p>
-                                    <p>asdfdsf</p>
-                                    <p>asdfdsf</p>
-                                    <p>asdfdsf</p>
-                                    <p>asdfdsf</p>
-                                    <p>asdfdsf</p>
-                                    <p>asdfdsf</p>
-                                    <p>asdfdsf</p>
+                                    <div id="buildings-for-sale" class="pt-20" >
+                                        <h2 class="text-3xl font-bold pt-10 lg:pt-0 text-gray-700 text-center">Обьекты в продаже</h2>
+                                        <!-- <div class="flex w-full"> -->
+                                        <div class="m-auto w-3/5 pt-3 mb-3 border-b-2 border-myMint-100 opacity-25"></div>
+                                        <!-- </div> -->
+                                        <div>
+        
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div v-else>
+                            <!-- <div v-else>
                                 <building-gallary 
                                     ref="buildings" 
                                     gallaryRef="buildingsGallary" 
@@ -209,7 +268,7 @@
                                     caption="Кошечка лучше, чем ничего"
                                 >
                                 </building-gallary>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 
@@ -314,7 +373,15 @@ export default {
         openMainImage(){
             console.log("Вот так вот:")
             console.log(this.$refs.buildings.$refs.buildingsGallary.$el)
-            this.$refs.buildings.$refs.buildingsGallary.$el.querySelector('a[itemprop="contentUrl"]').click()
+            if (this.building_images.length > 0){
+                this.$refs.buildings.$refs.buildingsGallary.$el.querySelector('a[itemprop="contentUrl"]').click()
+            }
+            else if(this.layout_images.length > 0){
+                this.$refs.layouts.$refs.layoutsGallary.$el.querySelector('a[itemprop="contentUrl"]').click()
+            }
+            else{
+                this.$refs.buildings.$refs.buildingsGallary.$el.querySelector('a[itemprop="contentUrl"]').click()
+            }
         },
         // ---- for animation eg
         handleScroll () {

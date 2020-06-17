@@ -67,21 +67,21 @@ export default {
     /* display: inline-block; */
 /* } */
 
-
+/* 
 .my-gallery{
     display: grid;
     grid-template-columns: repeat(2, minmax(250px, 1fr));
     grid-gap: 2vw;
-}
+} */
 
 
-@media (min-width: 768px) { 
-    .my-gallery{
-        /* display: grid; */
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    
-    }
+/* @media (min-width: 768px) {  */
+.my-gallery{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+
 }
+/* } */
 /* @media (min-width: 768px) { 
     .my-gallery{
     display: grid;
