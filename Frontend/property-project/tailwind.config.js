@@ -9,10 +9,16 @@ module.exports = {
       }),
       backgroundColor: theme => ({
         "myPageBackground" : "#f8f8f8",
-        "myFirstDark" : "#3c3838",
+        "myFirstDark" : "#34D2AF",
         "mySecondDark" : "#846667",
         "myFirstLight" : "#ff9b9d",
         "mySecondLight" : "#cbcbcb",
+        
+        "myMint-100" : "#5ED2B8",
+        "myMint-200": "#34D2AF",
+        "myMint-300" : "#00A480",
+        "myMint-400" : "#1F7B67",
+        "myMint-500" : "#006B53",
       }),
       textColor:{
         "myPageBackground": "#f8f8f8",
@@ -20,6 +26,19 @@ module.exports = {
         "mySecondDark" : "#846667",
         "myFirstLight" : "#ff9b9d",
         "mySecondLight" : "#cbcbcb",
+
+        "myMint-100" : "#5ED2B8",
+        "myMint-200": "#34D2AF",
+        "myMint-300" : "#00A480",
+        "myMint-400" : "#1F7B67",
+        "myMint-500" : "#006B53",
+      },
+      borderColor:{
+        "myMint-100" : "#5ED2B8",
+        "myMint-200": "#34D2AF",
+        "myMint-300" : "#00A480",
+        "myMint-400" : "#1F7B67",
+        "myMint-500" : "#006B53",
       }
     },
   },

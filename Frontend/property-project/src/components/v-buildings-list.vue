@@ -1,6 +1,9 @@
 <template> 
     <div>   
-        <div class="text-center text-lg">Найдено: {{ buildingsCount }}</div>
+        <div class="text-center text-lg text-myMint-300 hover:text-myMint-100 font-bold transition duration-500">
+            <div class="text-gray-500">Найдено:</div> 
+            <div class="text-4xl">{{ buildingsCount }}</div>
+        </div>
         <div v-if="buildingsCount > 0" class="grid m-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center gap-8 my-20">
             <vBuildingCard  
             v-for="building in allBuildings" 

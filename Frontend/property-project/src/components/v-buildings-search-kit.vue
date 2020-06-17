@@ -8,12 +8,11 @@
         >
           <div class="px-4 py-5 flex-auto">
             <div
-              class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-mySecondDark hover:bg-myFirstLight cursor-pointer"
+              class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full transition duration-500 bg-myMint-300 hover:bg-myMint-100 cursor-pointer"
               v-on:click="search"
             >
-              <i class="fas fa-retweet">III</i>
+              <HomeSearchIcon/>
             </div>
-            {{ dataReady }}
             <div class="flex flex-wrap -mx-3 mb-6">
               <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
@@ -178,11 +177,12 @@ import {
   severnayaSaltovkaMicroDistrictsBaseVariables,
   developersBaseVariables } from '../variables.js';
 import { mapMutations, mapActions, mapGetters } from 'vuex'
-
+import HomeSearchIcon from 'vue-material-design-icons/HomeSearch';
 export default{
     components: {
         MultipleSelect,
         MultipleTaggingSelect,
+        HomeSearchIcon
     },
     // В data только импортированные константные переменные
     data(){

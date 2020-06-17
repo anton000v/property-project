@@ -87,7 +87,7 @@
     }
     div.swiper-button-prev,
     div.swiper-button-next {
-    color: #ff9b9d;
+    color: #5ED2B8;
     }
   }
   

@@ -1,5 +1,8 @@
 <template>
-    <footer class="w-full bg-black text-white text-center border-t border-grey p-4">Footer</footer>    
+    <div>
+        <hr class="border-b m-0" />
+        <footer class="w-full h-32 text-center border-t border-grey p-4">2020 - All right reserved</footer>    
+    </div>
 </template>
 
 <script>

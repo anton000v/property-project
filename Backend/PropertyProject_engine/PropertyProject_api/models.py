@@ -185,7 +185,7 @@ class LayoutImage(models.Model):
 
 class WayFromMetro(models.Model):
     building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name='ways_from_metro', to_field='slug')
-    metro_choices = models.CharField(max_length=3, choices=choices.THE_METRO_CHOICES, default=choices.NOT_COMPLETED,
+    metro = models.CharField(max_length=3, choices=choices.THE_METRO_CHOICES, default=choices.NOT_COMPLETED,
                                     verbose_name=u"Метро")
     time = models.SmallIntegerField(verbose_name=u"Время", default=1)
     type_of_movement = models.CharField(max_length=2, choices=choices.THE_TYPE_OF_MOVEMENT_CHOICES,
@@ -194,4 +194,4 @@ class WayFromMetro(models.Model):
     number_of_meters = models.SmallIntegerField(verbose_name=u"Расстояние", default=1)
 
     def __str__(self):
-        return '%s - %s' % (self.building, self.metro_choices)
+        return '%s - %s' % (self.building, self.metro)

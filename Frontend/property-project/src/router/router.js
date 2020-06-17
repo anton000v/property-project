@@ -30,7 +30,14 @@ export default new Router({
             // meta: { transitionName: 'zoom' },
         },
         { path: '*', name:'page-404',component: vNotFoundPage }
-    ]
+    ],
+    scrollBehavior (to, from, savedPosition) {
+        if (savedPosition) {
+          return savedPosition
+        } else {
+          return { x: 0, y: 0 }
+        }
+      }
 })
 
 // export default router;

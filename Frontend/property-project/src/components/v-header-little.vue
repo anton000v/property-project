@@ -4,13 +4,10 @@
       style="min-height: 30vh;"
     >
       <div
-        class="absolute top-0 w-full h-full bg-center bg-cover bg-black"
+        class="absolute top-0 w-full h-full bg-center bg-cover bg-mySecondDark"
         >
       
-        <span
-          id="blackOverlay"
-          class="w-full h-full absolute opacity-75 bg-black"
-        ></span>
+
       </div>
       <div class="container relative mx-auto">
         <div class="items-center flex flex-wrap">
@@ -42,7 +39,7 @@
           y="0"
         >
           <polygon
-            class="text-gray-300 fill-current"
+            class="text-myPageBackground fill-current"
             points="2560 0 2560 100 0 100"
           ></polygon>
         </svg>

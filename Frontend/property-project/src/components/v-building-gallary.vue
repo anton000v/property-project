@@ -1,10 +1,11 @@
 <template>
-    <div>
-        <vue-picture-swipe :ref="gallaryRef" :options="{shareEl: false, history:false, captionEl:true}" :items="preparedImages"
-        >
-        </vue-picture-swipe>
+        <!-- <div class="asfdsf"> -->
+            <vue-picture-swipe :ref="gallaryRef" :options="{shareEl: false, history:false, captionEl:true, class:'dasds'}" :items="preparedImages"
+            >
+            </vue-picture-swipe>
+        <!-- </div> -->
         <!-- <button @onclick="sh">safdsfdf</button> -->
-    </div>
+
 </template>
 
 <script>
@@ -59,15 +60,46 @@ export default {
 </script>
 
 <style>
-img[itemprop="thumbnail"]{
-    padding: 5px;
-    width: 500px;
-    height:auto;
-    display: inline-block;
+/* img[itemprop="thumbnail"]{ */
+    /* padding: 5px; */
+    /* width: 500px; */
+    /* height:auto; */
+    /* display: inline-block; */
+/* } */
+
+
+.my-gallery{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(250px, 1fr));
+    grid-gap: 2vw;
 }
 
-/* a[itemprop="contentUrl"]{
-    padding: 5px;
-    width: 500px;
-} */
+
+@media (min-width: 768px) { 
+    .my-gallery{
+        /* display: grid; */
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    
+    }
+}
+/* @media (min-width: 768px) { 
+    .my-gallery{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+}
+
+@media (min-width: 1024px) { 
+    .my-gallery{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+}
+}
+ @media (min-width: 1280px) { 
+    .my-gallery{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+}
+}  */
+
 </style>

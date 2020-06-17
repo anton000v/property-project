@@ -162,10 +162,14 @@ class DevelopersSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     developer_name = serializers.CharField(max_length=150)
 
-class WayFromMetroSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = models.WayFromMetro
-		fields = '__all__'
+class WayFromMetroSerializer(serializers.Serializer):
+    metro = fields.ChoiceFieldCustomDisplay(choices=choices.THE_METRO_CHOICES, default=choices.NOT_COMPLETED) 
+    type_of_movement = fields.ChoiceFieldCustomDisplay(choices=choices.THE_TYPE_OF_MOVEMENT_CHOICES, default=choices.NOT_COMPLETED) 
+    time = serializers.IntegerField()
+    number_of_meters = serializers.IntegerField()
+    # class Meta:
+    #     model = models.WayFromMetro
+    #     fields = '__all__'
 
 class BuildingImageSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -186,8 +190,7 @@ class NewBuildingSerializerForSearch(serializers.Serializer):
     house_letter = serializers.CharField(max_length=1)
     district = fields.ChoiceFieldCustomDisplay(choices=choices.DISTRICT_CHOICES,
                                 default=choices.NOT_COMPLETED,
-                                # source='get_district_display'
-                                )  # )
+                                ) 
     micro_district = fields.ChoiceFieldCustomDisplay(choices=choices.FULL_MICRO_DISTRICT_CHOICES,
                                 default=choices.MICRO_DISTRICT_DOES_NOT_EXIST,
                                 # source='get_district_display'
