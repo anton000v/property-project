@@ -43,8 +43,9 @@
           
           <!-- <div v-show="isMouseOver"> -->
           <div class="invisible md:visible">
+             <transition name="preview">
             <div v-show="isMouseOver">
-              <transition name="preview">
+             
               
                 <div class="flex flex-wrap opacity-75 absolute bottom-0 w-full left-0 bg-gray-200 h-full">
                     <div class="w-full h-1/2 bg-gray-900 hover:bg-black text-white">
@@ -68,8 +69,9 @@
                 <!-- <button class="object w-full">Предпросмотр</button> -->
                 <!-- <button :class="[isMouseOver? 'visible' : '' , ' object w-full']">Предпросмотр</button> -->
               
-              </transition>
+             
            </div>
+            </transition>
           </div>
           <div class="visible md:invisible ">
             <router-link :to="{name:'building-page', params:{slug:building.slug}}">
@@ -123,18 +125,12 @@ export default {
 
 <style scoped>
 
-.preview-enter-active {
-  transition: all .2s ease;
+.preview-enter-active, .preview-leave-active {
+  transition: opacity .5s;
 }
-.preview-leave-active {
-  transition: all .2s 
-}
-.preview-enter, .preview-leave-to
-/* .slide-fade-leave-active до версии 2.1.8 */ {
-  transform: translateX(100px);
+.preview-enter, .preview-leave-to /* .fade-leave-active до версии 2.1.8 */ {
   opacity: 0;
 }
-
 
 
 </style>

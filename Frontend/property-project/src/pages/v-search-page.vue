@@ -1,6 +1,7 @@
 <template>  
     <div>
-        <vHeaderMain/>
+        <!-- <vHeaderMain v-if=""/>
+        <vHeaderLittle v-else/> -->
         <section class="pb-20 -mt-32">
             <div class="container mx-auto px-8">
                 <BuildingsSearchKit/>
@@ -12,22 +13,34 @@
 
 <script>
 
-import vHeaderMain from '../components/v-header-main'
+// import vHeaderMain from '../components/v-header-main'
+// import vHeaderLittle from '../components/v-header-little'
 import BuildingsList from '../components/v-buildings-list'
 import BuildingsSearchKit from '../components/v-buildings-search-kit'
 import { mapActions, mapGetters ,mapMutations } from 'vuex'
 
 export default {
-    // props:{
-    //     findParams: {
-    //         type: Object,
-    //         default: function () { return {} }
+
+    // data(){
+    //     return {
+    //         isMainPage: true
     //     }
+    // },
+    // watch:{
+    //   $route: (path) =>{
+    //       if(path !== "/"){
+    //           this.isMainPage = true
+    //       }
+    //       else{
+    //           this.isMainPage = false
+    //       }
+    //   }
     // },
     components: {
         BuildingsList,
         BuildingsSearchKit,
-        vHeaderMain
+        // vHeaderMain,
+        // vHeaderLittle
     },
     methods: {
         // parseFindParams(){
@@ -55,7 +68,7 @@ export default {
         ]),
         ...mapMutations([
             'updateFindParams',
-        ])
+        ]),
     },
     // mounted() {
         // alert('Mounted')
@@ -97,7 +110,16 @@ export default {
     computed: {
       ...mapGetters([
         'activeFindParams', 
-        ])
+        ]),
+        // isMainPage(){
+        //     console.log(this.$router.currentRoute)
+        //     if(this.$router.currentRoute.path == "/"){
+        //         return true
+        //     }
+        //     else{
+        //         return false
+        //     }
+        // }
     },
 }
 </script>

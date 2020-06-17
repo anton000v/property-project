@@ -4,7 +4,7 @@
       style="min-height: 30vh;"
     >
       <div
-        class="absolute top-0 w-full h-full bg-center bg-cover bg-mySecondDark"
+        class="absolute top-0 w-full h-full bg-center bg-cover bg-gray-200"
         >
       
 

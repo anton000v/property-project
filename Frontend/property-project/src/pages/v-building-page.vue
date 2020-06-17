@@ -2,7 +2,7 @@
 <template>
     <div v-if="loading">
     <!-- <section class="pb-20 -mt-32"> -->
-        <vHeaderLittle/>
+        <!-- <vHeaderLittle/> -->
         <section class="pb-20 -mt-20">
             <div class="container mx-auto  md:px-8">
 
@@ -24,8 +24,8 @@
                         <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
                             <div class="px-1 md:px-4 py-5 flex-auto">
                                 <div class="text-2xl">
-                                    <p class="uppercase font-bold  text-myMint-400">ЖК {{ building.name }}</p>
-                                    <p>{{ building.street }} {{ building.house_number }}{{ building.house_letter }}</p>
+                                    <p class="uppercase font-bold text-gray-700">ЖК {{ building.name }}</p>
+                                    <p class="text-gray-700 font-bold">{{ building.street }} {{ building.house_number }}{{ building.house_letter }}</p>
                                 </div>
                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-6 pt-6">
                                     <div class="cursor-pointer" @click="openMainImage">
@@ -36,12 +36,12 @@
                                     <div class="col-span-1">
                                         <div class= 'h-full w-full'>
 
-                                            <div v-if="building.administrative_district.length > 0" class="grid grid-cols-2 justify-center text-center justify-center gap-2">
-                                                <div class="flex-1 flex-col bg-gray-200 ">
-                                                    <div class="text-gray-700 font-bold text-center bg-gray-400 px-4 py-2 m-1 md:m-2">
+                                            <div class="grid grid-cols-2 justify-center text-center justify-center gap-2">
+                                                <div v-if="building.administrative_district.length > 0" class="flex-1 rounded-lg flex-col bg-gray-200 md:transition md:duration-500 md:hover:shadow-md">
+                                                    <div class="text-gray-700 font-bold text-center px-4 py-2 m-1 md:m-2">
                                                         <div class="inline-flex items-center">
                                                             <HomeCityIcon fillColor="#1F7B67" :size="25" />
-                                                            <div class="block md:hidden flex-1 sm:px-1 text-sm lg:text-base">
+                                                            <div class="block md:hidden flex-1 px-1 text-sm">
                                                                 Админ. район
                                                             </div>
                                                             <div class="hidden md:block flex-1 px-2 text-sm lg:text-base">
@@ -49,10 +49,10 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="flex-1 text-gray-700 text-center bg-gray-400 md:px-4 py-2 m-2">{{ building.administrative_district }}</div>
+                                                    <div class="rounded-lg bg-white border-b border-myMint-100 text-myMint-400 font-bold text-center md:px-4 py-2 m-2">{{ building.administrative_district }}</div>
                                                 </div>
-                                                <div v-if="building.district.length > 0" class="flex-1 flex-col bg-gray-200 ">
-                                                    <div class="text-gray-700 font-bold  text-center bg-gray-400 px-4 py-2 m-1 md:m-2">
+                                                <div v-if="building.district.length > 0" class="flex-1 rounded-lg flex-col bg-gray-200 md:transition md:duration-500 md:hover:shadow-md">
+                                                    <div class="text-gray-700 font-bold  text-center px-4 py-2 m-1 md:m-2">
                                                         <div class="inline-flex items-center">
                                                             <HomeGroupIcon fillColor="#1F7B67" :size="25" />
                                                             <div class="flex-1 sm:px-1 px-2 text-sm lg:text-base">
@@ -60,9 +60,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="flex-1 text-gray-700 text-center bg-gray-400 md:px-4 py-2 m-2">{{ building.district }}</div>
+                                                    <div class="rounded-lg bg-white border-b border-myMint-100 text-myMint-400 font-bold text-center md:px-4 py-2 m-2">{{ building.district }}</div>
                                                 </div>
-                                                <div v-if="building.micro_district !== 'Не делится на микрорайоны'" class="flex-1 flex-col bg-gray-200 ">
+                                                <div v-if="building.micro_district !== 'Не делится на микрорайоны'" class="flex-1 rounded-lg flex-col bg-gray-200 md:transition md:duration-500 md:hover:shadow-md">
                                                     <div class="text-gray-700 font-bold  text-center bg-gray-400 px-4 py-2 m-1 md:m-2">
                                                         <div class="inline-flex items-center">
                                                             <DomainIcon fillColor="#1F7B67" :size="25" />
@@ -71,10 +71,10 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="flex-1 text-gray-700 text-center bg-gray-400 md:px-4 py-2 m-1 md:m-2">{{ building.micro_district }}</div>
+                                                    <div class="bg-white rounded-lg border-b border-myMint-100 text-myMint-400 font-bold  text-center md:px-4 py-2 m-1 md:m-2">{{ building.micro_district }}</div>
                                                 </div>
-                                                <div v-if="building.developer.length > 0" class="flex-1 flex-col bg-gray-200 ">
-                                                    <div class="text-gray-700 font-bold  text-center bg-gray-400 px-4 py-2 m-1 md:m-2">
+                                                <div v-if="building.developer.length > 0" class="flex-1 rounded-lg flex-col bg-gray-200 md:transition md:duration-500 md:hover:shadow-md">
+                                                    <div class="text-gray-700 font-bold  text-center px-4 py-2 m-1 md:m-2">
                                                         <div class="inline-flex items-center">
                                                             <HouseEditIcon fillColor="#1F7B67" :size="25" />
                                                             <div class="flex-1 sm:px-1 px-2 text-sm lg:text-base">
@@ -82,12 +82,12 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="text-gray-700 text-center bg-gray-400 md:px-4 py-2 m-2">{{ building.developer }}</div>
+                                                    <div class="bg-white rounded-lg border-b border-myMint-100 border-myMint-100 text-myMint-400 font-bold  text-center  md:px-4 py-2 m-2">{{ building.developer }}</div>
                                                 </div>
                                             </div>
-                                            <div v-if="building.ways_from_metro.length > 0" class="flex1 bg-gray-200 mt-5" >
+                                            <div v-if="building.ways_from_metro.length > 0" class="flex1 rounded-lg bg-gray-200 mt-5 md:transition md:duration-500 md:hover:shadow-md" >
                                                 <div class="px-2 py-2">
-                                                    <div class="text-gray-700 font-bold  text-center bg-gray-400">
+                                                    <div class="text-gray-700 font-bold  text-center">
                                                         <div class="inline-flex items-center">
                                                             <highway-icon fillColor="#1F7B67" :size="30" />
                                                             <div class="flex-1 m-1 md:m-2 px-4 p-2 text-sm lg:text-base">
@@ -95,8 +95,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="flex-1 text-gray-700 text-center bg-gray-400 ">
-                                                        <div class="w-full flex text-sm lg:text-base justify-center mt-2 lg:px-4 pb-2 pt-2" v-for="way in building.ways_from_metro" :key="way.metro">
+                                                    <div class="flex-1 text-center">
+                                                        <div class="w-full rounded-lg bg-white border-b border-myMint-100 text-myMint-400 font-bold flex text-sm lg:text-base justify-center mt-2 lg:px-4 pb-2 pt-2" v-for="way in building.ways_from_metro" :key="way.metro">
                                                             <div class="w-2/5"> {{ way.metro }} </div>
                                                             <div class="w-1/5"> {{ way.type_of_movement }} </div>
                                                             <div class="w-1/5"> {{ way.time }} мин. </div>
@@ -105,8 +105,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div v-if="building.completion_date.length > 0" class="flex1 bg-gray-200 mt-5" >
-                                               <div class="text-gray-700 font-bold  text-center bg-gray-400 px-4 py-2 m-2">
+                                            <div v-if="building.completion_date.length > 0" class="flex1 rounded-lg bg-gray-200 mt-5 md:transition md:duration-500 md:hover:shadow-md" >
+                                               <div class="text-gray-700 font-bold  text-center px-4 py-2 m-2">
                                                 <div class="inline-flex items-center">
                                                     <ClipboardCheckMultipleIcon fillColor="#1F7B67" :size="25" />
                                                     <div class="flex-1 px-2 text-sm lg:text-base">
@@ -114,7 +114,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="text-gray-700 text-center bg-gray-400 md:px-4 py-2 m-2">{{ building.completion_date }}</div>
+                                            <div class="rounded-lg bg-white border-b border-myMint-100 text-myMint-400 font-bold text-center md:px-4 py-2 m-2">{{ building.completion_date }}</div>
                                             </div>
                                          </div>
                                     </div>
@@ -124,7 +124,7 @@
 
 <!-- <div class='p-10'> -->
     <div ref="anchors-default-position" class="invisible"> </div>
-    <div ref="anchors" class="sticky text-center left-0 top-0 z-50 bg-myPageBackground relative flex flex-col min-w-0 shadow-md ">
+    <div ref="anchors" class="sticky text-center left-0 top-0 z-50 bg-myPageBackground relative flex flex-col min-w-0 shadow-md rounded-lg ">
         <div class="hidden md:block">
             <transition name="fade">
                     <div v-if="anchorsInfo.showAncorsTitle" class='flex-1 '>
@@ -140,23 +140,23 @@
 
             <ul class="flex text-sm md:text-base">
                 <li class="flex-1">
-                    <a href="#building-full-info" class="scrollactive-item md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-100 font-bold text-gray-700 md:hover:text-white md:hover:shadow-xl py-2 ">
+                    <a href="#building-full-info" class="rounded-lg scrollactive-item md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-300 font-bold text-gray-700 md:hover:text-white md:hover:shadow-xl py-2 ">
                         Об обьекте
                     </a>
                 </li>
                 <li class="flex-1">
-                    <a href="#images" class="scrollactive-item md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-100 font-bold text-gray-700 md:hover:text-white  md:hover:shadow-xl py-2 ">
-                        Изображения дома
+                    <a href="#images" class="rounded-lg  scrollactive-item md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-300 font-bold text-gray-700 md:hover:text-white  md:hover:shadow-xl py-2 ">
+                        Изображения
                     </a>
                 </li>
                 <li class="flex-1">
-                    <a href="#layouts" class="scrollactive-item md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-100 font-bold text-gray-700 md:hover:text-white md:hover:shadow-xl py-2 ">
+                    <a href="#layouts" class="rounded-lg  scrollactive-item md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-300 font-bold text-gray-700 md:hover:text-white md:hover:shadow-xl py-2 ">
                         Планировки
                     </a>
                 </li>
                 <li class="flex-1">
-                    <a href="#buildings-for-sale" class="scrollactive-item md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-100 font-bold text-gray-700 md:hover:text-white md:hover:shadow-xl py-2 ">
-                        Обьекты в продаже
+                    <a href="#buildings-for-sale" class="rounded-lg  scrollactive-item md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-300 font-bold text-gray-700 md:hover:text-white md:hover:shadow-xl py-2 ">
+                        В продаже
                     </a>
                 </li>
             </ul>
@@ -177,31 +177,33 @@
                         >
                             <div class="flex-auto">
                                 <div>
-                                    <div id="building-full-info" class="pt-20" >
-                                        <h2 class="text-3xl font-bold pt-10 lg:pt-0 text-gray-700 text-center">Характеристики ЖК</h2>
-                                        <!-- <div class="flex w-full"> -->
-                                        <div class="m-auto w-3/5 pt-3 mb-3 border-b-2 border-myMint-100 opacity-25"></div>
-                                        <!-- </div> -->
-                                        <div class='grid py-2 grid-cols-2'>
-                                            <div v-if="building.the_class">Класс:<span class="px-4 font-bold text-myMint-400">{{ building.the_class }}</span></div>
-                                            <div v-if="building.construction_technology">Технология строительства:<span class="px-4 font-bold text-myMint-400">{{ building.construction_technology }}</span></div>
-                                            <div v-if="building.number_of_storeys">Этажность:<span class="px-4 font-bold text-myMint-400">{{ building.number_of_storeys }}</span></div>
-                                            <div v-if="building.walls_type">Стены:<span class="px-4 font-bold text-myMint-400">{{ building.walls_type }}</span></div>
-                                            <div v-if="building.number_of_buildings">Кол-во домов:<span class="px-4 font-bold text-myMint-400">{{ building.number_of_buildings }}</span></div>
-                                            <div v-if="building.warming">Утепление:<span class="px-4 font-bold text-myMint-400">{{ building.warming }}</span></div>
-                                            <div v-if="building.number_of_sections_or_entrances">Кол-во секций / подьездов:<span class="px-4 font-bold text-myMint-400">{{ building.number_of_sections_or_entrances }}</span></div>
-                                            <div v-if="building.room_height">Высота помещений:<span class="px-4 font-bold text-myMint-400">{{ building.room_height }}</span></div>
-                                            <div v-if="building.the_class" class="mt-5 col-span-2">Кол-во квартир в доме:<span class="px-4 font-bold text-myMint-400">{{ building.room_height }}</span></div>
-                                            <div v-if="building.the_class" class="col-span-2">Кол-во квартир на этаж:<span class="px-4 font-bold text-myMint-400">{{ building.room_height }}</span></div>
-                                            <div v-if="building.the_class" class="mt-5 col-span-2">Типы квартир:</div>
-                                            <div v-if="building.the_class" class="mt-5 col-span-2">Коммерческие помещения:</div>
+                                    <div id="building-full-info" class="mt-20 md:rounded-lg md:transition md:duration-500 md:transform " >
+                                        <div class="mx-5">
+                                            <h2 class="text-xl font-bold pt-10 lg:pt-0 text-gray-700 text-center">Характеристики ЖК</h2>
+                                            <!-- <div class="flex w-full"> -->
+                                            <div class="m-auto w-3/5 pt-3 mb-3 border-b-2 border-myMint-100 opacity-25"></div>
+                                            <!-- </div> -->
+                                            <div class='grid py-2 grid-cols-2'>
+                                                <div v-if="building.the_class">Класс:<span class="px-4 font-bold text-myMint-400">{{ building.the_class }}</span></div>
+                                                <div v-if="building.construction_technology">Технология строительства:<span class="px-4 font-bold text-myMint-400">{{ building.construction_technology }}</span></div>
+                                                <div v-if="building.number_of_storeys">Этажность:<span class="px-4 font-bold text-myMint-400">{{ building.number_of_storeys }}</span></div>
+                                                <div v-if="building.walls_type">Стены:<span class="px-4 font-bold text-myMint-400">{{ building.walls_type }}</span></div>
+                                                <div v-if="building.number_of_buildings">Кол-во домов:<span class="px-4 font-bold text-myMint-400">{{ building.number_of_buildings }}</span></div>
+                                                <div v-if="building.warming">Утепление:<span class="px-4 font-bold text-myMint-400">{{ building.warming }}</span></div>
+                                                <div v-if="building.number_of_sections_or_entrances">Кол-во секций / подьездов:<span class="px-4 font-bold text-myMint-400">{{ building.number_of_sections_or_entrances }}</span></div>
+                                                <div v-if="building.room_height">Высота помещений:<span class="px-4 font-bold text-myMint-400">{{ building.room_height }}</span></div>
+                                                <div v-if="building.the_class" class="mt-5 col-span-2">Кол-во квартир в доме:<span class="px-4 font-bold text-myMint-400">{{ building.room_height }}</span></div>
+                                                <div v-if="building.the_class" class="col-span-2">Кол-во квартир на этаж:<span class="px-4 font-bold text-myMint-400">{{ building.room_height }}</span></div>
+                                                <div v-if="building.the_class" class="mt-5 col-span-2">Типы квартир:</div>
+                                                <div v-if="building.the_class" class="mt-5 col-span-2">Коммерческие помещения:</div>
 
-                                            <div class="">Коммуникации:</div>
-                                            <div class="">Лифт:</div>
+                                                <div class="">Коммуникации:</div>
+                                                <div class="">Лифт:</div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div id="images" class="pt-20" >
-                                        <h2 class="text-3xl font-bold pt-10 lg:pt-0 text-gray-700 text-center">Изображения дома</h2>
+                                    <div id="images" class="mt-20 md:rounded-lg md:transition md:duration-500 md:transform " >
+                                        <h2 class="text-xl font-bold mt-10 lg:pt-0 text-gray-700 text-center">Изображения дома</h2>
                                         <!-- <div class="flex w-full"> -->
                                         <div class="m-auto w-3/5 pt-3 mb-3 border-b-2 border-myMint-100 opacity-25"></div>
                                         <!-- </div> -->
@@ -225,8 +227,8 @@
                                             </building-gallary>
                                         </div>
                                     </div>
-                                    <div id="layouts" class="pt-20">
-                                        <h2 class="text-3xl font-bold pt-10 lg:pt-0 text-gray-700 text-center">Планировки</h2>
+                                    <div id="layouts" class="mt-20 md:rounded-lg md:transition md:duration-500 md:transform ">
+                                        <h2 class="text-xl font-bold mt-10 lg:pt-0 text-gray-700 text-center">Планировки</h2>
                                         <!-- <div class="flex w-full"> -->
                                             <div class="m-auto w-3/5 pt-3 mb-3 border-b-2 border-myMint-100 opacity-25"></div>
                                         <!-- </div> -->
@@ -249,8 +251,8 @@
                                             </building-gallary>
                                         </div>
                                     </div>
-                                    <div id="buildings-for-sale" class="pt-20" >
-                                        <h2 class="text-3xl font-bold pt-10 lg:pt-0 text-gray-700 text-center">Обьекты в продаже</h2>
+                                    <div id="buildings-for-sale" class="mt-20 md:rounded-lg md:transition md:duration-500 md:transform " >
+                                        <h2 class="text-xl font-bold mt-10 lg:pt-0 text-gray-700 text-center">Обьекты в продаже</h2>
                                         <!-- <div class="flex w-full"> -->
                                         <div class="m-auto w-3/5 pt-3 mb-3 border-b-2 border-myMint-100 opacity-25"></div>
                                         <!-- </div> -->
@@ -282,7 +284,7 @@
 <script>
 import BuildingGallary from '../components/v-building-gallary'
 import { baseApiAddress } from '../variables'
-import vHeaderLittle from '../components/v-header-little'
+// import vHeaderLittle from '../components/v-header-little'
 import HighwayIcon from 'vue-material-design-icons/Highway.vue';
 import HouseEditIcon from 'vue-material-design-icons/HomeEdit';
 import HomeCityIcon from 'vue-material-design-icons/HomeCity';
@@ -301,7 +303,7 @@ export default {
     // },
     components:{
         BuildingGallary,
-        vHeaderLittle,
+        // vHeaderLittle,
         HighwayIcon,
         HouseEditIcon,
         HomeCityIcon,
