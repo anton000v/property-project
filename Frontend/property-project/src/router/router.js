@@ -12,16 +12,23 @@ export default new Router({
             path: '/',
             name: 'home',
             component: vSearchPage,
+            children: [
+              {
+              path: '/buildings',
+              name: 'search-page',
+              component: vSearchPage,
+              }
+            ]
         },
-        {
-            path: '/buildings',
-            name: 'search-page',
-            component: vSearchPage,
-            // props: (route) => ({ findParams: route.query }),
-            // meta: {
-            //     showModal: false
-            // }
-        },
+        // {
+        //     path: '/buildings',
+        //     name: 'search-page',
+        //     component: vSearchPage,
+        //     // props: (route) => ({ findParams: route.query }),
+        //     // meta: {
+        //     //     showModal: false
+        //     // }
+        // },
         {
             path: '/buildings/:slug',
             // props: true,

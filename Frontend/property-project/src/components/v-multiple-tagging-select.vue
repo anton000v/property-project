@@ -80,6 +80,9 @@ export default {
             // console.log(this.activeFindParams[this.sendParamName])
             // this.setIntitialActiveValues()
             this.value = this.activeFindParams[this.sendParamName]
+            if(this.value.length > 0){
+                this.showClearAllButton = true
+            }
         }
     },
     methods: {

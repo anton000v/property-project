@@ -258,13 +258,39 @@ export default{
           // this.$store.dispatch('updateFindParams')
           // .then(() => 
           // this.$router.replace({name: 'search-page', query:this.activeFindParams})
-          this.$router.replace({name:'search-page', query:this.activeFindParams})
+          if(this.$route.path == '/'){
+            this.$router.replace({name:'search-page', query:this.activeFindParams})
+          }
+          else{
+            this.addHashToLocation(this.activeFindParams)
+            this.updateBuildings()
+          }
           // this.$router.replace({name:'search-page', query:})
           // this.$router.replace({name: 'search-page', query:template})
         }, 
         updateBuildings(){
           this.searchBuildings(this.activeFindParams)
         },
+        addHashToLocation(paramsDict) {
+          console.log('aaaaaaaaaaaaaaaaa')
+          console.log(this.$router)
+          const qs = require('qs');
+          const q = qs.stringify(paramsDict, {arrayFormat: 'repeat'})
+          if(q.length > 0){
+            history.replaceState(
+              {},
+              null,
+              '#' + this.$route.path + '?' + q
+              )
+          }
+          else{
+            history.pushState(
+              {},
+              null,
+              '#' + this.$route.path,
+              )
+          }
+        }
         // setInitialData(){
         //   this.updateFindParams(JSON.parse(JSON.stringify(this.$route.query)))
         // },

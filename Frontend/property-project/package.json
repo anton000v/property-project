@@ -12,6 +12,7 @@
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.9.0",
     "core-js": "^3.6.4",
+    "gsap": "^3.3.3",
     "qs": "^6.9.4",
     "sass-loader": "^8.0.2",
     "swiper": "^5.4.2",

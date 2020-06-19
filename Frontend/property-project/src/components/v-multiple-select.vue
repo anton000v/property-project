@@ -141,9 +141,10 @@
             })
             }
             if(this.sendParamName in this.activeFindParams){
-              // console.log('INITIAL!!!!!')
               this.setIntitialActiveValues()
-              // console.log(this.activeFindParams[this.sendParamName])
+              if(this.value.length > 0){
+                this.showClearAllButton = true
+              }
             }
         });
     },
@@ -165,11 +166,8 @@
         this.SelectCloseAction()
       },
       SelectValueAction(selectedValue){
-        // this.searchValues.push(selectedValue[this.dbValueKey]);
         this.addAction({'key':this.sendParamName, 'value':selectedValue[this.dbValueKey]})
         this.hasChange = true
-        // this.localStorageValues.push(selectedValue[this.dbValueKey])
-        // alert()
         if(this.trackEveryUpdate){
           this.$emit('select', selectedValue[this.dbValueKey])
         }
@@ -177,12 +175,6 @@
       removeValueAction(removedValue){
         this.hasChange = true
         this.removeAction({'key':this.sendParamName , 'value':removedValue[this.dbValueKey]})
-        // console.log('AAAAAAAAAa')
-        // console.log(this.sendParamName)
-        // let index = this.selectedArr.indexOf(removedValue[this.searchKey]);
-        // if (index > -1) {
-        //     this.searchValues.splice(index, 1);
-        // }
         if(this.trackEveryUpdate){
           this.$emit('remove', removedValue[this.dbValueKey])
         }
@@ -199,9 +191,6 @@
           }
         }
       },
-      // setInitialData(){
-      //   console.log(this.initialDbData)
-      // }
     },
     computed: {
       ...mapGetters([

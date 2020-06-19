@@ -2,10 +2,13 @@
     <div class="main-wrapper">
         <div>
             <div class='min-h-screen'>
-                <!-- {{ isLoaded }} -->
-                <vHeaderMain v-if="isMainHeaderActive" />
-                <vHeaderLittle v-else/>
-                <router-view/>
+                <TransitionHeaderChange>
+                    <vHeaderMain v-if="isMainHeaderActive" />
+                    <vHeaderLittle v-else/>
+                </TransitionHeaderChange>
+                <TransitionPages>
+                    <router-view :key="$route.name"/>
+                </TransitionPages>
             </div>
             <Footer/>
         </div>
@@ -14,16 +17,19 @@
 
 <script>
 
-
 import Footer from '../components/v-footer'
 import vHeaderMain from '../components/v-header-main'
 import vHeaderLittle from '../components/v-header-little'
 import {mapGetters ,mapMutations } from 'vuex'
+import TransitionHeaderChange from '../transitions/headerChange'
+import TransitionPages from '../transitions/pages'
 export default {
     components: {
         Footer,
         vHeaderMain,
         vHeaderLittle,
+        TransitionHeaderChange,
+        TransitionPages
     },
     watch:{
         $route: "updateHeader"
@@ -42,11 +48,6 @@ export default {
                 this.changeMainHeader(false)
             }
         },
-        
-        // updateInfo(path){
-        //     updateHeader(path)
-
-        // }
     },
     mounted() {
         this.updateHeader()
