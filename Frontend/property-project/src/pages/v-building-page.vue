@@ -20,7 +20,7 @@
                                 Назад
                             </div>
                         </div> -->
-                    
+                        <div class="w-full hover:bg-myMint-100"><KeyboardBackspaceIcon fillColor="#1F7B67" :size="35"/></div>
                         <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
                             <div class="px-1 md:px-4 py-5 flex-auto">
                                 <div class="text-2xl">
@@ -291,6 +291,7 @@ import HomeCityIcon from 'vue-material-design-icons/HomeCity';
 import HomeGroupIcon from 'vue-material-design-icons/HomeGroup';
 import DomainIcon from 'vue-material-design-icons/Domain';
 import ClipboardCheckMultipleIcon from 'vue-material-design-icons/ClipboardCheckMultiple';
+import KeyboardBackspaceIcon from 'vue-material-design-icons/KeyboardBackspace'
 // import debounce from 'lodash/debounce';
 // import VueScrollactive from 'vue-scrollactive';
 
@@ -310,7 +311,7 @@ export default {
         HomeGroupIcon,
         DomainIcon,
         ClipboardCheckMultipleIcon,
-        
+        KeyboardBackspaceIcon
         // VueScrollactive
     },
     data(){

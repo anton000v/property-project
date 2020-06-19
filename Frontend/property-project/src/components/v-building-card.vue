@@ -43,35 +43,37 @@
           
           <!-- <div v-show="isMouseOver"> -->
           <div class="invisible md:visible">
-             <transition name="preview">
-            <div v-show="isMouseOver">
-             
-              
-                <div class="flex flex-wrap opacity-75 absolute bottom-0 w-full left-0 bg-gray-200 h-full">
-                    <div class="w-full h-1/2 bg-gray-900 hover:bg-black text-white">
-                      <router-link :to="{name:'building-page', params:{slug:building.slug}}">
-                        <div class='flex h-full'>     
-                          <div class="m-auto text-xl">
-                            Открыть полностью
-                          </div>
-                        </div>
-                      </router-link>
-                    </div>
-                    <div class="w-full h-1/2 bg-gray-900 hover:bg-black text-white cursor-pointer" @click.prevent="show">
-                        <div class='flex h-full'>     
-                          <div class="m-auto text-xl">
-                            Предпросмотр
-                          </div>
-                        </div>
-                    </div>
+             <!-- <transition name="preview"> -->
+               <TransitionSlowAppearance>
+                <div v-show="isMouseOver">
                 
-              </div>
+                  
+                    <div class="flex flex-wrap opacity-75 absolute bottom-0 w-full left-0 bg-gray-200 h-full">
+                        <div class="w-full h-1/2 bg-gray-900 hover:bg-black text-white">
+                          <router-link :to="{name:'building-page', params:{slug:building.slug}}">
+                            <div class='flex h-full'>     
+                              <div class="m-auto text-xl">
+                                Открыть полностью
+                              </div>
+                            </div>
+                          </router-link>
+                        </div>
+                        <div class="w-full h-1/2 bg-gray-900 hover:bg-black text-white cursor-pointer" @click.prevent="show">
+                            <div class='flex h-full'>     
+                              <div class="m-auto text-xl">
+                                Предпросмотр
+                              </div>
+                            </div>
+                        </div>
+                    
+                  </div>
                 <!-- <button class="object w-full">Предпросмотр</button> -->
                 <!-- <button :class="[isMouseOver? 'visible' : '' , ' object w-full']">Предпросмотр</button> -->
               
              
            </div>
-            </transition>
+            <!-- </transition> -->
+            </TransitionSlowAppearance>
           </div>
           <div class="visible md:invisible ">
             <router-link :to="{name:'building-page', params:{slug:building.slug}}">
@@ -91,6 +93,7 @@
 
 <script>
 import vBuildingPreview from '../components/v-building-preview'
+import TransitionSlowAppearance from '../transitions/slowAppearance'
 
 export default {
   props: {
@@ -105,6 +108,7 @@ export default {
   },
   components:{
     vBuildingPreview,
+    TransitionSlowAppearance
   },
 
   methods: {
@@ -125,12 +129,7 @@ export default {
 
 <style scoped>
 
-.preview-enter-active, .preview-leave-active {
-  transition: opacity .5s;
-}
-.preview-enter, .preview-leave-to /* .fade-leave-active до версии 2.1.8 */ {
-  opacity: 0;
-}
+
 
 
 </style>

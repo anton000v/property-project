@@ -4,7 +4,7 @@
       style="min-height: 30vh;"
     >
       <div
-        class="absolute top-0 w-full h-full bg-center bg-cover bg-gray-200"
+        class="absolute top-0 w-full h-full bg-center bg-cover "
         >
       
 
@@ -14,11 +14,11 @@
           <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
             <!-- <div class=""> -->
               <router-link to="/">
-                <h1 class="text-white font-semibold text-3xl md:text-4xl lg:text-5xl">
+                <h1 class="text-myMint-500 font-semibold text-3xl md:text-4xl lg:text-5xl">
                     property - project
                 </h1>
               </router-link>
-              <p class=" lg:mt-4 text-md md:text-lg text-gray-300">
+              <p class=" lg:mt-4 text-md md:text-lg text-myMint-400">
                 Поиск новостроев
               </p>
             <!-- </div> -->

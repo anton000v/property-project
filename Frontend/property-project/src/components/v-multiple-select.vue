@@ -3,45 +3,56 @@
     <!-- {{ fieldChoiceText }} {{ searchKey }} {{ apiAddress }} {{ dictKey }} -->
     <!-- <p>{{ activeFindParams }}</p>
     <p>{{ value }}</p> -->
-        <multiselect 
-          v-model="value" 
-          @select="SelectValueAction"
-          @close="SelectCloseAction"
-          @remove="removeValueAction"
-          :options="options" 
-          :multiple="true" 
-          :close-on-select="false" 
-          :clear-on-select="false" 
-          :preserve-search="true" 
-          :placeholder="placeholder" 
-          :label="fieldChoiceText"
+      <div class="flex items-center">
+        <TransitionLeftRide>
+          <div class='flex-1 px-1 cursor-pointer text-sm transition duration-500 ease-in-out  hover:opacity-40 transform hover:-translate-y-1 hover:-rotate-90 text-myMint-400 hover:text-myMint-100' v-show="showClearAllButton" @click="clearAll">
+              <CloseCircleOutlineIcon :size="20"  title="Очистить все"/>
+          </div>
+        </TransitionLeftRide>
+        <div class='w-full'>
+            <multiselect 
+              v-model="value" 
+              @select="SelectValueAction"
+              @close="SelectCloseAction"
+              @remove="removeValueAction"
+              :options="options" 
+              :multiple="true" 
+              :close-on-select="false" 
+              :clear-on-select="false" 
+              :preserve-search="true" 
+              :placeholder="placeholder" 
+              :label="fieldChoiceText"
 
-          :track-by="fieldChoiceText" 
-          :preselect-first="true" 
-          
-         
+              :track-by="fieldChoiceText" 
+              :preselect-first="true" 
+              
+            
 
-          selectLabel="enter чтобы выбрать" 
-          deselectLabel="enter чтобы удалить" 
-          selectedLabel="выбрано"
-          >
-          
-          <template slot="selection" slot-scope="{ values, search, isOpen }"><span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} выбрано</span></template>
-          <span slot="noResult">Ничего не найдено...</span>
-        
-          <template slot="option" slot-scope="props">
-            <div class="option">{{ props.option[fieldChoiceText] }}<span v-if="props.option[extraInformationField]" class="text-sm leading-tight text-gray-600"><br>{{ props.option[extraInformationField] }}</span></div>
-          </template>
-          <template v-slot:noOptions>
-            Загружаем...
-         </template>
-        </multiselect>
+              selectLabel="enter чтобы выбрать" 
+              deselectLabel="enter чтобы удалить" 
+              selectedLabel="выбрано"
+              >
+              
+                <template slot="selection" slot-scope="{ values, search, isOpen }"><span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} выбрано</span></template>
+                <span slot="noResult">Ничего не найдено...</span>
+              
+                <template slot="option" slot-scope="props">
+                  <div class="option">{{ props.option[fieldChoiceText] }}<span v-if="props.option[extraInformationField]" class="text-sm leading-tight text-gray-600"><br>{{ props.option[extraInformationField] }}</span></div>
+                </template>
+                <template v-slot:noOptions>
+                  Загружаем...
+              </template>
+            </multiselect>
+          </div>
+    </div>
   </div>
 </template>
 
 <script>
   import Multiselect from 'vue-multiselect';
+  import CloseCircleOutlineIcon from 'vue-material-design-icons/CloseCircleOutline'
   import { mapGetters } from 'vuex'
+  import TransitionLeftRide from '../transitions/leftRide'
   export default {
     props: {
       placeholder: {
@@ -80,6 +91,9 @@
       removeAction:{
         type: Function
       },
+      removeKeyAction:{
+        type: Function
+      },
       initialDbData:{
         type: Object,
         default: () => {},
@@ -90,12 +104,15 @@
         value: [],
         options: [],
         hasChange: false,
+        showClearAllButton: false,
         // localStorageValues: [],
         // searchValues: [],
       }
     },
     components: {
-      Multiselect
+      Multiselect,
+      CloseCircleOutlineIcon,
+      TransitionLeftRide
     },
     mounted() {
       // alert(1)
@@ -124,8 +141,9 @@
             })
             }
             if(this.sendParamName in this.activeFindParams){
-              console.log('INITIAL!!!!!')
+              // console.log('INITIAL!!!!!')
               this.setIntitialActiveValues()
+              // console.log(this.activeFindParams[this.sendParamName])
             }
         });
     },
@@ -133,7 +151,7 @@
       setIntitialActiveValues(){
           this.activeFindParams[this.sendParamName].forEach(activeParam => {
             this.options.forEach(element => {
-              if(activeParam === element[this.dbValueKey]){
+              if(activeParam == element[this.dbValueKey]){
                 this.value.push(element)
               }
             })
@@ -142,6 +160,9 @@
       },
       clearAll () {
         this.value = []
+        this.removeKeyAction(this.sendParamName)
+        this.hasChange = true
+        this.SelectCloseAction()
       },
       SelectValueAction(selectedValue){
         // this.searchValues.push(selectedValue[this.dbValueKey]);
@@ -156,6 +177,8 @@
       removeValueAction(removedValue){
         this.hasChange = true
         this.removeAction({'key':this.sendParamName , 'value':removedValue[this.dbValueKey]})
+        // console.log('AAAAAAAAAa')
+        // console.log(this.sendParamName)
         // let index = this.selectedArr.indexOf(removedValue[this.searchKey]);
         // if (index > -1) {
         //     this.searchValues.splice(index, 1);
@@ -165,13 +188,15 @@
         }
       },
       SelectCloseAction() {
-        // const local_value = []
-        // this.value.forEach((element) => {
-
-        // })
         if(this.hasChange){
           this.hasChange = false
           this.$emit('selectClose', this.dictKey , this.searchValues)
+          if(this.value.length > 0){
+            this.showClearAllButton = true
+          }
+          else{
+            this.showClearAllButton = false
+          }
         }
       },
       // setInitialData(){
@@ -187,10 +212,3 @@
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
-<style scoped>
-  .multiselect .multiselect__tags,
-  .multiselect .multiselect__tags span,
-  .multiselect .multiselect__tags input {
-    /* background:red; */
-  }
-</style>

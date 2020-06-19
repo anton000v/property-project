@@ -1,17 +1,14 @@
 <template>  
     <div class="main-wrapper">
         <div>
-        <!-- <vue-page-transition name="overlay-left-right"> -->
-            <!-- <md-transition> -->
-                <div class='min-h-screen'>
-                    <vHeaderMain v-if="isMainHeaderActive" />
-                    <vHeaderLittle v-else/>
-                    <router-view/>
-                </div>
-                <Footer/>
-            <!-- </md-transition> -->
+            <div class='min-h-screen'>
+                <!-- {{ isLoaded }} -->
+                <vHeaderMain v-if="isMainHeaderActive" />
+                <vHeaderLittle v-else/>
+                <router-view/>
+            </div>
+            <Footer/>
         </div>
-        <!-- </vue-page-transition> -->
     </div>
 </template>
 
@@ -22,18 +19,12 @@ import Footer from '../components/v-footer'
 import vHeaderMain from '../components/v-header-main'
 import vHeaderLittle from '../components/v-header-little'
 import {mapGetters ,mapMutations } from 'vuex'
-// import TransitionPage from '../transitions/v-transition-page';
 export default {
     components: {
         Footer,
         vHeaderMain,
         vHeaderLittle,
     },
-    // data(){
-    //     return{
-    //         isMainHeader: true 
-    //     }
-    // },
     watch:{
         $route: "updateHeader"
     },
@@ -41,18 +32,24 @@ export default {
         ...mapMutations([
             'changeMainHeader',
         ]),
-        updateHeader(path){
-            // alert(path.path)
-            if(path.path == '/'){
+        updateHeader(){
+            if(this.$route.path == '/'){
                 if(!this.isMainHeaderActive){
                     this.changeMainHeader(true)
                 }
             }
             else{
-                // alert("dasdfsdf")
                 this.changeMainHeader(false)
             }
-        }
+        },
+        
+        // updateInfo(path){
+        //     updateHeader(path)
+
+        // }
+    },
+    mounted() {
+        this.updateHeader()
     },
     computed: {
       ...mapGetters([

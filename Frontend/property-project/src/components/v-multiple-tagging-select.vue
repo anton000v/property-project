@@ -1,31 +1,36 @@
 <template>
   <div>
-      <!-- {{ activeFindParams }}
-      {{ value }} -->
-    <multiselect 
-    v-model="value" 
-    :tag-placeholder="tagPlaceHolder" 
-    :placeholder="placeholder" 
-    :label="searchKey" 
-    :track-by="searchKey" 
-    :options="options" 
-    :multiple="true" 
-    :taggable="true"
-    @tag="addTag"
-    @remove="deleteTagAction"
-    >
-    <template v-slot:noOptions>
-        просто вводите
-    </template>
-    </multiselect>
-
+      <div class="flex items-center">
+        <TransitionLeftRide>
+          <div class='flex-1 px-1 cursor-pointer text-sm transition duration-500 ease-in-out  hover:opacity-40 transform hover:-translate-y-1 hover:-rotate-90 text-myMint-400 hover:text-myMint-100' v-show="showClearAllButton" @click="clearAll">
+              <CloseCircleOutlineIcon :size="20"  title="Очистить все"/>
+          </div>
+        </TransitionLeftRide>
+        <multiselect 
+        v-model="value" 
+        :tag-placeholder="tagPlaceHolder" 
+        :placeholder="placeholder" 
+        :label="searchKey" 
+        :track-by="searchKey" 
+        :options="options" 
+        :multiple="true" 
+        :taggable="true"
+        @tag="addTag"
+        @remove="deleteTagAction"
+        >
+        <template v-slot:noOptions>
+            просто вводите
+        </template>
+        </multiselect>
+    </div>
   </div>
 </template>
 
 <script>
 import Multiselect from 'vue-multiselect'
 import { mapGetters } from 'vuex'
-
+import TransitionLeftRide from '../transitions/leftRide'
+import CloseCircleOutlineIcon from 'vue-material-design-icons/CloseCircleOutline'
 export default {
     props: {
         placeholder: {
@@ -46,13 +51,18 @@ export default {
         removeAction:{
             type: Function
         },
+        removeKeyAction:{
+            type: Function
+        },
         // initialDbData: {
         //     type: Array,
         //     default: () => undefined,
         // }
     },
     components: {
-        Multiselect
+        Multiselect,
+        CloseCircleOutlineIcon,
+        TransitionLeftRide
     },
 
     data () {
@@ -60,6 +70,7 @@ export default {
             value: [],
             options: [],
             regularExpr: /\d+[а-я]?/g,
+            showClearAllButton: false,
         }
     },
     mounted(){
@@ -112,12 +123,25 @@ export default {
 
         deleteTagAction(deletedTag){
             this.removeAction({'key':this.sendParamName, 'value':deletedTag})
+            
             this.changeTagAction()
         },
 
         changeTagAction() {
             this.$emit('tagsChange')
+            if(this.sendParamName in this.activeFindParams){
+                if(this.activeFindParams[this.sendParamName].length > 0){
+                    this.showClearAllButton = true
+                    return
+                }
+            }
+            this.showClearAllButton = false
        },
+        clearAll () {
+            this.value = []
+            this.removeKeyAction(this.sendParamName)
+            this.changeTagAction()
+      },
 
     },
     computed: {

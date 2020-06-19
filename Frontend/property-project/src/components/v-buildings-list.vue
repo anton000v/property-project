@@ -13,7 +13,7 @@
             />    
         </div>          
         <div v-else class="grid justify-center"> 
-            <h2>По вашему запросу ничего не найдено :с</h2>
+            <h2 class="text-2xl font-bold text-gray-600">По вашему запросу ничего не найдено :с</h2>
         </div>
     </div>
 </template>

@@ -7,11 +7,14 @@
           class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg"
         >
           <div class="px-4 py-5 flex-auto">
-            <div
-              class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full transition duration-500 bg-myMint-300 hover:bg-myMint-100 cursor-pointer"
-              v-on:click="search"
-            >
-              <HomeSearchIcon/>
+            <div class="inline-flex ">
+
+              <div
+                class="inline-block text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full transition duration-500 bg-myMint-300 hover:bg-myMint-100 cursor-pointer"
+                v-on:click="search"
+              >
+                <HomeSearchIcon/>
+              </div>
             </div>
             <div class="flex flex-wrap -mx-3 mb-6">
               <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -28,6 +31,7 @@
                   :sendParamName="administrativeDistrictsBaseVariables.sendParamName"
                   :addAction="addFindParam"
                   :removeAction="removeFindParam"
+                  :removeKeyAction="removeFindParamKey"
                   placeholder="Административные районы" 
                   />
                 </div>
@@ -51,6 +55,7 @@
                     :trackEveryUpdate="true"
                     :addAction="addFindParam"
                     :removeAction="removeFindParam"
+                    :removeKeyAction="removeFindParamKey"
                     placeholder="Районы" 
                     />
                   </div>
@@ -74,6 +79,7 @@
                     :sendParamName="saltovkaMicroDistrictsBaseVariables.sendParamName"
                     :addAction="addFindParam"
                     :removeAction="removeFindParam"
+                    :removeKeyAction="removeFindParamKey"
                     placeholder="Микрорайоны" 
                     />
                   </div>
@@ -92,6 +98,7 @@
                       :sendParamName="severnayaSaltovkaMicroDistrictsBaseVariables.sendParamName"
                       :addAction="addFindParam"
                       :removeAction="removeFindParam"
+                      :removeKeyAction="removeFindParamKey"
                       placeholder="Микрорайоны" 
                     />
                   </div>
@@ -113,6 +120,7 @@
                   :sendParamName="streetsBaseVariables.sendParamName"
                   :addAction="addFindParam"
                   :removeAction="removeFindParam"
+                  :removeKeyAction="removeFindParamKey"
                   placeholder="Улицы" 
                   />
                 </div>
@@ -127,6 +135,7 @@
                     :addAction="addFindParam"
                     :removeAction="removeFindParam"
                     :sendParamName="houseNumberSendParamName"
+                    :removeKeyAction="removeFindParamKey"
                     tagPlaceHolder="enter чтобы добавить к поиску"
                     placeholder="Номера домов"
                   />
@@ -148,6 +157,7 @@
                   :sendParamName="developersBaseVariables.sendParamName"
                   :addAction="addFindParam"
                   :removeAction="removeFindParam"
+                  :removeKeyAction="removeFindParamKey"
                   placeholder="застройщики" 
                   />
                 </div>
@@ -214,9 +224,9 @@ export default{
     // beforeRouteUpdate(){
     //   this.updateBuildings()
     // },
-    created () {
-       this.setInitialData()
-     },
+    // created () {
+    //    this.setInitialData()
+    //  },
     methods:{ 
       ...mapMutations([
         // 'removeStreet',
@@ -224,7 +234,7 @@ export default{
         'addFindParam',
         'removeFindParam',
         'updateFindParams',
-
+        'removeFindParamKey',
       ]),
       ...mapActions([
         'searchBuildings',
@@ -255,18 +265,23 @@ export default{
         updateBuildings(){
           this.searchBuildings(this.activeFindParams)
         },
-        setInitialData(){
-          this.updateFindParams(JSON.parse(JSON.stringify(this.$route.query)))
-        }
+        // setInitialData(){
+        //   this.updateFindParams(JSON.parse(JSON.stringify(this.$route.query)))
+        // },
+        // async prepareData(){
+        //   await this.updateBuildings()
+        // }
     },
-    mounted(){
-      // alert(this.$route.query)
-      // this.updateFindParams(JSON.parse(JSON.stringify(this.$route.query)))
-      // console.log("  [from mounted]  Find param:") 
-      // console.log(this.activeFindParams)
-      // this.dataReady = true
-      this.updateBuildings()   
-    },
+    // created() {
+    //   this.setInitialData()
+    // },
+    // mounted(){
+    //   this.prepareData()
+    //         .then(() => {
+    //             this.changeLoadingState(true)
+    //             }
+    //         )   
+    // },
     computed: {
       ...mapGetters([
         'activeFindParams', 

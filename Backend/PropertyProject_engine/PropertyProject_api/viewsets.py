@@ -16,11 +16,11 @@ class NewBuildingFilter(filters.FilterSet):
         to_field_name = 'id',
         queryset = Developer.objects.all(),
     )
-    developer = filters.ModelMultipleChoiceFilter(
-        field_name = 'developer',
-        to_field_name = 'id',
-        queryset = Developer.objects.all(),
-    )
+    # developer = filters.ModelMultipleChoiceFilter(
+    #     field_name = 'developer',
+    #     to_field_name = 'id',
+    #     queryset = Developer.objects.all(),
+    # )
     # street = NumberInFilter(field_name='street__id', lookup_expr='in')
     # street = filters.ModelMultipleChoiceFilter(
     #     field_name='street',

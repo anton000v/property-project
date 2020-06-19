@@ -137,10 +137,18 @@ export default {
                 state.findParams[dictVal.key].splice(index, 1);
             }
         },
+        removeFindParamKey(state, key){
+            if(key in state.findParams){
+                delete state.findParams[key]
+            }
+        },
         updateFindParams(state, findParams){
             for(const key in findParams){
                 if(!Array.isArray(findParams[key])){
-                    findParams[key] = Array(findParams[key])
+                    const num = stringToInt(findParams[key])
+                    if(num != -1){
+                        findParams[key] = [num]
+                    }
                 }
                 else { 
                     findParams[key].forEach((element,index) => {
