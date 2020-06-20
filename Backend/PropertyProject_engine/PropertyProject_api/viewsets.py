@@ -4,6 +4,7 @@ from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from django_filters import rest_framework as filters
 from django.db.models import Q
+from .pagination import CustomPageNumber
 import re 
 import operator
 from functools import reduce
@@ -53,7 +54,8 @@ class NewBuildingViewSet(viewsets.ReadOnlyModelViewSet):
         # 'list': MyModelListSerializer,
         # 'create': MyModelCreateSerializer
     }
-    pagination_class =  PageNumberPagination
+    # pagination_class =  PageNumberPagination
+    pagination_class = CustomPageNumber
     
     def get_serializer_class(self):
         '''

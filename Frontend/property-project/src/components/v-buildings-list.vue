@@ -48,12 +48,22 @@ export default{
             return this.numberOfBuildings.toFixed(0);
         }
     },
-    watch: {
-        buildingsCount: function(val) {
+    methods:{
+        animateCounter(val){
             TweenLite.to(this.$data, { 
                 duration: 0.5,
                 numberOfBuildings: val,
                 });
+        }
+    },
+    watch: {
+        buildingsCount: function(val) {
+            this.animateCounter(val)
+        }
+    },
+    mounted(){
+        if(this.buildingsCount > 0){
+            this.animateCounter(this.buildingsCount)
         }
     }
 }
