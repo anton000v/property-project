@@ -14,10 +14,10 @@
             :next-text="'Вперед'"
             :hide-prev-next="true"
             container-class="flex list-reset rounded w-auto m-auto font-sans"
-            page-class="block border-r border-grey-light px-3 py-2 transition duration-500 ease-in-out hover:opacity-40 transform hover:-translate-y-1"
+            page-class="block border-r border-grey-light px-3 py-2 md:transition md:duration-500 md:ease-in-out hover:opacity-40 md:transform md:hover:-translate-y-1"
             active-class="block text-white bg-myMint-400 border-r px-3 py-2"
-            prev-class="pr-8 block border-r border-grey-light px-3 py-2 transition duration-500 ease-in-out hover:opacity-40 transform hover:-translate-y-1"
-            next-class="pl-8 block border-r border-grey-light px-3 py-2 transition duration-500 ease-in-out hover:opacity-40 transform hover:-translate-y-1"
+            prev-class="pr-8 block border-r border-grey-light px-3 py-2 md:transition md:duration-500 md:ease-in-out md:hover:opacity-40 md:transform md:hover:-translate-y-1"
+            next-class="pl-8 block border-r border-grey-light px-3 py-2 md:transition md:duration-500 md:ease-in-out md:hover:opacity-40 md:transform md:hover:-translate-y-1"
             break-view-text="..."
             break-view-class="transition-none transform-none cursor-not-allowed"
             >

@@ -20,7 +20,14 @@
                                 Назад
                             </div>
                         </div> -->
-                        <div class="w-full hover:bg-myMint-100"><KeyboardBackspaceIcon fillColor="#1F7B67" :size="35"/></div>
+                        <div class="relative rounded-lg flex md:hover:shadow-lg hover:bg-myMint-100 hover:text-white md:hover:text-gray-700 text-myMint-400 cursor-pointer" @click="$router.go(-1)">
+                            <div class="w-full inline-flex items-center md:transition md:duration-500 md:ease-in-out  md:transform md:hover:-translate-x-10">
+                                <!-- <div class=""> -->
+                                    <KeyboardBackspaceIcon  :size="35"/>
+                                <!-- </div> -->
+                                <span class="pl-5">Назад</span>
+                            </div>
+                        </div>
                         <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
                             <div class="px-1 md:px-4 py-5 flex-auto">
                                 <div class="text-2xl">
@@ -37,7 +44,7 @@
                                         <div class= 'h-full w-full'>
 
                                             <div class="grid grid-cols-2 justify-center text-center justify-center gap-2">
-                                                <div v-if="building.administrative_district.length > 0" class="flex-1 rounded-lg flex-col bg-gray-200 md:transition md:duration-500 md:hover:shadow-md">
+                                                <div v-if="building.administrative_district != null" class="flex-1 rounded-lg flex-col bg-gray-200 md:transition md:duration-500 md:hover:shadow-md">
                                                     <div class="text-gray-700 font-bold text-center px-4 py-2 m-1 md:m-2">
                                                         <div class="inline-flex items-center">
                                                             <HomeCityIcon fillColor="#1F7B67" :size="25" />
@@ -51,7 +58,7 @@
                                                     </div>
                                                     <div class="rounded-lg bg-white border-b border-myMint-100 text-myMint-400 font-bold text-center md:px-4 py-2 m-2">{{ building.administrative_district }}</div>
                                                 </div>
-                                                <div v-if="building.district.length > 0" class="flex-1 rounded-lg flex-col bg-gray-200 md:transition md:duration-500 md:hover:shadow-md">
+                                                <div v-if="building.district != null" class="flex-1 rounded-lg flex-col bg-gray-200 md:transition md:duration-500 md:hover:shadow-md">
                                                     <div class="text-gray-700 font-bold  text-center px-4 py-2 m-1 md:m-2">
                                                         <div class="inline-flex items-center">
                                                             <HomeGroupIcon fillColor="#1F7B67" :size="25" />
@@ -73,7 +80,7 @@
                                                     </div>
                                                     <div class="bg-white rounded-lg border-b border-myMint-100 text-myMint-400 font-bold  text-center md:px-4 py-2 m-1 md:m-2">{{ building.micro_district }}</div>
                                                 </div>
-                                                <div v-if="building.developer.length > 0" class="flex-1 rounded-lg flex-col bg-gray-200 md:transition md:duration-500 md:hover:shadow-md">
+                                                <div v-if="building.developer != null" class="flex-1 rounded-lg flex-col bg-gray-200 md:transition md:duration-500 md:hover:shadow-md">
                                                     <div class="text-gray-700 font-bold  text-center px-4 py-2 m-1 md:m-2">
                                                         <div class="inline-flex items-center">
                                                             <HouseEditIcon fillColor="#1F7B67" :size="25" />
@@ -85,7 +92,7 @@
                                                     <div class="bg-white rounded-lg border-b border-myMint-100 border-myMint-100 text-myMint-400 font-bold  text-center  md:px-4 py-2 m-2">{{ building.developer }}</div>
                                                 </div>
                                             </div>
-                                            <div v-if="building.ways_from_metro.length > 0" class="flex1 rounded-lg bg-gray-200 mt-5 md:transition md:duration-500 md:hover:shadow-md" >
+                                            <div v-if="building.ways_from_metro != null && building.ways_from_metro.length > 0" class="flex1 rounded-lg bg-gray-200 mt-5 md:transition md:duration-500 md:hover:shadow-md" >
                                                 <div class="px-2 py-2">
                                                     <div class="text-gray-700 font-bold  text-center">
                                                         <div class="inline-flex items-center">
@@ -105,7 +112,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div v-if="building.completion_date.length > 0" class="flex1 rounded-lg bg-gray-200 mt-5 md:transition md:duration-500 md:hover:shadow-md" >
+                                            <div v-if="building.completion_date != null" class="flex1 rounded-lg bg-gray-200 mt-5 md:transition md:duration-500 md:hover:shadow-md" >
                                                <div class="text-gray-700 font-bold  text-center px-4 py-2 m-2">
                                                 <div class="inline-flex items-center">
                                                     <ClipboardCheckMultipleIcon fillColor="#1F7B67" :size="25" />
@@ -134,7 +141,7 @@
                     </div> -->
             </transition>
         </div>
-        <scrollactive  active-class="bg-myMint-100" :modifyUrl="false">
+        <scrollactive  :offset="80" active-class="bg-myMint-100" :modifyUrl="false">
             <!-- <a href="#images" class="">Фото</a>
             <a href="#layouts" class="">Планировки</a> -->
 
