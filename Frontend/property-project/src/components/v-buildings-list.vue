@@ -1,5 +1,6 @@
 <template> 
-    <div>   
+    <div id="buildings-list-begin">  
+        <!-- {{ searchId }}  -->
         <div class="text-center text-lg text-myMint-300 hover:text-myMint-100 font-bold transition duration-500">
             <div class="text-gray-500">Найдено:</div> 
             <div ref="buildingsCounter" class="text-4xl">{{ animatedNumber }}</div>
@@ -8,7 +9,7 @@
         <TransitionList>
             <div key="buildings" v-if="buildingsCount > 0">
                 <TransitionList>
-                    <div :key="buildingsCount" class="grid m-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center gap-8 my-20">
+                    <div :key="searchId" class="grid m-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center gap-8 my-20">
                         <vBuildingCard  
                         v-for="building in allBuildings" 
                         :key="building.slug" 
@@ -23,6 +24,9 @@
             <!-- </TransitionList> -->
             </div>
         </TransitionList>
+        <vPagination>
+
+        </vPagination>
     </div>
 </template>
 
@@ -32,6 +36,8 @@ import vBuildingCard from './v-building-card.vue';
 import TransitionList from '../transitions/list'
 import {mapGetters} from 'vuex'
 import {TweenLite} from 'gsap'
+import vPagination from './v-pagination' 
+
 export default{
     data(){
         return {
@@ -40,10 +46,11 @@ export default{
     },
     components: {
         vBuildingCard,
-        TransitionList
+        TransitionList,
+        vPagination
     },
     computed: {
-        ...mapGetters(['allBuildings','buildingsCount']),
+        ...mapGetters(['allBuildings','buildingsCount','currentPage','activeFindParams', 'searchId']),
         animatedNumber: function() {
             return this.numberOfBuildings.toFixed(0);
         }

@@ -188,6 +188,7 @@ import {
   developersBaseVariables } from '../variables.js';
 import { mapMutations, mapActions, mapGetters } from 'vuex'
 import HomeSearchIcon from 'vue-material-design-icons/HomeSearch';
+import { addHashToLocation } from '../utils.js'
 export default{
     components: {
         MultipleSelect,
@@ -259,38 +260,48 @@ export default{
           // .then(() => 
           // this.$router.replace({name: 'search-page', query:this.activeFindParams})
           if(this.$route.path == '/'){
+            this.removeFindParamKey('page')
             this.$router.replace({name:'search-page', query:this.activeFindParams})
           }
           else{
-            this.addHashToLocation(this.activeFindParams)
+            // this.addHashToLocation(this.activeFindParams)
+            this.removeFindParamKey('page')
+            this.callAddHashToLocation()
             this.updateBuildings()
           }
           // this.$router.replace({name:'search-page', query:})
           // this.$router.replace({name: 'search-page', query:template})
         }, 
         updateBuildings(){
+          // if('page' in this.activeFindParams){
+          //   alert()
+          //   this.removeFindParamKey('page')
+          // }
           this.searchBuildings(this.activeFindParams)
         },
-        addHashToLocation(paramsDict) {
-          console.log('aaaaaaaaaaaaaaaaa')
-          console.log(this.$router)
-          const qs = require('qs');
-          const q = qs.stringify(paramsDict, {arrayFormat: 'repeat'})
-          if(q.length > 0){
-            history.replaceState(
-              {},
-              null,
-              '#' + this.$route.path + '?' + q
-              )
-          }
-          else{
-            history.pushState(
-              {},
-              null,
-              '#' + this.$route.path,
-              )
-          }
+        callAddHashToLocation() {
+          addHashToLocation(this.activeFindParams, this.$route.path)
         }
+        // addHashToLocation(paramsDict) {
+        //   console.log('aaaaaaaaaaaaaaaaa')
+        //   console.log(this.$router)
+        //   const qs = require('qs');
+        //   const q = qs.stringify(paramsDict, {arrayFormat: 'repeat'})
+        //   if(q.length > 0){
+        //     history.replaceState(
+        //       {},
+        //       null,
+        //       '#' + this.$route.path + '?' + q
+        //       )
+        //   }
+        //   else{
+        //     history.pushState(
+        //       {},
+        //       null,
+        //       '#' + this.$route.path,
+        //       )
+        //   }
+        // }
         // setInitialData(){
         //   this.updateFindParams(JSON.parse(JSON.stringify(this.$route.query)))
         // },

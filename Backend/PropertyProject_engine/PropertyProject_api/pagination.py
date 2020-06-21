@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from collections import OrderedDict
 
 class CustomPageNumber(PageNumberPagination):
-    page_size = 2
+    page_size = 12
 
     def get_paginated_response(self, data):
         return Response(OrderedDict([

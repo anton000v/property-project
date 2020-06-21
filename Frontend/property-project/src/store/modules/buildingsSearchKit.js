@@ -9,14 +9,8 @@
 // }
 // let session = context.rootState.instance.session;
 
-function stringToInt(n) {
-    let num = parseInt(n)
-    if(isNaN(num)){
-        return -1
-    }
-    return num
-}
 
+import { stringToInt } from '../../utils'
 import { saltovkaDBValue, severnayaSaltovkaDBValue } from '../../variables.js'
 
 export default {
@@ -197,7 +191,7 @@ export default {
         // developers:[],
 
         findParams:{},
-  
+        // findParamsAsString: {},
         isSaltovkaDistrictChoosen: false,
         isSevernayaSaltovkaDistrictChoosen: false,
   
