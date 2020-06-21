@@ -54,6 +54,10 @@ export default {
               }
             }
         },
+        setDefaultDistrictsChoosen(ctx){
+            ctx.commit('updateIsSaltovkaDistrictChoosen', false)
+            ctx.commit('updateIsSevernayaSaltovkaDistrictChoosen', false)
+        }
         // fetchActiveFindParams ({ commit }, id) {
         //     // возвращаем Promise через `store.dispatch()`
         //     // чтобы могли определять когда данные будут загружены

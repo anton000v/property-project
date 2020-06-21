@@ -163,6 +163,9 @@
         this.value = []
         this.removeKeyAction(this.sendParamName)
         this.hasChange = true
+        if(this.trackEveryUpdate){
+          this.$emit('removeAll')
+        }
         this.SelectCloseAction()
       },
       SelectValueAction(selectedValue){

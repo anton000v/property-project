@@ -46,6 +46,7 @@
                     @selectClose="search" 
                     @select="checkToShowMicroDistricts"
                     @remove="checkToHideMicroDistricts"
+                    @removeAll="setDefaultDistrictsChoosen"
                     :dbValueKey="districtsBaseVariables.dbValueKey"
                     :extraInformationField="districtsBaseVariables.extraInformationText"
                     :fieldChoiceText="districtsBaseVariables.choiceText" 
@@ -62,49 +63,55 @@
                 </div>
               </div>
             </div>
-            <div class="flex flex-wrap -mx-3 mb-6" v-if="isSaltovkaDistrictChoosen || isSevernayaSaltovkaDistrictChoosen">
-              <div class='w-1/2'></div>
-              <div class="w-full md:w-1/2 flex" >  
-                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0 " v-if="isSaltovkaDistrictChoosen">
-                  <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
-                    Салтовка
-                  </label>
-                  <div name="field" class="w-full">
-                    <MultipleSelect 
-                    @selectClose="search"
-                    :dbValueKey="saltovkaMicroDistrictsBaseVariables.dbValueKey"
-                    :fieldChoiceText="saltovkaMicroDistrictsBaseVariables.choiceText" 
-                    :dictKey="saltovkaMicroDistrictsBaseVariables.dictKey" 
-                    :apiAddress="saltovkaMicroDistrictsBaseVariables.fullApiAddress" 
-                    :sendParamName="saltovkaMicroDistrictsBaseVariables.sendParamName"
-                    :addAction="addFindParam"
-                    :removeAction="removeFindParam"
-                    :removeKeyAction="removeFindParamKey"
-                    placeholder="Микрорайоны" 
-                    />
-                  </div>
-                </div>
-                <div class="w-full md:w-1/2 px-3" v-if="isSevernayaSaltovkaDistrictChoosen">
-                  <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
-                    Северная салтовка
-                  </label>
-                  <div class="w-full">    
-                    <MultipleSelect 
-                      @selectClose="search"
-                      :dbValueKey="severnayaSaltovkaMicroDistrictsBaseVariables.dbValueKey"
-                      :fieldChoiceText="severnayaSaltovkaMicroDistrictsBaseVariables.fieldChoiceText" 
-                      :dictKey="severnayaSaltovkaMicroDistrictsBaseVariables.dictKey" 
-                      :apiAddress="severnayaSaltovkaMicroDistrictsBaseVariables.fullApiAddress" 
-                      :sendParamName="severnayaSaltovkaMicroDistrictsBaseVariables.sendParamName"
-                      :addAction="addFindParam"
-                      :removeAction="removeFindParam"
-                      :removeKeyAction="removeFindParamKey"
-                      placeholder="Микрорайоны" 
-                    />
-                  </div>
+            <TransitionDownRide>
+              <div class="flex flex-wrap -mx-3 mb-6" v-if="isSaltovkaDistrictChoosen || isSevernayaSaltovkaDistrictChoosen">
+                <div class='w-1/2'></div>
+                <div class="w-full md:w-1/2 flex" >  
+                  <TransitionDownRide>
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0 " v-if="isSaltovkaDistrictChoosen">
+                      <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                        Салтовка
+                      </label>
+                      <div name="field" class="w-full">
+                        <MultipleSelect 
+                        @selectClose="search"
+                        :dbValueKey="saltovkaMicroDistrictsBaseVariables.dbValueKey"
+                        :fieldChoiceText="saltovkaMicroDistrictsBaseVariables.choiceText" 
+                        :dictKey="saltovkaMicroDistrictsBaseVariables.dictKey" 
+                        :apiAddress="saltovkaMicroDistrictsBaseVariables.fullApiAddress" 
+                        :sendParamName="saltovkaMicroDistrictsBaseVariables.sendParamName"
+                        :addAction="addFindParam"
+                        :removeAction="removeFindParam"
+                        :removeKeyAction="removeFindParamKey"
+                        placeholder="Микрорайоны" 
+                        />
+                      </div>
+                    </div>
+                  </TransitionDownRide>
+                  <TransitionDownRide>
+                    <div class="w-full md:w-1/2 px-3" v-if="isSevernayaSaltovkaDistrictChoosen">
+                      <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                        Северная салтовка
+                      </label>
+                      <div class="w-full">    
+                        <MultipleSelect 
+                          @selectClose="search"
+                          :dbValueKey="severnayaSaltovkaMicroDistrictsBaseVariables.dbValueKey"
+                          :fieldChoiceText="severnayaSaltovkaMicroDistrictsBaseVariables.choiceText" 
+                          :dictKey="severnayaSaltovkaMicroDistrictsBaseVariables.dictKey" 
+                          :apiAddress="severnayaSaltovkaMicroDistrictsBaseVariables.fullApiAddress" 
+                          :sendParamName="severnayaSaltovkaMicroDistrictsBaseVariables.sendParamName"
+                          :addAction="addFindParam"
+                          :removeAction="removeFindParam"
+                          :removeKeyAction="removeFindParamKey"
+                          placeholder="Микрорайоны" 
+                        />
+                      </div>
+                    </div>
+                  </TransitionDownRide>
                 </div>
               </div>
-            </div>
+            </TransitionDownRide>
             <div class="flex flex-wrap -mx-3 mb-6">
               <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
@@ -189,11 +196,14 @@ import {
 import { mapMutations, mapActions, mapGetters } from 'vuex'
 import HomeSearchIcon from 'vue-material-design-icons/HomeSearch';
 import { addHashToLocation } from '../utils.js'
+import TransitionDownRide from '../transitions/downRide'
+
 export default{
     components: {
         MultipleSelect,
         MultipleTaggingSelect,
-        HomeSearchIcon
+        HomeSearchIcon,
+        TransitionDownRide
     },
     // В data только импортированные константные переменные
     data(){
@@ -241,7 +251,7 @@ export default{
         'searchBuildings',
         'checkToShowMicroDistricts',
         'checkToHideMicroDistricts',
-        
+        'setDefaultDistrictsChoosen'
         // 'addStreet',
         // 'removeStreet',
         ]),
