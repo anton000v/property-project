@@ -21,4 +21,8 @@ export default {
   background-color:black;
 } */
 
+body {
+  /* background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#5ED2B8)) fixed; */
+}
+
 </style>

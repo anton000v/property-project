@@ -26,6 +26,7 @@ Vue.use(VModal)
 
 Vue.config.productionTip = false
 // console.log(App);
+
 new Vue({
   store: store,
   router:router,

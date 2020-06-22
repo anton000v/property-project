@@ -1,6 +1,6 @@
 <template>
         <!-- <div class="asfdsf"> -->
-            <vue-picture-swipe :ref="gallaryRef" :options="{shareEl: false, history:false, captionEl:true, class:'dasds'}" :items="preparedImages"
+            <vue-picture-swipe :ref="gallaryRef" :options="{shareEl: false, history:false, captionEl:true}" :items="preparedImages"
             >
             </vue-picture-swipe>
         <!-- </div> -->

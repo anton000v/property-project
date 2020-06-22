@@ -1,6 +1,6 @@
 <template>
   <div
-      class="h-12 md:h-22 relative pt-16 pb-32 flex content-center items-center justify-center"
+      class="h-12 md:h-30 bg-myHeaderColor relative pt-16 pb-32 flex content-center items-center justify-center"
       style="min-height: 30vh;"
     >
       <div
@@ -11,21 +11,21 @@
       </div>
       <div class="container relative mx-auto">
         <div class="items-center flex flex-wrap">
-          <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
+          <div class="w-full xl:w-6/12 px-4 ml-auto mr-auto text-center">
             <!-- <div class=""> -->
               <router-link to="/">
-                <h1 class="text-myMint-500 font-semibold text-3xl md:text-4xl lg:text-5xl">
+                <h1 class="text-white font-semibold text-4xl md:text-5xl lg:text-5xl">
                     property - project
                 </h1>
               </router-link>
-              <p class=" lg:mt-4 text-md md:text-lg text-myMint-400">
+              <p class=" lg:mt-4 text-md md:text-lg text-white">
                 Поиск новостроев
               </p>
             <!-- </div> -->
           </div>
         </div>
       </div>
-      <div
+      <!-- <div
         class="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden"
         style="height: 70px; transform: translateZ(0px);"
       >
@@ -43,7 +43,7 @@
             points="2560 0 2560 100 0 100"
           ></polygon>
         </svg>
-      </div>
+      </div> -->
     </div>
 
 

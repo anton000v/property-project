@@ -13,7 +13,8 @@ module.exports = {
         "mySecondDark" : "#846667",
         "myFirstLight" : "#ff9b9d",
         "mySecondLight" : "#cbcbcb",
-        
+        "myHeaderColor": "#002d31",
+
         "myMint-100" : "#5ED2B8",
         "myMint-200": "#34D2AF",
         "myMint-300" : "#00A480",
@@ -22,11 +23,12 @@ module.exports = {
       }),
       textColor:{
         "myPageBackground": "#f8f8f8",
+        
         "myFirstDark" : "#3c3838",
         "mySecondDark" : "#846667",
         "myFirstLight" : "#ff9b9d",
         "mySecondLight" : "#cbcbcb",
-
+        "myHeaderColor": "#002d31",
         "myMint-100" : "#5ED2B8",
         "myMint-200": "#34D2AF",
         "myMint-300" : "#00A480",
@@ -39,6 +41,7 @@ module.exports = {
         "myMint-300" : "#00A480",
         "myMint-400" : "#1F7B67",
         "myMint-500" : "#006B53",
+        "myHeaderColor": "#002d31",
       }
     },
   },
