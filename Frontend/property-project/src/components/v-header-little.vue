@@ -14,7 +14,7 @@
           <div class="w-full xl:w-6/12 px-4 ml-auto mr-auto text-center">
             <!-- <div class=""> -->
               <router-link to="/">
-                <h1 class="text-white font-semibold text-4xl md:text-5xl lg:text-5xl">
+                <h1 class="text-white font-semibold text-2xl md:text-5xl lg:text-5xl">
                     property - project
                 </h1>
               </router-link>

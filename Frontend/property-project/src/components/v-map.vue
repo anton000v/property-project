@@ -15,7 +15,7 @@
       :zoom="zoom"
       :center="center"
       :options="mapOptions"
-      style="height:500px;"
+      :style="'height:'+mapSize+'px;'"
       @update:center="centerUpdate"
       @update:zoom="zoomUpdate"
     >
@@ -80,6 +80,7 @@ export default {
       lat: Number,
       lng: Number,
       zoom: Number,
+      mapSize: Number,
   },
   data() {
     return {

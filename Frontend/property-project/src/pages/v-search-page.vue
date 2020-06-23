@@ -1,7 +1,7 @@
 <template>  
     <div>
         <section class="pb-20 -mt-20">
-            <div class="container mx-auto px-8" v-if="loaded">
+            <div class="container mx-auto md:px-8" v-if="loaded">
                 <!-- {{ this.activeFindParams }} -->
                 <BuildingsSearchKit />
                 <BuildingsList/>

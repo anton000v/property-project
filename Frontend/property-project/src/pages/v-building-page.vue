@@ -21,19 +21,19 @@
                             </div>
                         </div> -->
                         <div v-if="canBack" class="relative rounded-lg flex md:hover:shadow-lg  text-myMint-100 md:hover:text-white cursor-pointer" @click="$router.go(-1)">
-                            <div class="w-full inline-flex items-center md:transition md:duration-500 md:ease-in-out  md:transform md:hover:-translate-x-10">
+                            <div class="w-full pt-4 inline-flex items-center transition duration-500 ease-in-out  transform hover:-translate-x-10">
                                 <!-- <div class=""> -->
                                     <KeyboardBackspaceIcon  :size="40"/>
                                 <!-- </div> -->
-                                <span class="pl-5 text-xl">Назад</span>
+                                <span class="pl-5 text-sm md:text-xl">Назад</span>
                             </div>
                         </div>
                         <div v-else class="relative rounded-lg flex md:hover:shadow-lg  text-myMint-100 md:hover:text-white cursor-pointer" @click="$router.push(prevRoute.fullPath)">
-                            <div class="w-full inline-flex items-center md:transition md:duration-500 md:ease-in-out  md:transform md:hover:-translate-x-10">
+                            <div class="w-full pt-4 inline-flex items-center transition duration-500 ease-in-out  transform hover:-translate-x-10">
                                 <!-- <div class=""> -->
                                     <KeyboardBackspaceIcon  :size="40"/>
                                 <!-- </div> -->
-                                <span class="pl-5 text-xl">Назад</span>
+                                <span class="pl-5 text-sm md:text-xl">Назад</span>
                             </div>
                         </div>
                         <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
@@ -104,7 +104,8 @@
                                                 <div class="px-2 py-2">
                                                     <div class="text-gray-700 text-base text-center">
                                                         <div class="inline-flex items-center">
-                                                            <highway-icon class="text-myMint-400" :size="30" />
+                                                            <highway-icon class="text-myMint-400" 
+                                                             />
                                                             <div class="flex-1 m-1 md:m-2 px-4 p-2">
                                                                 Пути от метро
                                                             </div>
@@ -141,33 +142,49 @@
 
                           <div id="building-on-map" class="mt-16 mb-16">
 
-                                        <div class="flex -mx-2">
-                                            <div class="w-4/5 px-2">
-                                                <vMap :lat="building.lat" :lng="building.lng" :zoom="30"></vMap>
+                                        <div class="md:flex md:-mx-2">
+                                            <div class="m-auto w-4/5 md:px-2">
+                                                <div class="hidden md:block">
+                                                    <vMap :lat="building.lat" :lng="building.lng" :mapSize="500" :zoom="30"></vMap>
+                                                </div>
+                                                <div class="block md:hidden">
+                                                    <vMap :lat="building.lat" :lng="building.lng" :mapSize="200" :zoom="30"></vMap>
+                                                </div>
                                             </div>
-                                            <div class="grid grid-rows-2 px-2 gap-2">
-                                                <div @click="openInGoogleMaps" class="flex border cursor-pointer rounded-lg  text-black shadow text-xl md:transition md:duration-500 md:transform md:hover:translate-x-2 md:ease-in-out text-center block  md:hover:shadow-xl py-2">
+                                            <div class="w-full md:w-auto grid grid-cols-2 md:grid-cols-none md:grid-rows-2 px-6 md:px-2 gap-2">
+                                                <div @click="openInGoogleMaps" class="flex border cursor-pointer rounded-lg  text-black shadow md:text-xl md:transition md:duration-500 md:transform md:hover:translate-x-2 md:ease-in-out text-center block  md:hover:shadow-xl py-2">
                                                     <div class="m-auto">
                                                         Открыть в Google Maps
                                                     </div>
                                                 </div>
-                                                <div @click="openInGoogleStreetView" class="flex border cursor-pointer rounded-lg  text-black shadow text-xl md:transition md:duration-500 md:transform md:hover:translate-x-2 md:ease-in-out text-center block md:hover:shadow-xl py-2">
+                                                <div @click="openInGoogleStreetView" class="flex border cursor-pointer rounded-lg  text-black shadow md:text-xl md:transition md:duration-500 md:transform md:hover:translate-x-2 md:ease-in-out text-center block md:hover:shadow-xl py-2">
                                                     <div class="m-auto">
                                                         Покрутить в Google Streets View
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="text-sm">
-                                        P.S. Так как мы используем бесплатную карту, новострои могут не отображаться на карте должным образом (маркер может указывать на место, которое никак не обозначено на карте). Однако сам маркер имеет точные координаты дома, проверенные Google. 
-                                        Чтобы ознакомиться с полной инфраструктурой Вы можете воспользоваться кнопкой "Открыть в Google maps". Просим прощения за неудобства
+                                        <div class="text-sm pt-4 pl-2 pr-2">
+                                            <p v-if="!readMoreActivated">{{textAboutMap.slice(0, 60)}}...
+                                                <span class="pl-2 text-center text-myMint-400 cursor-pointer" @click="readMoreActivated = !readMoreActivated">
+                                                    Читать далее
+                                                </span>
+                                            </p>
+                                            <p v-if="readMoreActivated">
+                                                {{ textAboutMap }}
+                                                <span class="pl-2 text-center text-myMint-400 cursor-pointer" @click="readMoreActivated = !readMoreActivated">
+                                                    Скрыть
+                                                </span>
+                                            </p>
+
+                                            <!-- {{ textAboutMap }} -->
                                         </div>
                                     </div>
 
 
 <!-- <div class='p-10'> -->
     <div ref="anchors-default-position" class="invisible"> </div>
-    <div ref="anchors" class="sticky text-center left-0 bg-myPageBackground top-0 z-50 relative flex flex-col min-w-0 rounded-lg ">
+    <div ref="anchors" class="sticky text-center left-0 bg-myPageBackground top-0 z-40 relative flex flex-col min-w-0 rounded-lg ">
         <div class="hidden md:block">
             <transition name="fade">
                     <div v-if="anchorsInfo.showAncorsTitle" class='flex-1 '>
@@ -182,26 +199,26 @@
             <a href="#layouts" class="">Планировки</a> -->
 
             <ul class="flex text-sm md:text-base">
-                <li class="flex-1 mx-2">
-                    <a href="#building-full-info" class="rounded-lg scrollactive-item bg-myHeaderColor text-white text-xl md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-500 md:hover:shadow-xl py-2 ">
+                <li class="flex-1 mx-1 md:mx-2">
+                    <a href="#building-full-info" class="rounded-lg scrollactive-item bg-myHeaderColor text-white text-sm md:text-xl md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-500 md:hover:shadow-xl py-2 ">
                         Об обьекте
                     </a>
                 </li>
-                <li class="flex-1 mx-2">
-                    <a href="#images" class="rounded-lg  scrollactive-item bg-myHeaderColor text-white text-xl md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-500 md:hover:shadow-xl py-2 ">
+                <li class="flex-1 mx-1 md:mx-2">
+                    <a href="#images" class="rounded-lg  scrollactive-item bg-myHeaderColor text-white text-sm md:text-xl md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-500 md:hover:shadow-xl py-2 ">
                         Изображения
                     </a>
                 </li>
-                <li class="flex-1 mx-2">
-                    <a href="#layouts" class="rounded-lg  scrollactive-item bg-myHeaderColor text-white text-xl md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-500 md:hover:shadow-xl py-2 ">
+                <li class="flex-1 mx-1 md:mx-2">
+                    <a href="#layouts" class="rounded-lg  scrollactive-item bg-myHeaderColor text-white text-sm md:text-xl md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-500 md:hover:shadow-xl py-2 ">
                         Планировки
                     </a>
                 </li>
-                <li class="flex-1 mx-2">
-                    <a href="#buildings-for-sale" class="rounded-lg scrollactive-item bg-myHeaderColor text-white text-xl md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-500 md:hover:shadow-xl py-2 ">
+                <!-- <li class="flex-1 md:mx-2">
+                    <a href="#buildings-for-sale" class="rounded-lg scrollactive-item bg-myHeaderColor text-white text-sm md:text-xl md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-500 md:hover:shadow-xl py-2 ">
                         В продаже
                     </a>
-                </li>
+                </li> -->
             </ul>
         </scrollactive>
     </div>
@@ -310,13 +327,13 @@
                                         </div>
                                     </div> -->
 
-                                    <div id="buildings-for-sale" class="mt-32 border-t" >
+                                    <!-- <div id="buildings-for-sale" class="mt-32 border-t" >
                                         <h2 class="text-2xl lg:pt-0 text-gray-700 text-center">Обьекты в продаже</h2>
      
                                         <div class="mt-8">
         
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <!-- <div id="building-on-map" class="mt-16 mb-16">
                                         <div class="cursor-pointer rounded-lg  text-black text-xl md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-500 md:hover:shadow-xl py-2">
@@ -346,6 +363,9 @@
                 </div>
             </div>
         </section>
+        <div class='z-50'>
+            <vBackToTopButton :currentOffset="currentWindowOffset" :fullWindowHeight="fullWindowHeight"/>
+        </div>
         <!-- <vGoogleMapModal ref='googleModalMapComponent' :url="googleMapUrl"/> -->
     </div>
     <!-- </section> -->
@@ -363,6 +383,7 @@ import DomainIcon from 'vue-material-design-icons/Domain';
 import ClipboardCheckMultipleIcon from 'vue-material-design-icons/ClipboardCheckMultiple';
 import KeyboardBackspaceIcon from 'vue-material-design-icons/KeyboardBackspace'
 import vMap from '../components/v-map'
+import vBackToTopButton from '../components/v-back-to-top'
 // import vGoogleMapModal from '../components/v-google-map'
 // import debounce from 'lodash/debounce';
 // import VueScrollactive from 'vue-scrollactive';
@@ -385,6 +406,7 @@ export default {
         DomainIcon,
         ClipboardCheckMultipleIcon,
         KeyboardBackspaceIcon,
+        vBackToTopButton
         // vGoogleMapModal,
         // VueScrollactive
     },
@@ -394,6 +416,11 @@ export default {
             loading: false,
             anchorsInfo: {showAncorsTitle: false},
             prevRoute: null,
+            currentWindowOffset: window.pageYOffset,
+            fullWindowHeight:window.innerHeight ,
+            readMoreActivated: false,
+            textAboutMap: `P.S. Так как мы используем бесплатную карту, новострои могут не отображаться на карте должным образом (маркер может указывать на место, которое никак не обозначено на карте). Однако сам маркер имеет точные координаты дома, проверенные Google. 
+                            Чтобы ознакомиться с полной инфраструктурой Вы можете воспользоваться кнопкой "Открыть в Google maps". Просим прощения за неудобства`
         }
         
     },
@@ -474,6 +501,8 @@ export default {
         },
         // ---- for animation eg
         handleScroll () {
+            this.currentWindowOffset = window.pageYOffset
+
             if(!this.anchorsInfo.defaultPosition){
                 this.anchorsInfo.defaultPosition = this.$refs["anchors-default-position"].offsetTop 
             }
@@ -490,6 +519,8 @@ export default {
             }
         },
         updateAnchorsOffset(){
+            this.fullWindowHeight = window.innerHeight
+
             this.anchorsInfo.element = this.$refs.anchors;
             // this.anchorsInfo.anchorsOffset = this.anchorsInfo.element.offsetTop
             // console.log("Anchors offset: "+this.anchorsInfo.anchorsOffset)
@@ -549,7 +580,10 @@ export default {
             return `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${this.building.lat},${this.building.lng}`;
             // https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=48.857832,2.295226&heading=-45&pitch=38&fov=80
         
-        }
+        },
+        // currentWindowOffset(){
+        //     return window.pageYOffset
+        // }
     },
 }
 </script>

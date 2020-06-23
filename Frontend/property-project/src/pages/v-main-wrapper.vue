@@ -1,5 +1,5 @@
 <template>  
-    <div class="main-wrapper">
+    <div id="top" class="main-wrapper">
         <div>
             <div class='min-h-screen'>
                 <TransitionHeaderChange>

@@ -15,9 +15,9 @@
       <div class="container relative mx-auto">
         <div class="items-center flex flex-wrap">
           <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
-            <div class="pr-12">
-              <h1 class="text-white font-semibold text-5xl">
-                property - project
+            <div class="">
+              <h1 class="text-white font-semibold text-4xl md:text-5xl">
+                property-project
               </h1>
               <p class="mt-4 text-lg text-gray-300">
                 Поиск новостроев

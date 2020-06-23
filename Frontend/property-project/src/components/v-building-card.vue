@@ -9,38 +9,89 @@
     <div id='modal-wrapper'>
       <!-- {{ isMouseOver }} -->
       <div @mouseover="isMouseOver=true" @mouseleave="isMouseOver = false" >
-        <div class="hover:flex max-w-sm transition rounded-lg duration-500 ease-in-out hover:rounded-none hover:opacity-40 transform hover:-translate-y-1 sm:hover:scale-100 md:hover:scale-105 hover:shadow-2xl overflow-hidden shadow-lg">
+        <div class="bg-white hover:flex max-w-sm transition rounded-lg duration-500 ease-in-out hover:rounded-none hover:opacity-40 transform hover:-translate-y-1 sm:hover:scale-100 md:hover:scale-105 hover:shadow-2xl overflow-hidden shadow-lg">
           <img v-if="building.building_images[0]" :src="building.building_images[0].building_image" alt="">
           <img v-else :src="require('@/assets/images/cat-no-photo-yet-green-2.jpg')" alt="Пока что нет фото :(">
-          <div class="flex items-center px-6 py-3 bg-gray-900">
+          <div class="flex items-center md:px-6 py-1 md:py-3 bg-gray-900">
               <!-- <svg class="h-6 w-6 text-white fill-current" viewBox="0 0 512 512">
                   <path d="M256 48C150 48 64 136.2 64 245.1v153.3c0 36.3 28.6 65.7 64 65.7h64V288h-85.3v-42.9c0-84.7 66.8-153.3 149.3-153.3s149.3 68.5 149.3 153.3V288H320v176h64c35.4 0 64-29.3 64-65.7V245.1C448 136.2 362 48 256 48z"/>
               </svg> -->
               <h1 class="mx-3 text-white font-semibold text-lg">{{ building.street }} {{ building.house_number }}{{ building.house_letter }}</h1>
           </div>
-          <div class="px-6 py-4">
-            <div class="mt-6 grid m-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 justify-center text-center">
-                <div class>
-                  <p class="text-gray-700 font-bold">{{ building.administrative_district }}
-                  </p>
-                  <p class="text-md mt-2 text-gray-600 font-hairline">Административный район
-                  </p>
+          <div class="hidden md:block md:py-4 m-1">
+             <div class="grid grid-cols-2 justify-center text-center gap-2">
+                <div v-if="building.administrative_district != null" class="flex-1 rounded-lg flex-col bg-gray-200 shadow-sm md:transition md:duration-500 md:hover:shadow-md">
+                    <div class="text-gray-700 text-base text-center px-2 py-2 m-1 md:m-2">
+                        <div class="inline-flex items-center">
+                            <HomeCityIcon class="text-myHeaderColor" :size="20"  />
+                            <div class="flex-1 sm:px-1 px-2">
+                                Админ. район
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rounded-lg text-gray-700 text-base text-center md:px-4 py-2">{{ building.administrative_district }}</div>
                 </div>
-                <div>
-                  <p class="text-gray-700 font-bold">{{ building.district }}
-                  </p>
-                  <p class="text-md mt-2 text-gray-600 font-hairline">Район
-                  </p>
+                <div v-if="building.district != null" class="flex-1 rounded-lg flex-col bg-gray-200 shadow-sm md:transition md:duration-500 md:hover:shadow-md">
+                    <div class="text-gray-700 text-base text-center px-2 py-2 m-1 md:m-2">
+                        <div class="inline-flex items-center">
+                            <HomeGroupIcon class="text-myHeaderColor" :size="20" />
+                            <div class="flex-1 sm:px-1 px-2">
+                                Район
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rounded-lg text-gray-700 text-base text-center md:px-4 py-2">{{ building.district }}</div>
                 </div>
-                <div>
-                  <p class="text-gray-700 font-bold">{{ building.developer }}
-                  </p>
-                  <p class="text-xs mt-2 text-gray-700 font-hairline">Застройщик
-                  </p>
+                <div v-if="building.micro_district !== 'Не делится на микрорайоны'" class="flex-1 rounded-lg flex-col bg-gray-200 shadow-sm md:transition md:duration-500 md:hover:shadow-md">
+                    <div class="text-gray-700 text-base text-center px-2 py-2 m-1 md:m-2">
+                        <div class="inline-flex items-center">
+                            <DomainIcon class="text-myHeaderColor" :size="20" />
+                            <div class="flex-1 sm:px-1 px-2">
+                                Микрорайон
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" rounded-lg text-gray-700 text-base text-center md:px-4 py-2">{{ building.micro_district }}</div>
+                </div>
+                <div v-if="building.developer != null" class="flex-1 rounded-lg flex-col bg-gray-200 shadow-sm md:transition md:duration-500 md:hover:shadow-md">
+                    <div class="text-gray-700 text-base text-center px-2 py-2 m-1 md:m-2">
+                        <div class="inline-flex items-center">
+                            <HouseEditIcon class="text-myHeaderColor" :size="20" />
+                            <div class="flex-1 sm:px-1 px-2">
+                                Застройщик
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" rounded-lg text-gray-700 text-base text-center  md:px-4 py-2 ">{{ building.developer }}</div>
                 </div>
             </div>
           </div>
-          
+            <div class="grid grid-col-1 block md:hidden py-2 m-1">
+              <div v-if="building.administrative_district != null" class="inline-flex items-center">
+                <HomeCityIcon class="text-myHeaderColor" :size="17"  />
+                <div class="flex-1 sm:px-1 px-2 text-sm">
+                  {{ building.administrative_district }}
+                </div>
+              </div>
+              <div v-if="building.district != null" class="inline-flex items-center">
+                <HomeGroupIcon class="text-myHeaderColor" :size="17" />
+                <div class="flex-1 sm:px-1 px-2 text-sm">
+                    {{ building.district }}
+                </div>
+              </div>
+              <div v-if="building.micro_district !== 'Не делится на микрорайоны'" class="inline-flex items-center">
+                <DomainIcon class="text-myHeaderColor" :size="17" />
+                <div class="flex-1 sm:px-1 px-2 text-sm">
+                    {{ building.micro_district }}
+                </div>
+              </div>
+              <div v-if="building.developer != null" class="inline-flex items-center">
+                <HouseEditIcon class="text-myHeaderColor" :size="17" />
+                <div class="flex-1 sm:px-1 px-2 text-sm">
+                    {{ building.developer }}
+                </div>
+              </div>
+            </div>
           <!-- <div v-show="isMouseOver"> -->
           <div class="invisible md:visible">
              <!-- <transition name="preview"> -->
@@ -94,6 +145,10 @@
 <script>
 import vBuildingPreview from '../components/v-building-preview'
 import TransitionSlowAppearance from '../transitions/slowAppearance'
+import HouseEditIcon from 'vue-material-design-icons/HomeEdit';
+import HomeCityIcon from 'vue-material-design-icons/HomeCity';
+import HomeGroupIcon from 'vue-material-design-icons/HomeGroup';
+import DomainIcon from 'vue-material-design-icons/Domain';
 
 export default {
   props: {
@@ -108,7 +163,11 @@ export default {
   },
   components:{
     vBuildingPreview,
-    TransitionSlowAppearance
+    TransitionSlowAppearance,
+    HouseEditIcon,
+    HomeCityIcon,
+    HomeGroupIcon,
+    DomainIcon,
   },
 
   methods: {

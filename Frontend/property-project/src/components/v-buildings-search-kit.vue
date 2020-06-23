@@ -16,10 +16,13 @@
                 <HomeSearchIcon/>
               </div>
             </div>
-            <div class="flex flex-wrap -mx-3 mb-6">
-              <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+            <div class="flex flex-wrap -mx-3 mb-3 md:mb-6">
+              <div class="w-full md:w-1/2 px-3 mb-3 md:mb-0">
+                <label class="hidden md:block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Выберите административные районы
+                </label>
+                <label class="block md:hidden text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                  Выберите админ. районы
                 </label>
                 <div name="field" class="w-full">
                   <MultipleSelect 
@@ -64,12 +67,12 @@
               </div>
             </div>
             <TransitionDownRide>
-              <div class="flex flex-wrap -mx-3 mb-6" v-if="isSaltovkaDistrictChoosen || isSevernayaSaltovkaDistrictChoosen">
+              <div class="flex flex-wrap -mx-3 md-3 md:mb-6" v-if="isSaltovkaDistrictChoosen || isSevernayaSaltovkaDistrictChoosen">
                 <div class='w-1/2'></div>
-                <div class="w-full md:w-1/2 flex" >  
+                <div class="w-full md:w-1/2 grid grid-cols-2" >  
                   <TransitionDownRide>
-                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0 " v-if="isSaltovkaDistrictChoosen">
-                      <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                    <div class="w-full md:w-1/2 px-3 mb-3 md:mb-0 " v-if="isSaltovkaDistrictChoosen">
+                      <label class="block text-sm md:text-base text-gray-500 md:font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                         Салтовка
                       </label>
                       <div name="field" class="w-full">
@@ -90,8 +93,11 @@
                   </TransitionDownRide>
                   <TransitionDownRide>
                     <div class="w-full md:w-1/2 px-3" v-if="isSevernayaSaltovkaDistrictChoosen">
-                      <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
-                        Северная салтовка
+                      <label class="hidden md:block text-sm md:text-base text-gray-500 md:font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                        Северная Салтовка.
+                      </label>
+                      <label class="block md:hidden text-sm md:text-base text-gray-500 md:font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                        Северная Салт.
                       </label>
                       <div class="w-full">    
                         <MultipleSelect 
@@ -112,8 +118,8 @@
                 </div>
               </div>
             </TransitionDownRide>
-            <div class="flex flex-wrap -mx-3 mb-6">
-              <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+            <div class="flex flex-wrap -mx-3 mb-3 md:mb-6">
+              <div class="w-full md:w-1/2 px-3 mb-3 md:mb-0">
                 <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Выберите улицы
                 </label>
@@ -150,7 +156,7 @@
               </div>
             </div>
             <div class="flex flex-wrap -mx-3 mb-6">
-              <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <div class="w-full md:w-1/2 px-3 mb-3 md:mb-0">
                 <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Фильтр по застройщикам
                 </label>

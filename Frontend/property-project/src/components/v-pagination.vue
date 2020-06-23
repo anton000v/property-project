@@ -78,10 +78,9 @@ export default {
             this.removeFindParamKey('page')
             this.addFindParam({key:'page','value':pageNum})
             this.searchBuildings(this.activeFindParams)
-            // this.callAddHashToLocation()
             addHashToLocation(this.activeFindParams, this.$route.path)
             console.log(pageNum)
-                VueScrollTo.scrollTo('#buildings-list-begin', 500, options)
+            VueScrollTo.scrollTo('#buildings-list-begin', 500, options)
             // var that = this;
             // setTimeout(function (){
             //         that.removeFindParamKey('page')
