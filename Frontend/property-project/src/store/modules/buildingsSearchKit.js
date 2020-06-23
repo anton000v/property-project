@@ -123,7 +123,7 @@ export default {
                     state.findParams[dictVal.key].push(dictVal.value)
                 }
                 else{
-                    state.findParams[dictVal.key] = [dictVal.value,]
+                    state.findParams[dictVal.key] = [dictVal.value]
                 }  
                 // console.log('!! PARAMS')
                 // console.log(state.findParams)
@@ -143,9 +143,14 @@ export default {
         updateFindParams(state, findParams){
             for(const key in findParams){
                 if(!Array.isArray(findParams[key])){
-                    const num = stringToInt(findParams[key])
-                    if(num != -1){
-                        findParams[key] = [num]
+                    if(!isNaN(findParams[key])){
+                        const num = stringToInt(findParams[key])
+                        if(num != -1){
+                            findParams[key] = [num]
+                        }
+                    }
+                    else{
+                        findParams[key] = [findParams[key]]
                     }
                 }
                 else { 

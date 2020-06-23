@@ -184,7 +184,7 @@
 
 <!-- <div class='p-10'> -->
     <div ref="anchors-default-position" class="invisible"> </div>
-    <div ref="anchors" class="sticky text-center left-0 bg-myPageBackground top-0 z-40 relative flex flex-col min-w-0 rounded-lg ">
+    <div ref="anchors" class="sticky text-center bg-myPageBackground top-0 pt-1 z-40 relative flex flex-col min-w-0 rounded-lg ">
         <div class="hidden md:block">
             <transition name="fade">
                     <div v-if="anchorsInfo.showAncorsTitle" class='flex-1 '>
@@ -200,17 +200,17 @@
 
             <ul class="flex text-sm md:text-base">
                 <li class="flex-1 mx-1 md:mx-2">
-                    <a href="#building-full-info" class="rounded-lg scrollactive-item bg-myHeaderColor text-white text-sm md:text-xl md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-500 md:hover:shadow-xl py-2 ">
+                    <a href="#building-full-info" class="rounded-lg scrollactive-item bg-myHeaderColor text-white  md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-500 md:hover:shadow-xl py-2 ">
                         Об обьекте
                     </a>
                 </li>
                 <li class="flex-1 mx-1 md:mx-2">
-                    <a href="#images" class="rounded-lg  scrollactive-item bg-myHeaderColor text-white text-sm md:text-xl md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-500 md:hover:shadow-xl py-2 ">
+                    <a href="#images" class="rounded-lg  scrollactive-item bg-myHeaderColor text-white  md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-500 md:hover:shadow-xl py-2 ">
                         Изображения
                     </a>
                 </li>
                 <li class="flex-1 mx-1 md:mx-2">
-                    <a href="#layouts" class="rounded-lg  scrollactive-item bg-myHeaderColor text-white text-sm md:text-xl md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-500 md:hover:shadow-xl py-2 ">
+                    <a href="#layouts" class="rounded-lg  scrollactive-item bg-myHeaderColor text-white  md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-500 md:hover:shadow-xl py-2 ">
                         Планировки
                     </a>
                 </li>
@@ -363,9 +363,9 @@
                 </div>
             </div>
         </section>
-        <div class='z-50'>
+        <!-- <div class='z-50'>
             <vBackToTopButton :currentOffset="currentWindowOffset" :fullWindowHeight="fullWindowHeight"/>
-        </div>
+        </div> -->
         <!-- <vGoogleMapModal ref='googleModalMapComponent' :url="googleMapUrl"/> -->
     </div>
     <!-- </section> -->
@@ -383,7 +383,7 @@ import DomainIcon from 'vue-material-design-icons/Domain';
 import ClipboardCheckMultipleIcon from 'vue-material-design-icons/ClipboardCheckMultiple';
 import KeyboardBackspaceIcon from 'vue-material-design-icons/KeyboardBackspace'
 import vMap from '../components/v-map'
-import vBackToTopButton from '../components/v-back-to-top'
+// import vBackToTopButton from '../components/v-back-to-top'
 // import vGoogleMapModal from '../components/v-google-map'
 // import debounce from 'lodash/debounce';
 // import VueScrollactive from 'vue-scrollactive';
@@ -406,7 +406,7 @@ export default {
         DomainIcon,
         ClipboardCheckMultipleIcon,
         KeyboardBackspaceIcon,
-        vBackToTopButton
+        // vBackToTopButton
         // vGoogleMapModal,
         // VueScrollactive
     },
@@ -416,8 +416,8 @@ export default {
             loading: false,
             anchorsInfo: {showAncorsTitle: false},
             prevRoute: null,
-            currentWindowOffset: window.pageYOffset,
-            fullWindowHeight:window.innerHeight ,
+            // currentWindowOffset: window.pageYOffset,
+            // fullWindowHeight:window.innerHeight ,
             readMoreActivated: false,
             textAboutMap: `P.S. Так как мы используем бесплатную карту, новострои могут не отображаться на карте должным образом (маркер может указывать на место, которое никак не обозначено на карте). Однако сам маркер имеет точные координаты дома, проверенные Google. 
                             Чтобы ознакомиться с полной инфраструктурой Вы можете воспользоваться кнопкой "Открыть в Google maps". Просим прощения за неудобства`
@@ -501,9 +501,9 @@ export default {
         },
         // ---- for animation eg
         handleScroll () {
-            this.currentWindowOffset = window.pageYOffset
+            // this.currentWindowOffset = window.pageYOffset
 
-            if(!this.anchorsInfo.defaultPosition){
+            if(!this.anchorsInfo.defaultPosition && this.$refs["anchors-default-position"]){
                 this.anchorsInfo.defaultPosition = this.$refs["anchors-default-position"].offsetTop 
             }
             // console.log('SCROLE: ')
@@ -519,7 +519,7 @@ export default {
             }
         },
         updateAnchorsOffset(){
-            this.fullWindowHeight = window.innerHeight
+            // this.fullWindowHeight = window.innerHeight
 
             this.anchorsInfo.element = this.$refs.anchors;
             // this.anchorsInfo.anchorsOffset = this.anchorsInfo.element.offsetTop

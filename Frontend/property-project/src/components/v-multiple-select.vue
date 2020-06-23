@@ -3,6 +3,7 @@
     <!-- {{ fieldChoiceText }} {{ searchKey }} {{ apiAddress }} {{ dictKey }} -->
     <!-- <p>{{ activeFindParams }}</p>
     <p>{{ value }}</p> -->
+    {{ activeFindParams[sendParamName] }}
       <div class="flex items-center">
         <TransitionLeftRide>
           <div class='flex-1 px-1 cursor-pointer text-sm transition duration-500 ease-in-out  hover:opacity-40 transform hover:-translate-y-1 hover:-rotate-90 text-myMint-400 hover:text-myMint-100' v-show="showClearAllButton" @click="clearAll">
@@ -150,6 +151,7 @@
     },
     methods: {
       setIntitialActiveValues(){
+        console.log(this.activeFindParams[this.sendParamName])
           this.activeFindParams[this.sendParamName].forEach(activeParam => {
             this.options.forEach(element => {
               if(activeParam == element[this.dbValueKey]){

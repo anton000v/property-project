@@ -2,6 +2,9 @@
     <div id="top" class="main-wrapper">
         <div>
             <div class='min-h-screen'>
+                <!-- <div class="fixed top-0 bg-white w-full z-50">
+                {{ currentWindowOffset }} {{ TransitionPages }}
+                </div> -->
                 <TransitionHeaderChange>
                     <vHeaderMain v-if="isMainHeaderActive" />
                     <vHeaderLittle v-else/>
@@ -9,6 +12,9 @@
                 <TransitionPages>
                     <router-view :key="$route.name"/>
                 </TransitionPages>
+                <div class='z-50'>
+                    <vBackToTopButton :currentOffset="currentWindowOffset" :fullWindowHeight="fullWindowHeight"/>
+                </div>
             </div>
             <Footer/>
         </div>
@@ -23,16 +29,24 @@ import vHeaderLittle from '../components/v-header-little'
 import {mapGetters ,mapMutations } from 'vuex'
 import TransitionHeaderChange from '../transitions/headerChange'
 import TransitionPages from '../transitions/pages'
+import vBackToTopButton from '../components/v-back-to-top'
 export default {
     components: {
         Footer,
         vHeaderMain,
         vHeaderLittle,
         TransitionHeaderChange,
-        TransitionPages
+        TransitionPages,
+        vBackToTopButton
     },
     watch:{
         $route: "updateHeader"
+    },
+    data(){
+        return {
+            currentWindowOffset: window.pageYOffset,
+            fullWindowHeight:window.innerHeight ,
+        }
     },
     methods: {
         ...mapMutations([
@@ -48,6 +62,12 @@ export default {
                 this.changeMainHeader(false)
             }
         },
+        updateWindowOffset() {
+            this.currentWindowOffset = window.pageYOffset
+        },
+        updatefullWindowWidth(){
+            this.fullWindowHeight = window.innerHeight
+        },
     },
     mounted() {
         this.updateHeader()
@@ -57,6 +77,18 @@ export default {
         'isMainHeaderActive', 
         ]),
     },
+    created () {
+         window.addEventListener('scroll', this.updateWindowOffset);
+         window.addEventListener('resize', this.updatefullWindowWidth);
+            // this.anchorsOffsetTop = this.$refs.anchors.$el.offsetTop;
+            // alert(this.anchorsOffsetTop)
+
+    },
+    destroyed () {
+        window.removeEventListener('scroll', this.updateWindowOffset);
+        window.removeEventListener('resize', this.updatefullWindowWidth);
+    },
+
 }
 
 </script>
