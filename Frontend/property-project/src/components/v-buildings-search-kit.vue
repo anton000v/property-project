@@ -1,13 +1,14 @@
 <template>
 
     <!-- <div :if="dataReady"> -->
+    <!-- <div id="searchComponent" :class="{'collapsed' : !isExtendedSearchActivated}" class="flex flex-wrap"> -->
     <div class="flex flex-wrap">
       <div class="w-full text-center"> 
         <div
-          class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg"
+          class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg"  
         >
-          <div class="px-4 py-5 flex-auto">
-            <div class="inline-flex ">
+          <div class="px-4 py-5 flex-auto" ref='searchComponent' >
+            <div class="inline-flex " >
 
               <div
                 class="inline-block text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full transition duration-500 bg-myMint-300 hover:bg-myMint-100 cursor-pointer"
@@ -16,7 +17,7 @@
                 <HomeSearchIcon/>
               </div>
             </div>
-            <div class="flex flex-wrap -mx-3 mb-3 md:mb-6">
+            <div class="flex flex-wrap -mx-3 mb-3 md:mb-6" >
               <div class="w-full md:w-1/2 px-3 mb-3 md:mb-0">
                 <label class="hidden md:block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Выберите административные районы
@@ -155,7 +156,7 @@
                 </div>
               </div>
             </div>
-            <div class="flex flex-wrap -mx-3 mb-6">
+            <!-- <div class="flex flex-wrap -mx-3 mb-6">
               <div class="w-full md:w-1/2 px-3 mb-3 md:mb-0">
                 <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Фильтр по застройщикам
@@ -175,6 +176,58 @@
                   />
                 </div>
               </div>
+            </div> -->
+
+            <div class="flex justify-center">
+              <div class="p-2" :class="{'text-myMint-400' : isExtendedSearchActivated}">
+                  Расширенный поиск
+              </div>
+              <div class="p-2">
+                <toggle-button v-model="isExtendedSearchActivated"/>
+              </div>
+            </div>
+            <div >
+            <!-- <ExtendedSearchTransition> -->
+              <div v-show="isExtendedSearchActivated">
+                <div class="flex flex-wrap -mx-3 mb-3 md:mb-6">
+                  <div class="w-full md:w-1/2 px-3 mb-3 md:mb-0">
+                    <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                      Фильтр по застройщикам
+                    </label>
+                    <div name="field" class="w-full">
+                      <MultipleSelect 
+                      @selectClose="search"
+                      :dbValueKey="developersBaseVariables.dbValueKey"
+                      :fieldChoiceText="developersBaseVariables.choiceText" 
+                      :dictKey="developersBaseVariables.dictKey" 
+                      :apiAddress="developersBaseVariables.fullApiAddress" 
+                      :sendParamName="developersBaseVariables.sendParamName"
+                      :addAction="addFindParam"
+                      :removeAction="removeFindParam"
+                      :removeKeyAction="removeFindParamKey"
+                      placeholder="застройщики" 
+                      />
+                    </div>
+                  </div>
+                  <div class="w-full md:w-1/2 px-3">
+                    <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                      Введите номера домов на выбранных улицах
+                    </label>
+                    <div class="w-full">    
+                      <MultipleTaggingSelect
+                        @tagsChange="search"
+                        :addAction="addFindParam"
+                        :removeAction="removeFindParam"
+                        :sendParamName="houseNumberSendParamName"
+                        :removeKeyAction="removeFindParamKey"
+                        tagPlaceHolder="enter чтобы добавить к поиску"
+                        placeholder="Номера домов"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <!-- </ExtendedSearchTransition> -->
             </div>
           </div>
           <!-- <button v-on:click="search" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
@@ -203,13 +256,20 @@ import { mapMutations, mapActions, mapGetters } from 'vuex'
 import HomeSearchIcon from 'vue-material-design-icons/HomeSearch';
 import { addHashToLocation } from '../utils.js'
 import TransitionDownRide from '../transitions/downRide'
+import { ToggleButton } from 'vue-js-toggle-button'
+// import ExtendedSearchTransition from '../transitions/extendedSearch'
+// import searchComponentTransition from '../transitions/searchComponent'\
+import smoothHeight from 'vue-smooth-height';
 
 export default{
     components: {
         MultipleSelect,
         MultipleTaggingSelect,
         HomeSearchIcon,
-        TransitionDownRide
+        TransitionDownRide,
+        ToggleButton,
+        // ExtendedSearchTransition,
+        // searchComponentTransition
     },
     // В data только импортированные константные переменные
     data(){
@@ -224,6 +284,7 @@ export default{
         severnayaSaltovkaMicroDistrictsBaseVariables:severnayaSaltovkaMicroDistrictsBaseVariables,
         developersBaseVariables:developersBaseVariables,
         dataReady: false,
+        isExtendedSearchActivated: false
       }
    },
     // computed: {
@@ -350,7 +411,33 @@ export default{
         'selectedSevernayaSaltovkaMicroDistricts',
         ])
     },
+    mounted(){
+      if('' in this.activeFindParams){
+        this.isExtendedSearchActivated = true
+      }
+      this.$smoothElement({
+            el: this.$refs.searchComponent,
+            hideOverflow: true
+        })
+    },
+    mixins:[
+       smoothHeight
+       ],
 
 }
 
 </script>
+
+
+<style scoped>
+
+/* div { */
+ 
+  /* transition:max-height 0.3s ease-out; 
+  max-height:auto; */
+/* } */
+/* #searchComponent.collapsed {
+  max-height: 0;
+} */
+
+</style>

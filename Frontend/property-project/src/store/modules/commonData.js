@@ -10,6 +10,7 @@ export default {
     },
     state: {
         mainHeader: false,
+
         // loaded: true,
     },
     getters: {

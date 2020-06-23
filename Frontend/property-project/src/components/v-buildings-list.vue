@@ -18,7 +18,7 @@
                         </div>
                     </TransitionList>    
                 </div>      
-                <div key="no-results" v-else class="grid justify-center"> 
+                <div key="no-results" v-else class="grid justify-center w-full"> 
                     <!-- <TransitionList> -->
                         <h2 :if="buildingsCount == 0" class="text-2xl font-bold text-gray-600">По вашему запросу ничего не найдено :с</h2>
                 <!-- </TransitionList> -->
