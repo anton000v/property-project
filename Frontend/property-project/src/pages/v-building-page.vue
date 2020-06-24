@@ -46,7 +46,7 @@
                                     <div class="">
                                         <img v-if="building.building_images[0]" :src="building.building_images[0].building_image" class="cursor-pointer" @click="openMainImage"  alt="Главное фото">
                                         <img v-else-if="building.layout_images[0]" :src="building.layout_images[0].layout_image" class="cursor-pointer" @click="openMainImage"  alt="Главное фото">
-                                        <img v-else :src="require('@/assets/images/cat-no-photo-yet-green-2.jpg')" class="cursor-pointer" @click="openMainImage" alt="Главное фото">
+                                        <img v-else :src="require('@/assets/images/no-photo-yet.jpg')" class="cursor-pointer" @click="openMainImage" alt="Главное фото">
                                     </div>
                                     <div class="col-span-1">
                                         <div class= 'h-full w-full'>
@@ -77,7 +77,7 @@
                                                     </div>
                                                     <div class="rounded-lg bg-gray-100 text-gray-700 text-base md:text-lg text-center md:px-4 py-2 m-2">{{ building.district }}</div>
                                                 </div>
-                                                <div v-if="building.micro_district !== 'Не делится на микрорайоны'" class="flex-1 rounded-lg flex-col bg-gray-200 shadow-sm md:transition md:duration-500 md:hover:shadow-md">
+                                                <div v-if="building.micro_district !== 'Не делится на микрорайоны'" class="flex-1 rounded-lg flex-col shadow-sm md:transition md:duration-500 md:hover:shadow-md">
                                                     <div class="text-gray-700 text-base text-center px-4 py-2 m-1 md:m-2">
                                                         <div class="inline-flex items-center">
                                                             <DomainIcon class="text-myMint-400" :size="30" />
@@ -244,22 +244,58 @@
                                             <!-- <div class="flex w-full"> -->
                                             <!-- <div class="m-auto w-3/5 pt-3 mb-3 border-b-2 border-myHeaderColor opacity-25"></div> -->
                                             <!-- </div> -->
-                                            <div class='grid grid-cols-2 bg-white shadow-md rounded-lg mt-8 py-6 px-6'>
-                                                <div v-if="building.the_class">Класс:<span class="px-4 font-bold text-myMint-400">{{ building.the_class }}</span></div>
-                                                <div v-if="building.construction_technology">Технология строительства:<span class="px-4 font-bold text-myMint-400">{{ building.construction_technology }}</span></div>
-                                                <div v-if="building.number_of_storeys">Этажность:<span class="px-4 font-bold text-myMint-400">{{ building.number_of_storeys }}</span></div>
-                                                <div v-if="building.walls_type">Стены:<span class="px-4 font-bold text-myMint-400">{{ building.walls_type }}</span></div>
-                                                <div v-if="building.number_of_buildings">Кол-во домов:<span class="px-4 font-bold text-myMint-400">{{ building.number_of_buildings }}</span></div>
-                                                <div v-if="building.warming">Утепление:<span class="px-4 font-bold text-myMint-400">{{ building.warming }}</span></div>
-                                                <div v-if="building.number_of_sections_or_entrances">Кол-во секций / подьездов:<span class="px-4 font-bold text-myMint-400">{{ building.number_of_sections_or_entrances }}</span></div>
-                                                <div v-if="building.room_height">Высота помещений:<span class="px-4 font-bold text-myMint-400">{{ building.room_height }}</span></div>
-                                                <div v-if="building.the_class" class="mt-5 col-span-2">Кол-во квартир в доме:<span class="px-4 font-bold text-myMint-400">{{ building.room_height }}</span></div>
-                                                <div v-if="building.the_class" class="col-span-2">Кол-во квартир на этаж:<span class="px-4 font-bold text-myMint-400">{{ building.room_height }}</span></div>
-                                                <div v-if="building.the_class" class="mt-5 col-span-2">Типы квартир:</div>
-                                                <div v-if="building.the_class" class="mt-5 col-span-2">Коммерческие помещения:</div>
-
-                                                <div class="">Коммуникации:</div>
-                                                <div class="">Лифт:</div>
+                                            <div class='bg-white text-xs sm:text-sm md:text-base shadow-md rounded-lg mt-8 py-6 px-6'>
+                                                <div class="grid grid-cols-2 ">
+                                                    <div v-if="building.the_class">Класс:<span class="px-4 font-bold text-myMint-400">{{ building.the_class }}</span></div>
+                                                    <div v-if="building.construction_technology">Технология строительства:<span class="px-4  font-bold text-myMint-400">{{ building.construction_technology }}</span></div>
+                                                    <div v-if="building.number_of_storeys">Этажность:<span class="px-4  font-bold text-myMint-400">{{ building.number_of_storeys }}</span></div>
+                                                    <div v-if="building.walls_type">Стены:<span class="px-4  font-bold text-myMint-400">{{ building.walls_type }}</span></div>
+                                                    <div v-if="building.number_of_buildings">Кол-во домов:<span class="px-4  font-bold text-myMint-400">{{ building.number_of_buildings }}</span></div>
+                                                    <div v-if="building.warming">Утепление:<span class="px-4  font-bold text-myMint-400">{{ building.warming }}</span></div>
+                                                    <div v-if="building.number_of_sections_or_entrances">Кол-во секций / подьездов:<span class="px-4  font-bold text-myMint-400">{{ building.number_of_sections_or_entrances }}</span></div>
+                                                    <div v-if="building.room_height">Высота помещений:<span class="px-4  font-bold text-myMint-400">{{ building.room_height }}</span></div>
+                                                </div>
+                                                <div v-if="building.number_of_apartments_in_house || building.number_of_apartments_per_floor" class="pt-4">
+                                                    <div v-if="building.number_of_apartments_in_house" class="col-span-2">Кол-во квартир в доме:<span class="px-4 font-bold text-myMint-400">{{ building.number_of_apartments_in_house }}</span></div>
+                                                    <div v-if="building.number_of_apartments_per_floor" class="col-span-2">Кол-во квартир на этаж:<span class="px-4 font-bold text-myMint-400">{{ building.number_of_apartments_per_floor }}</span></div>
+                                                </div>
+                                                <div v-if=" building.number_of_one_room || 
+                                                            building.number_of_two_room || 
+                                                            building.number_of_three_room ||
+                                                            building.number_of_four_room"
+                                                    class="pt-4"
+                                                >
+                                                    <p>ТИПЫ КВАРТИР:</p>
+                                                    <div class="px-4">
+                                                        <div v-if="building.number_of_one_room">1 комнатные квартиры |  кол-во: <span class="px-4  font-bold text-myMint-400">{{ building.number_of_one_room }}</span> каждая по <span class="pl-4  font-bold text-myMint-400">{{ building.square_of_one_room }} м<sup>2</sup></span></div>
+                                                        <div v-if="building.number_of_two_room">2 комнатные квартиры |  кол-во: <span class="px-4  font-bold text-myMint-400">{{ building.number_of_two_room }}</span> каждая по <span class="pl-4  font-bold text-myMint-400">{{ building.square_of_two_room }} м<sup>2</sup></span></div>
+                                                        <div v-if="building.number_of_three_room">3 комнатные квартиры |  кол-во: <span class="px-4  font-bold text-myMint-400">{{ building.number_of_three_room }}</span> каждая по <span class="pl-4  font-bold text-myMint-400">{{ building.square_of_three_room }} м<sup>2</sup></span></div>
+                                                        <div v-if="building.number_of_four_room">4 комнатные квартиры |  кол-во: <span class="px-4  font-bold text-myMint-400">{{ building.number_of_four_room }}</span> каждая по <span class="pl-4  font-bold text-myMint-400">{{ building.square_of_four_room }} м<sup>2</sup></span></div>
+                                                    </div>
+                                                </div>
+                                                <div class="pt-4">
+                                                    <p>КОММЕРЧЕСКИЕ ПОМЕЩЕНИЯ:</p>
+                                                    <div class="pl-4">
+                                                        <div v-if="building.commercial_premises"><span class="px-4  font-bold text-myMint-400">{{ building.commercial_premises }}</span></div>
+                                                    </div>
+                                                </div>
+                                                <div class="pt-4 grid grid-cols-2">
+                                                    <div>
+                                                        <p>КОММУНИКАЦИИ:</p>
+                                                        <div class="pl-4">
+                                                            <div v-if="building.heating">Отопление: <span class="px-4  font-bold text-myMint-400"> {{ building.heating}} </span></div>   
+                                                            <div v-if="building.gasification">Газификация: <span class="px-4  font-bold text-myMint-400"> {{ building.gasification}} </span></div> 
+                                                            <div>Водоснабжение????</div> 
+                                                            <div>Электроенргия???</div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <p>ЛИФТ:</p>
+                                                        <div class="pl-4">
+                                                            <div v-if="building.elevator"><span class="px-4  font-bold text-myMint-400">{{ building.elevator }}</span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -282,7 +318,7 @@
                                                 v-else
                                                 ref="buildings" 
                                                 gallaryRef="buildingsGallary" 
-                                                :images_src="[require('@/assets/images/cat-no-photo-yet-green-2.jpg')]" 
+                                                :images_src="[require('@/assets/images/no-photo-yet.jpg')]" 
                                                 caption="Кошечка лучше, чем ничего"
                                             >
                                             </building-gallary>
@@ -306,7 +342,7 @@
                                                 v-else
                                                 ref="layouts" 
                                                 gallaryRef="layoutsGallary" 
-                                                :images_src="[require('@/assets/images/cat-no-photo-yet-green-2.jpg')]" 
+                                                :images_src="[require('@/assets/images/no-photo-yet.jpg')]" 
                                                 caption="Кошечка лучше, чем ничего"
                                             >
                                             </building-gallary>

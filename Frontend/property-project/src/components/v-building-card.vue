@@ -11,7 +11,8 @@
       <div @mouseover="isMouseOver=true" @mouseleave="isMouseOver = false" >
         <div class="bg-white hover:flex max-w-sm transition rounded-lg duration-500 ease-in-out hover:rounded-none hover:opacity-40 transform hover:-translate-y-1 sm:hover:scale-100 md:hover:scale-105 hover:shadow-2xl overflow-hidden shadow-lg">
           <img v-if="building.building_images[0]" :src="building.building_images[0].building_image" alt="">
-          <img v-else :src="require('@/assets/images/cat-no-photo-yet-green-2.jpg')" alt="Пока что нет фото :(">
+          <img v-else-if="building.layout_images[0]" :src="building.layout_images[0].layout_image" alt="">
+          <img v-else :src="require('@/assets/images/no-photo-yet.jpg')" alt="Пока что нет фото :(">
           <div class="flex items-center md:px-6 py-1 md:py-3 bg-gray-900">
               <!-- <svg class="h-6 w-6 text-white fill-current" viewBox="0 0 512 512">
                   <path d="M256 48C150 48 64 136.2 64 245.1v153.3c0 36.3 28.6 65.7 64 65.7h64V288h-85.3v-42.9c0-84.7 66.8-153.3 149.3-153.3s149.3 68.5 149.3 153.3V288H320v176h64c35.4 0 64-29.3 64-65.7V245.1C448 136.2 362 48 256 48z"/>

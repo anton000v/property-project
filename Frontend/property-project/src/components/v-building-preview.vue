@@ -22,7 +22,7 @@
                     </div>
                     <router-link :to="{name:'building-page', params:{slug:slug}}">
                         <!-- <div class="flex h-16 shadow-md bg-myFirstLight hover:shadow-xl "> -->
-                        <div class="flex h-16 bg-myHeaderColor text-white hover:bg-myMint-500 transition duration-500 ease-in-out hover:rounded-none hover:opacity-40 transform hover:translate-y-1 hover:shadow-2xl overflow-hidden shadow-md">  
+                        <div class="flex h-16 bg-myHeaderColor text-white hover:bg-myMint-400 transition duration-500 ease-in-out hover:rounded-none hover:opacity-40 transform hover:translate-y-1 hover:shadow-2xl overflow-hidden shadow-md">  
                             <p class="m-auto text-xl"> Открыть полностью </p>
                         </div>
                     </router-link>
@@ -36,16 +36,115 @@
             </div>
             <div id='preview-slider' class='py-2 h-screen/2' v-else>
                 <vPreviewSlider 
-                    :images="[require('@/assets/images/cat-no-photo-yet-green-2.jpg')]" 
+                    :images="[require('@/assets/images/no-photo-yet.jpg')]" 
                 />
             </div>
-            <div class="">  
-                <div class= 'h-full w-full px-10 py-4'>
-                    <!-- <div class='flex justify-center'> -->
+            <div class="pr-5 pl-5 pb-5"> 
+                 <!-- <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg"> -->
+                            <!-- <div class="px-1 md:px-4 py-5 flex-auto">
+                                <div class="text-2xl">
+                                    <p class="uppercase font-bold text-gray-700">ЖК {{ building.name }}</p>
+                                    <p class="text-gray-700 font-bold">{{ building.street }} {{ building.house_number }}{{ building.house_letter }}</p>
+                                </div>
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-6 pt-6">
+                                    <div class="">
+                                        <img v-if="building.building_images[0]" :src="building.building_images[0].building_image" class="cursor-pointer" @click="openMainImage"  alt="Главное фото">
+                                        <img v-else-if="building.layout_images[0]" :src="building.layout_images[0].layout_image" class="cursor-pointer" @click="openMainImage"  alt="Главное фото">
+                                        <img v-else :src="require('@/assets/images/cat-no-photo-yet-green-2.jpg')" class="cursor-pointer" @click="openMainImage" alt="Главное фото">
+                                    </div>
+                                    <div class="col-span-1"> -->
+                                        <div class= 'w-full'>
+
+                                            <div class="flex justify-center justify-center text-center justify-center gap-2">
+                                                <div v-if="building.administrative_district != null" class="flex-1 rounded-lg flex-col shadow-sm md:transition md:duration-500 md:hover:shadow-md">
+                                                    <div class="text-gray-700 text-base text-center px-4 py-2 m-1 md:m-2">
+                                                        <div class="inline-flex items-center text-wh">
+                                                            <HomeCityIcon class="text-myMint-400" :size="30"  />
+                                                            <div class="block xl:hidden flex-1 px-1  ">
+                                                                Админ. район
+                                                            </div>
+                                                            <div class="hidden xl:block flex-1 px-2  ">
+                                                                Административный район
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="rounded-lg bg-gray-200  text-gray-700 text-base md:text-lg text-center md:px-4 py-2 m-2">{{ building.administrative_district }}</div>
+                                                </div>
+                                                <div v-if="building.district != null" class="flex-1 rounded-lg flex-col shadow-sm md:transition md:duration-500 md:hover:shadow-md">
+                                                    <div class="text-gray-700 text-base text-center px-4 py-2 m-1 md:m-2">
+                                                        <div class="inline-flex items-center">
+                                                            <HomeGroupIcon class="text-myMint-400" :size="30" />
+                                                            <div class="flex-1 sm:px-1 px-2">
+                                                                Район
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="rounded-lg bg-gray-200 text-gray-700 text-base md:text-lg text-center md:px-4 py-2 m-2">{{ building.district }}</div>
+                                                </div>
+                                                <div v-if="building.micro_district !== 'Не делится на микрорайоны'" class="flex-1 rounded-lg flex-col shadow-sm md:transition md:duration-500 md:hover:shadow-md">
+                                                    <div class="text-gray-700 text-base text-center px-4 py-2 m-1 md:m-2">
+                                                        <div class="inline-flex items-center">
+                                                            <DomainIcon class="text-myMint-400" :size="30" />
+                                                            <div class="flex-1 sm:px-1 px-2">
+                                                                Микрорайон
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="bg-gray-200 rounded-lg text-gray-700 text-base md:text-lg  text-center md:px-4 py-2 m-1 md:m-2">{{ building.micro_district }}</div>
+                                                </div>
+                                                <div v-if="building.developer != null" class="flex-1 rounded-lg flex-col shadow-sm md:transition md:duration-500 md:hover:shadow-md">
+                                                    <div class="text-gray-700 text-base text-center px-4 py-2 m-1 md:m-2">
+                                                        <div class="inline-flex items-center">
+                                                            <HouseEditIcon class="text-myMint-400" :size="30" />
+                                                            <div class="flex-1 sm:px-1 px-2">
+                                                                Застройщик
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="bg-gray-200 rounded-lg text-gray-700 text-base md:text-lg text-center  md:px-4 py-2 m-2">{{ building.developer }}</div>
+                                                </div>
+                                            </div>
+                                            <div v-if="building.ways_from_metro != null && building.ways_from_metro.length > 0" class=" rounded-lg  mt-5 shadow-sm md:transition md:duration-500 md:hover:shadow-md" >
+                                                <div class="px-2 py-2">
+                                                    <div class="text-gray-700 text-base text-center">
+                                                        <div class="inline-flex items-center">
+                                                            <highway-icon class="text-myMint-400" 
+                                                             />
+                                                            <div class="flex-1 m-1 md:m-2 px-4 p-2">
+                                                                Пути от метро
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-1 text-center">
+                                                        <div class="w-full rounded-lg bg-gray-200 text-gray-700 text-base md:text-lg flex justify-center mt-2 lg:px-4 pb-2 pt-2" v-for="way in building.ways_from_metro" :key="way.metro">
+                                                            <div class="w-2/5"> {{ way.metro }} </div>
+                                                            <div class="w-1/5"> {{ way.type_of_movement }} </div>
+                                                            <div class="w-1/5"> {{ way.time }} мин. </div>
+                                                            <div class="w-1/5"> {{ way.number_of_meters }} м. </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- <div v-if="building.completion_date != null" class="flex1 rounded-lg mt-5 shadow-sm md:transition md:duration-500 md:hover:shadow-md" >
+                                               <div class="px-2 py-2">
+                                                <div class="text-gray-700 text-base text-center px-4 py-2 m-2">
+                                                    <div class="inline-flex items-center">
+                                                        <ClipboardCheckMultipleIcon class="text-myMint-400" :size="30" />
+                                                        <div class="flex-1 px-2">
+                                                            Сдан в эксплуатацию
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                    <div class="rounded-lg bg-gray-200 text-gray-700 text-base md:text-lg text-center md:px-4 py-2 ">{{ building.completion_date }}</div>
+                                                </div>
+                                            </div> -->
+                                         </div>
+                                    <!-- </div>
+                                </div>
+                            </div> -->
+                        <!-- </div>  -->
+                <!-- <div class= 'h-full w-full px-10 py-4'>
                     <div class="flex justify-center text-center">
-                        <!-- <div>
-                            <highway-icon :size="48" />
-                        </div> -->
                         <div class="flex-1 flex-col bg-gray-200 ">
                             <div class="text-gray-700 font-bold  text-center bg-gray-400 px-4 py-2 m-2">
                                 <div class="inline-flex items-center">
@@ -102,7 +201,7 @@
                                 </div>
                             </div>
 
-                                <!-- <div class="flex-1 text-gray-700 text-center font-bold  bg-gray-400 px-4 py-2 m-2">Пути от метро <span><highway-icon :size="40" /></span> </div> -->
+                            
                             <div class="flex-1 text-gray-700 text-center bg-gray-400 ">
                                 <div class="w-full flex justify-center my-2 px-4 py-2" v-for="way in building.ways_from_metro" :key="way.metro">
                                     <div class="w-1/4"> {{ way.metro }} </div>
@@ -113,7 +212,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <!-- </div> -->

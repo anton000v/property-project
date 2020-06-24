@@ -178,12 +178,12 @@
               </div>
             </div> -->
 
-            <div class="flex justify-center">
-              <div class="p-2" :class="{'text-myMint-400' : isExtendedSearchActivated}">
+            <div class="pt-2 pb-2 justify-center">
+              <div class="text-gray-500 font-bold" :class="{'text-myMint-300' : isExtendedSearchActivated}">
                   Расширенный поиск
               </div>
-              <div class="p-2">
-                <toggle-button v-model="isExtendedSearchActivated"/>
+              <div>
+                <toggle-button v-model="isExtendedSearchActivated" color="#00A480"/>
               </div>
             </div>
             <div >
