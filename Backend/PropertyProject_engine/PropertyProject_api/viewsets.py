@@ -1,21 +1,49 @@
-from PropertyProject_api.models import Street, AdministrativeDistrict, Developer, NewBuilding
+from PropertyProject_api.models import (
+    Street, 
+    AdministrativeDistrict, 
+    Developer, 
+    NewBuilding, 
+    WayFromMetro
+)
 from .serializers import NewBuildingSerializer, NewBuildingSerializerForSearch
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from django_filters import rest_framework as filters
 from django.db.models import Q
 from .pagination import CustomPageNumber
+from . import choices
+from functools import reduce
 import re 
 import operator
-from functools import reduce
 
 BOOLEAN_CHOICES = (('false', 'False'), ('true', 'True'),)
 
 class NewBuildingFilter(filters.FilterSet):
+    '''
+    Класс отвечающий за фильтрацию
+    '''
     developer = filters.ModelMultipleChoiceFilter(
         field_name = 'developer',
         to_field_name = 'id',
         queryset = Developer.objects.all(),
+        distinct = True
+    )
+    metro = filters.MultipleChoiceFilter(
+        field_name = 'ways_from_metro__metro',
+        # to_field_name = 'metro',
+        choices = choices.THE_METRO_CHOICES,
+        distinct = True
+    )
+    time_from_metro = filters.NumberFilter(
+        field_name = 'ways_from_metro__time',
+        lookup_expr = 'lte',
+        distinct = True
+    )
+    the_class = filters.MultipleChoiceFilter(
+        # field_name = 'ways_from_metro__metro',
+        # to_field_name = 'metro',
+        choices = choices.THE_CLASS_CHOICES,
+        distinct = True
     )
     # developer = filters.ModelMultipleChoiceFilter(
     #     field_name = 'developer',
@@ -37,7 +65,7 @@ class NewBuildingFilter(filters.FilterSet):
                                             # coerce=strtobool)
     class Meta:
         model = NewBuilding
-        fields = ['developer',]
+        fields = ['developer', 'metro','time_from_metro', 'the_class']
         # fields = {
         #     'street' : ['icontains']
         # }

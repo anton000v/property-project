@@ -78,12 +78,12 @@ export const metroBaseVariables = {
     extraInformationText:'line',
 }
 
-export const classBaseVariables = {
+export const theClassBaseVariables = {
     fullApiAddress: baseApiAddress + "get-classes/",
     dictKey:'classes',
     choiceText:'text_value',
     dbValueKey:'db_value',
-    sendParamName: 'class',
+    sendParamName: 'the_class',
 }
 
 export const timeFromMetroBaseVariables = {

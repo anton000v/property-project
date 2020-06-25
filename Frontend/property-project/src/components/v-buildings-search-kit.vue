@@ -162,11 +162,11 @@
                 <div name="field" class="w-full">
                     <MultipleSelect 
                     @selectClose="search"
-                    :dbValueKey="classBaseVariables.dbValueKey"
-                    :fieldChoiceText="classBaseVariables.choiceText" 
-                    :dictKey="classBaseVariables.dictKey" 
-                    :apiAddress="classBaseVariables.fullApiAddress" 
-                    :sendParamName="classBaseVariables.sendParamName"
+                    :dbValueKey="theClassBaseVariables.dbValueKey"
+                    :fieldChoiceText="theClassBaseVariables.choiceText" 
+                    :dictKey="theClassBaseVariables.dictKey" 
+                    :apiAddress="theClassBaseVariables.fullApiAddress" 
+                    :sendParamName="theClassBaseVariables.sendParamName"
                     :addAction="addFindParam"
                     :removeAction="removeFindParam"
                     :removeKeyAction="removeFindParamKey"
@@ -316,7 +316,7 @@ import {
   severnayaSaltovkaMicroDistrictsBaseVariables,
   developersBaseVariables,
   metroBaseVariables,
-  classBaseVariables,
+  theClassBaseVariables,
   timeFromMetroBaseVariables } from '../variables.js';
 import { mapMutations, mapActions, mapGetters } from 'vuex'
 import HomeSearchIcon from 'vue-material-design-icons/HomeSearch';
@@ -352,7 +352,7 @@ export default{
         severnayaSaltovkaMicroDistrictsBaseVariables:severnayaSaltovkaMicroDistrictsBaseVariables,
         developersBaseVariables:developersBaseVariables,
         metroBaseVariables: metroBaseVariables,
-        classBaseVariables: classBaseVariables,
+        theClassBaseVariables: theClassBaseVariables,
         timeFromMetroBaseVariables: timeFromMetroBaseVariables,
         dataReady: false,
         isExtendedSearchActivated: false
