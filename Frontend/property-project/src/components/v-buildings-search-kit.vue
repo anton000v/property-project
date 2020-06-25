@@ -20,10 +20,10 @@
             <div class="flex flex-wrap -mx-3 mb-3 md:mb-6" >
               <div class="w-full md:w-1/2 px-3 mb-3 md:mb-0">
                 <label class="hidden md:block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
-                  Выберите административные районы
+                  Административные районы
                 </label>
                 <label class="block md:hidden text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
-                  Выберите админ. районы
+                  Админ. районы
                 </label>
                 <div name="field" class="w-full">
                   <MultipleSelect 
@@ -42,7 +42,7 @@
               </div>
               <div class="w-full md:w-1/2 px-3">
                 <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="inline-full-name">
-                  Выберите районы
+                  Районы
                 </label>
                 <div class="w-full">
                   <div name="field" class="w-full">
@@ -72,7 +72,7 @@
                 <div class='w-1/2'></div>
                 <div class="w-full md:w-1/2 grid grid-cols-2" >  
                   <TransitionDownRide>
-                    <div class="w-full md:w-1/2 px-3 mb-3 md:mb-0 " v-if="isSaltovkaDistrictChoosen">
+                    <div class="w-full px-3 mb-3 md:mb-0 " v-if="isSaltovkaDistrictChoosen">
                       <label class="block text-sm md:text-base text-gray-500 md:font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                         Салтовка
                       </label>
@@ -93,7 +93,7 @@
                     </div>
                   </TransitionDownRide>
                   <TransitionDownRide>
-                    <div class="w-full md:w-1/2 px-3" v-if="isSevernayaSaltovkaDistrictChoosen">
+                    <div class="w-full px-3" v-if="isSevernayaSaltovkaDistrictChoosen">
                       <label class="hidden md:block text-sm md:text-base text-gray-500 md:font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                         Северная Салтовка.
                       </label>
@@ -120,9 +120,9 @@
               </div>
             </TransitionDownRide>
             <div class="flex flex-wrap -mx-3 mb-3 md:mb-6">
-              <div class="w-full md:w-1/2 px-3 mb-3 md:mb-0">
+              <div class="w-full md:w-2/4 px-3 mb-3 md:mb-0">
                 <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
-                  Выберите улицы
+                  Улицы
                 </label>
                 <div name="field" class="w-full">
                   <MultipleSelect 
@@ -139,9 +139,9 @@
                   />
                 </div>
               </div>
-              <div class="w-full md:w-1/2 px-3">
+              <div class="w-full md:w-1/4 px-3">
                 <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
-                  Введите номера домов на выбранных улицах
+                  Номера домов
                 </label>
                 <div class="w-full">    
                   <MultipleTaggingSelect
@@ -155,28 +155,91 @@
                   />
                 </div>
               </div>
-            </div>
-            <!-- <div class="flex flex-wrap -mx-3 mb-6">
-              <div class="w-full md:w-1/2 px-3 mb-3 md:mb-0">
+               <div class="w-full md:w-1/4 px-3">
                 <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
-                  Фильтр по застройщикам
+                  Классы
+                </label>
+                <div name="field" class="w-full">
+                    <MultipleSelect 
+                    @selectClose="search"
+                    :dbValueKey="classBaseVariables.dbValueKey"
+                    :fieldChoiceText="classBaseVariables.choiceText" 
+                    :dictKey="classBaseVariables.dictKey" 
+                    :apiAddress="classBaseVariables.fullApiAddress" 
+                    :sendParamName="classBaseVariables.sendParamName"
+                    :addAction="addFindParam"
+                    :removeAction="removeFindParam"
+                    :removeKeyAction="removeFindParamKey"
+                    placeholder="Классы" 
+                    />
+                  </div>
+              </div>
+            </div>
+            <div class="flex flex-wrap -mx-3 mb-3 md:mb-6">
+              <div class="w-full md:w-2/5 px-3 mb-3 md:mb-0">
+                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                  Метро
                 </label>
                 <div name="field" class="w-full">
                   <MultipleSelect 
                   @selectClose="search"
-                  :dbValueKey="developersBaseVariables.dbValueKey"
-                  :fieldChoiceText="developersBaseVariables.choiceText" 
-                  :dictKey="developersBaseVariables.dictKey" 
-                  :apiAddress="developersBaseVariables.fullApiAddress" 
-                  :sendParamName="developersBaseVariables.sendParamName"
+                  :dbValueKey="metroBaseVariables.dbValueKey"
+                  :fieldChoiceText="metroBaseVariables.choiceText" 
+                  :dictKey="metroBaseVariables.dictKey" 
+                  :apiAddress="metroBaseVariables.fullApiAddress" 
+                  :sendParamName="metroBaseVariables.sendParamName"
+                  :extraInformationField="metroBaseVariables.extraInformationText"
                   :addAction="addFindParam"
                   :removeAction="removeFindParam"
                   :removeKeyAction="removeFindParamKey"
-                  placeholder="застройщики" 
+                  placeholder="Станция" 
                   />
                 </div>
               </div>
-            </div> -->
+              <div class="w-full md:w-1/5 px-3">
+                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                  Время от метро
+                </label>
+                <div class="w-full">    
+                  <div class="grid grid-cols-5 justify-center items-center">
+                    <div class="col-span-1">
+                      До
+                    </div>
+                    <div class="col-span-2">
+                      <vInputSearch
+                        @valueChanged="search"
+                        :addAction="addFindParam"
+                        :removeAction="removeFindParam"
+                        :sendParamName="timeFromMetroBaseVariables.sendParamName"
+                        :removeKeyAction="removeFindParamKey"
+                      />
+                    </div>
+                    <div class="col-span-2">
+                      Минут
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="w-full md:w-2/5 px-3 mb-3 md:mb-0">
+                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                  Застройщики
+                </label>
+                <div name="field" class="w-full">
+                  <MultipleSelect 
+                    @selectClose="search"
+                    :dbValueKey="developersBaseVariables.dbValueKey"
+                    :fieldChoiceText="developersBaseVariables.choiceText" 
+                    :dictKey="developersBaseVariables.dictKey" 
+                    :apiAddress="developersBaseVariables.fullApiAddress" 
+                    :sendParamName="developersBaseVariables.sendParamName"
+                    :addAction="addFindParam"
+                    :removeAction="removeFindParam"
+                    :removeKeyAction="removeFindParamKey"
+                    placeholder="застройщики" 
+                  />
+                </div>
+              </div>
+            </div>
 
             <div class="pt-2 pb-2 justify-center">
               <div class="text-gray-500 font-bold" :class="{'text-myMint-300' : isExtendedSearchActivated}">
@@ -190,7 +253,7 @@
             <!-- <ExtendedSearchTransition> -->
               <div v-show="isExtendedSearchActivated">
                 <div class="flex flex-wrap -mx-3 mb-3 md:mb-6">
-                  <div class="w-full md:w-1/2 px-3 mb-3 md:mb-0">
+                  <!-- <div class="w-full md:w-1/2 px-3 mb-3 md:mb-0">
                     <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                       Фильтр по застройщикам
                     </label>
@@ -208,7 +271,7 @@
                       placeholder="застройщики" 
                       />
                     </div>
-                  </div>
+                  </div> -->
                   <div class="w-full md:w-1/2 px-3">
                     <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                       Введите номера домов на выбранных улицах
@@ -251,7 +314,10 @@ import {
   administrativeDistrictsBaseVariables,
   saltovkaMicroDistrictsBaseVariables,
   severnayaSaltovkaMicroDistrictsBaseVariables,
-  developersBaseVariables } from '../variables.js';
+  developersBaseVariables,
+  metroBaseVariables,
+  classBaseVariables,
+  timeFromMetroBaseVariables } from '../variables.js';
 import { mapMutations, mapActions, mapGetters } from 'vuex'
 import HomeSearchIcon from 'vue-material-design-icons/HomeSearch';
 import { addHashToLocation } from '../utils.js'
@@ -260,6 +326,7 @@ import { ToggleButton } from 'vue-js-toggle-button'
 // import ExtendedSearchTransition from '../transitions/extendedSearch'
 // import searchComponentTransition from '../transitions/searchComponent'\
 import smoothHeight from 'vue-smooth-height';
+import vInputSearch from './v-input-search' ;
 
 export default{
     components: {
@@ -268,6 +335,7 @@ export default{
         HomeSearchIcon,
         TransitionDownRide,
         ToggleButton,
+        vInputSearch
         // ExtendedSearchTransition,
         // searchComponentTransition
     },
@@ -283,6 +351,9 @@ export default{
         saltovkaMicroDistrictsBaseVariables:saltovkaMicroDistrictsBaseVariables,
         severnayaSaltovkaMicroDistrictsBaseVariables:severnayaSaltovkaMicroDistrictsBaseVariables,
         developersBaseVariables:developersBaseVariables,
+        metroBaseVariables: metroBaseVariables,
+        classBaseVariables: classBaseVariables,
+        timeFromMetroBaseVariables: timeFromMetroBaseVariables,
         dataReady: false,
         isExtendedSearchActivated: false
       }

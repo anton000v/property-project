@@ -68,6 +68,28 @@ export const developersBaseVariables = {
     sendParamName: 'developer'
 }
 
+export const metroBaseVariables = {
+    fullApiAddress: baseApiAddress + "get-metro/",
+    dictKey:'metro',
+    choiceText:'text_value',
+    dbValueKey:'db_value',
+    sendParamName: 'metro',
+    // Дополнительный
+    extraInformationText:'line',
+}
+
+export const classBaseVariables = {
+    fullApiAddress: baseApiAddress + "get-classes/",
+    dictKey:'classes',
+    choiceText:'text_value',
+    dbValueKey:'db_value',
+    sendParamName: 'class',
+}
+
+export const timeFromMetroBaseVariables = {
+    sendParamName: 'time_from_metro',
+}
+
 // saltovkaDBKey:'saltovka_db_value',
 // severnayaSaltovkaDBKey:'severnaya_saltovka_db_value',
 

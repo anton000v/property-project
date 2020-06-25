@@ -225,7 +225,7 @@ class APIGetClassChoices(APIView):
     Класс для получения вариантов выбора класса. Используется фронтендом.
     '''
     def get(self, request):
-        class_choices = [{ 'db_value':item[0], 'text_val': item[1] } for item in choices.THE_CLASS_CHOICES[1:] ]
+        class_choices = [{ 'db_value':item[0], 'text_value': item[1] } for item in choices.THE_CLASS_CHOICES[1:] ]
         if(not class_choices):
             raise Exception('Class choices is empty')
         return Response({'classes':class_choices})

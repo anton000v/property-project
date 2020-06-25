@@ -28,8 +28,8 @@
               
             
 
-              selectLabel="enter чтобы выбрать" 
-              deselectLabel="enter чтобы удалить" 
+              selectLabel="выбрать" 
+              deselectLabel="удалить" 
               selectedLabel="выбрано"
               >
               
