@@ -1,14 +1,25 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import NewBuilding 
-from .models import AdministrativeDistrict 
-from .models import Street 
-from .models import Developer
-from .serializers import NewBuildingSerializer
-from .serializers import NewBuildingSerializerForSearch 
-from .serializers import StreetsSerializer 
-from .serializers import AdministrativeDistrictsSerializer
-from .serializers import DevelopersSerializer
+from .models import (
+    NewBuilding,
+    AdministrativeDistrict,
+    Street,
+    Developer
+)
+# from .models import AdministrativeDistrict 
+# from .models import Street 
+# from .models import Developer
+from .serializers import ( 
+    NewBuildingSerializer,
+    NewBuildingSerializerForSearch,
+    StreetsSerializer,
+    AdministrativeDistrictsSerializer,
+    DevelopersSerializer
+)
+# from .serializers import NewBuildingSerializerForSearch 
+# from .serializers import StreetsSerializer 
+# from .serializers import AdministrativeDistrictsSerializer
+# from .serializers import DevelopersSerializer
 from . import choices
 from django.http import JsonResponse, HttpResponse, Http404
 from .utils import House
@@ -112,7 +123,7 @@ class APIGetSaltovkaMicroDistrictsChoices(APIView):
              if len(element) == 2
              ]  
         if not saltovka_micro_district_choices:
-            raise Exception("Saltovka micro district choices are empty")
+            raise Exception("Saltovka micro district choices is empty")
         return Response({'saltovka_micro_districts':saltovka_micro_district_choices})
 
 class APIGetSevernayaSaltovkaMicroDistrictsChoices(APIView):
@@ -128,7 +139,7 @@ class APIGetSevernayaSaltovkaMicroDistrictsChoices(APIView):
              if len(element) == 2
         ]
         if not severnaya_saltovka_micro_district_choices:
-            raise Exception("Saltovka micro district choices are empty")
+            raise Exception("Severnaya Saltovka micro district choices is empty")
         return Response({'severnaya_saltovka_micro_districts':severnaya_saltovka_micro_district_choices})
 
 class APIGetDistrictsChoices(APIView):
@@ -150,7 +161,7 @@ class APIGetDistrictsChoices(APIView):
             else :
                 continue
         if not districts_choices:
-            districts_choices.append({'districts':'empty districts :('})
+            raise Exception("District choices is empty")
         return Response({'districts':districts_choices})
         
 
@@ -161,7 +172,7 @@ class APIGetAdministrativeDistrictsChoices(APIView):
     def get(self, request):
         all_administrative_districts = AdministrativeDistrict.objects.all()
         serializer = AdministrativeDistrictsSerializer(all_administrative_districts, many=True)
-        print('Get admin districts request!')
+        # print('Get admin districts request!')
         return Response({'administrative_districts':serializer.data})
 
 
@@ -184,6 +195,40 @@ class APIGetDevelopersChoices(APIView):
         all_developers = Developer.objects.all()
         serializer = DevelopersSerializer(all_developers, many = True)
         return Response({'developers':serializer.data})
+
+class APIGetMetroChoices(APIView):
+    '''
+    Класс для получения вариантов выбора метро. Используется фронтендом.
+    '''
+    def get(self, request):
+        metro_choices = []
+        db_value_field = 'db_value'
+        text_value_field = 'text_value'
+        for tup in choices.THE_METRO_CHOICES:
+                if (type(tup[1]) is tuple) or (
+                    type(tup[1]) is list) or (
+                    type(tup[1]) is dict):
+                    for metro in tup[1]:
+                        m = {}
+                        m['line'] = tup[0]
+                        m['db_value'] = metro[0]
+                        m['text_value'] = metro[1]
+                        metro_choices.append(m)
+                else :
+                    continue
+        if not metro_choices:
+            raise Exception("Metro choices is empty")
+        return Response({'metro':metro_choices})
+
+class APIGetClassChoices(APIView):
+    '''
+    Класс для получения вариантов выбора класса. Используется фронтендом.
+    '''
+    def get(self, request):
+        class_choices = [{ 'db_value':item[0], 'text_val': item[1] } for item in choices.THE_CLASS_CHOICES[1:] ]
+        if(not class_choices):
+            raise Exception('Class choices is empty')
+        return Response({'classes':class_choices})
 
 
 # class APIGetBuilding(APIView):
