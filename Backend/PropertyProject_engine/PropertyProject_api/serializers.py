@@ -197,9 +197,12 @@ class NewBuildingSerializerForSearch(serializers.Serializer):
                                 )  # )
     developer = serializers.CharField(max_length=100, default=1)
     slug = serializers.CharField()
+    lat = serializers.FloatField()
+    lng = serializers.FloatField()
     building_images = BuildingImageSerializer(many=True)
     layout_images = LayoutImageSerializer(many=True)
     ways_from_metro = WayFromMetroSerializer(many=True)
+
 
 class NewBuildingSerializer(serializers.ModelSerializer, ExtraFieldsMixin):
 	street = serializers.SlugRelatedField(slug_field="street_ru",queryset=models.Street.objects.all())

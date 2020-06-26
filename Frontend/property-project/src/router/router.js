@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import vSearchPage from '../pages/v-search-page.vue'
 import vBuildingPage from '../pages/v-building-page.vue'
+import vMapSearchPage from '../pages/v-map-search-page.vue'
 import vNotFoundPage from '../pages/v-not-found-page.vue'
 Vue.use(Router);
 
@@ -36,7 +37,19 @@ export default new Router({
             component: vBuildingPage,
             // meta: { transitionName: 'zoom' },
         },
-        { path: '*', name:'page-404',component: vNotFoundPage }
+        {
+          path: '/map-search',
+          name: 'map-search',
+          component: vMapSearchPage,
+          // children: [
+          //   {
+          //   path: '/',
+          //   name: 'search-page',
+          //   component: vSearchPage,
+          //   }
+          // ]
+        },
+        { path: '*', name:'page-404', component: vNotFoundPage }
     ],
     scrollBehavior (to, from, savedPosition) {
         if (savedPosition) {

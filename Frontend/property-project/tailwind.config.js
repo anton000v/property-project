@@ -45,6 +45,9 @@ module.exports = {
       }
     },
   },
-  variants: {},
-  plugins: [],
+  variants: {
+    textColor: ['group-hover', 'hover', 'responsive', 'focus', 'active'],
+  },
+  plugins: [
+  ],
 }

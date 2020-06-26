@@ -8,21 +8,36 @@
           class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg"  
         >
           <div class="px-4 py-5 flex-auto" ref='searchComponent' >
-            <div class="inline-flex " >
+            <div class="grid grid-cols-3">
+              <div class="col-start-2 justify-center inline-flex" >
 
-              <div
-                class="inline-block text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full transition duration-500 bg-myMint-300 hover:bg-myMint-100 cursor-pointer"
-                v-on:click="search"
-              >
-                <HomeSearchIcon/>
+                <div
+                  class="inline-block text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full transition duration-500 bg-myMint-300 hover:bg-myMint-100 cursor-pointer"
+                  v-on:click="search"
+                >
+                  <HomeSearchIcon title="Принудительный поиск"/>
+                </div>
+              </div>
+              <div class="">
+                <p class="-my-4 text-sm">Попробуйте менее занудный</p>
+                <router-link :to="{name:'map-search'}">
+                  <div  class="my-4 h-full group bg-myHeaderColor flex rounded-lg cursor-pointer transition duration-500 transform hover:translate-y-1 hover:shadow-xl">
+                    <div class="m-auto">
+                      <div class="flex"> 
+                        <GoogleMapsIcon class="text-white transition duration-500 group-hover:text-myMint-300"/>
+                        <p class="text-white pl-2">Поиск по карте</p>
+                      </div>
+                    </div>
+                  </div>
+                </router-link>
               </div>
             </div>
-            <div class="flex flex-wrap -mx-3 mb-3 md:mb-6" >
-              <div class="w-full md:w-1/2 px-3 mb-3 md:mb-0">
-                <label class="hidden md:block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+            <div class="flex flex-wrap -mx-3" >
+              <div class="w-full md:w-1/2 px-3 pt-3 md:pt-6">
+                <label class="hidden text-xs md:text-sm lg:text-base md:block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Административные районы
                 </label>
-                <label class="block md:hidden text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                <label class="block text-xs md:text-sm lg:text-base md:hidden text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Админ. районы
                 </label>
                 <div name="field" class="w-full">
@@ -40,8 +55,8 @@
                   />
                 </div>
               </div>
-              <div class="w-full md:w-1/2 px-3">
-                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="inline-full-name">
+              <div class="w-full md:w-1/2 px-3 pt-3 md:pt-6">
+                <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="inline-full-name">
                   Районы
                 </label>
                 <div class="w-full">
@@ -68,12 +83,12 @@
               </div>
             </div>
             <TransitionDownRide>
-              <div class="flex flex-wrap -mx-3 md-3 md:mb-6" v-if="isSaltovkaDistrictChoosen || isSevernayaSaltovkaDistrictChoosen">
+              <div class="flex flex-wrap -mx-3 pt-3 md:pt-6" v-if="isSaltovkaDistrictChoosen || isSevernayaSaltovkaDistrictChoosen">
                 <div class='w-1/2'></div>
                 <div class="w-full md:w-1/2 grid grid-cols-2" >  
                   <TransitionDownRide>
-                    <div class="w-full px-3 mb-3 md:mb-0 " v-if="isSaltovkaDistrictChoosen">
-                      <label class="block text-sm md:text-base text-gray-500 md:font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                    <div class="w-full text-sm lg:text-base px-3 mb-3 md:mb-0 " v-if="isSaltovkaDistrictChoosen">
+                      <label class="block text-xs md:text-sm lg:text-base text-gray-500 md:font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                         Салтовка
                       </label>
                       <div name="field" class="w-full">
@@ -93,11 +108,11 @@
                     </div>
                   </TransitionDownRide>
                   <TransitionDownRide>
-                    <div class="w-full px-3" v-if="isSevernayaSaltovkaDistrictChoosen">
-                      <label class="hidden md:block text-sm md:text-base text-gray-500 md:font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                    <div class="w-full px-3 pt-3 md:pt-6" v-if="isSevernayaSaltovkaDistrictChoosen">
+                      <label class="hidden text-xs md:text-sm lg:text-base md:block text-sm md:text-base text-gray-500 md:font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                         Северная Салтовка.
                       </label>
-                      <label class="block md:hidden text-sm md:text-base text-gray-500 md:font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                      <label class="block text-xs md:text-sm lg:text-base md:hidden text-sm md:text-base text-gray-500 md:font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                         Северная Салт.
                       </label>
                       <div class="w-full">    
@@ -119,9 +134,9 @@
                 </div>
               </div>
             </TransitionDownRide>
-            <div class="flex flex-wrap -mx-3 mb-3 md:mb-6">
-              <div class="w-full md:w-2/4 px-3 mb-3 md:mb-0">
-                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+            <div class="flex flex-wrap -mx-3 ">
+              <div class="w-full md:w-2/4 px-3 pt-3 md:pt-6">
+                <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Улицы
                 </label>
                 <div name="field" class="w-full">
@@ -139,8 +154,8 @@
                   />
                 </div>
               </div>
-              <div class="w-full md:w-1/4 px-3">
-                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+              <div class="w-full md:w-1/4 px-3 pt-3 md:pt-6">
+                <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Номера домов
                 </label>
                 <div class="w-full">    
@@ -151,12 +166,12 @@
                     :sendParamName="houseNumberSendParamName"
                     :removeKeyAction="removeFindParamKey"
                     tagPlaceHolder="enter чтобы добавить к поиску"
-                    placeholder="Номера домов"
+                    placeholder="№"
                   />
                 </div>
               </div>
-               <div class="w-full md:w-1/4 px-3">
-                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+               <div class="w-full md:w-1/4 px-3 pt-3 md:pt-6">
+                <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Классы
                 </label>
                 <div name="field" class="w-full">
@@ -175,9 +190,9 @@
                   </div>
               </div>
             </div>
-            <div class="flex flex-wrap -mx-3 mb-3 md:mb-6">
-              <div class="w-full md:w-2/5 px-3 mb-3 md:mb-0">
-                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+            <div class="flex flex-wrap -mx-3 ">
+              <div class="w-full md:w-2/6 lg:2/5 px-3 pt-3 md:pt-6">
+                <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Метро
                 </label>
                 <div name="field" class="w-full">
@@ -196,16 +211,16 @@
                   />
                 </div>
               </div>
-              <div class="w-full md:w-1/5 px-3">
-                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+              <div class="w-full md:w-2/6 lg:1/5 px-3 pt-3 md:pt-6">
+                <label class="block text-xs md:text-sm lg:text-base  font-bold text-gray-500  md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Время от метро
                 </label>
                 <div class="w-full">    
-                  <div class="grid grid-cols-5 justify-center items-center">
-                    <div class="col-span-1">
+                  <div class="grid grid-cols-8 justify-center items-center">
+                    <div class="col-span-1 text-xs md:text-sm lg:text-base">
                       До
                     </div>
-                    <div class="col-span-2">
+                    <div class="col-span-5">
                       <vInputSearch
                         @valueChanged="search"
                         :addAction="addFindParam"
@@ -214,14 +229,17 @@
                         :removeKeyAction="removeFindParamKey"
                       />
                     </div>
-                    <div class="col-span-2">
+                    <!-- <div class="hidden text-xs lg:text-base lg:block col-span-2">
                       Минут
+                    </div> -->
+                    <div class="text-xs md:text-sm lg:text-base col-span-2">
+                      мин.
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="w-full md:w-2/5 px-3 mb-3 md:mb-0">
-                <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+              <div class="w-full md:w-2/6 lg:2/5 px-3 pt-3 md:pt-6">
+                <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Застройщики
                 </label>
                 <div name="field" class="w-full">
@@ -320,6 +338,7 @@ import {
   timeFromMetroBaseVariables } from '../variables.js';
 import { mapMutations, mapActions, mapGetters } from 'vuex'
 import HomeSearchIcon from 'vue-material-design-icons/HomeSearch';
+import GoogleMapsIcon from 'vue-material-design-icons/GoogleMaps';
 import { addHashToLocation } from '../utils.js'
 import TransitionDownRide from '../transitions/downRide'
 import { ToggleButton } from 'vue-js-toggle-button'
@@ -335,7 +354,8 @@ export default{
         HomeSearchIcon,
         TransitionDownRide,
         ToggleButton,
-        vInputSearch
+        vInputSearch,
+        GoogleMapsIcon
         // ExtendedSearchTransition,
         // searchComponentTransition
     },

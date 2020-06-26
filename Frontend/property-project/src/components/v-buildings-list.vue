@@ -1,17 +1,14 @@
 <template> 
     <div id="buildings-list-begin">  
         <!-- {{ searchId }}  -->
-        <div class="text-center text-lg text-myMint-300 hover:text-myMint-100 font-bold transition duration-500">
-            <div class="text-gray-500">Найдено:</div> 
-            <div ref="buildingsCounter" class="text-4xl">{{ animatedNumber }}</div>
-        </div>
+        
         <div class='flex'>
             <TransitionList>
                 <div key="buildings" v-if="buildingsCount > 0" class="m-auto">
                     <TransitionList>
                         <div :key="searchId" class="grid grid-cols-2 xl:grid-cols-3 items-center justify-center gap-2 md:gap-8 my-20">
                             <vBuildingCard  
-                            v-for="building in allBuildings" 
+                            v-for="building in buildings" 
                             :key="building.slug" 
                             :building="building" 
                             />    
@@ -25,9 +22,9 @@
                 </div>
             </TransitionList>
         </div>
-        <vPagination>
+        <!-- <vPagination>
 
-        </vPagination>
+        </vPagination> -->
     </div>
 </template>
 
@@ -36,44 +33,57 @@
 import vBuildingCard from './v-building-card.vue';
 import TransitionList from '../transitions/list'
 import {mapGetters} from 'vuex'
-import {TweenLite} from 'gsap'
-import vPagination from './v-pagination' 
+// import {TweenLite} from 'gsap'
+// import vPagination from './v-pagination' 
 
 export default{
+    props:{
+        certainBuildigns: {
+            type: Array,
+            default: null
+        }
+    },
     data(){
         return {
-            numberOfBuildings: 0
+            // numberOfBuildings: 0
         }
     },
     components: {
         vBuildingCard,
         TransitionList,
-        vPagination
+        // vPagination,
     },
     computed: {
         ...mapGetters(['allBuildings','buildingsCount','currentPage','activeFindParams', 'searchId']),
-        animatedNumber: function() {
-            return this.numberOfBuildings.toFixed(0);
+        // animatedNumber: function() {
+        //     return this.numberOfBuildings.toFixed(0);
+        // },
+        buildings(){
+            if(this.certainBuildigns){
+                return this.certainBuildigns
+            }
+            return this.allBuildings
         }
     },
-    methods:{
-        animateCounter(val){
-            TweenLite.to(this.$data, { 
-                duration: 0.5,
-                numberOfBuildings: val,
-                });
-        }
-    },
-    watch: {
-        buildingsCount: function(val) {
-            this.animateCounter(val)
-        }
-    },
-    mounted(){
-        if(this.buildingsCount > 0){
-            this.animateCounter(this.buildingsCount)
-        }
-    }
+    // methods:{
+    //     animateCounter(val){
+    //         TweenLite.to(this.$data, { 
+    //             duration: 0.5,
+    //             numberOfBuildings: val,
+    //             });
+    //     }
+    // },
+    // watch: {
+    //     buildingsCount: function(val) {
+    //         this.animateCounter(val)
+    //     }
+    // },
+    // mounted(){
+    //     if(this.buildingsCount > 0){
+    //         this.animateCounter(this.buildingsCount)
+    //     }
+    // },
+    
 }
 
 </script>

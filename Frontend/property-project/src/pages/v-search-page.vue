@@ -4,7 +4,9 @@
             <div class="container mx-auto md:px-8" v-if="loaded">
                 <!-- {{ this.activeFindParams }} -->
                 <BuildingsSearchKit />
+                <vBuildingsCounter/>
                 <BuildingsList/>
+                <vPagination/>
             </div>
         </section>
     </div>
@@ -15,8 +17,8 @@
 import BuildingsList from '../components/v-buildings-list'
 import BuildingsSearchKit from '../components/v-buildings-search-kit'
 import { mapActions, mapGetters ,mapMutations } from 'vuex'
-
-
+import vBuildingsCounter from '../components/v-buildings-counter'
+import vPagination from '../components/v-pagination' 
 export default {
 
     data(){
@@ -27,7 +29,8 @@ export default {
     components: {
         BuildingsList,
         BuildingsSearchKit,
-
+        vBuildingsCounter,
+        vPagination,
     },
     methods: {
         ...mapActions([

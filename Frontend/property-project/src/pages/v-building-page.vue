@@ -20,22 +20,7 @@
                                 Назад
                             </div>
                         </div> -->
-                        <div v-if="canBack" class="relative rounded-lg flex md:hover:shadow-lg  text-myMint-100 md:hover:text-white cursor-pointer" @click="$router.go(-1)">
-                            <div class="w-full pt-4 inline-flex items-center transition duration-500 ease-in-out  transform hover:-translate-x-10">
-                                <!-- <div class=""> -->
-                                    <KeyboardBackspaceIcon  :size="40"/>
-                                <!-- </div> -->
-                                <span class="pl-5 text-sm md:text-xl">Назад</span>
-                            </div>
-                        </div>
-                        <div v-else class="relative rounded-lg flex md:hover:shadow-lg  text-myMint-100 md:hover:text-white cursor-pointer" @click="$router.push(prevRoute.fullPath)">
-                            <div class="w-full pt-4 inline-flex items-center transition duration-500 ease-in-out  transform hover:-translate-x-10">
-                                <!-- <div class=""> -->
-                                    <KeyboardBackspaceIcon  :size="40"/>
-                                <!-- </div> -->
-                                <span class="pl-5 text-sm md:text-xl">Назад</span>
-                            </div>
-                        </div>
+                        <vBackButton/>
                         <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
                             <div class="px-1 md:px-4 py-5 flex-auto">
                                 <div class="text-2xl">
@@ -417,8 +402,9 @@ import HomeCityIcon from 'vue-material-design-icons/HomeCity';
 import HomeGroupIcon from 'vue-material-design-icons/HomeGroup';
 import DomainIcon from 'vue-material-design-icons/Domain';
 import ClipboardCheckMultipleIcon from 'vue-material-design-icons/ClipboardCheckMultiple';
-import KeyboardBackspaceIcon from 'vue-material-design-icons/KeyboardBackspace'
-import vMap from '../components/v-map'
+// import KeyboardBackspaceIcon from 'vue-material-design-icons/KeyboardBackspace'
+import vMap from '../components/v-page-map'
+import vBackButton from '../components/v-back-button'
 // import vBackToTopButton from '../components/v-back-to-top'
 // import vGoogleMapModal from '../components/v-google-map'
 // import debounce from 'lodash/debounce';
@@ -441,7 +427,8 @@ export default {
         HomeGroupIcon,
         DomainIcon,
         ClipboardCheckMultipleIcon,
-        KeyboardBackspaceIcon,
+        vBackButton
+        // KeyboardBackspaceIcon,
         // vBackToTopButton
         // vGoogleMapModal,
         // VueScrollactive
@@ -601,12 +588,12 @@ export default {
             });
             return images
         },
-        canBack(){
-            if(window.history.length > 1){
-                return true
-            }
-            return false
-        },
+        // canBack(){
+        //     if(window.history.length > 1){
+        //         return true
+        //     }
+        //     return false
+        // },
         googleMapUrl(){
             let house_letter = this.building.house_letter ? this.building.house_letter : '';
             return `https://www.google.com/maps/search/?api=1&query=${this.building.street}+${this.building.house_number}+${house_letter}`;
