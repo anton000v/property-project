@@ -125,7 +125,7 @@
                             </div>
                         </div>
 
-                          <div id="building-on-map" class="mt-16 mb-16">
+                          <div id="building-on-map" class="mt-16 mb-16" v-if="building.lat && building.lng">
 
                                         <div class="md:flex md:-mx-2">
                                             <div class="m-auto w-4/5 md:px-2">
@@ -164,7 +164,10 @@
 
                                             <!-- {{ textAboutMap }} -->
                                         </div>
-                                    </div>
+                            </div>
+                            <div v-else id="building-on-map" class="mt-16 mb-16 font-bold text-myHeaderColor">
+                                К сожалению, новострой еще не достроился и не имеет адресса, который может быть отображен на карте :(
+                            </div>
 
 
 <!-- <div class='p-10'> -->

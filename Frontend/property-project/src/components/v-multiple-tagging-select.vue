@@ -102,12 +102,14 @@ export default {
         addTag (newTag) {
             let vm = this;
             const matches = newTag.match(vm.regularExpr)
+            console.log('House mathces:')
+            console.log(matches)
             let isUnique = false 
             matches.forEach((tagVal) => {
                 // console.log(tagVal in  vm.value)
                 // console.log(vm.value)
                 // if(!(tagVal in vm.value)){
-                tagVal = parseInt(tagVal)
+                // tagVal = parseInt(tagVal
                 if(vm.value.indexOf(tagVal) == -1){
                     // const tag = {}
                     // tag[vm.sendParamName] = tagVal

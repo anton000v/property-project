@@ -4,7 +4,7 @@
         
         <div class='flex'>
             <TransitionList>
-                <div key="buildings" v-if="buildingsCount > 0" class="m-auto">
+                <div key="buildings" v-if="count > 0" class="m-auto">
                     <TransitionList>
                         <div :key="searchId" class="grid grid-cols-2 xl:grid-cols-3 items-center justify-center gap-2 md:gap-8 my-20">
                             <vBuildingCard  
@@ -17,7 +17,7 @@
                 </div>      
                 <div key="no-results" v-else class="grid justify-center w-full"> 
                     <!-- <TransitionList> -->
-                        <h2 :if="buildingsCount == 0" class="text-2xl font-bold text-gray-600">По вашему запросу ничего не найдено :с</h2>
+                        <h2 :if="count == 0" class="text-2xl font-bold text-gray-600">По вашему запросу ничего не найдено :с</h2>
                 <!-- </TransitionList> -->
                 </div>
             </TransitionList>
@@ -63,6 +63,12 @@ export default{
                 return this.certainBuildigns
             }
             return this.allBuildings
+        },
+        count(){
+            if(this.certainBuildigns){
+                return this.certainBuildigns.length
+            }
+            return this.buildingsCount
         }
     },
     // methods:{

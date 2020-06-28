@@ -4,16 +4,16 @@
             <div class="container mx-auto md:px-8">
                 <vBackButton />
                 <vMapSearchKit/>
-                <vBuildingsCounter/>
+                <vBuildingsCounter :countByBuildingsArr='true'/>
                 <div class="h-full">
                     <div class="m-auto px-10 xl:px-5">
                         <div class="">
-                            <vSearchableMap @preview="show" :buildings="buildingsForMap"/>
+                            <vSearchableMap :buildings="buildingsForMap"/>
                              <!-- <vBuildingPreview v-for="building in allBuildings" :key="building.slug" :slug="building.slug" :building="building"/> -->
                         </div>
                     </div>
-                    <div class="pt-10">
-                        <p >Так же, есть вот такие новострои, которые еще строятся. Они не имеют адресса и не могут быть отображены на карте:</p>
+                    <div class="pt-12" v-if="buildingsForList.length > 0">
+                        <p class="px-2 md:px-0">Так же есть вот такие новострои, которые еще строятся. Они не имеют адресса и не могут быть отображены на карте:</p>
                         <!-- <div class="grid grid-cols-4"> -->
                             <vBuildingsList :certainBuildigns="buildingsForList"/>
                         <!-- </div> -->
@@ -50,14 +50,14 @@ export default {
         ...mapActions([
             'searchBuildings', 
             'actionUpdateFindParams',
-            
+            'mapSearchBuildings'
         ]),
         ...mapMutations([
             'updateFindParams',
             'changeLoadingState',
         ]),
         async prepareData(){
-          await this.searchBuildings(this.activeFindParams)
+          await this.mapSearchBuildings(this.activeFindParams)
         },
         setInitialData(){
           this.updateFindParams(JSON.parse(JSON.stringify(this.$route.query)))
@@ -75,10 +75,11 @@ export default {
         'allBuildings'
         ]),
         buildingsForMap(){
+            console.log()
             return this.allBuildings.filter(building => (building.lat != null && building.lng != null));
         },
         buildingsForList(){
-            let buildings = this.allBuildings.filter(building => (building.lat == null && building.lng == null));
+            let buildings = this.allBuildings.filter(building => (building.lat == null || building.lng == null));
             // alert(buildings)
             // if(!Array.isArray(buildings)){
             //     buildings = [buildings]
@@ -92,16 +93,16 @@ export default {
     },
     mounted(){
       // this.changeLoadingState(false)
-      if(this.allBuildings.length == 0){
+    //   if(this.allBuildings.length == 0){
         this.prepareData()
                 .then(() => {
                     this.loaded = true
                     }
                 )   
-        }
-      else{
-          this.loaded = true
-      }
+    //     }
+    //   else{
+    //       this.loaded = true
+    //   }
       // this.updateBuildings()   
     },
 }

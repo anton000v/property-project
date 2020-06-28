@@ -8,30 +8,44 @@
           class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg"  
         >
           <div class="px-4 py-5 flex-auto" ref='searchComponent' >
-            <div class="grid grid-cols-3">
-              <div class="col-start-2 justify-center inline-flex" >
 
-                <div
-                  class="inline-block text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full transition duration-500 bg-myMint-300 hover:bg-myMint-100 cursor-pointer"
-                  v-on:click="search"
-                >
-                  <HomeSearchIcon title="Принудительный поиск"/>
-                </div>
-              </div>
-              <div class="">
-                <p class="-my-4 text-sm">Попробуйте менее занудный</p>
-                <router-link :to="{name:'map-search'}">
-                  <div  class="my-4 h-full group bg-myHeaderColor flex rounded-lg cursor-pointer transition duration-500 transform hover:translate-y-1 hover:shadow-xl">
-                    <div class="m-auto">
-                      <div class="flex"> 
-                        <GoogleMapsIcon class="text-white transition duration-500 group-hover:text-myMint-300"/>
-                        <p class="text-white pl-2">Поиск по карте</p>
-                      </div>
-                    </div>
-                  </div>
-                </router-link>
-              </div>
-            </div>
+
+                       <div class="flex flex-col-reverse flex-wrap md:flex-row">
+                                <div class="w-1/3 hidden md:block"></div>
+                                <div class="w-full md:w-1/3 pt-5 md:pt-0 justify-center  text-center" >
+                                <!-- <div class="flex group cursor-pointer transition duration-500"
+                                
+                                > -->
+                                    <div 
+                                        ref="searchButton"
+                                        v-on:click="search"
+                                        class="inline-block text-white p-3 text-center items-center justify-center shadow-lg rounded-full transition duration-500 transform bg-myHeaderColor hover:text-myMint-300 cursor-pointer">
+                                        <div>
+                                        <HomeSearchIcon title="Принудительный поиск"/>
+                                        </div>
+                                    </div>
+                                <!-- <div class="m-auto bg-myHeaderColor text-white p-1 -ml-2 rounded-r-lg">
+                                    По карте
+                                </div> -->
+                                <!-- </div> -->
+                            </div>
+                            <div class="w-full md:w-1/3">
+                                <p class="-my-4 text-sm">Попробуйте менее занудный</p>
+                                <!-- <p class="text-xs block md:hidden">Можете выбрать</p> -->
+                                <router-link :to="{name:'map-search'}">
+                                <div  class="my-4 h-full group bg-myHeaderColor flex rounded-lg cursor-pointer transition duration-500 transform hover:translate-y-1 hover:shadow-xl">
+                                    <div class="m-auto">
+                                    <div class="flex"> 
+                                        <GoogleMapsIcon class="m-auto text-white transition duration-500 group-hover:text-myMint-300"/>
+                                        <p class="text-white pl-2 text-base p-2">Поиск по карте</p>
+                                    </div>
+                                    </div>
+                                </div>
+                                </router-link>
+                            </div>
+                        </div>
+
+
             <div class="flex flex-wrap -mx-3" >
               <div class="w-full md:w-1/2 px-3 pt-3 md:pt-6">
                 <label class="hidden text-xs md:text-sm lg:text-base md:block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
@@ -409,7 +423,7 @@ export default{
         'searchBuildings',
         'checkToShowMicroDistricts',
         'checkToHideMicroDistricts',
-        'setDefaultDistrictsChoosen'
+        'setDefaultDistrictsChoosen',
         // 'addStreet',
         // 'removeStreet',
         ]),
@@ -440,12 +454,23 @@ export default{
           // this.$router.replace({name:'search-page', query:})
           // this.$router.replace({name: 'search-page', query:template})
         }, 
+        visualSearchButtonTrigger(){
+            // this.$refs.searchButton.classList.add("rotate-90");
+            this.$refs.searchButton.classList.add("translate-y-1");
+            this.$refs.searchButton.classList.add("text-myMint-300");
+            setTimeout(() =>{
+                // this.$refs.searchButton.classList.remove("rotate-90");
+                this.$refs.searchButton.classList.remove("translate-y-1");
+                this.$refs.searchButton.classList.remove("text-myMint-300");
+            }, 400);
+        },
         updateBuildings(){
           // if('page' in this.activeFindParams){
           //   alert()
           //   this.removeFindParamKey('page')
           // }
           this.searchBuildings(this.activeFindParams)
+          this.visualSearchButtonTrigger()
         },
         callAddHashToLocation() {
           addHashToLocation(this.activeFindParams, this.$route.path)
@@ -503,9 +528,9 @@ export default{
         ])
     },
     mounted(){
-      if('' in this.activeFindParams){
-        this.isExtendedSearchActivated = true
-      }
+      // if('' in this.activeFindParams){
+      //   this.isExtendedSearchActivated = true
+      // }
       this.$smoothElement({
             el: this.$refs.searchComponent,
             hideOverflow: true

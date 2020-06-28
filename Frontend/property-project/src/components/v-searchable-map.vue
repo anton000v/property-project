@@ -3,7 +3,7 @@
       <v-map 
         :zoom=10.5
         :center="initialLocation"
-        :style="'height:50vh;'"
+        :style="'height:50vh; z-index: 0;'"
   
         >
         <v-icondefault></v-icondefault>
@@ -14,7 +14,7 @@
           </v-marker> -->
           <v-marker v-for="building in buildings" :key="building.slug" :lat-lng="getLatLng(building.lat, building.lng)"  :icon="icon">
             <v-popup>
-              <div class="w-64">
+              <div class="w-auto md:w-64">
                 <div class="w-full grid grid-col-1 py-2 m-1">
                   <div v-if="building.administrative_district != null" class="inline-flex items-center">
                     <HomeCityIcon class="text-myHeaderColor" :size="17"  />
@@ -40,13 +40,13 @@
                         {{ building.developer }}
                     </div>
                   </div>
-                  <div class="grid grid-cols-2 text-center gap-2">
+                  <div class="grid grid-cols-1 md:grid-cols-2 text-center gap-2">
                     <router-link :to="{name:'building-page', params:{slug:building.slug}}">
                       <p class="border cursor-pointer rounded-lg  text-black shadow text-sm md:transition md:duration-500 md:transform md:hover:translate-y-1 md:ease-in-out text-center block  md:hover:shadow-lg py-2">
                         Открыть
                       </p>
                     </router-link>
-                      <p @click="show(building.slug)" class="border cursor-pointer rounded-lg  text-black shadow text-sm md:transition md:duration-500 md:transform md:hover:translate-y-1 md:ease-in-out text-center block  md:hover:shadow-lg py-2">
+                      <p @click="show(building.slug)" class="hidden md:block border cursor-pointer rounded-lg  text-black shadow text-sm md:transition md:duration-500 md:transform md:hover:translate-y-1 md:ease-in-out text-center block  md:hover:shadow-lg py-2">
                         Предпросмотр
                       </p>
                   </div>

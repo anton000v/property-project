@@ -9,16 +9,29 @@
 import {mapGetters} from 'vuex'
 import {TweenLite} from 'gsap'
 export default {
-        data(){
+    props:{
+        countByBuildingsArr: {
+            type:Boolean,
+            default:false
+        }
+    },
+
+    data(){
         return {
             numberOfBuildings: 0
         }
     },
     computed: {
-        ...mapGetters(['allBuildings','buildingsCount']),
+        ...mapGetters(['allBuildings' ,'buildingsCount']),
         animatedNumber: function() {
             return this.numberOfBuildings.toFixed(0);
         },
+        count(){
+            if(this.countByBuildingsArr){
+                return this.allBuildings.length
+            }
+            return this.buildingsCount
+        }
     },
     methods:{
         animateCounter(val){
@@ -29,13 +42,13 @@ export default {
         }
     },
     watch: {
-        buildingsCount: function(val) {
+        count: function(val) {
             this.animateCounter(val)
         }
     },
     mounted(){
-        if(this.buildingsCount > 0){
-            this.animateCounter(this.buildingsCount)
+        if(this.count > 0){
+            this.animateCounter(this.count)
         }
     },
 }

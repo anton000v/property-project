@@ -203,5 +203,14 @@
     },
   }
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style> 
+
+<style scoped>
+
+/* .multiselect--active { 
+  z-index: 20
+}
+.multiselect__content-wrapper { z-index: 20 } */
+
+</style>
 
