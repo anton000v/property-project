@@ -4,7 +4,17 @@ import App from './App.vue'
 // import '@/assets/css/main.css'
 import './assets/css/main.css'
 import 'vue-search-select/dist/VueSearchSelect.css'
-import VueKinesis from 'vue-kinesis'
+import store from './store/index.js'
+import router from './router/router.js'
+import VModal from 'vue-js-modal'
+import VueScrollactive from 'vue-scrollactive';
+
+
+Vue.use(VueScrollactive);
+// import VueTabs from 'vue-nav-tabs' 
+
+Vue.use(VModal)
+// Vue.use(VueTabs)
 // import 'bootstrap/dist/css/bootstrap.css'
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -16,9 +26,11 @@ import VueKinesis from 'vue-kinesis'
 // Vue.use(IconsPlugin)
 
 Vue.config.productionTip = false
-Vue.use(VueKinesis)
 // console.log(App);
+
 new Vue({
+  store: store,
+  router:router,
   // router,
   render: h => h(App),
 }).$mount('#app')

@@ -21,6 +21,8 @@ urlpatterns = [
     path('api/get-severnaya-saltovka-micro-districts/', views.APIGetSevernayaSaltovkaMicroDistrictsChoices.as_view()),
     path('api/get-saltovka-severnaya-saltovka-db-values/', views.APIGetSaltovkaSevernayaSaltovkaDBValues.as_view()),
     path('api/get-developers/', views.APIGetDevelopersChoices.as_view()),
+    path('api/get-metro/', views.APIGetMetroChoices.as_view()),
+    path('api/get-classes/', views.APIGetClassChoices.as_view())
     ]
 if settings.DEBUG:
     urlpatterns += staticfiles_urlpatterns() + static(

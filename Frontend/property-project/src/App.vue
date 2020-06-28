@@ -1,29 +1,28 @@
 <template>
-  <div id="app">
-    <!-- <b-container fluid> -->
-
-      <Header/>
-      <Body/>
-      
-    <!-- </b-container> -->
+  <div id="app" class="bg-myPageBackground">
+      <vMainWrapper/>
   </div>
 </template>
 
 <script>
-
-import Header from './components/header.vue';
-import Body from './components/body.vue';
+import vMainWrapper from './pages/v-main-wrapper'
 
 export default {
   name: 'App',
   components: {
-    Header,
-    Body,
+    vMainWrapper,
   },
-
 }
 </script>
 
 <style>
+
+/* body{
+  background-color:black;
+} */
+
+body {
+  /* background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#5ED2B8)) fixed; */
+}
 
 </style>

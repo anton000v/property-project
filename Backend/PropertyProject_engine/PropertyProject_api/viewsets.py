@@ -1,29 +1,55 @@
-from PropertyProject_api.models import Street, AdministrativeDistrict, Developer, NewBuilding
+from PropertyProject_api.models import (
+    Street, 
+    AdministrativeDistrict, 
+    Developer, 
+    NewBuilding, 
+    WayFromMetro
+)
 from .serializers import NewBuildingSerializer, NewBuildingSerializerForSearch
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from django_filters import rest_framework as filters
 from django.db.models import Q
+from .pagination import CustomPageNumber
+from . import choices
+from functools import reduce
 import re 
 import operator
-from functools import reduce
 
 BOOLEAN_CHOICES = (('false', 'False'), ('true', 'True'),)
 
-# class NumberInFilter(filters.BaseInFilter, filters.NumberFilter):
-#     pass
-
 class NewBuildingFilter(filters.FilterSet):
+    '''
+    Класс отвечающий за фильтрацию
+    '''
     developer = filters.ModelMultipleChoiceFilter(
         field_name = 'developer',
         to_field_name = 'id',
         queryset = Developer.objects.all(),
+        distinct = True
     )
-    developer = filters.ModelMultipleChoiceFilter(
-        field_name = 'developer',
-        to_field_name = 'id',
-        queryset = Developer.objects.all(),
+    metro = filters.MultipleChoiceFilter(
+        field_name = 'ways_from_metro__metro',
+        # to_field_name = 'metro',
+        choices = choices.THE_METRO_CHOICES,
+        distinct = True
     )
+    time_from_metro = filters.NumberFilter(
+        field_name = 'ways_from_metro__time',
+        lookup_expr = 'lte',
+        distinct = True
+    )
+    the_class = filters.MultipleChoiceFilter(
+        # field_name = 'ways_from_metro__metro',
+        # to_field_name = 'metro',
+        choices = choices.THE_CLASS_CHOICES,
+        distinct = True
+    )
+    # developer = filters.ModelMultipleChoiceFilter(
+    #     field_name = 'developer',
+    #     to_field_name = 'id',
+    #     queryset = Developer.objects.all(),
+    # )
     # street = NumberInFilter(field_name='street__id', lookup_expr='in')
     # street = filters.ModelMultipleChoiceFilter(
     #     field_name='street',
@@ -39,7 +65,7 @@ class NewBuildingFilter(filters.FilterSet):
                                             # coerce=strtobool)
     class Meta:
         model = NewBuilding
-        fields = ['developer',]
+        fields = ['developer', 'metro','time_from_metro', 'the_class']
         # fields = {
         #     'street' : ['icontains']
         # }
@@ -56,7 +82,8 @@ class NewBuildingViewSet(viewsets.ReadOnlyModelViewSet):
         # 'list': MyModelListSerializer,
         # 'create': MyModelCreateSerializer
     }
-    pagination_class =  PageNumberPagination
+    # pagination_class =  PageNumberPagination
+    pagination_class = CustomPageNumber
     
     def get_serializer_class(self):
         '''
@@ -81,52 +108,64 @@ class NewBuildingViewSet(viewsets.ReadOnlyModelViewSet):
         house_numbers_query_list = self.request.query_params.getlist('house_number', '')
         saltovka_microdistricts_query_list = self.request.query_params.getlist('saltovka_microdistrict', '')
         severnaya_saltovka_microdistricts_query_list = self.request.query_params.getlist('severnaya_saltovka_microdistrict', '')
+        if districts_query_list or streets_query_list or administrative_districts_query_list or house_numbers_query_list or saltovka_microdistricts_query_list or severnaya_saltovka_microdistricts_query_list:
+            q_administrative_districts = Q()
+            if administrative_districts_query_list:
+                q_administrative_districts = Q(administrative_district__in = administrative_districts_query_list)
+                print('Административные районы: ', administrative_districts_query_list)
 
-        q_administrative_districts = Q()
-        if administrative_districts_query_list:
-            q_administrative_districts = Q(administrative_district__in = administrative_districts_query_list)
-            print('Административные районы: ', administrative_districts_query_list)
+            q_districts = Q()
+            if districts_query_list:
+                q_districts = Q(district__in=districts_query_list)
+                print('Районы: ', districts_query_list)
 
-        q_districts = Q()
-        if districts_query_list:
-            q_districts = Q(district__in=districts_query_list)
-            print('Районы: ', districts_query_list)
+            q_streets = Q()
+            if streets_query_list:
+                q_streets = Q(street__in=streets_query_list)
+                print('Улицы: ', streets_query_list)
 
-        q_streets = Q()
-        if streets_query_list:
-            q_streets = Q(street__in=streets_query_list)
-            print('Улицы: ', streets_query_list)
-
-        q_house_numbers = Q()
-        if house_numbers_query_list:
-            # Парсинг номеров домов в списке (вида 23г, 25) в генератор кортежей вида (('23', 'г'), (25, ''))
-            house_numbers_and_letters_generator = (
-                (match.group(0), item[match.end():].upper()) for
-                item in house_numbers_query_list
-                if (match := re.match('\d+', item))
-            )
-            # Совмещение sql запросов с помощью оператора or
-            q_house_numbers = reduce(
-                operator.or_,
-                (Q(house_number = number, house_letter=letter) for
-                number, letter in 
-                house_numbers_and_letters_generator
+            q_house_numbers = Q()
+            if house_numbers_query_list:
+                # Парсинг номеров домов в списке (вида 23г, 25) в генератор кортежей вида (('23', 'г'), (25, ''))
+                house_numbers_and_letters_generator = (
+                    (match.group(0), item[match.end():].upper()) for
+                    item in house_numbers_query_list
+                    if (match := re.match('\d+', item))
                 )
-            )
-            print('Номера домов: ', house_numbers_and_letters_generator)
+                letter_or_none = lambda x: x or None
+                # q_house_numbers = Q()
+                # for number, letter in house_numbers_and_letters_generator:
+                #     if letter:=letter_or_none(letter):
+                #         q_house_numbers
+                # Совмещение sql запросов с помощью оператора or
+                q_house_numbers = reduce(
+                    operator.or_,
+                    (Q(house_number = number, house_letter=letter_or_none(letter)) for
+                    number, letter in 
+                    house_numbers_and_letters_generator
+                    )
+                )
+                print('Номера домов: ', house_numbers_query_list)
 
-        q_saltovka_microdistricts = Q()
-        q_severnaya_saltovka_microdistricts = Q()
-        if saltovka_microdistricts_query_list:
-            q_saltovka_microdistricts = Q(micro_district__in=saltovka_microdistricts_query_list)
-        if severnaya_saltovka_microdistricts_query_list:
-            q_severnaya_saltovka_microdistricts = Q(micro_district__in=severnaya_saltovka_microdistricts_query_list)
-            
-        found_buildings = NewBuilding.objects.filter(
-            (q_streets & q_house_numbers) |  
-            (q_districts & q_saltovka_microdistricts & q_severnaya_saltovka_microdistricts) | 
-            q_administrative_districts
-            )
+            q_saltovka_microdistricts = Q()
+            q_severnaya_saltovka_microdistricts = Q()
+            if saltovka_microdistricts_query_list:
+                q_saltovka_microdistricts = Q(micro_district__in=saltovka_microdistricts_query_list)
+            if severnaya_saltovka_microdistricts_query_list:
+                q_severnaya_saltovka_microdistricts = Q(micro_district__in=severnaya_saltovka_microdistricts_query_list)
+                
+            found_buildings = NewBuilding.objects.filter(
+                (q_streets & q_house_numbers) |  
+                (q_districts & q_saltovka_microdistricts & q_severnaya_saltovka_microdistricts & q_house_numbers) | 
+                q_administrative_districts
+                )
 
-        print('\t NASHLO: ',found_buildings)
-        return found_buildings
+            print('\t NASHLO: ',found_buildings)
+            return found_buildings
+        else:
+            print('\t NASHLO: ',NewBuilding.objects.all())
+            print('\tCount:', NewBuilding.objects.all())
+            return  NewBuilding.objects.all()
+
+    class Meta:
+        ordering = ['-id']
