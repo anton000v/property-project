@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from . import models
-from . forms import NewBuildingForm, WayFromMetroForm
+from . forms import NewBuildingForm, WayFromMetroForm, FlatForSaleForm
 
 
 admin.site.unregister(Group)
@@ -138,8 +138,39 @@ class NewBuildingModelAdmin(admin.ModelAdmin):
         # "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js",
         )
 
+class FlatForSaleImageTabularInline(admin.TabularInline):
+    model = models.FlatForSaleImage
+    extra = 1
+    verbose_name = "Изображение квартиры"
+    verbose_name_plural = "Изображения квартиры"    
+
+class FlatForSaleModelAdmin(admin.ModelAdmin):
+    form = FlatForSaleForm
+
+    class Meta:
+        model = models.FlatForSale
+
+    inlines = [FlatForSaleImageTabularInline]
+
+    class Media:
+        css = {
+             'all': (
+                     "https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css",
+                    "admin/css/PropertyProject_api/SearchableChoice.css",
+             )
+        }
+
+        js = (
+        # "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js",
+        "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"
+        # "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
+        # "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js",
+        )
+
 admin.site.register(models.NewBuilding, NewBuildingModelAdmin)
 admin.site.register(models.AdministrativeDistrict, DistrictsModelAdmin)
 admin.site.register(models.Street, StreetsModelAdmin)
 admin.site.register(models.Developer, DeveloperAdmin)
+admin.site.register(models.FlatForSale, FlatForSaleModelAdmin)
 # admin.site.register(models.Test,TestAdmin)

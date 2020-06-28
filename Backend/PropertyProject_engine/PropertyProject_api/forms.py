@@ -1,5 +1,5 @@
 from django import forms
-from .models import NewBuilding, WayFromMetro
+from .models import NewBuilding, WayFromMetro, FlatForSale
 from .widgets import SearchableChoiceWidget, MultipleChoiceWidget
 from .utils import generate_slug
 from . import choices
@@ -68,5 +68,13 @@ class WayFromMetroForm(forms.ModelForm):
         model = WayFromMetro
         fields = '__all__'
         widgets = {
-            'metroChoices': SearchableChoiceWidget(widget_title="Выберите метро"),
+            'metro': SearchableChoiceWidget(widget_title="Выберите метро"),
+        }
+
+class FlatForSaleForm(forms.ModelForm):
+    class Meta:
+        model = FlatForSale
+        fields = '__all__'
+        widgets = {
+            'building': SearchableChoiceWidget(widget_title="Выберите дом"),
         }

@@ -134,7 +134,10 @@ class NewBuilding(models.Model):
 
 
     def __str__(self):
-        return self.slug
+        if(self.house_letter):
+            return '{} {}{}'.format(self.street, self.house_number, self.house_letter)
+        else:
+            return '{} {}'.format(self.street, self.house_number)
 
 
     class Meta:
@@ -195,3 +198,17 @@ class WayFromMetro(models.Model):
 
     def __str__(self):
         return '%s - %s' % (self.building, self.metro)
+
+
+class FlatForSale(models.Model):
+    building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name="for_sale", to_field='slug', verbose_name="Дом")
+    floor = models.SmallIntegerField(default=1, verbose_name='Этаж')
+    price = models.IntegerField(default=1, verbose_name="Цена")
+
+    class Meta:
+        verbose_name = 'Новострой в продаже'
+        verbose_name_plural = 'Новострои в продаже'
+
+class FlatForSaleImage(models.Model):
+    building = models.ForeignKey(FlatForSale, on_delete=models.CASCADE, related_name="for_sale_images")
+    flat_image = models.ImageField(verbose_name="Фото квартиры", blank=True, null=True) 
