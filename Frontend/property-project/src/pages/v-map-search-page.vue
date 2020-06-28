@@ -1,6 +1,6 @@
 <template>
     <div>
-        <section class="pb-20 -mt-20">
+        <section class="pb-20 -mt-24">
             <div class="container mx-auto md:px-8">
                 <vBackButton />
                 <vMapSearchKit/>

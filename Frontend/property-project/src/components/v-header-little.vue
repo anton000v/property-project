@@ -1,6 +1,6 @@
 <template>
   <div
-      class="h-12 md:h-30 bg-myHeaderColor relative pt-16 pb-32 flex content-center items-center justify-center"
+      class="h-14 md:h-30 bg-myHeaderColor relative pt-16 pb-32 flex content-center items-center justify-center"
       style="min-height: 30vh;"
     >
       <div
@@ -15,11 +15,12 @@
             <!-- <div class=""> -->
               <router-link to="/">
                 <h1 class="text-white font-semibold text-2xl md:text-5xl lg:text-5xl">
-                    property - project
+                    <!-- property - project -->
+                    <span class="bg-myPageBackground border rounded-l-lg p-4 text-myHeaderColor">Ок.</span><span class="p-4 text-myPageBackground border rounded-r-lg">Найдем</span>
                 </h1>
               </router-link>
-              <p class=" lg:mt-4 text-md md:text-lg text-white">
-                Поиск новостроев
+              <p class="mt-4 text-lg text-myPageBackground text-center">
+                Поиск новостроев Харькова. 
               </p>
             <!-- </div> -->
           </div>

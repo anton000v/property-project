@@ -1,26 +1,32 @@
 <template>
   <div
       class="h-48 relative pt-16 pb-32 flex content-center items-center justify-center"
-      style="min-height: 75vh;"
+      style="min-height: 50vh;"
     >
       <div
-        class="absolute top-0 w-full h-full bg-center bg-cover"
-        :style="{ backgroundImage: 'url(' + require('@/assets/images/header.png') + ')' }">
+        class="absolute top-0 w-full h-full bg-center bg-cover bg-myPageBackground md:bg-white"
+        :style="{ backgroundImage: 'url(' + require('@/assets/images/header-temp1.jpg') + ')' }">
+        
       
         <span
           id="blackOverlay"
           class="w-full h-full absolute opacity-75 bg-black"
         ></span>
       </div>
-      <div class="container relative mx-auto">
+      <div class="container relative mx-auto ">
         <div class="items-center flex flex-wrap">
-          <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
-            <div class="">
-              <h1 class="text-white font-semibold text-4xl md:text-5xl">
-                property-project
-              </h1>
-              <p class="mt-4 text-lg text-gray-300">
-                Поиск новостроев
+          <div class="px-4 ml-auto mr-auto">
+            <div>
+              <!-- <div class=" bg-gray-400"> -->
+                <p class="text-gray-200">- Хочешь?</p>
+                <p class="text-gray-200">- Хочу</p>
+                <h1 class="pt-6 text-white font-semibold text-4xl md:text-5xl text-center">
+                  <span class="bg-myPageBackground border rounded-l-lg p-4 text-myHeaderColor">Ок.</span><span class="p-4 text-myPageBackground border rounded-r-lg">Найдем</span>
+                  <!-- <img :src="require('@/assets/images/logo1.svg')" class="m-auto"> -->
+                </h1>
+              <!-- </div> -->
+              <p class="mt-4 text-lg text-myPageBackground text-center">
+                Поиск новостроев Харькова. 
               </p>
             </div>
           </div>

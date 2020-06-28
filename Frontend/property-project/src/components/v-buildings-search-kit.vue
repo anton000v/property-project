@@ -65,7 +65,7 @@
                   :addAction="addFindParam"
                   :removeAction="removeFindParam"
                   :removeKeyAction="removeFindParamKey"
-                  placeholder="Административные районы" 
+                  placeholder="Московский, Киевский..." 
                   />
                 </div>
               </div>
@@ -90,7 +90,7 @@
                     :addAction="addFindParam"
                     :removeAction="removeFindParam"
                     :removeKeyAction="removeFindParamKey"
-                    placeholder="Районы" 
+                    placeholder="Центр, Салтовка..." 
                     />
                   </div>
                 </div>
@@ -164,7 +164,7 @@
                   :addAction="addFindParam"
                   :removeAction="removeFindParam"
                   :removeKeyAction="removeFindParamKey"
-                  placeholder="Улицы" 
+                  placeholder="Сумская, Пушкинская..." 
                   />
                 </div>
               </div>
@@ -186,7 +186,7 @@
               </div>
                <div class="w-full md:w-1/4 px-3 pt-3 md:pt-6">
                 <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
-                  Классы
+                  Класс
                 </label>
                 <div name="field" class="w-full">
                     <MultipleSelect 
@@ -199,7 +199,7 @@
                     :addAction="addFindParam"
                     :removeAction="removeFindParam"
                     :removeKeyAction="removeFindParamKey"
-                    placeholder="Классы" 
+                    placeholder="Эконом, комфорт..." 
                     />
                   </div>
               </div>
@@ -221,7 +221,7 @@
                   :addAction="addFindParam"
                   :removeAction="removeFindParam"
                   :removeKeyAction="removeFindParamKey"
-                  placeholder="Станция" 
+                  placeholder="Университет, Олексеевская..." 
                   />
                 </div>
               </div>
