@@ -4,9 +4,10 @@
         {{ currentPage  }}
         {{ nextPageLink }} 
         {{ previousPageLink }} -->
+        {{pagesNumber}}
         <paginate
             v-model="page"
-            :page-count="totalPages"
+            :page-count="pagesNumber"
             :page-range="pageRange"
             :margin-pages="2"
             :click-handler="clickCallback"
@@ -33,6 +34,12 @@ import { addHashToLocation } from '../utils.js'
 import { stringToInt } from '../utils'
 
 export default {
+    // props:{
+    //     flats: {
+    //         type: Object,
+    //         default: null,
+    //     }
+    // },
     components:{
         Paginate
     },
@@ -133,13 +140,21 @@ export default {
         }
     },
     computed:{
-        ...mapGetters(['buildingsCount','totalPages','currentPage','nextPageLink','previousPageLink','activeFindParams']),
+        ...mapGetters([
+            'buildingsCount','totalPages','currentPage','nextPageLink','previousPageLink','activeFindParams','showFlatsOnly','elementsPerPage','flatBuildingArr'
+            ]),
         pageRange(){
             if(this.totalPages > 10){
                 return 7
             }
             return 100
         },
+        pagesNumber(){
+            if(this.showFlatsOnly){
+                return this.flatBuildingArr.length/this.elementsPerPage
+            }
+            return this.totalPages
+        }
     },
     mounted() {
         // alert(this.currentPage)

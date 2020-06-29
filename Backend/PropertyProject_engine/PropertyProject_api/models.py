@@ -77,6 +77,7 @@ class NewBuilding(models.Model):
                                       verbose_name='Номер корпуса',
                                       null=True, blank=True)
 
+
     location = models.CharField(max_length=200, verbose_name=u"Расположение", default=1, null=True, blank=True)  #
     # developer = models.CharField(max_length=100, verbose_name=u"Застройщик", default=1)  #
     developer = models.ForeignKey(Developer, on_delete=models.CASCADE, verbose_name = 'Застройщик', null=True, blank=True)
@@ -135,7 +136,7 @@ class NewBuilding(models.Model):
 
     def __str__(self):
         if(self.house_letter):
-            return '{} {}{}'.format(self.street, self.house_number, self.house_letter)
+            return '{} {}{}   |   {}'.format(self.street, self.house_number, self.house_letter, self.name )
         else:
             return '{} {}'.format(self.street, self.house_number)
 
@@ -201,14 +202,25 @@ class WayFromMetro(models.Model):
 
 
 class FlatForSale(models.Model):
-    building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name="for_sale", to_field='slug', verbose_name="Дом")
+    building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name="flats_for_sale", to_field='slug', verbose_name="Дом")
+    rooms = models.PositiveSmallIntegerField(default=1, verbose_name='Кол-во комнат')
+    living_area = models.FloatField(default=1, verbose_name='Жилая площадь')
+    kitchen_area = models.FloatField(default=1, verbose_name='Кухонная площадь')
     floor = models.SmallIntegerField(default=1, verbose_name='Этаж')
     price = models.IntegerField(default=1, verbose_name="Цена")
+    description = models.CharField(max_length=500, default=1, verbose_name='Описание')
 
     class Meta:
         verbose_name = 'Новострой в продаже'
         verbose_name_plural = 'Новострои в продаже'
 
+    def __str__(self):
+        return '{}, {} этаж, цена:{}'.format(self.building, self.floor, self.price)
+
 class FlatForSaleImage(models.Model):
-    building = models.ForeignKey(FlatForSale, on_delete=models.CASCADE, related_name="for_sale_images")
+    building = models.ForeignKey(FlatForSale, on_delete=models.CASCADE, related_name="flats_images")
     flat_image = models.ImageField(verbose_name="Фото квартиры", blank=True, null=True) 
+
+class FlatForSaleLayout(models.Model):
+    building = models.ForeignKey(FlatForSale, on_delete=models.CASCADE, related_name="flats_layouts")
+    flat_layout = models.ImageField(verbose_name="Планировка квартиры", blank=True, null=True) 

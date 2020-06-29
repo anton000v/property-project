@@ -18,6 +18,11 @@ export default new Router({
               path: '/buildings',
               name: 'search-page',
               component: vSearchPage,
+              },
+              {
+                path: '/flats',
+                name: 'search-flats',
+                component: vSearchPage
               }
             ]
         },

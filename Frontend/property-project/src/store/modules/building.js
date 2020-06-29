@@ -1,3 +1,4 @@
+// import { stringToInt } from '../../utils'
 export default {
     actions: {
         // async searchBuildings(ctx, query=''){
@@ -52,6 +53,7 @@ export default {
                 const currentPage = resp.data.current
                 const nextPageLink = resp.data.next
                 const previousPageLink = resp.data.previous
+                // const perPage = resp.data.per_page
                 console.log('FOUND BUILDINGS')
                 console.log(foundBuildings)
                 ctx.commit('updateBuildings', foundBuildings)
@@ -61,6 +63,7 @@ export default {
                 ctx.commit('updateNextPageLink', nextPageLink)
                 ctx.commit('updatePreviousPageLink', previousPageLink)
                 ctx.commit('updateSearchId', searchId)
+                // ctx.commit('updatePerPage', perPage)
             })
         }
     },
@@ -85,7 +88,11 @@ export default {
         },
         updateSearchId(state, searchId){
             state.searchId = searchId
-        }
+        },
+
+        // updatePerPage(state, value){
+        //     state.perPage = value
+        // }
     },
     state: {
         buildings: [],
@@ -96,6 +103,8 @@ export default {
         currentPage: 0,
         nextPageLink: null,
         previousPageLink: null,
+ 
+        // perPage: 0,
         // loadedBuildings: [],
         // currentFindParams: {},
     },
@@ -120,9 +129,11 @@ export default {
         },
         searchId(state){
             return state.searchId
-        }
+        },
 
-        
+        // elementsPerPage(state){
+        //     return state.perPage
+        // }
         // getLoadedBuilding(state, slug){
         //     return state.loadedBuildings[]
         // }

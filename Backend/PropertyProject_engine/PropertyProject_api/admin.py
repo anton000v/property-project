@@ -141,8 +141,14 @@ class NewBuildingModelAdmin(admin.ModelAdmin):
 class FlatForSaleImageTabularInline(admin.TabularInline):
     model = models.FlatForSaleImage
     extra = 1
-    verbose_name = "Изображение квартиры"
-    verbose_name_plural = "Изображения квартиры"    
+    verbose_name = "Изображения квартиры"
+    verbose_name_plural = "Изображения"    
+
+class FlatForSaleLayoutTabularInline(admin.TabularInline):
+    model = models.FlatForSaleLayout
+    extra = 1
+    verbose_name = "Планировки квартиры"
+    verbose_name_plural = "Планировки"    
 
 class FlatForSaleModelAdmin(admin.ModelAdmin):
     form = FlatForSaleForm
@@ -150,7 +156,7 @@ class FlatForSaleModelAdmin(admin.ModelAdmin):
     class Meta:
         model = models.FlatForSale
 
-    inlines = [FlatForSaleImageTabularInline]
+    inlines = [FlatForSaleImageTabularInline, FlatForSaleLayoutTabularInline]
 
     class Media:
         css = {

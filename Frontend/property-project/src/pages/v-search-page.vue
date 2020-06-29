@@ -4,8 +4,14 @@
             <div class="container mx-auto md:px-8" v-if="loaded">
                 <!-- {{ this.activeFindParams }} -->
                 <BuildingsSearchKit />
-                <vBuildingsCounter/>
-                <BuildingsList/>
+                <vBuildingsCounter v-if="!showFlatsOnly"/>
+                <TransitionList>
+                    <FlatsList v-if="showFlatsOnly"/>
+                </TransitionList>
+                <TransitionList>
+                    <BuildingsList v-if="!showFlatsOnly"/>
+                </TransitionList>
+                
                 <vPagination/>
             </div>
         </section>
@@ -15,10 +21,13 @@
 <script>
 
 import BuildingsList from '../components/v-buildings-list'
+import FlatsList from '../components/v-flats-list'
 import BuildingsSearchKit from '../components/v-buildings-search-kit'
 import { mapActions, mapGetters ,mapMutations } from 'vuex'
 import vBuildingsCounter from '../components/v-buildings-counter'
 import vPagination from '../components/v-pagination' 
+import TransitionList from '../transitions/list'
+// import { addHashToLocation } from '../utils.js'
 export default {
 
     data(){
@@ -31,28 +40,43 @@ export default {
         BuildingsSearchKit,
         vBuildingsCounter,
         vPagination,
+        FlatsList,
+        TransitionList
     },
     methods: {
         ...mapActions([
             'searchBuildings', 
             'actionUpdateFindParams',
-            
+            'searchFlats'
         ]),
         ...mapMutations([
             'updateFindParams',
             'changeLoadingState',
         ]),
         async prepareData(){
-          await this.searchBuildings(this.activeFindParams)
+            if(this.showFlatsOnly){
+                await this.searchFlats(this.activeFindParams)
+            }
+            else{
+                await this.searchBuildings(this.activeFindParams)
+            }
         },
         setInitialData(){
-          this.updateFindParams(JSON.parse(JSON.stringify(this.$route.query)))
+            // if(this.$route.)
+            // console.log('router:', this.$router)
+            // console.log('route:', this.$route)
+ 
+              this.updateFindParams(JSON.parse(JSON.stringify(this.$route.query)))
         },
+        // callAddHashToLocation() {
+        //   addHashToLocation(this.activeFindParams, this.$route.path)
+        // }
     },
 
     computed: {
       ...mapGetters([
         'activeFindParams', 
+        'showFlatsOnly'
         ]),
     },
 
@@ -60,14 +84,26 @@ export default {
       this.setInitialData()
       
     },
+    watch:{        
+        showFlatsOnly(newVal){
+            // this.updateFindParams({})
+            if(newVal){
+                this.$router.push({name:'search-flats'})
+                this.searchFlats()
+            }
+            else{
+                this.$router.push({name:'search-page'})
+                this.searchBuildings()
+            }
+
+        }
+    },
     mounted(){
-      // this.changeLoadingState(false)
       this.prepareData()
-            .then(() => {
-                this.loaded = true
-                }
-            )   
-      // this.updateBuildings()   
+        .then(() => {
+            this.loaded = true
+            }
+        )   
     },
     // before
 }

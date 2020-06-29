@@ -272,13 +272,27 @@
                 </div>
               </div>
             </div>
-
-            <div class="pt-2 pb-2 justify-center">
-              <div class="text-gray-500 font-bold" :class="{'text-myMint-300' : isExtendedSearchActivated}">
-                  Расширенный поиск
+            <div class="flex w-full">
+              <div class="m-auto w-3/5 pt-6 border-b-2 border-myHeaderColor opacity-25"></div>
+            </div>
+            <div class="flex pt-3 pb-4">
+              <div class="w-1/3">
+                Только в продаже
               </div>
-              <div>
-                <toggle-button v-model="isExtendedSearchActivated" color="#00A480"/>
+              <div class="w-1/3 justify-center">
+                <div class="text-gray-500 font-bold" :class="{'text-myMint-300' : isExtendedSearchActivated}">
+                    Расширенный поиск
+                </div>
+                <div>
+                  <toggle-button v-model="isExtendedSearchActivated" color="#00A480"/>
+                </div>
+              </div>
+              <div class="w-1/3">
+                  <p class="text-gray-500 font-bold">Что ищем?</p> 
+                  <div class=''>
+                    <span @click="updateShowFlatsOnly(false)" class="px-2 transition duration-300 cursor-pointer" :class="{'border-b-2 border-myMint-400 font-bold text-myMint-400':!showFlatsOnly}">Новострои</span> 
+                    <span @click="updateShowFlatsOnly(true)" class="px-2 transition duration-300 cursor-pointer " :class="{'border-b-2 border-myMint-400 font-bold text-myMint-400':showFlatsOnly}">Квартиры в них</span>
+                  </div>
               </div>
             </div>
             <div >
@@ -389,7 +403,7 @@ export default{
         theClassBaseVariables: theClassBaseVariables,
         timeFromMetroBaseVariables: timeFromMetroBaseVariables,
         dataReady: false,
-        isExtendedSearchActivated: false
+        isExtendedSearchActivated: false,
       }
    },
     // computed: {
@@ -418,12 +432,14 @@ export default{
         'removeFindParam',
         'updateFindParams',
         'removeFindParamKey',
+        'updateShowFlatsOnly'
       ]),
       ...mapActions([
         'searchBuildings',
         'checkToShowMicroDistricts',
         'checkToHideMicroDistricts',
         'setDefaultDistrictsChoosen',
+        'searchFlats'
         // 'addStreet',
         // 'removeStreet',
         ]),
@@ -469,7 +485,12 @@ export default{
           //   alert()
           //   this.removeFindParamKey('page')
           // }
-          this.searchBuildings(this.activeFindParams)
+          if(this.showFlatsOnly){
+            this.searchFlats(this.activeFindParams)
+          }
+          else{
+            this.searchBuildings(this.activeFindParams)
+          }
           this.visualSearchButtonTrigger()
         },
         callAddHashToLocation() {
@@ -525,6 +546,7 @@ export default{
         'selectedDevelopers',
         'selectedSaltovkaMicroDistricts',
         'selectedSevernayaSaltovkaMicroDistricts',
+        'showFlatsOnly'
         ])
     },
     mounted(){
