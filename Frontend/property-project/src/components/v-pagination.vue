@@ -1,13 +1,13 @@
 <template>
-    <div class='w-full flex pt-16' v-if="totalPages > 1">
-        <!-- {{ totalPages }}
-        {{ currentPage  }}
+    <div class='w-full flex pt-16' v-if="pagesNumber > 1">
+        <!-- {{ buildingsTotalPages }}
+        {{ currentBuildingPage  }}
         {{ nextPageLink }} 
         {{ previousPageLink }} -->
-        {{totalPages}}
+        {{pagesNumber}}
         <paginate
             v-model="page"
-            :page-count="totalPages"
+            :page-count="pagesNumber"
             :page-range="pageRange"
             :margin-pages="2"
             :click-handler="clickCallback"
@@ -59,35 +59,44 @@ export default {
         ]),
         ...mapActions([
             'searchBuildings',
+            'searchFlats'
         ]),
         clickCallback: async function(pageNum) {
-            var VueScrollTo = require('vue-scrollto');
-            var options = {
-                // container: 'body',
-                easing: 'ease-in',
-                // offset: -60,
-                force: true,
-                cancelable: true,
-                // onStart: function(element) {
-                // // scrolling started
-                // },
-                // onDone: function(element) {
-                // // scrolling is done
-                // },
-                // onCancel: function() {
-                // // scrolling has been interrupted
-                // },
-                x: false,
-                y: true
+            // var VueScrollTo = require('vue-scrollto');
+            // var options = {
+            //     // container: 'body',
+            //     easing: 'ease-in',
+            //     // offset: -60,
+            //     force: true,
+            //     cancelable: true,
+            //     // onStart: function(element) {
+            //     // // scrolling started
+            //     // },
+            //     // onDone: function(element) {
+            //     // // scrolling is done
+            //     // },
+            //     // onCancel: function() {
+            //     // // scrolling has been interrupted
+            //     // },
+            //     x: false,
+            //     y: true
+            // }
+            
+            if(this.showFlatsOnly){
+                this.removeFindParamKey('page')
+                this.addFindParam({key:'page','value':pageNum})
+                this.searchFlats(this.activeFindParams)
+                this.scrollUp('flats')
             }
-            
-            
-            this.removeFindParamKey('page')
-            this.addFindParam({key:'page','value':pageNum})
-            this.searchBuildings(this.activeFindParams)
+            else{
+                this.removeFindParamKey('page')
+                this.addFindParam({key:'page','value':pageNum})
+                this.searchBuildings(this.activeFindParams)
+                this.scrollUp('buildings')
+            }
             addHashToLocation(this.activeFindParams, this.$route.path)
             console.log(pageNum)
-            VueScrollTo.scrollTo('#buildings-list-begin', 500, options)
+            // VueScrollTo.scrollTo('#buildings-list-begin', 500, options)
             // var that = this;
             // setTimeout(function (){
             //         that.removeFindParamKey('page')
@@ -116,7 +125,7 @@ export default {
         callAddHashToLocation() {
           addHashToLocation(this.activeFindParams, this.$route.path)
         },
-         scrollUp(){
+         scrollUp(type){
             var VueScrollTo = require('vue-scrollto');
             var options = {
                 // container: 'body',
@@ -136,13 +145,19 @@ export default {
                 x: false,
                 y: true
             }
-            VueScrollTo.scrollTo('#buildings-list-begin', 500, options)
+            
+            
+            // this.removeFindParamKey('page')
+            // this.addFindParam({key:'page','value':pageNum})
+            // this.searchBuildings(this.activeFindParams)
+            // addHashToLocation(this.activeFindParams, this.$route.path)
+            VueScrollTo.scrollTo(`#${type}-list-begin`, 500, options)
         }
     },
     computed:{
         ...mapGetters([
             'buildingsCount',
-            'totalPages',
+            'buildingsTotalPages',
             'currentBuildingPage',
             'nextPageLink',
             'previousPageLink',
@@ -158,21 +173,30 @@ export default {
             'flatsPreviousPageLink',
             ]),
         pageRange(){
-            if(this.totalPages > 10){
-                return 7
+            if(this.showFlatsOnly){
+                if(this.flatsTotalPages > 10){
+                    return 7
+                }
+            }
+            else{
+                if(this.buildingsTotalPages > 10){
+                    return 7
+                }
             }
             return 100
+
+            
         },
         pagesNumber(){
             if(this.showFlatsOnly){
                 return this.flatsTotalPages
             }
-            return this.totalPages
+            return this.buildingsTotalPages
         },
         
     },
     mounted() {
-        // alert(this.currentPage)
+        // alert(this.currentBuildingPage)
     }
 }
 </script> 

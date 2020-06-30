@@ -4,13 +4,13 @@
             <div class="container mx-auto md:px-8" v-if="loaded">
                 <!-- {{ this.activeFindParams }} -->
                 <BuildingsSearchKit />
-                <vBuildingsCounter v-if="!showFlatsOnly"/>
-                <TransitionList>
-                    <FlatsList v-if="showFlatsOnly"/>
-                </TransitionList>
-                <TransitionList>
-                    <BuildingsList v-if="!showFlatsOnly"/>
-                </TransitionList>
+                <vBuildingsCounter/>
+                <!-- <TransitionList> -->
+                    <FlatsList key="flats" v-if="showFlatsOnly"/>
+                <!-- </TransitionList> -->
+                <!-- <TransitionList> -->
+                    <BuildingsList key="buildings" v-if="!showFlatsOnly"/>
+                <!-- </TransitionList> -->
                 
                 <vPagination/>
             </div>
@@ -26,7 +26,7 @@ import BuildingsSearchKit from '../components/v-buildings-search-kit'
 import { mapActions, mapGetters ,mapMutations } from 'vuex'
 import vBuildingsCounter from '../components/v-buildings-counter'
 import vPagination from '../components/v-pagination' 
-import TransitionList from '../transitions/list'
+// import TransitionList from '../transitions/list'
 // import { addHashToLocation } from '../utils.js'
 export default {
 
@@ -41,7 +41,7 @@ export default {
         vBuildingsCounter,
         vPagination,
         FlatsList,
-        TransitionList
+        // TransitionList
     },
     methods: {
         ...mapActions([

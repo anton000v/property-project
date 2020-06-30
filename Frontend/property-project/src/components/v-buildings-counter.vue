@@ -22,11 +22,14 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['allBuildings' ,'buildingsCount']),
+        ...mapGetters(['allBuildings' ,'buildingsCount','showFlatsOnly','flatsCount']),
         animatedNumber: function() {
             return this.numberOfBuildings.toFixed(0);
         },
         count(){
+            if(this.showFlatsOnly){
+                return this.flatsCount
+            }
             if(this.countByBuildingsArr){
                 return this.allBuildings.length
             }

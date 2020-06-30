@@ -18,7 +18,7 @@ export default {
                 const foundFlats = resp.data.results
                 const flatsCount = resp.data.count
                 const flatsTotalPages = resp.data.total_pages
-                const currentFlatsPage = resp.data.current
+                const flatsCurrentPage = resp.data.current
                 const flatsNextPageLink = resp.data.next
                 const flatsPreviousPageLink = resp.data.previous
                 // const perPage = resp.data.per_page
@@ -27,7 +27,7 @@ export default {
                 ctx.commit('updateFlats', foundFlats)
                 ctx.commit('updateFlatsCount', flatsCount)
                 ctx.commit('updateFlatsTotalPages', flatsTotalPages)
-                ctx.commit('updateFlatsCurrentPage', currentFlatsPage)
+                ctx.commit('updateFlatsCurrentPage', flatsCurrentPage)
                 ctx.commit('updateFlatsNextPageLink', flatsNextPageLink)
                 ctx.commit('updateFlatsPreviousPageLink', flatsPreviousPageLink)
                 ctx.commit('updateFlatsSearchId', searchId)
@@ -81,8 +81,8 @@ export default {
         updateFlatsCount(state, count){
             state.flatsCount = count
         },
-        updateFlatsTotalPages(state, totalPages){
-            state.totalPages = totalPages
+        updateFlatsTotalPages(state, flatsTotalPages){
+            state.flatsTotalPages = flatsTotalPages
         },
         updateFlatsCurrentPage(state, flatsCurrentPage){
             state.flatsCurrentPage = flatsCurrentPage
@@ -94,7 +94,7 @@ export default {
             state.previousPageLink = previousPageLink
         },
         updateFlatsSearchId(state, searchId){
-            state.searchId = searchId
+            state.flatsSearchId = searchId
         },
     },
 

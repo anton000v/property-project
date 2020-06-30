@@ -4,19 +4,19 @@
         <!-- {{ flatBuildingArr }} -->
         <div class='flex'>
             <TransitionList>
-                <div key="buildings" v-if="flatsCount > 0" class="m-auto">
+                <div key="flats" v-if="flatsCount > 0" class="m-auto">
                     <TransitionList>
-                        <div :key="searchId" class="grid grid-cols-2 xl:grid-cols-3 items-center justify-center gap-2 md:gap-8 my-20">
+                        <div :key="flatsSearchId" class="grid grid-cols-2 xl:grid-cols-3 items-center justify-center gap-2 md:gap-8 my-20">
                             
                             <vFlatCard  
-                            v-for="flat in allFlats" 
-                            :key="flat.id" 
-                            :flat="flat" 
+                                v-for="flat in allFlats" 
+                                :key="flat.id" 
+                                :flat="flat" 
                             />    
                         </div>
                     </TransitionList>    
                 </div>      
-                <div key="no-results" v-else class="grid justify-center w-full"> 
+                <div key="flats-no-results" v-else class="grid justify-center w-full"> 
                     <h2 :if="flatsCount == 0" class="text-2xl font-bold text-gray-600">По вашему запросу ничего не найдено :с</h2>
                 </div>
             </TransitionList>
@@ -53,16 +53,17 @@ export default{
         // vPagination,
     },
     computed: {
-        ...mapGetters(['flatsCount', 'allFlats', 'searchId']),
+        ...mapGetters(['flatsCount', 'allFlats', 'flatsSearchId']),
+    },
         // animatedNumber: function() {
         //     return this.numberOfBuildings.toFixed(0);
         // },
-        buildings(){
-            if(this.certainBuildigns){
-                return this.certainBuildigns
-            }
-            return this.allBuildings
-        },
+        // buildings(){
+            // if(this.certainBuildigns){
+                // return this.certainBuildigns
+            // }
+            // return this.allBuildings
+        // },
         // count(){
         //     if(this.certainBuildigns){
         //         return this.certainBuildigns.length
@@ -86,7 +87,7 @@ export default{
         //     console.log('flatBuildingsPair:', flatBuildingArr)
         //     return flatBuildingArr
         // }
-    },
+    // },
     // methods:{
     //     ...mapMutations([
     //         'updateFlats'

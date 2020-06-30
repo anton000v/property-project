@@ -1,7 +1,7 @@
 <template> 
     <div id="buildings-list-begin">  
         <!-- {{ searchId }}  -->
-        
+
         <div class='flex'>
             <TransitionList>
                 <div key="buildings" v-if="count > 0" class="m-auto">

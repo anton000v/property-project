@@ -49,7 +49,7 @@ export default {
             ).then(resp => {
                 const foundBuildings = resp.data.results
                 const buildingsCount = resp.data.count
-                const totalPages = resp.data.total_pages
+                const buildingsTotalPages = resp.data.total_pages
                 const currentBuildingPage = resp.data.current
                 const nextPageLink = resp.data.next
                 const previousPageLink = resp.data.previous
@@ -58,7 +58,7 @@ export default {
                 console.log(foundBuildings)
                 ctx.commit('updateBuildings', foundBuildings)
                 ctx.commit('updateBuildingsCount', buildingsCount)
-                ctx.commit('updateTotalPages', totalPages)
+                ctx.commit('updateBuildingsTotalPages', buildingsTotalPages)
                 ctx.commit('updateCurrentBuildingPage', currentBuildingPage)
                 ctx.commit('updateNextPageLink', nextPageLink)
                 ctx.commit('updatePreviousPageLink', previousPageLink)
@@ -74,8 +74,8 @@ export default {
         updateBuildingsCount(state, count){
             state.buildingsCount = count
         },
-        updateTotalPages(state, totalPages){
-            state.totalPages = totalPages
+        updateBuildingsTotalPages(state, buildingsTotalPages){
+            state.buildingsTotalPages = buildingsTotalPages
         },
         updateCurrentBuildingPage(state, currentBuildingPage){
             state.currentBuildingPage = currentBuildingPage
@@ -99,7 +99,7 @@ export default {
         buildingsOnMap: [],
         searchId: '',
         buildingsCount: 0,
-        totalPages: 0,
+        buildingsTotalPages: 0,
         currentBuildingPage: 0,
         nextPageLink: null,
         previousPageLink: null,
@@ -115,8 +115,8 @@ export default {
         buildingsCount(state){
             return state.buildingsCount
         },
-        totalPages(state){
-            return state.totalPages
+        buildingsTotalPages(state){
+            return state.buildingsTotalPages
         },
         currentBuildingPage(state){
             return state.currentBuildingPage

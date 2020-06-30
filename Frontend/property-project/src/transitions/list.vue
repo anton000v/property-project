@@ -20,23 +20,27 @@ export default {
       ...mapGetters([
             'currentBuildingPage',
             'flatsCurrentPage',
+            'flatsCount',
             'buildingsCount',
             'showFlatsOnly'
         ]),
-        actualTransitionName() {
-            if(this.isBuildingsCountChanged){
-                // this.isBuildingsCountChanged = false
-                return 'newSearch'
-            }
-            if(this.isCurrentPageChanged){
-                // this.isCurrentPageChanged = false
-                return 'newPage'
-            }
-            return ''
-        },
+        // actualTransitionName() {
+        //     if(this.isBuildingsCountChanged){
+        //         // this.isBuildingsCountChanged = false
+        //         return 'newSearch'
+        //     }
+        //     if(this.isCurrentPageChanged){
+        //         // this.isCurrentPageChanged = false
+        //         return 'newPage'
+        //     }
+        //     return ''
+        // },
         currentPage(){
+            
             if(this.showFlatsOnly){
+                
                 return this.flatsCurrentPage
+                
             }
             return this.currentBuildingPage
         }
@@ -46,9 +50,11 @@ export default {
             // alert('New page')
             // this.isCurrentPageChanged = true
             if(this.curPage > val){
+                // alert('bigger')
                 this.transitionName = 'newPageLeft'
             }
             else if (this.curPage < val){
+                // alert('less')
                 this.transitionName = 'newPageRight'
             }
             this.curPage = val
@@ -59,6 +65,10 @@ export default {
             //  alert('buildings count')
             // this.isBuildingsCountChanged = true
         },
+        flatsCount: function() {
+            // alert('changeFlatsCount')
+            this.transitionName = 'newSearch'
+        }
 
 
     },
