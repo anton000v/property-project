@@ -33,7 +33,7 @@
                             <div class="w-full md:w-1/3">
                                 <p class="-my-4 text-sm">Надоела карта? Можете выбрать</p>
                                 <!-- <p class="text-xs block md:hidden">Можете выбрать</p> -->
-                                <router-link :to="{name:'search-page'}">
+                                <router-link :to="{name:'search-buildings'}">
                                 <div  class="my-4 h-full group bg-myHeaderColor flex rounded-lg cursor-pointer transition duration-500 transform hover:translate-y-1 hover:shadow-xl">
                                     <div class="m-auto">
                                     <div class="flex"> 
@@ -207,7 +207,7 @@ export default {
         search(){
           if(this.$route.path == '/'){
             this.removeFindParamKey('page')
-            this.$router.replace({name:'search-page', query:this.activeFindParams})
+            this.$router.replace({name:'search-buildings', query:this.activeFindParams})
           }
           else{
             this.removeFindParamKey('page')

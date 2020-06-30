@@ -50,7 +50,7 @@ export default {
                 const foundBuildings = resp.data.results
                 const buildingsCount = resp.data.count
                 const totalPages = resp.data.total_pages
-                const currentPage = resp.data.current
+                const currentBuildingPage = resp.data.current
                 const nextPageLink = resp.data.next
                 const previousPageLink = resp.data.previous
                 // const perPage = resp.data.per_page
@@ -59,7 +59,7 @@ export default {
                 ctx.commit('updateBuildings', foundBuildings)
                 ctx.commit('updateBuildingsCount', buildingsCount)
                 ctx.commit('updateTotalPages', totalPages)
-                ctx.commit('updateCurrentPage', currentPage)
+                ctx.commit('updateCurrentBuildingPage', currentBuildingPage)
                 ctx.commit('updateNextPageLink', nextPageLink)
                 ctx.commit('updatePreviousPageLink', previousPageLink)
                 ctx.commit('updateSearchId', searchId)
@@ -77,8 +77,8 @@ export default {
         updateTotalPages(state, totalPages){
             state.totalPages = totalPages
         },
-        updateCurrentPage(state, currentPage){
-            state.currentPage = currentPage
+        updateCurrentBuildingPage(state, currentBuildingPage){
+            state.currentBuildingPage = currentBuildingPage
         },
         updateNextPageLink(state, nextPageLink){
             state.nextPageLink = nextPageLink
@@ -100,7 +100,7 @@ export default {
         searchId: '',
         buildingsCount: 0,
         totalPages: 0,
-        currentPage: 0,
+        currentBuildingPage: 0,
         nextPageLink: null,
         previousPageLink: null,
  
@@ -118,8 +118,9 @@ export default {
         totalPages(state){
             return state.totalPages
         },
-        currentPage(state){
-            return state.currentPage
+        currentBuildingPage(state){
+            return state.currentBuildingPage
+            
         },
         nextPageLink(state){
             return state.nextPageLink

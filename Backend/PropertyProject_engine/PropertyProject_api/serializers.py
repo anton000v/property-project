@@ -279,6 +279,7 @@ class NewBuildingSerializer(serializers.ModelSerializer, ):
 
 class NewBuildingForFlatSerializer(serializers.Serializer):
     '''Сериализатор новостроя (parent) для поиска квартиры (child)'''
+    slug = serializers.CharField()
     street = serializers.SlugRelatedField(slug_field="street_ru",queryset=models.Street.objects.all())
     administrative_district = serializers.SlugRelatedField(slug_field="administrative_dist_ru",queryset=models.AdministrativeDistrict.objects.all())
     developer = serializers.SlugRelatedField(slug_field="developer_name",queryset=models.Developer.objects.all())
@@ -291,7 +292,8 @@ class FlatForSaleForSearchSerializer(serializers.ModelSerializer):
     # building = serializers.SlugRelatedField(slug_field="slug",queryset=models.NewBuilding.objects.all())
     # flats_for_sale = serializers.JSONField(required=False, allow_null=True)
     building = NewBuildingForFlatSerializer()
-
+    flats_images = FlatForSaleImageSerializer(many=True)
+    flats_layouts = FlatForSaleLayoutSerializer(many=True)
     class Meta:
         model = models.FlatForSale
         fields = '__all__'

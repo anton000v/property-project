@@ -13,7 +13,7 @@
           <img v-else-if="flat.flats_layouts[0]" :src="flat.flats_layouts[0].flat_layout" alt="">
           <img v-else :src="require('@/assets/images/no-photo-yet.jpg')" alt="Пока что нет фото :(">
           <div class="flex items md:px-2 py-1 md:py-3 bg-gray-900">
-              <h1 class="mx-3 text-white font-semibold text-base">{{ building.street }} {{ building.house_number }}{{ building.house_letter }}</h1>
+              <h1 class="mx-3 text-white font-semibold text-base">{{ flat.building.street }} {{ flat.building.house_number }}{{ flat.building.house_letter }}</h1>
           </div>
           <!-- <div class="hidden md:block md:py-4 m-1">
              <div class="grid grid-cols-2 justify-center text-center gap-2">
@@ -90,23 +90,23 @@
                 </div>
               </div> -->
 
-            <div v-if="building.administrative_district != null" class="inline-flex items-center">
+            <div v-if="flat.building.administrative_district != null" class="inline-flex items-center">
                 <HomeCityIcon class="text-myHeaderColor" :size="20"  />
                 <div class="flex-1 sm:px-1 px-2 text-sm">
                   Адресс: <span class="font-bold text-myHeaderColor">
                       Харьков
-                    <span v-if="building.administrative_district != null">, {{ building.administrative_district}}</span>
-                    <span v-if="building.district != null">, {{building.district}}</span>
-                    <span v-if="building.street != null">, {{ building.street }}</span>
-                    <span v-if="building.house_number != null">, {{ building.house_number }}</span>
-                    <span v-if="building.house_letter != null">, {{ building.house_letter }}</span>
+                    <span v-if="flat.building.administrative_district != null">, {{ flat.building.administrative_district}}</span>
+                    <span v-if="flat.building.district != null">, {{flat.building.district}}</span>
+                    <span v-if="flat.building.street != null">, {{ flat.building.street }}</span>
+                    <span v-if="flat.building.house_number != null">, {{ flat.building.house_number }}</span>
+                    <span v-if="flat.building.house_letter != null">, {{ flat.building.house_letter }}</span>
                     </span> 
                 </div>
             </div>
-            <div v-if="building.developer != null" class="inline-flex items-center">
+            <div v-if="flat.building.developer != null" class="inline-flex items-center">
                 <HouseEditIcon class="text-myHeaderColor" :size="20" />
                 <div class="flex-1 sm:px-1 px-2 text-sm">
-                    Застройщик:  <span class="font-bold text-myHeaderColor">{{ building.developer }}</span> 
+                    Застройщик:  <span class="font-bold text-myHeaderColor">{{ flat.building.developer }}</span> 
                 </div>
             </div>
             <div v-if="flat.rooms != null" class="inline-flex items-center">
@@ -118,7 +118,7 @@
             <div v-if="flat.floor != null" class="inline-flex items-center">
                 <HomeFloor0Icon class="text-myHeaderColor" :size="20" />
                 <div class="flex-1 sm:px-1 px-2 text-sm">
-                  Этаж / этажность:  <span class="font-bold text-myHeaderColor">{{ flat.floor }}/{{ building.number_of_storeys }}</span> 
+                  Этаж / этажность:  <span class="font-bold text-myHeaderColor">{{ flat.floor }}/{{ flat.building.number_of_storeys }}</span> 
                 </div>
             </div>
 
@@ -140,7 +140,7 @@
                 <div v-show="isMouseOver">
                     <div class="flex flex-wrap opacity-75 absolute bottom-0 w-full left-0 bg-gray-200 h-full">
                         <div class="w-full h-1/2 bg-gray-900 hover:bg-black text-white">
-                          <router-link :to="{name:'building-page', params:{slug:building.slug}}">
+                          <router-link :to="{name:'flat-page', params:{slug:flat.building.slug, id:flat.id}}">
                             <div class='flex h-full'>     
                               <div class="m-auto text-xl">
                                 Открыть полностью
@@ -160,20 +160,20 @@
             </TransitionSlowAppearance>
           </div>
           <div class="visible md:invisible ">
-            <router-link :to="{name:'building-page', params:{slug:building.slug}}">
+            <router-link :to="{name:'building-page', params:{slug:flat.building.slug, id:flat.id}}">
               <div class="flex flex-wrap absolute bottom-0 w-full left-0 h-full cursor-pointer">
               </div>
             </router-link>
           </div>
         </div>
       </div>
-        <vBuildingPreview :slug="building.slug" :building="building"/>
+        <vFlatPreview :slug="flat.building.slug" :flat="flat"/>
     </div>
 
 </template>
 
 <script>
-import vBuildingPreview from '../components/v-building-preview'
+import vFlatPreview from '../components/v-flat-preview'
 import TransitionSlowAppearance from '../transitions/slowAppearance'
 import HouseEditIcon from 'vue-material-design-icons/HomeEdit';
 import HomeCityIcon from 'vue-material-design-icons/HomeCity';
@@ -185,9 +185,9 @@ import RulerIcon from 'vue-material-design-icons/Ruler'
 
 export default {
   props: {
-      building: {
-        type: Object,
-      }, 
+    //   building: {
+    //     type: Object,
+    //   }, 
       flat: {
           type: Object
       }
@@ -198,7 +198,7 @@ export default {
     }
   },
   components:{
-    vBuildingPreview,
+    vFlatPreview,
     TransitionSlowAppearance,
     HouseEditIcon,
     HomeCityIcon,
@@ -211,10 +211,10 @@ export default {
 
   methods: {
     show () {
-        this.$modal.show('building-preview:'+this.building.slug);
+        this.$modal.show(`flat-preview:${this.flat.building.slug}-${this.flat.id}`);
     },
     hide () {
-        this.$modal.hide('building-preview:'+this.building.slug);
+        this.$modal.hide(`flat-preview:${this.flat.building.slug}-${this.flat.id}`);
     },
   },
 

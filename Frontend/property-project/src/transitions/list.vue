@@ -18,8 +18,10 @@ export default {
     },
     computed: {
       ...mapGetters([
-            'currentPage',
+            'currentBuildingPage',
+            'flatsCurrentPage',
             'buildingsCount',
+            'showFlatsOnly'
         ]),
         actualTransitionName() {
             if(this.isBuildingsCountChanged){
@@ -31,7 +33,12 @@ export default {
                 return 'newPage'
             }
             return ''
-
+        },
+        currentPage(){
+            if(this.showFlatsOnly){
+                return this.flatsCurrentPage
+            }
+            return this.currentBuildingPage
         }
     },
     watch: {
@@ -51,7 +58,8 @@ export default {
             this.transitionName = 'newSearch'
             //  alert('buildings count')
             // this.isBuildingsCountChanged = true
-        }
+        },
+
 
     },
 }

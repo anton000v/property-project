@@ -4,10 +4,10 @@
         {{ currentPage  }}
         {{ nextPageLink }} 
         {{ previousPageLink }} -->
-        {{pagesNumber}}
+        {{totalPages}}
         <paginate
             v-model="page"
-            :page-count="pagesNumber"
+            :page-count="totalPages"
             :page-range="pageRange"
             :margin-pages="2"
             :click-handler="clickCallback"
@@ -141,7 +141,21 @@ export default {
     },
     computed:{
         ...mapGetters([
-            'buildingsCount','totalPages','currentPage','nextPageLink','previousPageLink','activeFindParams','showFlatsOnly','elementsPerPage','flatBuildingArr'
+            'buildingsCount',
+            'totalPages',
+            'currentBuildingPage',
+            'nextPageLink',
+            'previousPageLink',
+            'activeFindParams',
+            'showFlatsOnly',
+            // 'elementsPerPage',
+
+            // 'allFlats',
+            'flatsCount',
+            'flatsTotalPages',
+            'flatsCurrentPage',
+            'flatsNextPageLink',
+            'flatsPreviousPageLink',
             ]),
         pageRange(){
             if(this.totalPages > 10){
@@ -151,10 +165,11 @@ export default {
         },
         pagesNumber(){
             if(this.showFlatsOnly){
-                return this.flatBuildingArr.length/this.elementsPerPage
+                return this.flatsTotalPages
             }
             return this.totalPages
-        }
+        },
+        
     },
     mounted() {
         // alert(this.currentPage)

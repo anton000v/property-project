@@ -4,6 +4,8 @@ import vSearchPage from '../pages/v-search-page.vue'
 import vBuildingPage from '../pages/v-building-page.vue'
 import vMapSearchPage from '../pages/v-map-search-page.vue'
 import vNotFoundPage from '../pages/v-not-found-page.vue'
+import vFlatPage from '../pages/v-flat-page.vue'
+
 Vue.use(Router);
 
 export default new Router({
@@ -13,18 +15,18 @@ export default new Router({
             path: '/',
             name: 'home',
             component: vSearchPage,
-            children: [
-              {
-              path: '/buildings',
-              name: 'search-page',
-              component: vSearchPage,
-              },
-              {
-                path: '/flats',
-                name: 'search-flats',
-                component: vSearchPage
-              }
-            ]
+            // children: [
+            //   {
+            //   path: '/buildings',
+            //   name: 'search-buildings',
+            //   component: vSearchPage,
+            //   },
+            //   {
+            //     path: '/flats',
+            //     name: 'search-flats',
+            //     component: vSearchPage
+            //   }
+            // ]
         },
         // {
         //     path: '/buildings',
@@ -36,11 +38,27 @@ export default new Router({
         //     // }
         // },
         {
+          path: '/buildings',
+          name: 'search-buildings',
+          component: vSearchPage,
+          // children: [
+            
+          // ]
+        },
+        {
+          path: '/flats',
+          name: 'search-flats',
+          component: vSearchPage
+        },
+        {
+          path: '/flats/:slug/[:id]',
+          name: 'flat-page',
+          component: vFlatPage
+        },
+        {
             path: '/buildings/:slug',
-            // props: true,
             name: 'building-page',
             component: vBuildingPage,
-            // meta: { transitionName: 'zoom' },
         },
         {
           path: '/map-search',

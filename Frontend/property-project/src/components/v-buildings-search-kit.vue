@@ -459,7 +459,7 @@ export default{
           // this.$router.replace({name: 'search-page', query:this.activeFindParams})
           if(this.$route.path == '/'){
             this.removeFindParamKey('page')
-            this.$router.replace({name:'search-page', query:this.activeFindParams})
+            this.$router.replace({name:'search-buildings', query:this.activeFindParams})
           }
           else{
             // this.addHashToLocation(this.activeFindParams)

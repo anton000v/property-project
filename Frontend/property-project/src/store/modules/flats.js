@@ -17,19 +17,19 @@ export default {
             ).then(resp => {
                 const foundFlats = resp.data.results
                 const flatsCount = resp.data.count
-                const totalPages = resp.data.total_pages
-                const currentPage = resp.data.current
-                const nextPageLink = resp.data.next
-                const previousPageLink = resp.data.previous
+                const flatsTotalPages = resp.data.total_pages
+                const currentFlatsPage = resp.data.current
+                const flatsNextPageLink = resp.data.next
+                const flatsPreviousPageLink = resp.data.previous
                 // const perPage = resp.data.per_page
                 console.log('FOUND Flats')
                 console.log(foundFlats)
                 ctx.commit('updateFlats', foundFlats)
                 ctx.commit('updateFlatsCount', flatsCount)
-                ctx.commit('updateFlatsTotalPages', totalPages)
-                ctx.commit('updateFlatsCurrentPage', currentPage)
-                ctx.commit('updateFlatsNextPageLink', nextPageLink)
-                ctx.commit('updateFlatsPreviousPageLink', previousPageLink)
+                ctx.commit('updateFlatsTotalPages', flatsTotalPages)
+                ctx.commit('updateFlatsCurrentPage', currentFlatsPage)
+                ctx.commit('updateFlatsNextPageLink', flatsNextPageLink)
+                ctx.commit('updateFlatsPreviousPageLink', flatsPreviousPageLink)
                 ctx.commit('updateFlatsSearchId', searchId)
                 // ctx.commit('updatePerPage', perPage)
             })
@@ -75,17 +75,17 @@ export default {
     },
     mutations: {
 
-        updateFlats(state, buildings){
-            state.buildings = buildings
+        updateFlats(state, flats){
+            state.flats = flats
         },
         updateFlatsCount(state, count){
-            state.buildingsCount = count
+            state.flatsCount = count
         },
         updateFlatsTotalPages(state, totalPages){
             state.totalPages = totalPages
         },
-        updateFlatsCurrentPage(state, currentPage){
-            state.currentPage = currentPage
+        updateFlatsCurrentPage(state, flatsCurrentPage){
+            state.flatsCurrentPage = flatsCurrentPage
         },
         updateFlatsNextPageLink(state, nextPageLink){
             state.nextPageLink = nextPageLink
@@ -103,7 +103,7 @@ export default {
         flats: [],
         // buildingsOnMap: [],
         flatsSearchId: '',
-        flatsBuildingsCount: 0,
+        flatsCount: 0,
         flatsTotalPages: 0,
         flatsCurrentPage: 0,
         flatsNextPageLink: null,
@@ -116,7 +116,7 @@ export default {
             return state.flats
         },
         flatsCount(state){
-            return state.flatsBuildingsCount
+            return state.flatsCount
         },
         flatsTotalPages(state){
             return state.flatsTotalPages

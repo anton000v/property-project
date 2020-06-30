@@ -54,7 +54,7 @@ export default{
         // vPagination,
     },
     computed: {
-        ...mapGetters(['allBuildings','buildingsCount','currentPage','activeFindParams', 'searchId']),
+        ...mapGetters(['allBuildings','buildingsCount','currentBuildingPage','activeFindParams', 'searchId']),
         // animatedNumber: function() {
         //     return this.numberOfBuildings.toFixed(0);
         // },

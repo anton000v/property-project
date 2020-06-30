@@ -92,7 +92,7 @@ export default {
                 this.searchFlats()
             }
             else{
-                this.$router.push({name:'search-page'})
+                this.$router.push({name:'search-buildings'})
                 this.searchBuildings()
             }
 
