@@ -150,7 +150,7 @@
     },
     methods: {
       setIntitialActiveValues(){
-        console.log(this.activeFindParams[this.sendParamName])
+        console.log('Param name while mounted(' + this.sendParamName+') :',this.activeFindParams[this.sendParamName])
           this.activeFindParams[this.sendParamName].forEach(activeParam => {
             this.options.forEach(element => {
               if(activeParam == element[this.dbValueKey]){

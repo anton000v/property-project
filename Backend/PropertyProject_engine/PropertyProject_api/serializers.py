@@ -282,6 +282,8 @@ class NewBuildingForFlatSerializer(serializers.Serializer):
     slug = serializers.CharField()
     street = serializers.SlugRelatedField(slug_field="street_ru",queryset=models.Street.objects.all())
     administrative_district = serializers.SlugRelatedField(slug_field="administrative_dist_ru",queryset=models.AdministrativeDistrict.objects.all())
+    house_number = serializers.IntegerField()
+    house_letter = serializers.CharField(max_length = 3)
     developer = serializers.SlugRelatedField(slug_field="developer_name",queryset=models.Developer.objects.all())
     ways_from_metro = WayFromMetroSerializer(many=True)
     district = fields.ChoiceFieldCustomDisplay(choices=choices.DISTRICT_CHOICES, default=choices.NOT_COMPLETED)  

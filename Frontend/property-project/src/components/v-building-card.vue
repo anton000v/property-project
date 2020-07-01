@@ -9,7 +9,7 @@
     <div id='modal-wrapper'>
       <!-- {{ isMouseOver }} -->
       <div @mouseover="isMouseOver=true" @mouseleave="isMouseOver = false" >
-        <div class="bg-white hover:flex max-w-sm transition rounded-lg duration-500 ease-in-out hover:rounded-none hover:opacity-40 transform hover:-translate-y-1 sm:hover:scale-100 md:hover:scale-105 hover:shadow-2xl overflow-hidden shadow-lg">
+        <div class="bg-white hover:flex max-w-sm transition rounded-lg duration-500 ease-in-out hover:rounded-none hover:opacity-40 transform md:hover:-translate-y-3 sm:hover:scale-100 md:hover:scale-100 hover:shadow-2xl overflow-hidden shadow-lg">
           <img v-if="building.building_images[0]" :src="building.building_images[0].building_image" alt="">
           <img v-else-if="building.layout_images[0]" :src="building.layout_images[0].layout_image" alt="">
           <img v-else :src="require('@/assets/images/no-photo-yet.jpg')" alt="Пока что нет фото :(">

@@ -27,7 +27,7 @@ import { mapActions, mapGetters ,mapMutations } from 'vuex'
 import vBuildingsCounter from '../components/v-buildings-counter'
 import vPagination from '../components/v-pagination' 
 // import TransitionList from '../transitions/list'
-// import { addHashToLocation } from '../utils.js'
+import { addHashToLocation } from '../utils.js'
 export default {
 
     data(){
@@ -52,22 +52,36 @@ export default {
         ...mapMutations([
             'updateFindParams',
             'changeLoadingState',
+            'updateShowFlatsOnly'
         ]),
         async prepareData(){
             if(this.showFlatsOnly){
+                console.log('ACTIVE FIND PARAMS AAAAA: ', this.activeFindParams)
                 await this.searchFlats(this.activeFindParams)
+                this.callAddHashToLocation()
             }
             else{
                 await this.searchBuildings(this.activeFindParams)
             }
         },
         setInitialData(){
-            // if(this.$route.)
-            // console.log('router:', this.$router)
-            // console.log('route:', this.$route)
- 
-              this.updateFindParams(JSON.parse(JSON.stringify(this.$route.query)))
-        },
+
+                // if(this.$route.name=="search-buildings" || this.$route.name == 'home'){
+                //     alert(1)
+                // }
+                this.updateFindParams(JSON.parse(JSON.stringify(this.$route.query)))
+                if(this.$route.name=="search-flats"){
+                    this.updateShowFlatsOnly(true)
+
+                }
+                // else{
+                //     console.log('Router:', this.$route.name)
+                // }
+
+        },        
+        callAddHashToLocation() {
+          addHashToLocation(this.activeFindParams, this.$route.path)
+        }
         // callAddHashToLocation() {
         //   addHashToLocation(this.activeFindParams, this.$route.path)
         // }
@@ -82,18 +96,19 @@ export default {
 
     created() {
       this.setInitialData()
-      
     },
     watch:{        
         showFlatsOnly(newVal){
             // this.updateFindParams({})
-            if(newVal){
-                this.$router.push({name:'search-flats'})
-                this.searchFlats()
-            }
-            else{
-                this.$router.push({name:'search-buildings'})
-                this.searchBuildings()
+            if(this.loaded){
+                if(newVal){
+                    this.$router.push({name:'search-flats'})
+                    this.searchFlats()
+                }
+                else{
+                    this.$router.push({name:'search-buildings'})
+                    this.searchBuildings()
+                }
             }
 
         }
