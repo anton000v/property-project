@@ -290,8 +290,12 @@
               <div class="w-1/3">
                   <p class="text-gray-500 font-bold">Что ищем?</p> 
                   <div class=''>
-                    <span @click="updateShowFlatsOnly(false)" class="px-2 transition duration-300 cursor-pointer" :class="{'border-b-2 border-myMint-400 font-bold text-myMint-400':!showFlatsOnly}">Новострои</span> 
-                    <span @click="updateShowFlatsOnly(true)" class="px-2 transition duration-300 cursor-pointer " :class="{'border-b-2 border-myMint-400 font-bold text-myMint-400':showFlatsOnly}">Квартиры в них</span>
+                    <router-link :to="{name:'search-buildings'}">
+                      <span class="px-2 transition duration-300 cursor-pointer" :class="{'border-b-2 border-myMint-400 font-bold text-myMint-400':showBuildings}">Новострои</span> 
+                    </router-link>
+                    <router-link :to="{name:'search-flats'}">
+                      <span class="px-2 transition duration-300 cursor-pointer " :class="{'border-b-2 border-myMint-400 font-bold text-myMint-400':showFlats}">Квартиры в них</span>
+                    </router-link>
                   </div>
               </div>
             </div>
@@ -485,10 +489,10 @@ export default{
           //   alert()
           //   this.removeFindParamKey('page')
           // }
-          if(this.showFlatsOnly){
+          if(this.showFlats){
             this.searchFlats(this.activeFindParams)
           }
-          else{
+          else if(this.searchBuildings){
             this.searchBuildings(this.activeFindParams)
           }
           this.visualSearchButtonTrigger()
@@ -547,7 +551,19 @@ export default{
         'selectedSaltovkaMicroDistricts',
         'selectedSevernayaSaltovkaMicroDistricts',
         'showFlatsOnly'
-        ])
+        ]),
+        showFlats: function() {
+          if(this.$route.name=='search-flats'){
+            return true
+          }
+          return false
+        },
+        showBuildings: function() {
+          if(this.$route.name=='search-buildings' || this.$route.name=='home'){
+            return true
+          }
+          return false
+        }
     },
     mounted(){
       // if('' in this.activeFindParams){

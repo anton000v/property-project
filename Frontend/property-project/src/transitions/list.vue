@@ -8,6 +8,12 @@
 import { mapGetters } from 'vuex'
 
 export default {
+    props: { 
+        of: {
+            type: String,
+            default: null
+        }
+    },
     data() {
         return {  
             transitionName: '',
@@ -37,12 +43,18 @@ export default {
         // },
         currentPage(){
             
-            if(this.showFlatsOnly){
+            if(this.of == 'flats'){
                 
                 return this.flatsCurrentPage
                 
             }
-            return this.currentBuildingPage
+            else if(this.of == 'buildings'){
+                return this.currentBuildingPage
+            }
+            else{
+                console.log(`\tERROR! Передано неправильное значение(${this.of}) в ключ of (list transition)`)
+                return false
+            }
         }
     },
     watch: {

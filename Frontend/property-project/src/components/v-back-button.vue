@@ -8,7 +8,7 @@
                 <span class="pl-5 text-sm md:text-xl">{{ canBackText }}</span>
             </div>
         </div>
-        <div v-else class="relative rounded-lg flex md:hover:shadow-lg  text-myMint-100 md:hover:text-white cursor-pointer" @click="$router.push(prevRoute.fullPath)">
+        <div v-else class="relative rounded-lg flex md:hover:shadow-lg  text-myMint-100 md:hover:text-white cursor-pointer" @click="$router.push(noBackUrl)">
             <div class="w-full pt-4 inline-flex items-center md:transition md:duration-500 md:ease-in-out  md:transform md:hover:-translate-x-10">
                 <!-- <div class=""> -->
                     <KeyboardBackspaceIcon  :size="40"/>
@@ -29,7 +29,16 @@ export default {
         },
         canNotBackText:{
             type:String,
-            default: 'Назад'
+            default: 'На главную'
+        },
+        noBackUrl:{
+            type:String,
+            default: '/'
+        }
+    },
+    data(){
+        return{
+            prevRoute: null,
         }
     },
     components:{
@@ -42,6 +51,21 @@ export default {
             }
             return false
         },
-    }
+        // noBackUrl(){
+        //     return this.$route.
+        // }
+    },
+    // beforeRouteEnter(to, from, next) {
+    //     alert()
+    //     next(vm => {
+    //         alert()
+    //         vm.prevRoute = from
+    //         // console.log('FFFFFFFf')
+    //         // console.log(from)
+    //         // console.log(vm.$route)
+    //         // console.log(vm.$router)
+    //         // alert(vm.prevRoute.path)
+    //     })
+    // },
 }
 </script>

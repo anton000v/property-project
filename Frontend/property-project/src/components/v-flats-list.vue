@@ -3,9 +3,9 @@
         <!-- {{ searchId }}  -->
         <!-- {{ flatBuildingArr }} -->
         <div class='flex'>
-            <TransitionList>
+            <TransitionList of="flats">
                 <div key="flats" v-if="flatsCount > 0" class="m-auto">
-                    <TransitionList>
+                    <TransitionList of="flats">
                         <div :key="flatsSearchId" class="grid grid-cols-2 xl:grid-cols-3 items-center justify-center gap-2 md:gap-8 my-20">
                             
                             <vFlatCard  

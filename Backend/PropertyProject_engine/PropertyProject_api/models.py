@@ -218,9 +218,9 @@ class FlatForSale(models.Model):
         return '{}, {} этаж, цена:{}'.format(self.building, self.floor, self.price)
 
 class FlatForSaleImage(models.Model):
-    building = models.ForeignKey(FlatForSale, on_delete=models.CASCADE, related_name="flats_images")
+    building = models.ForeignKey(FlatForSale, on_delete=models.CASCADE, related_name="flat_images")
     flat_image = models.ImageField(verbose_name="Фото квартиры", blank=True, null=True) 
 
 class FlatForSaleLayout(models.Model):
-    building = models.ForeignKey(FlatForSale, on_delete=models.CASCADE, related_name="flats_layouts")
+    building = models.ForeignKey(FlatForSale, on_delete=models.CASCADE, related_name="flat_layouts")
     flat_layout = models.ImageField(verbose_name="Планировка квартиры", blank=True, null=True) 

@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import vSearchPage from '../pages/v-search-page.vue'
+// import vSearchPage from '../pages/v-search-page.vue'
 import vBuildingPage from '../pages/v-building-page.vue'
 import vMapSearchPage from '../pages/v-map-search-page.vue'
 import vNotFoundPage from '../pages/v-not-found-page.vue'
 import vFlatPage from '../pages/v-flat-page.vue'
+import vBuildingsSearchPage from '../pages/v-search-buildings-page.vue'
+import vFlatsSearchPage from '../pages/v-search-flats-page.vue'
 
 Vue.use(Router);
 
@@ -14,7 +16,7 @@ export default new Router({
         {
             path: '/',
             name: 'home',
-            component: vSearchPage,
+            component: vBuildingsSearchPage,
             // children: [
             //   {
             //   path: '/buildings',
@@ -40,7 +42,7 @@ export default new Router({
         {
           path: '/buildings',
           name: 'search-buildings',
-          component: vSearchPage,
+          component: vBuildingsSearchPage,
           // children: [
             
           // ]
@@ -48,10 +50,10 @@ export default new Router({
         {
           path: '/flats',
           name: 'search-flats',
-          component: vSearchPage
+          component: vFlatsSearchPage
         },
         {
-          path: '/flats/:slug/[:id]',
+          path: '/flats/:slug/:id',
           name: 'flat-page',
           component: vFlatPage
         },

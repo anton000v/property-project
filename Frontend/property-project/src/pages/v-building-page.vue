@@ -194,12 +194,12 @@
                 </li>
                 <li class="flex-1 mx-1 md:mx-2">
                     <a href="#images" class="rounded-lg  scrollactive-item bg-myHeaderColor text-white  md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-500 md:hover:shadow-xl py-2 ">
-                        Изображения
+                        Фото
                     </a>
                 </li>
                 <li class="flex-1 mx-1 md:mx-2">
-                    <a href="#layouts" class="rounded-lg  scrollactive-item bg-myHeaderColor text-white  md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-500 md:hover:shadow-xl py-2 ">
-                        Планировки
+                    <a href="#for-sale" class="rounded-lg  scrollactive-item bg-myHeaderColor text-white  md:transition md:duration-500 md:transform md:hover:-translate-y-1 md:ease-in-out text-center block md:hover:bg-myMint-500 md:hover:shadow-xl py-2 ">
+                        В продаже
                     </a>
                 </li>
                 <!-- <li class="flex-1 md:mx-2">
@@ -336,7 +336,12 @@
                                             </building-gallary>
                                         </div>
                                     </div>
-
+                                    <div id="for-sale" class="mt-32 border-t" >
+                                        <h2 class="text-2xl lg:pt-0 text-gray-700 text-center">Квартиры в продаже</h2>
+                                        <div class="mt-8 relative">
+                                            <vForSaleSlider :flatsIdForSale="building.flats_for_sale"/>
+                                        </div>
+                                    </div>
                                    <!-- <div id="building-on-map" class="mt-32 border-t" >
                                         <h2 class="text-2xl lg:pt-0 text-gray-700 text-center">Карта</h2>
                                         <div class="mt-6">
@@ -408,6 +413,7 @@ import ClipboardCheckMultipleIcon from 'vue-material-design-icons/ClipboardCheck
 // import KeyboardBackspaceIcon from 'vue-material-design-icons/KeyboardBackspace'
 import vMap from '../components/v-page-map'
 import vBackButton from '../components/v-back-button'
+import vForSaleSlider from '../components/v-for-sale-slider'
 // import vBackToTopButton from '../components/v-back-to-top'
 // import vGoogleMapModal from '../components/v-google-map'
 // import debounce from 'lodash/debounce';
@@ -430,7 +436,8 @@ export default {
         HomeGroupIcon,
         DomainIcon,
         ClipboardCheckMultipleIcon,
-        vBackButton
+        vBackButton,
+        vForSaleSlider
         // KeyboardBackspaceIcon,
         // vBackToTopButton
         // vGoogleMapModal,
@@ -441,7 +448,7 @@ export default {
             building: {},
             loading: false,
             anchorsInfo: {showAncorsTitle: false},
-            prevRoute: null,
+            // prevRoute: null,
             // currentWindowOffset: window.pageYOffset,
             // fullWindowHeight:window.innerHeight ,
             readMoreActivated: false,
@@ -450,16 +457,16 @@ export default {
         }
         
     },
-    beforeRouteEnter(to, from, next) {
-        next(vm => {
-            vm.prevRoute = from
-            // console.log('FFFFFFFf')
-            // console.log(from)
-            // console.log(vm.$route)
-            // console.log(vm.$router)
-            // alert(vm.prevRoute.path)
-        })
-    },
+    // beforeRouteEnter(to, from, next) {
+    //     next(vm => {
+    //         vm.prevRoute = from
+    //         // console.log('FFFFFFFf')
+    //         // console.log(from)
+    //         // console.log(vm.$route)
+    //         // console.log(vm.$router)
+    //         // alert(vm.prevRoute.path)
+    //     })
+    // },
     mounted() {
         if(this.$route.params.slug === undefined){
             this.$router.replace({name: 'page-404' })
@@ -490,10 +497,10 @@ export default {
 
     methods: {
         async prepareData(){
-            await this.searchBuildings()
+            await this.searchBuilding()
         },
 
-        async searchBuildings(){
+        async searchBuilding(){
             // const qs = require('qs');
             const axios = require('axios');
             await axios.get(baseApiAddress+'buildings/'+this.$route.params.slug, {

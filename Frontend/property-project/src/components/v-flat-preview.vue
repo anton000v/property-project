@@ -38,7 +38,8 @@
                             {{ flat.price }}$
                             
                         </div>
-                        <div class="cursor-default " @mouseover="socialMouseHover=true" @mouseleave="socialMouseHover = false">     
+                        <vShareDropdown :pageUrl="pageUrl" :descriptionText="fullFlatAddress"/>
+                        <!-- <div class="cursor-default " @mouseover="socialMouseHover=true" @mouseleave="socialMouseHover = false">     
                             <div class="rounded-lg px-4 py-2">
                                <div class="inline-flex items-center">
                                 <ShareVariantIcon :size="20" class="transition duration-500 text-myHeaderColor" :class="{'text-myMint-400':socialMouseHover}"/>
@@ -79,7 +80,7 @@
                                     <span class="text-myMint-400 text-sm text-center">Возникла ошибка</span>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="flex justify-center justify-center text-center justify-center gap-2">
                         <div v-if="flat.building.administrative_district != null" class="flex-1 rounded-lg flex-col shadow-sm transition duration-500 hover:shadow-md">
@@ -217,11 +218,11 @@ import DoorIcon from 'vue-material-design-icons/Door'
 import HomeFloor0Icon from 'vue-material-design-icons/HomeFloor0'
 import RulerIcon from 'vue-material-design-icons/Ruler'
 import CashUsdOutlineIcon from 'vue-material-design-icons/CashUsdOutline'
-import TelegramButton from "vue-share-buttons/src/components/TelegramButton";
-import ViberButton from "vue-share-buttons/src/components/ViberButton";
-import VkontakteButton from "vue-share-buttons/src/components/VkontakteButton";
-import ShareVariantIcon from 'vue-material-design-icons/ShareVariant'
-
+// import TelegramButton from "vue-share-buttons/src/components/TelegramButton";
+// import ViberButton from "vue-share-buttons/src/components/ViberButton";
+// import VkontakteButton from "vue-share-buttons/src/components/VkontakteButton";
+// import ShareVariantIcon from 'vue-material-design-icons/ShareVariant'
+import vShareDropdown from './v-share-dropdown'
 
 export default {
     components:{
@@ -235,10 +236,11 @@ export default {
         HomeFloor0Icon,
         RulerIcon,
         CashUsdOutlineIcon,
-        TelegramButton,
-        ShareVariantIcon,
-        ViberButton,
-        VkontakteButton
+        // TelegramButton,
+        // ShareVariantIcon,
+        // ViberButton,
+        // VkontakteButton,
+        vShareDropdown
         // VueTabs,
         // VTab
     },
@@ -248,48 +250,48 @@ export default {
         }
     },
     methods: {
-        copyAddress () {
-            let testingCodeToCopy = this.$refs.pageUrl
-            testingCodeToCopy.setAttribute('type', 'text')    // 不是 hidden 才能複製
-            testingCodeToCopy.select()
-            // alert(testingCodeToCopy)
-            try {
-                // document.execCommand('copy');
-                var successful = document.execCommand('copy');
-                if(successful){
-                    this.addressCopiedSuccessfully = true
-                    setTimeout(()=>{
-                        this.addressCopiedSuccessfully = false
-                    }, 
-                    1000);
-                    // alert()
-                }
-                if(!successful){
-                    this.addressCopiedUnsuccessfully = true
-                    setTimeout(()=>{
-                        this.addressCopiedUnsuccessfully = false
-                    }, 
-                    1000);
-                }
-                // var msg = successful ? 'successful' : 'unsuccessful';
-                // alert('Testing code was copied ' + msg);
-            } catch (err) {
-                // alert('Oops, unable to copy');
-            }
+        // copyAddress () {
+        //     let testingCodeToCopy = this.$refs.pageUrl
+        //     testingCodeToCopy.setAttribute('type', 'text')    // 不是 hidden 才能複製
+        //     testingCodeToCopy.select()
+        //     // alert(testingCodeToCopy)
+        //     try {
+        //         // document.execCommand('copy');
+        //         var successful = document.execCommand('copy');
+        //         if(successful){
+        //             this.addressCopiedSuccessfully = true
+        //             setTimeout(()=>{
+        //                 this.addressCopiedSuccessfully = false
+        //             }, 
+        //             1000);
+        //             // alert()
+        //         }
+        //         if(!successful){
+        //             this.addressCopiedUnsuccessfully = true
+        //             setTimeout(()=>{
+        //                 this.addressCopiedUnsuccessfully = false
+        //             }, 
+        //             1000);
+        //         }
+        //         // var msg = successful ? 'successful' : 'unsuccessful';
+        //         // alert('Testing code was copied ' + msg);
+        //     } catch (err) {
+        //         // alert('Oops, unable to copy');
+        //     }
 
-            /* unselect the range */
-            testingCodeToCopy.setAttribute('type', 'hidden')
-            window.getSelection().removeAllRanges()
-            },
+        //     /* unselect the range */
+        //     testingCodeToCopy.setAttribute('type', 'hidden')
+        //     window.getSelection().removeAllRanges()
+        //     },
     },
     data(){
         return{
             modalWidth:1000,
             // modalHeight:800,
             modalHeight:'auto',
-            socialMouseHover: false,
-            addressCopiedSuccessfully: false,
-            addressCopiedUnsuccessfully:false,
+            // socialMouseHover: false,
+            // addressCopiedSuccessfully: false,
+            // addressCopiedUnsuccessfully:false,
 
             
         }
@@ -297,10 +299,10 @@ export default {
     computed: {
         sliderImages: function (){
             let images = []
-            this.flat.flats_images.forEach(function(entry) {
+            this.flat.flat_images.forEach(function(entry) {
                 images.push(entry.flat_image)
             });
-            this.flat.flats_layouts.forEach(function(entry) {
+            this.flat.flat_layouts.forEach(function(entry) {
                 images.push(entry.flat_layout)
             });
             return images

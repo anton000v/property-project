@@ -3,9 +3,9 @@
         <!-- {{ searchId }}  -->
 
         <div class='flex'>
-            <TransitionList>
+            <TransitionList of="buildings">
                 <div key="buildings" v-if="count > 0" class="m-auto">
-                    <TransitionList>
+                    <TransitionList of="buildings">
                         <div :key="searchId" class="grid grid-cols-2 xl:grid-cols-3 items-center justify-center gap-2 md:gap-8 my-20">
                             <vBuildingCard  
                             v-for="building in buildings" 

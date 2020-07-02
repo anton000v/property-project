@@ -13,6 +13,10 @@ export default {
         countByBuildingsArr: {
             type:Boolean,
             default:false
+        },
+        of: {
+            type: String,
+            default: null
         }
     },
 
@@ -27,13 +31,19 @@ export default {
             return this.numberOfBuildings.toFixed(0);
         },
         count(){
-            if(this.showFlatsOnly){
+            if(this.of == 'flats'){
                 return this.flatsCount
             }
-            if(this.countByBuildingsArr){
-                return this.allBuildings.length
+            else if(this.of == 'buildings'){
+                if(this.countByBuildingsArr){
+                    return this.allBuildings.length
+                }
+                return this.buildingsCount
             }
-            return this.buildingsCount
+            else{
+                console.log(`\tERROR! Передано неправильное значение(${this.of}) в ключ of (v-buildings-counter). `)
+                return false
+            }
         }
     },
     methods:{

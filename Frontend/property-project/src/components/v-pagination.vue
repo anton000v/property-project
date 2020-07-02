@@ -34,12 +34,12 @@ import { addHashToLocation } from '../utils.js'
 import { stringToInt } from '../utils'
 
 export default {
-    // props:{
-    //     flats: {
-    //         type: Object,
-    //         default: null,
-    //     }
-    // },
+    props:{
+        of: {
+            type: String,
+            default: null,
+        }
+    },
     components:{
         Paginate
     },
@@ -82,17 +82,21 @@ export default {
             //     y: true
             // }
             
-            if(this.showFlatsOnly){
+            if(this.of == "flats"){
                 this.removeFindParamKey('page')
                 this.addFindParam({key:'page','value':pageNum})
                 this.searchFlats(this.activeFindParams)
                 this.scrollUp('flats')
             }
-            else{
+            else if(this.of == 'buildings'){
                 this.removeFindParamKey('page')
                 this.addFindParam({key:'page','value':pageNum})
                 this.searchBuildings(this.activeFindParams)
                 this.scrollUp('buildings')
+            }
+            else{
+                console.log(`\tERROR! Передано неправильное значение(${this.of}) в ключ of (v-pagination)`)
+                return false
             }
             addHashToLocation(this.activeFindParams, this.$route.path)
             console.log(pageNum)
@@ -173,13 +177,13 @@ export default {
             'flatsPreviousPageLink',
             ]),
         pageRange(){
-            if(this.showFlatsOnly){
-                if(this.flatsTotalPages > 10){
+            if(this.of == "flats"){
+                if(this.flatsTotalPages < 10){
                     return 7
                 }
             }
-            else{
-                if(this.buildingsTotalPages > 10){
+            else if(this.of == 'buildings'){
+                if(this.buildingsTotalPages < 10){
                     return 7
                 }
             }
@@ -188,10 +192,17 @@ export default {
             
         },
         pagesNumber(){
-            if(this.showFlatsOnly){
+            if(this.of == "flats"){
                 return this.flatsTotalPages
             }
-            return this.buildingsTotalPages
+            else if(this.of == 'buildings'){
+                return this.buildingsTotalPages
+            }
+            else{
+                console.log(`\tERROR! Передано неправильное значение(${this.of}) в ключ of (v-pagination)`)
+                return false
+            }
+            
         },
         
     },

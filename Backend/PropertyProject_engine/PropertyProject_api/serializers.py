@@ -215,11 +215,11 @@ class FlatForSaleFromBuildingSerializer(serializers.ModelSerializer):
     # building = serializers.SlugRelatedField(slug_field="slug",queryset=models.Street.objects.all())
     # floor = 
     # price
-    flats_images = FlatForSaleImageSerializer(many=True)
-    flats_layouts = FlatForSaleLayoutSerializer(many=True)
+    # flat_images = FlatForSaleImageSerializer(many=True)
+    # flat_layouts = FlatForSaleLayoutSerializer(many=True)
     class Meta:
         model = models.FlatForSale
-        fields = ['id','building','price', 'rooms', 'living_area','kitchen_area','floor','flats_images','flats_layouts']
+        fields = ['id']
 
 
 
@@ -288,14 +288,16 @@ class NewBuildingForFlatSerializer(serializers.Serializer):
     ways_from_metro = WayFromMetroSerializer(many=True)
     district = fields.ChoiceFieldCustomDisplay(choices=choices.DISTRICT_CHOICES, default=choices.NOT_COMPLETED)  
     micro_district = fields.ChoiceFieldCustomDisplay(choices=choices.FULL_MICRO_DISTRICT_CHOICES, default=choices.NOT_COMPLETED)
+    lat = serializers.FloatField()
+    lng = serializers.FloatField()
 
 class FlatForSaleForSearchSerializer(serializers.ModelSerializer):
     '''Сериализатор для поиска квартир'''
     # building = serializers.SlugRelatedField(slug_field="slug",queryset=models.NewBuilding.objects.all())
     # flats_for_sale = serializers.JSONField(required=False, allow_null=True)
     building = NewBuildingForFlatSerializer()
-    flats_images = FlatForSaleImageSerializer(many=True)
-    flats_layouts = FlatForSaleLayoutSerializer(many=True)
+    flat_images = FlatForSaleImageSerializer(many=True)
+    flat_layouts = FlatForSaleLayoutSerializer(many=True)
     class Meta:
         model = models.FlatForSale
         fields = '__all__'
@@ -304,3 +306,7 @@ class FlatForSaleForSearchSerializer(serializers.ModelSerializer):
         #     # 'skills':{'serializer_class': SkillSerializer, 'many': True, 'kwargs': 'person'}
         # }
 
+# class FlatForSaleSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = models.FlatForSale
+#         fields = '__all__'

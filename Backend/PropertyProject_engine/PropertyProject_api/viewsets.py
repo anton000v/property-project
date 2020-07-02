@@ -208,6 +208,11 @@ class FlatForSaleViewset(viewsets.ReadOnlyModelViewSet):
     serializer_class = FlatForSaleForSearchSerializer
     filterset_class = FlatForSaleFilter
     lookup_field = 'id'
+    # action_serializers = {
+    #     'retrieve': NewBuildingSerializer,
+    #     # 'list': MyModelListSerializer,
+    #     # 'create': MyModelCreateSerializer
+    # }
     pagination_class = CustomPageNumber
     
     def get_queryset(self):

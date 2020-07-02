@@ -8,9 +8,9 @@
       > -->
     <div id='modal-wrapper'>
       <div @mouseover="isMouseOver=true" @mouseleave="isMouseOver = false" >
-        <div class="bg-white hover:flex max-w-sm transition rounded-lg duration-500 ease-in-out hover:rounded-none hover:opacity-40 transform hover:-translate-y-1 sm:hover:scale-100 md:hover:scale-105 hover:shadow-2xl overflow-hidden shadow-lg">
-          <img v-if="flat.flats_images[0]" :src="flat.flats_images[0].flat_image" alt="">
-          <img v-else-if="flat.flats_layouts[0]" :src="flat.flats_layouts[0].flat_layout" alt="">
+        <div class="bg-white hover:flex max-w-sm transition rounded-lg duration-500 ease-in-out hover:rounded-none hover:opacity-40 transform md:hover:-translate-y-3  hover:shadow-2xl shadow-lg">
+          <img v-if="flat.flat_images[0]" :src="flat.flat_images[0].flat_image" alt="">
+          <img v-else-if="flat.flat_layouts[0]" :src="flat.flat_layouts[0].flat_layout" alt="">
           <img v-else :src="require('@/assets/images/no-photo-yet.jpg')" alt="Пока что нет фото :(">
           <div class="flex items md:px-2 py-1 md:py-3 bg-gray-900">
               <h1 class="mx-3 text-white font-semibold text-base">{{ flat.building.street }} {{ flat.building.house_number }}{{ flat.building.house_letter }}</h1>
