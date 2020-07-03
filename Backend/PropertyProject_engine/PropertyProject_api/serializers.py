@@ -288,6 +288,7 @@ class NewBuildingForFlatSerializer(serializers.Serializer):
     ways_from_metro = WayFromMetroSerializer(many=True)
     district = fields.ChoiceFieldCustomDisplay(choices=choices.DISTRICT_CHOICES, default=choices.NOT_COMPLETED)  
     micro_district = fields.ChoiceFieldCustomDisplay(choices=choices.FULL_MICRO_DISTRICT_CHOICES, default=choices.NOT_COMPLETED)
+    flats_for_sale = FlatForSaleFromBuildingSerializer(many=True)
     lat = serializers.FloatField()
     lng = serializers.FloatField()
 

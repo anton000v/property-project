@@ -18,7 +18,7 @@
             <div class="items-center text-center w-full">
                 <div class="grid md:grid-cols-2 justify-center">
                     <div class="flex h-16">
-                        <p class="m-auto text-2xl font-bold">{{ building.street }} {{ building.house_number }}{{ building.house_letter }}</p>
+                        <p class="m-auto text-2xl font-bold">{{fullBuildingAddress}}</p>
                     </div>
                     <router-link :to="{name:'building-page', params:{slug:slug}}">
                         <!-- <div class="flex h-16 shadow-md bg-myFirstLight hover:shadow-xl "> -->
@@ -54,7 +54,11 @@
                                     </div>
                                     <div class="col-span-1"> -->
                                         <div class= 'w-full'>
-
+                                            <div class="flex justify-end m-2 relative">
+                                                <!-- <div class="border rounded-lg border-myMint-400 text-gray-700 text-xl px-4 py-2">
+                                                </div> -->
+                                                <vShareDropdown :pageUrl="pageUrl" :descriptionText="fullBuildingAddress"/>
+                                            </div>
                                             <div class="flex justify-center justify-center text-center justify-center gap-2">
                                                 <div v-if="building.administrative_district != null" class="flex-1 rounded-lg flex-col shadow-sm md:transition md:duration-500 md:hover:shadow-md">
                                                     <div class="text-gray-700 text-base text-center px-4 py-2 m-1 md:m-2">
@@ -268,6 +272,7 @@ import HouseEditIcon from 'vue-material-design-icons/HomeEdit';
 import HomeCityIcon from 'vue-material-design-icons/HomeCity';
 import HomeGroupIcon from 'vue-material-design-icons/HomeGroup';
 import DomainIcon from 'vue-material-design-icons/Domain';
+import vShareDropdown from './v-share-dropdown'
 export default {
     components:{
         vPreviewSlider,
@@ -275,7 +280,8 @@ export default {
         HouseEditIcon,
         HomeCityIcon,
         HomeGroupIcon,
-        DomainIcon
+        DomainIcon,
+        vShareDropdown
         // VueTabs,
         // VTab
     },
@@ -307,7 +313,20 @@ export default {
                 images.push(entry.layout_image)
             });
             return images
-        }
+        },
+        pageUrl: function(){ 
+            let url = this.$router.resolve({ 
+                name: 'building-page',
+                params: { slug:this.building.slug},
+            }).href
+            return window.location.origin + "/" + url
+        },
+        fullBuildingAddress: function(){
+            let house_letter = this.building.house_letter != null ? this.building.house_letter : ''
+            // alert(house_letter)
+            // console.log(house_letter)
+            return this.building.street + ' ' + this.building.house_number + house_letter
+        },
     },
 }
 </script>

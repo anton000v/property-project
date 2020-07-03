@@ -148,13 +148,14 @@
                             </div>
                           </router-link>
                         </div>
-                        <div class="my-action-choice w-full h-1/2 text-white cursor-pointer" @click.prevent="show">
+                        <div class="my-action-choice w-full h-1/2 text-white cursor-pointer" @click.prevent="$emit('show', flat)">
                             <div class='flex h-full'>     
                               <div class="m-auto text-xl">
                                 Предпросмотр
                               </div>
                             </div>
                         </div>
+
                   </div>
            </div>
             </TransitionSlowAppearance>
@@ -167,13 +168,13 @@
           </div>
         </div>
       </div>
-        <vFlatPreview :slug="flat.building.slug" :flat="flat"/>
+        <!-- <vFlatPreview :slug="flat.building.slug" :flat="flat"/> -->
     </div>
 
 </template>
 
 <script>
-import vFlatPreview from '../components/v-flat-preview'
+// import vFlatPreview from '../components/v-flat-preview'
 import TransitionSlowAppearance from '../transitions/slowAppearance'
 import HouseEditIcon from 'vue-material-design-icons/HomeEdit';
 import HomeCityIcon from 'vue-material-design-icons/HomeCity';
@@ -198,7 +199,7 @@ export default {
     }
   },
   components:{
-    vFlatPreview,
+    // vFlatPreview,
     TransitionSlowAppearance,
     HouseEditIcon,
     HomeCityIcon,
@@ -210,12 +211,12 @@ export default {
   },
 
   methods: {
-    show () {
-        this.$modal.show(`flat-preview:${this.flat.building.slug}-${this.flat.id}`);
-    },
-    hide () {
-        this.$modal.hide(`flat-preview:${this.flat.building.slug}-${this.flat.id}`);
-    },
+    // show () {
+    //     this.$modal.show(`flat-preview:${this.flat.building.slug}-${this.flat.id}`);
+    // },
+    // hide () {
+    //     this.$modal.hide(`flat-preview:${this.flat.building.slug}-${this.flat.id}`);
+    // },
   },
 
 }
@@ -230,5 +231,6 @@ export default {
 .my-action-choice:hover{
   background-color: rgba(34, 31, 31, 0.8);
 }
+
 
 </style>

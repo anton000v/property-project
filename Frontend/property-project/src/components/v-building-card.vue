@@ -11,7 +11,7 @@
       <div @mouseover="isMouseOver=true" @mouseleave="isMouseOver = false" >
         <div class="bg-white hover:flex max-w-sm transition rounded-lg duration-500 ease-in-out hover:rounded-none hover:opacity-40 transform md:hover:-translate-y-3 sm:hover:scale-100 md:hover:scale-100 hover:shadow-2xl overflow-hidden shadow-lg">
 
-          <div v-if="building.flats_for_sale.length > 0" class="absolute rounded bg-myMint-100 text-myHeaderColor p-1 text-sm">в продаже</div>
+          <div v-if="building.flats_for_sale.length > 0" class="absolute px-2 m-2 rounded-full bg-myOrange font-bold text-white p-1 text-xs">{{building.flats_for_sale.length }} в продаже</div>
 
           <img v-if="building.building_images[0]" :src="building.building_images[0].building_image" alt="">
           <img v-else-if="building.layout_images[0]" :src="building.layout_images[0].layout_image" alt="">
@@ -103,8 +103,8 @@
                 <div v-show="isMouseOver">
                 
                   
-                    <div class="flex flex-wrap opacity-75 absolute bottom-0 w-full left-0 bg-gray-200 h-full">
-                        <div class="w-full h-1/2 bg-gray-900 hover:bg-black text-white">
+                    <div id="action-choice-container" class="flex flex-wrap absolute bottom-0 w-full left-0  h-full">
+                        <div class="my-action-choice w-full h-1/2  text-white">
                           <router-link :to="{name:'building-page', params:{slug:building.slug}}">
                             <div class='flex h-full'>     
                               <div class="m-auto text-xl">
@@ -113,7 +113,7 @@
                             </div>
                           </router-link>
                         </div>
-                        <div class="w-full h-1/2 bg-gray-900 hover:bg-black text-white cursor-pointer" @click.prevent="show">
+                        <div class="my-action-choice w-full h-1/2  text-white cursor-pointer" @click.prevent="show">
                             <div class='flex h-full'>     
                               <div class="m-auto text-xl">
                                 Предпросмотр
@@ -190,9 +190,14 @@ export default {
 }
 </script>
 
+
 <style scoped>
 
-
-
+#action-choice-container{
+  background-color: rgba(25, 27, 29, 0.8);
+}
+.my-action-choice:hover{
+  background-color: rgba(34, 31, 31, 0.8);
+}
 
 </style>

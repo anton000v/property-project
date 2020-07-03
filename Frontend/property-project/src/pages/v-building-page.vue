@@ -338,8 +338,11 @@
                                     </div>
                                     <div id="for-sale" class="mt-32 border-t" >
                                         <h2 class="text-2xl lg:pt-0 text-gray-700 text-center">Квартиры в продаже</h2>
-                                        <div class="mt-8 relative">
+                                        <div v-if="building.flats_for_sale.length > 0" class="mt-8 relative">
                                             <vForSaleSlider :flatsIdForSale="building.flats_for_sale"/>
+                                        </div>
+                                        <div v-else class="mt-16 mb-16 text-myHeaderColor">
+                                            К сожалению, в этом доме нет квартир на продажу.
                                         </div>
                                     </div>
                                    <!-- <div id="building-on-map" class="mt-32 border-t" >

@@ -2,25 +2,31 @@
 <template>
   <div class="">
 
-    <swiper class="swiper" :options="swiperOption">
-      <swiper-slide
-        v-for="flat in flats"
-        :key="flat.id"
-      >
-        <v-flat-card class=" overflow-visible" :flat="flat"/>
-      </swiper-slide>
+    <swiper class="swiper my-20" :options="swiperOption">
+
+        <swiper-slide
+          v-for="flat in flats"
+          :key="flat.id"
+          class="my-20 rounded-lg"
+        >
+          <vFlatsSliderCard @show="show"  :flat="flat"/>
+        </swiper-slide>
+
       <!-- <div class="swiper-pagination" slot="pagination"></div> -->
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
     </swiper>
+      <vFlatPreview v-for="flat in flats" :key="flat.id" :slug="flat.building.slug" :flat="flat"/>
   </div>
 </template>
 
 <script>
   import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
-  import vFlatCard from './v-flat-card.vue'
+  // import vFlatCard from './v-flat-card.vue'
   import { baseApiAddress } from '../variables'
-  import 'swiper/css/swiper.css'
+  import vFlatsSliderCard from './v-flats-slider-card'
+  import vFlatPreview from './v-flat-preview'
+  // import 'swiper/css/swiper.css'
 
   export default {
     props:{
@@ -32,7 +38,8 @@
     components: {
       Swiper,
       SwiperSlide,
-      vFlatCard
+      vFlatsSliderCard,
+      vFlatPreview
     },
     data() {
       return {
@@ -41,7 +48,7 @@
           slidesPerView: 3,
           centeredSlides: true,
           spaceBetween: 30,
-          freeMode:true,
+
           pagination: {
             el: '.swiper-pagination',
             clickable: true
@@ -68,25 +75,23 @@
             })
             // console.log(this.building)
           })
+    },
+    methods: {
+      show (flat) {
+        this.$modal.show(`flat-preview:${flat.building.slug}-${flat.id}`);
+      },
+      hide (flat) {
+          this.$modal.hide(`flat-preview:${flat.building.slug}-${flat.id}`);
+      },
     }
-    // methods: {
-    //   appendSlide() {
-    //     this.swiperSlides.push(this.swiperSlides.length + 1)
-    //   },
-    //   prependSlide() {
-    //     this.swiperSlides.unshift(this.swiperSlides[0] - 1)
-    //   },
-    //   popSlide() {
-    //     this.swiperSlides.pop()
-    //   },
-    //   shiftSlide() {
-    //     this.swiperSlides.shift()
-    //   }
-    // }
   }
 </script>
 
 <style lang="scss" scoped>
+
+    .content {
+      width: 100%;
+    }
   // @import './base.scss';
 
   // .example {

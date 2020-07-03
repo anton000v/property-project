@@ -1,4 +1,5 @@
 module.exports = {
+  important: true,
   theme: {
     extend: {
       height: theme => ({
@@ -20,6 +21,8 @@ module.exports = {
         "myMint-300" : "#00A480",
         "myMint-400" : "#1F7B67",
         "myMint-500" : "#006B53",
+
+        'myOrange' : '#ff5b48'
       }),
       textColor:{
         "myPageBackground": "#f8f8f8",
@@ -42,12 +45,12 @@ module.exports = {
         "myMint-400" : "#1F7B67",
         "myMint-500" : "#006B53",
         "myHeaderColor": "#002d31",
-      }
+      },
     },
   },
   variants: {
     textColor: ['group-hover', 'hover', 'responsive', 'focus', 'active'],
+    background: ['responsive', 'hover', 'focus', 'active', 'group-hover']
   },
-  plugins: [
-  ],
+ 
 }

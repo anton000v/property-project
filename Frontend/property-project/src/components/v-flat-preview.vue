@@ -38,49 +38,7 @@
                             {{ flat.price }}$
                             
                         </div>
-                        <vShareDropdown :pageUrl="pageUrl" :descriptionText="fullFlatAddress"/>
-                        <!-- <div class="cursor-default " @mouseover="socialMouseHover=true" @mouseleave="socialMouseHover = false">     
-                            <div class="rounded-lg px-4 py-2">
-                               <div class="inline-flex items-center">
-                                <ShareVariantIcon :size="20" class="transition duration-500 text-myHeaderColor" :class="{'text-myMint-400':socialMouseHover}"/>
-                                    <p class="pl-2 text-md">Поделиться</p>
-                               </div>
-                            </div>
-                            <div v-show="socialMouseHover" class="absolute p-2 right-0 rounded-lg bg-myHeaderColor">
-                                <div class="flex">
-                                    <ViberButton 
-                                        :description="'Oк. Найдем! ' + fullFlatAddress" 
-                                        :url="pageUrl" 
-                                        v-bind:isBlank="false" 
-                                        class="share-button--circle"
-                                        btnText
-                                    />
-                                    <TelegramButton 
-                                        :description="'Oк. Найдем! ' + fullFlatAddress" 
-                                        :url="pageUrl" 
-                                        v-bind:isBlank="false" 
-                                        class="share-button--circle"
-                                        btnText
-                                    />
-                                    <VkontakteButton 
-                                        :description="'Oк. Найдем! ' + fullFlatAddress" 
-                                        :url="pageUrl" 
-                                        v-bind:isBlank="false" 
-                                        class="share-button--circle" 
-                                        btnText
-                                    />
-                                </div>
-
-                                <span @click="copyAddress" class="w-full text-sm pt-2 text-white cursor-pointer">Скопировать ссылку</span>
-                                <input ref="pageUrl" type="hidden" :value="pageUrl">
-                                <div v-show="addressCopiedSuccessfully" class="text-center">
-                                    <span class="text-myMint-400 text-sm ">Скопировано!</span>
-                                </div>
-                                <div v-show="addressCopiedUnsuccessfully" class="text-center">
-                                    <span class="text-myMint-400 text-sm text-center">Возникла ошибка</span>
-                                </div>
-                            </div>
-                        </div> -->
+                        <vShareDropdown :pageUrl="pageUrl" :descriptionText="`${fullFlatAddress}. Описание: ${flat.description}.`"/>
                     </div>
                     <div class="flex justify-center justify-center text-center justify-center gap-2">
                         <div v-if="flat.building.administrative_district != null" class="flex-1 rounded-lg flex-col shadow-sm transition duration-500 hover:shadow-md">

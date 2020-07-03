@@ -4,7 +4,7 @@
         {{ currentBuildingPage  }}
         {{ nextPageLink }} 
         {{ previousPageLink }} -->
-        {{pagesNumber}}
+        <!-- {{pagesNumber}} -->
         <paginate
             v-model="page"
             :page-count="pagesNumber"

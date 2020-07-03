@@ -9,21 +9,21 @@
                             <div v-show="socialMouseHover" class="absolute z-50 p-2 right-0 rounded-lg bg-myHeaderColor">
                                 <div class="flex">
                                     <ViberButton 
-                                        :description="'Oк. Найдем! ' + descriptionText" 
+                                        :description="'Ок! Найдем. | '+descriptionText+` Самая свежая информация о новостроях Харькова от сайта 'Ок! Найдем'`" 
                                         :url="pageUrl" 
                                         v-bind:isBlank="false" 
                                         class="share-button--circle"
                                         btnText
                                     />
                                     <TelegramButton 
-                                        :description="'Oк. Найдем! ' + descriptionText" 
+                                        :description="'Ок! Найдем. | '+descriptionText+` Самая свежая информация о новостроях Харькова от сайта 'Ок! Найдем'`" 
                                         :url="pageUrl" 
                                         v-bind:isBlank="false" 
                                         class="share-button--circle"
                                         btnText
                                     />
                                     <VkontakteButton 
-                                        :description="'Oк. Найдем! ' + descriptionText" 
+                                        :description="'Ок! Найдем. | '+descriptionText+` Самая свежая информация о новостроях Харькова от сайта 'Ок! Найдем'`" 
                                         :url="pageUrl" 
                                         v-bind:isBlank="false" 
                                         class="share-button--circle" 

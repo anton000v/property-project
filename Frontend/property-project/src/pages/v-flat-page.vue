@@ -120,6 +120,23 @@
                                             </div>
                                          </div>
                                     </div>
+
+                                </div>
+                                 <div class="rounded-lg  mt-5 shadow-sm md:transition md:duration-500 md:hover:shadow-md">
+                                    <div class="px-2 py-2">
+                                        <div class="text-gray-700 text-base text-center">
+                                            <div class="inline-flex items-center">
+                                                <highway-icon class="text-myMint-400" 
+                                                    />
+                                                <div class="flex-1 m-1 md:m-2 px-4 p-2">
+                                                    Описание:
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="bg-gray-100 rounded-lg text-gray-700 text-base md:text-lg  text-center md:px-4 py-2 m-1 md:m-2">
+                                            {{ flat.description }}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="flex justify-end pt-2">
                                     <vShareDropdown/>
@@ -275,7 +292,15 @@
                                             </flat-gallary>
                                         </div>
                                     </div>
-
+                                    <div id="for-sale" class="mt-32 border-t" >
+                                        <h2 class="text-2xl lg:pt-0 text-gray-700 text-center">В этом доме так же продаются</h2>
+                                        <div v-if="actualFlatsForSale.length > 0" class="mt-8 relative">
+                                            <vForSaleSlider :flatsIdForSale="actualFlatsForSale"/>
+                                        </div>
+                                        <div v-else class="mt-16 mb-16 text-myHeaderColor">
+                                            К сожалению, в данном доме сейчас продается только эта квартира.
+                                        </div>
+                                    </div>
                                    <!-- <div id="building-on-map" class="mt-32 border-t" >
                                         <h2 class="text-2xl lg:pt-0 text-gray-700 text-center">Карта</h2>
                                         <div class="mt-6">
@@ -352,6 +377,7 @@ import DoorIcon from 'vue-material-design-icons/Door'
 import HomeFloor0Icon from 'vue-material-design-icons/HomeFloor0'
 import RulerIcon from 'vue-material-design-icons/Ruler'
 import vShareDropdown from '../components/v-share-dropdown'
+import vForSaleSlider from '../components/v-for-sale-slider'
 // import vBackToTopButton from '../components/v-back-to-top'
 // import vGoogleMapModal from '../components/v-google-map'
 // import debounce from 'lodash/debounce';
@@ -379,7 +405,8 @@ export default {
         DoorIcon,
         HomeFloor0Icon,
         RulerIcon,
-        vShareDropdown
+        vShareDropdown,
+        vForSaleSlider
         // KeyboardBackspaceIcon,
         // vBackToTopButton
         // vGoogleMapModal,
@@ -508,14 +535,7 @@ export default {
         //     this.$modal.show('google-map-modal');
         // },
         openInGoogleMaps(){
-            // let house_letter = this.building.house_letter ? this.building.house_letter : ''
-            // let address = `https://www.google.com/maps/search/?api=1&query=${this.building.street}+${this.building.house_number}+${house_letter}`
             window.open(this.googleMapUrl, '_blank')
-
-            // this.$modal.show('google-map-modal');
-            // console.log('REFFFFFSSSS')
-            // console.log(this.$refs.googleModalMapComponent.$refs.googleMapModal.$refs)
-            //  this.$refs.googleModalMapComponent.$refs.modalBody.$el = '<iframe width="100%" height="100%" frameborder="0" scrolling="no" allowtransparency="true" src="'+this.url+'"></iframe>';
         },
         openInGoogleStreetView(){
             window.open(this.googleStreetUrl, '_blank')
@@ -569,6 +589,17 @@ export default {
             // https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=48.857832,2.295226&heading=-45&pitch=38&fov=80
         
         },
+        actualFlatsForSale(){
+            let actualFlats = this.flat.building.flats_for_sale
+            var index = actualFlats.findIndex(item => item.id == this.flat.id);
+            console.log('INDEX: ', index)
+            if (index > -1) {
+                actualFlats.splice(index, 1);
+                return actualFlats
+            }
+            print('\tERROR! Данная квартира не находится в списке квартир на продажу!')
+            return false
+        }
         // currentWindowOffset(){
         //     return window.pageYOffset
         // }
