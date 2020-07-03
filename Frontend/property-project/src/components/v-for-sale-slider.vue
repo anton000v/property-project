@@ -26,7 +26,7 @@
   import { baseApiAddress } from '../variables'
   import vFlatsSliderCard from './v-flats-slider-card'
   import vFlatPreview from './v-flat-preview'
-  // import 'swiper/css/swiper.css'
+  import 'swiper/css/swiper.css'
 
   export default {
     props:{
@@ -45,7 +45,7 @@
       return {
         swiperOption: {
 
-          slidesPerView: 3,
+          slidesPerView: 1,
           centeredSlides: true,
           spaceBetween: 30,
 
@@ -55,8 +55,31 @@
           },
           navigation: {
             nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev'
+            prevEl: '.swiper-button-prev',
+            // 'hideOnClick': true
           },
+          // Responsive breakpoints
+          breakpoints: {
+            // when window width is >= 320px
+            320: {
+              slidesPerView: 1,
+              spaceBetween: 20
+            },
+            // when window width is >= 480px
+            480: {
+              slidesPerView: 1,
+              spaceBetween: 30
+            },
+            // when window width is >= 640px
+            640: {
+              slidesPerView: 2,
+              spaceBetween: 40
+            },
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 40
+            }
+          }
         },
         flats: []
       }
@@ -83,15 +106,75 @@
       hide (flat) {
           this.$modal.hide(`flat-preview:${flat.building.slug}-${flat.id}`);
       },
-    }
+      updateSlidesPerView(){
+        console.log('aaaaaaaaaaaaaaaaa')
+        console.log('WIDTH: ', window.screen.width)
+        // this.swiperOption.slidesPerView = window.screen.width < 640 ? 1  : 3
+
+      }
+    },
+    computed:{
+      // slidesPerView(){
+      //   console.log("WIDTH: ", window.screen.width)
+      //   return  window.screen.width < 640 ? 1  : 3
+      // }
+    },
+    created() {
+      // this.updateSlidesPerView()
+      window.addEventListener('resize', this.updateSlidesPerView);
+    },
+    destroyed () {
+      window.removeEventListener('resize', this.updateSlidesPerView);
+    },
   }
 </script>
 
 <style lang="scss" scoped>
 
-    .content {
-      width: 100%;
+  .swiper {
+      
+    // .swiper-slide {
+    //   background: #444;
+    // }
+    div.swiper-button-prev,
+    div.swiper-button-next {
+      
+    color: #5ED2B8;
     }
+  }
+
+
+//   .slider-produtos-wrap {
+//   position: relative;
+//   width: 100%;
+//   margin-top: 20px;
+// }
+
+// .swiper-slide {
+//   z-index: 1;
+//   height: 150px;
+//   background: blue;
+// }
+
+// .swiper-prev,
+// .swiper-next {
+//   width: 60px;
+//   height: 60px;
+//   background: red;
+//   position: absolute;
+//   top: 50%;
+//   transform: translateY(-50%);
+//   border-radius: 60px;
+//   z-index: 9999;
+// }
+
+// .swiper-prev {
+//   left: -30px;
+// }
+
+// .swiper-next {
+//   right: -30px;
+// }
   // @import './base.scss';
 
   // .example {

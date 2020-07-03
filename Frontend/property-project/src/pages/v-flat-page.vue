@@ -145,7 +145,7 @@
                         </div>
                             <div class="flex">
                                 <p class="p-4">
-                                    Перейдите на страницу новостроя, чтобы подробно изучить его
+                                    Перейдите на страницу новостроя, в котором находится эта квартира, чтобы подробно изучить его
                                 </p>
                                 <router-link :to="{name:'building-page', params:{slug:flat.building.slug}}">
                                     <div class="ml-4 p-4 border bg-myHeaderColor text-white rounded-lg md:transition md:duration-500 md:transform md:hover:translate-x-2 md:hover:bg-myMint-400">
