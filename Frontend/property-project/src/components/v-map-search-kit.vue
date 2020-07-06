@@ -2,6 +2,18 @@
     <div>
         <div class="flex flex-wrap">
             <div class="w-full text-center"> 
+                <div class="w-full md:w-1/3">
+                    <router-link :to="{name:'search-buildings'}">
+                    <div  class=" h-full group bg-myHeaderColor border flex rounded-md cursor-pointer transition duration-500 transform translate-y-1 hover:-translate-y-1 hover:shadow-xl hover:border-myMint-300">
+                        <div class="m-auto">
+                        <div class="flex"> 
+                            <HomeSearchIcon class="m-auto text-white transition duration-500 group-hover:text-myMint-300"/>
+                            <p class="text-white pl-2 text-base p-2">Обычный поиск</p>
+                        </div>
+                        </div>
+                    </div>
+                    </router-link>
+                </div>
                 <div
                 class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg"  
                 >
@@ -30,9 +42,8 @@
                                 </div> -->
                                 <!-- </div> -->
                             </div>
-                            <div class="w-full md:w-1/3">
+                            <!-- <div class="w-full md:w-1/3">
                                 <p class="-my-4 text-sm">Надоела карта? Можете выбрать</p>
-                                <!-- <p class="text-xs block md:hidden">Можете выбрать</p> -->
                                 <router-link :to="{name:'search-buildings'}">
                                 <div  class="my-4 h-full group bg-myHeaderColor flex rounded-lg cursor-pointer transition duration-500 transform hover:translate-y-1 hover:shadow-xl">
                                     <div class="m-auto">
@@ -43,7 +54,7 @@
                                     </div>
                                 </div>
                                 </router-link>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="flex flex-wrap -mx-3  overflow-visible">
                             <div class="w-full md:w-1/2 px-3 pt-3 md:pt-6">

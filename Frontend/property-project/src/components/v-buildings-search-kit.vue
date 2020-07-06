@@ -3,7 +3,22 @@
     <!-- <div :if="dataReady"> -->
     <!-- <div id="searchComponent" :class="{'collapsed' : !isExtendedSearchActivated}" class="flex flex-wrap"> -->
     <div class="flex flex-wrap">
-      <div class="w-full text-center"> 
+      
+      <div class="w-full md: text-center"> 
+              <div class="flex">
+                <div class="w-1/2 md:w-1/3 m-auto md:m-0">
+                  <router-link :to="{name:'map-search'}">
+                  <div class=" h-full group bg-myHeaderColor border border-myOrange md:border-myPageBackground  flex rounded-md cursor-pointer transition duration-500 transform translate-y-1 hover:-translate-y-1 hover:shadow-xl hover:border-myMint-300">
+                      <div class="m-auto">
+                      <div class="flex"> 
+                          <GoogleMapsIcon class="m-auto text-white transition duration-500 group-hover:text-myMint-300"/>
+                          <p class="text-white pl-2 text-base p-2">Поиск по карте</p>
+                      </div>
+                      </div>
+                  </div>
+                  </router-link>
+              </div>
+            </div>
         <div
           class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg"  
         >
@@ -11,8 +26,11 @@
 
 
                        <div class="flex flex-col-reverse flex-wrap md:flex-row">
-                                <div class="w-1/3 hidden md:block"></div>
-                                <div class="w-full md:w-1/3 pt-5 md:pt-0 justify-center  text-center" >
+                          <div class="w-1/3 hidden md:block">
+
+  
+                          </div>
+                            <div class="w-full md:w-1/3 pt-5 md:pt-0 justify-center  text-center" >
                                 <!-- <div class="flex group cursor-pointer transition duration-500"
                                 
                                 > -->
@@ -30,8 +48,16 @@
                                 <!-- </div> -->
                             </div>
                             <div class="w-full md:w-1/3">
+                              <p class="text-gray-500 font-bold">Ищем</p> 
+                              <router-link :to="{name:'search-buildings'}">
+                                <span class="px-2 transition duration-300 cursor-pointer" :class="{'border-b-2 border-myMint-400 font-bold text-myMint-400':showBuildings}">Новострои</span> 
+                              </router-link>
+                              <router-link :to="{name:'search-flats'}">
+                                <span class="px-2 transition duration-300 cursor-pointer " :class="{'border-b-2 border-myMint-400 font-bold text-myMint-400':showFlats}">Квартиры в них</span>
+                              </router-link>
+                            </div>
+                            <!-- <div class="w-full md:w-1/3">
                                 <p class="-my-4 text-sm">Попробуйте менее занудный</p>
-                                <!-- <p class="text-xs block md:hidden">Можете выбрать</p> -->
                                 <router-link :to="{name:'map-search'}">
                                 <div  class="my-4 h-full group bg-myHeaderColor flex rounded-lg cursor-pointer transition duration-500 transform hover:translate-y-1 hover:shadow-xl">
                                     <div class="m-auto">
@@ -42,7 +68,7 @@
                                     </div>
                                 </div>
                                 </router-link>
-                            </div>
+                            </div> -->
                         </div>
 
 
@@ -65,7 +91,7 @@
                   :addAction="addFindParam"
                   :removeAction="removeFindParam"
                   :removeKeyAction="removeFindParamKey"
-                  placeholder="Московский, Киевский..." 
+                  placeholder="Выберите админ. районы" 
                   />
                 </div>
               </div>
@@ -90,7 +116,7 @@
                     :addAction="addFindParam"
                     :removeAction="removeFindParam"
                     :removeKeyAction="removeFindParamKey"
-                    placeholder="Центр, Салтовка..." 
+                    placeholder="Выберите районы" 
                     />
                   </div>
                 </div>
@@ -116,7 +142,7 @@
                         :addAction="addFindParam"
                         :removeAction="removeFindParam"
                         :removeKeyAction="removeFindParamKey"
-                        placeholder="Микрорайоны" 
+                        placeholder="Выберите микрорайоны" 
                         />
                       </div>
                     </div>
@@ -164,27 +190,11 @@
                   :addAction="addFindParam"
                   :removeAction="removeFindParam"
                   :removeKeyAction="removeFindParamKey"
-                  placeholder="Сумская, Пушкинская..." 
+                  placeholder="Выберите улицы" 
                   />
                 </div>
               </div>
-              <div class="w-full md:w-1/4 px-3 pt-3 md:pt-6">
-                <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
-                  Номера домов
-                </label>
-                <div class="w-full">    
-                  <MultipleTaggingSelect
-                    @tagsChange="search"
-                    :addAction="addFindParam"
-                    :removeAction="removeFindParam"
-                    :sendParamName="houseNumberSendParamName"
-                    :removeKeyAction="removeFindParamKey"
-                    tagPlaceHolder="enter чтобы добавить к поиску"
-                    placeholder="№"
-                  />
-                </div>
-              </div>
-               <div class="w-full md:w-1/4 px-3 pt-3 md:pt-6">
+               <!-- <div class="w-full md:w-1/4 px-3 pt-3 md:pt-6">
                 <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Класс
                 </label>
@@ -202,7 +212,7 @@
                     placeholder="Эконом, комфорт..." 
                     />
                   </div>
-              </div>
+              </div> -->
             </div>
             <div class="flex flex-wrap -mx-3 ">
               <div class="w-full md:w-2/6 lg:2/5 px-3 pt-3 md:pt-6">
@@ -221,7 +231,7 @@
                   :addAction="addFindParam"
                   :removeAction="removeFindParam"
                   :removeKeyAction="removeFindParamKey"
-                  placeholder="Университет, Олексеевская..." 
+                  placeholder="Выберите метро" 
                   />
                 </div>
               </div>
@@ -267,27 +277,141 @@
                     :addAction="addFindParam"
                     :removeAction="removeFindParam"
                     :removeKeyAction="removeFindParamKey"
-                    placeholder="застройщики" 
+                    placeholder="Выберите застройщиков" 
                   />
                 </div>
               </div>
             </div>
+            
+
+            <div class="flex flex-wrap -mx-3" v-if="showFlats">
+              <div class="w-full md:w-2/6 lg:2/5 px-3 pt-3 md:pt-6">
+                <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                  Кол-во комнат
+                </label>
+                <div class="w-4/5 md:w-full m-auto">
+                 <div class="grid grid-cols-5 md:grid-cols-6 justify-center items-center">
+                    <!-- <div class="col-span-1 text-xs md:text-sm lg:text-base">
+                      от
+                    </div> -->
+                    <div class="col-span-2">
+                      <vInputSearch
+                        @valueChanged="search"
+                        :addAction="addFindParam"
+                        :removeAction="removeFindParam"
+                        :sendParamName="roomsBaseVariables.sendParamNameFrom"
+                        :removeKeyAction="removeFindParamKey"
+                      />
+                    </div>
+                    <div class="col-span-1 text-xs md:text-sm lg:text-base">
+                      -
+                    </div>
+                    <div class="col-span-2">
+                      <vInputSearch
+                        @valueChanged="search"
+                        :addAction="addFindParam"
+                        :removeAction="removeFindParam"
+                        :sendParamName="roomsBaseVariables.sendParamNameTo"
+                        :removeKeyAction="removeFindParamKey"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="w-full md:w-2/6 lg:1/5 px-3 pt-3 md:pt-6">
+              <!-- {{ floorBaseVariables }} -->
+                <label class="block text-xs md:text-sm lg:text-base  font-bold text-gray-500  md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                  Этаж
+                </label>
+                <div class="w-4/5 md:w-full m-auto">    
+                  <div class="grid grid-cols-5 md:grid-cols-6 justify-center items-center">
+                    <!-- <div class="col-span-1 text-xs md:text-sm lg:text-base">
+                      от
+                    </div> -->
+                    <div class="col-span-2">
+                      <vInputSearch
+                        @valueChanged="search"
+                        :addAction="addFindParam"
+                        :removeAction="removeFindParam"
+                        :sendParamName="floorBaseVariables.sendParamNameFrom"
+                        :removeKeyAction="removeFindParamKey"
+                      />
+                    </div>
+                    <div class="col-span-1 text-xs md:text-sm lg:text-base">
+                      -
+                    </div>
+                    <div class="col-span-2">
+                      <vInputSearch
+                        @valueChanged="search"
+                        :addAction="addFindParam"
+                        :removeAction="removeFindParam"
+                        :sendParamName="floorBaseVariables.sendParamNameTo"
+                        :removeKeyAction="removeFindParamKey"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="w-full md:w-2/6 lg:2/5 px-3 pt-3 md:pt-6">
+                <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                  Цена ($)
+                </label>
+                <div class="w-4/5 md:w-full m-auto">
+                  <div class="grid grid-cols-5 md:grid-cols-6 justify-center items-center">
+                    <!-- <div class="col-span-1 text-xs md:text-sm lg:text-base">
+                      от
+                    </div> -->
+                    <div class="col-span-2">
+                      <vInputSearch
+                        @valueChanged="search"
+                        :addAction="addFindParam"
+                        :removeAction="removeFindParam"
+                        :sendParamName="priceBaseVariables.sendParamNameFrom"
+                        :removeKeyAction="removeFindParamKey"
+                      />
+                    </div>
+                    <div class="col-span-1 text-xs md:text-sm lg:text-base">
+                      -
+                    </div>
+                    <div class="col-span-2">
+                      <vInputSearch
+                        @valueChanged="search"
+                        :addAction="addFindParam"
+                        :removeAction="removeFindParam"
+                        :sendParamName="priceBaseVariables.sendParamNameTo"
+                        :removeKeyAction="removeFindParamKey"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
             <div class="flex w-full">
               <div class="m-auto w-3/5 pt-6 border-b-2 border-myHeaderColor opacity-25"></div>
             </div>
             <div class="flex pt-3 pb-4">
-              <div class="w-1/3">
-                Только в продаже
+              <div class="w-1/2" v-if="showBuildings">
+                <div class="text-gray-500 font-bold" :class="{'text-myMint-300' : sallableOnlyActivated.value}">
+                    Только с квартирами в продаже
+
+                </div>
+                <div>
+                  <toggle-button @change="updateSallableOnly" :sync="true" v-model="sallableOnlyActivated.value" color="#00A480"/>
+                </div>
               </div>
-              <div class="w-1/3 justify-center">
+              <div class="w-1/2 justify-center" :class="{'w-full':showFlats}">
                 <div class="text-gray-500 font-bold" :class="{'text-myMint-300' : isExtendedSearchActivated}">
                     Расширенный поиск
                 </div>
                 <div>
-                  <toggle-button v-model="isExtendedSearchActivated" color="#00A480"/>
+                  <toggle-button :sync="true" v-model="isExtendedSearchActivated" color="#00A480"/>
                 </div>
               </div>
-              <div class="w-1/3">
+
+              <!-- <div class="w-1/3">
                   <p class="text-gray-500 font-bold">Что ищем?</p> 
                   <div class=''>
                     <router-link :to="{name:'search-buildings'}">
@@ -297,32 +421,48 @@
                       <span class="px-2 transition duration-300 cursor-pointer " :class="{'border-b-2 border-myMint-400 font-bold text-myMint-400':showFlats}">Квартиры в них</span>
                     </router-link>
                   </div>
-              </div>
+              </div> -->
             </div>
             <div >
             <!-- <ExtendedSearchTransition> -->
               <div v-show="isExtendedSearchActivated">
                 <div class="flex flex-wrap -mx-3 mb-3 md:mb-6">
-                  <!-- <div class="w-full md:w-1/2 px-3 mb-3 md:mb-0">
-                    <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
-                      Фильтр по застройщикам
-                    </label>
-                    <div name="field" class="w-full">
-                      <MultipleSelect 
-                      @selectClose="search"
-                      :dbValueKey="developersBaseVariables.dbValueKey"
-                      :fieldChoiceText="developersBaseVariables.choiceText" 
-                      :dictKey="developersBaseVariables.dictKey" 
-                      :apiAddress="developersBaseVariables.fullApiAddress" 
-                      :sendParamName="developersBaseVariables.sendParamName"
+                  <div class="w-full md:w-1/4 px-3 pt-3 md:pt-6">
+                  <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                    Номера домов
+                  </label>
+                  <div class="w-full">    
+                    <MultipleTaggingSelect
+                      @tagsChange="search"
                       :addAction="addFindParam"
                       :removeAction="removeFindParam"
+                      :sendParamName="houseNumberSendParamName"
                       :removeKeyAction="removeFindParamKey"
-                      placeholder="застройщики" 
-                      />
-                    </div>
-                  </div> -->
-                  <div class="w-full md:w-1/2 px-3">
+                      tagPlaceHolder="enter чтобы добавить к поиску"
+                      placeholder="№"
+                    />
+                  </div>
+                </div>
+                <div class="w-full md:w-1/4 px-3 pt-3 md:pt-6">
+                <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                  Класс
+                </label>
+                <div name="field" class="w-full">
+                    <MultipleSelect 
+                    @selectClose="search"
+                    :dbValueKey="theClassBaseVariables.dbValueKey"
+                    :fieldChoiceText="theClassBaseVariables.choiceText" 
+                    :dictKey="theClassBaseVariables.dictKey" 
+                    :apiAddress="theClassBaseVariables.fullApiAddress" 
+                    :sendParamName="theClassBaseVariables.sendParamName"
+                    :addAction="addFindParam"
+                    :removeAction="removeFindParam"
+                    :removeKeyAction="removeFindParamKey"
+                    placeholder="Эконом, комфорт..." 
+                    />
+                  </div>
+              </div>
+                  <!-- <div class="w-full md:w-1/2 px-3">
                     <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                       Введите номера домов на выбранных улицах
                     </label>
@@ -337,7 +477,7 @@
                         placeholder="Номера домов"
                       />
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             <!-- </ExtendedSearchTransition> -->
@@ -367,7 +507,11 @@ import {
   developersBaseVariables,
   metroBaseVariables,
   theClassBaseVariables,
-  timeFromMetroBaseVariables } from '../variables.js';
+  timeFromMetroBaseVariables,
+  floorBaseVariables,
+  roomsBaseVariables,
+  priceBaseVariables,
+  } from '../variables.js';
 import { mapMutations, mapActions, mapGetters } from 'vuex'
 import HomeSearchIcon from 'vue-material-design-icons/HomeSearch';
 import GoogleMapsIcon from 'vue-material-design-icons/GoogleMaps';
@@ -387,7 +531,7 @@ export default{
         TransitionDownRide,
         ToggleButton,
         vInputSearch,
-        GoogleMapsIcon
+        GoogleMapsIcon,
         // ExtendedSearchTransition,
         // searchComponentTransition
     },
@@ -406,8 +550,16 @@ export default{
         metroBaseVariables: metroBaseVariables,
         theClassBaseVariables: theClassBaseVariables,
         timeFromMetroBaseVariables: timeFromMetroBaseVariables,
+        floorBaseVariables:floorBaseVariables,
+        roomsBaseVariables:roomsBaseVariables,
+        priceBaseVariables:priceBaseVariables,
         dataReady: false,
         isExtendedSearchActivated: false,
+
+        sallableOnlyActivated: {
+          'key' : 'sallable_only',
+          'value' : false
+        }
       }
    },
     // computed: {
@@ -420,7 +572,18 @@ export default{
     //     ...mapGetters(['allBuildings','buildingsCount'])
     //     },
     watch:{
-      $route:"updateBuildings"
+      $route:"updateBuildings",
+      
+        // (value){
+        // alert()
+        // if(value){
+        //   this.addFindParam({'key':this.sallableOnlyActivated.key,'value':this.sallableOnlyActivated.value})
+        // }
+        // else{
+        //   this.removeFindParamKey(this.sallableOnlyActivated.key)
+        // }
+        // this.search()
+      // }
     },
     // beforeRouteUpdate(){
     //   this.updateBuildings()
@@ -436,7 +599,8 @@ export default{
         'removeFindParam',
         'updateFindParams',
         'removeFindParamKey',
-        'updateShowFlatsOnly'
+        'updateShowFlatsOnly',
+        // 'updateSaleOnlyActivated',
       ]),
       ...mapActions([
         'searchBuildings',
@@ -499,44 +663,26 @@ export default{
         },
         callAddHashToLocation() {
           addHashToLocation(this.activeFindParams, this.$route.path)
+        },
+        updateSallableOnly(newValueDict){
+            console.log('\tNEW VALUE: ', newValueDict)
+            if(newValueDict.value){
+              this.addFindParam({'key':this.sallableOnlyActivated.key,'value': true})
+            }
+            else{
+              this.removeFindParamKey(this.sallableOnlyActivated.key)
+            }
+            this.search()
+        },
+        setInitialData(){
+          if(this.sallableOnlyActivated.key in this.activeFindParams){
+            this.sallableOnlyActivated.value = true
+          }
+        },
+        async prepareData(){
+          // await this.updateBuildings()
         }
-        // addHashToLocation(paramsDict) {
-        //   console.log('aaaaaaaaaaaaaaaaa')
-        //   console.log(this.$router)
-        //   const qs = require('qs');
-        //   const q = qs.stringify(paramsDict, {arrayFormat: 'repeat'})
-        //   if(q.length > 0){
-        //     history.replaceState(
-        //       {},
-        //       null,
-        //       '#' + this.$route.path + '?' + q
-        //       )
-        //   }
-        //   else{
-        //     history.pushState(
-        //       {},
-        //       null,
-        //       '#' + this.$route.path,
-        //       )
-        //   }
-        // }
-        // setInitialData(){
-        //   this.updateFindParams(JSON.parse(JSON.stringify(this.$route.query)))
-        // },
-        // async prepareData(){
-        //   await this.updateBuildings()
-        // }
     },
-    // created() {
-    //   this.setInitialData()
-    // },
-    // mounted(){
-    //   this.prepareData()
-    //         .then(() => {
-    //             this.changeLoadingState(true)
-    //             }
-    //         )   
-    // },
     computed: {
       ...mapGetters([
         'activeFindParams', 
@@ -550,7 +696,8 @@ export default{
         'selectedDevelopers',
         'selectedSaltovkaMicroDistricts',
         'selectedSevernayaSaltovkaMicroDistricts',
-        'showFlatsOnly'
+        'showFlatsOnly',
+        // 'isSaleOnlyActivated',
         ]),
         showFlats: function() {
           if(this.$route.name=='search-flats'){
@@ -566,13 +713,12 @@ export default{
         }
     },
     mounted(){
-      // if('' in this.activeFindParams){
-      //   this.isExtendedSearchActivated = true
-      // }
+
       this.$smoothElement({
             el: this.$refs.searchComponent,
             hideOverflow: true
         })
+      this.setInitialData()
     },
     mixins:[
        smoothHeight

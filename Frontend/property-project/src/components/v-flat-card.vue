@@ -63,8 +63,10 @@
                 </div>
             </div>
           </div> -->
-            <div class="grid grid-col-1  py-2 m-1">
-
+            <div class="hidden md:grid grid-cols-1  py-2 m-1 ">
+                <div v-if="flat.price != null" class="text-right">
+                    <p class="pr-2 pb-2 font-bold text-lg text-myMint-400 ">{{ flat.price }}$</p>
+                </div>
               <!-- <div v-if="building.administrative_district != null" class="inline-flex items-center">
                 <HomeCityIcon class="text-myHeaderColor" :size="17"  />
                 <div class="flex-1 sm:px-1 px-2 ">
@@ -90,50 +92,103 @@
                 </div>
               </div> -->
 
-            <div v-if="flat.building.administrative_district != null" class="inline-flex items-center">
+            <div v-if="flat.building != null" class="inline-flex items-center">
                 <HomeCityIcon class="text-myHeaderColor" :size="20"  />
-                <div class="flex-1 sm:px-1 px-2 text-sm">
-                  Адресс: <span class="font-bold text-myHeaderColor">
+                <div class="flex-1  px-2 text-sm">
+
+                  <span class="font-light">Адресс: </span> 
+                    <span class=" text-myHeaderColor">
                       Харьков
-                    <span v-if="flat.building.administrative_district != null">, {{ flat.building.administrative_district}}</span>
-                    <span v-if="flat.building.district != null">, {{flat.building.district}}</span>
-                    <span v-if="flat.building.street != null">, {{ flat.building.street }}</span>
-                    <span v-if="flat.building.house_number != null">, {{ flat.building.house_number }}</span>
-                    <span v-if="flat.building.house_letter != null">, {{ flat.building.house_letter }}</span>
-                    </span> 
+                      <span v-if="flat.building.administrative_district != null">, {{ flat.building.administrative_district}}</span>
+                      <span v-if="flat.building.district != null">, {{flat.building.district}}</span>
+                      <span v-if="flat.building.street != null">, {{ flat.building.street }}</span>
+                      <span v-if="flat.building.house_number != null">, {{ flat.building.house_number }}</span>
+                      <span v-if="flat.building.house_letter != null">{{ flat.building.house_letter }}</span> 
+                    </span>
                 </div>
             </div>
             <div v-if="flat.building.developer != null" class="inline-flex items-center">
                 <HouseEditIcon class="text-myHeaderColor" :size="20" />
-                <div class="flex-1 sm:px-1 px-2 text-sm">
-                    Застройщик:  <span class="font-bold text-myHeaderColor">{{ flat.building.developer }}</span> 
+                <div class="flex-1  px-2 text-sm">
+                    <span class="font-light"> Застройщик:  </span> 
+                      <span class=" text-myHeaderColor">{{ flat.building.developer }}</span> 
                 </div>
             </div>
             <div v-if="flat.rooms != null" class="inline-flex items-center">
                 <DoorIcon class="text-myHeaderColor" :size="20" />
-                <div class="flex-1 sm:px-1 px-2 text-sm">
-                    Комнат:  <span class="font-bold text-myHeaderColor">{{ flat.rooms }}</span> 
+                <div class="flex-1  px-2 text-sm">
+                    <span class="font-light"> Комнат:  </span> 
+                      <span class=" text-myHeaderColor">{{ flat.rooms }}</span> 
                 </div>
             </div>
             <div v-if="flat.floor != null" class="inline-flex items-center">
                 <HomeFloor0Icon class="text-myHeaderColor" :size="20" />
-                <div class="flex-1 sm:px-1 px-2 text-sm">
-                  Этаж / этажность:  <span class="font-bold text-myHeaderColor">{{ flat.floor }}/{{ flat.building.number_of_storeys }}</span> 
+                <div class="flex-1  px-2 text-sm">
+                  <span class="font-light"> Этаж / этажность:  </span> 
+                    <span class=" text-myHeaderColor">{{ flat.floor }}/{{ flat.building.number_of_storeys ? flat.building.number_of_storeys : '-' }}</span> 
                 </div>
             </div>
 
             <div v-if="flat.living_area != null" class="inline-flex items-center">
                 <RulerIcon class="text-myHeaderColor" :size="20" />
-                <div class="flex-1 sm:px-1 px-2 text-sm">
-                    S общ/жил/кух:  
-                    <span class="font-bold text-myHeaderColor" v-if="flat.kitchen_area">{{ flat.living_area + flat.kitchen_area }}/{{ flat.living_area }}/{{ flat.kitchen_area }}</span>
-                    <span class="font-bold text-myHeaderColor" v-else>{{ flat.living_area }}/{{ flat.living_area }}/-</span>
-                    м<sup>2</sup>
+                <div class="flex-1  px-2 text-sm">
+                    <span class="font-light"> S общ/жил/кух:  </span> 
+                    <span class=" text-myHeaderColor">
+                      {{ (flat.living_area ? flat.living_area : 0) + (flat.kitchen_area ? flat.kitchen_area : 0)}}/{{flat.living_area ? flat.living_area : '-'}}/{{flat.kitchen_area ? flat.kitchen_area : '-'}}
+                    </span>
+                    <!-- <span class="font-bold text-myHeaderColor" v-if="flat.kitchen_area">{{ flat.living_area + flat.kitchen_area }}/{{ flat.living_area }}/{{ flat.kitchen_area }}</span>
+                    <span class="font-bold text-myHeaderColor" v-else>{{ flat.living_area }}/{{ flat.living_area }}/-</span> -->
+                    <span class="font-light">м<sup>2</sup></span>
                 </div>
             </div>
-                <div v-if="flat.price != null" class="inline-flex items-center">
-                    <p class="font-bold text-myMint-400 px-4 pt-2">{{ flat.price }}$</p>
+            </div>
+
+
+
+
+
+            <div class="grid grid-col-1 block md:hidden py-2 m-1">
+              <div v-if="flat.price != null" class="text-right pr-1">
+                <p class="font-bold text-myMint-400">{{ flat.price }}$</p>
+              </div>
+              <div v-if="flat.building != null" class="inline-flex items-center">
+                <!-- <HomeCityIcon class="text-myHeaderColor" :size="17"  /> -->
+                <div class="flex-1 sm:px-1 px-2 text-xs">
+                    <span class="font-light">Адресс:</span> <span class="text-black">
+                      Харьков
+                    <span v-if="flat.building.administrative_district != null">, {{ flat.building.administrative_district}}</span>
+                    <span v-if="flat.building.district != null">, {{flat.building.district}}</span>
+                    <span v-if="flat.building.street != null">, {{ flat.building.street }}</span>
+                    <span v-if="flat.building.house_number != null">, {{ flat.building.house_number }}</span>
+                    <span v-if="flat.building.house_letter != null">{{ flat.building.house_letter }}</span>
+                    </span> 
                 </div>
+              </div>
+              <div v-if="flat.building.developer != null" class="inline-flex items-center">
+                <HouseEditIcon class="text-myHeaderColor" :size="17" />
+                <div class="flex-1 sm:px-1 px-2 text-xs">
+                    {{ flat.building.developer }}
+                </div>
+              </div>
+              <div v-if="flat.rooms !== 'Не делится на микрорайоны'" class="inline-flex items-center">
+                <DoorIcon class="text-myHeaderColor" :size="17" />
+                <div class="flex-1 sm:px-1 px-2 text-xs">
+                    {{ flat.rooms }} комнат(-ы)
+                </div>
+              </div>
+              <div v-if="flat.floor != null" class="inline-flex items-center">
+                <HomeFloor0Icon class="text-myHeaderColor" :size="17" />
+                <div class="flex-1 sm:px-1 px-2 text-xs">
+                    <span class="font-light">Этаж: </span> {{ flat.floor }}/{{ flat.building.number_of_storeys ? flat.building.number_of_storeys : '-' }}
+                </div>
+              </div>
+              <div v-if="flat.living_area != null" class="inline-flex items-center">
+                <RulerIcon class="text-myHeaderColor" :size="17" />
+                <div class="flex-1 sm:px-1 px-2 text-xs">
+                <span class="font-light">S общ/жил/кух: </span> {{ (flat.living_area ? flat.living_area : 0) + (flat.kitchen_area ? flat.kitchen_area : 0)}}/{{flat.living_area ? flat.living_area : '-'}}/{{flat.kitchen_area ? flat.kitchen_area : '-'}}
+                </div>
+              </div>
+
             </div>
           <div class="invisible md:visible">
                <TransitionSlowAppearance>
@@ -160,7 +215,7 @@
             </TransitionSlowAppearance>
           </div>
           <div class="visible md:invisible ">
-            <router-link :to="{name:'building-page', params:{slug:flat.building.slug, id:flat.id}}">
+            <router-link :to="{name:'flat-page', params:{slug:flat.building.slug, id:flat.id}}">
               <div class="flex flex-wrap absolute bottom-0 w-full left-0 h-full cursor-pointer">
               </div>
             </router-link>

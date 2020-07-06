@@ -98,9 +98,39 @@ class FlatForSaleFilter(filters.FilterSet):
         choices = choices.THE_CLASS_CHOICES,
         distinct = True
     )
+    floor_from = filters.NumberFilter(
+        field_name = 'floor',
+        lookup_expr = 'gte',
+        distinct = True
+    )
+    floor_to = filters.NumberFilter(
+        field_name = 'floor',
+        lookup_expr = 'lte',
+        distinct = True
+    )
+    rooms_from = filters.NumberFilter(
+        field_name = 'rooms',
+        lookup_expr = 'gte',
+        distinct = True
+    )
+    rooms_to = filters.NumberFilter(
+        field_name = 'rooms',
+        lookup_expr = 'lte',
+        distinct = True
+    )
+    price_from = filters.NumberFilter(
+        field_name = 'price',
+        lookup_expr = 'gte',
+        distinct = True
+    )
+    price_to = filters.NumberFilter(
+        field_name = 'price',
+        lookup_expr = 'lte',
+        distinct = True
+    )
     class Meta:
         model = FlatForSale
-        fields = ['developer', 'metro','time_from_metro', 'the_class']
+        fields = ['developer', 'metro','time_from_metro', 'the_class','floor_from','floor_to','rooms_from','rooms_to','price_from','price_to']
 
 class NewBuildingViewSet(viewsets.ReadOnlyModelViewSet):
     #list create retrieve update partial_update destroy
@@ -140,7 +170,11 @@ class NewBuildingViewSet(viewsets.ReadOnlyModelViewSet):
         house_numbers_query_list = self.request.query_params.getlist('house_number', '')
         saltovka_microdistricts_query_list = self.request.query_params.getlist('saltovka_microdistrict', '')
         severnaya_saltovka_microdistricts_query_list = self.request.query_params.getlist('severnaya_saltovka_microdistrict', '')
-        if districts_query_list or streets_query_list or administrative_districts_query_list or house_numbers_query_list or saltovka_microdistricts_query_list or severnaya_saltovka_microdistricts_query_list:
+        is_sallable_only = self.request.query_params.get('sallable_only', '')
+
+        # print('\n\tSALLABLE ONLY: ', is_sallable_only)
+        
+        if districts_query_list or streets_query_list or administrative_districts_query_list or house_numbers_query_list or saltovka_microdistricts_query_list or severnaya_saltovka_microdistricts_query_list or is_sallable_only:
             q_administrative_districts = Q()
             if administrative_districts_query_list:
                 q_administrative_districts = Q(administrative_district__in = administrative_districts_query_list)
@@ -186,17 +220,23 @@ class NewBuildingViewSet(viewsets.ReadOnlyModelViewSet):
             if severnaya_saltovka_microdistricts_query_list:
                 q_severnaya_saltovka_microdistricts = Q(micro_district__in=severnaya_saltovka_microdistricts_query_list)
                 
-            found_buildings = NewBuilding.objects.filter(
-                (q_streets & q_house_numbers) |  
-                (q_districts & q_saltovka_microdistricts & q_severnaya_saltovka_microdistricts & q_house_numbers) | 
-                q_administrative_districts
-                )
+            q_sallable_only = Q()
+            if is_sallable_only:
+                q_sallable_only = Q(flats_for_sale__isnull=False)
 
-            print('\t NASHLO: ',found_buildings)
+            found_buildings = NewBuilding.objects.filter(
+                q_sallable_only & (
+                    (q_streets & q_house_numbers) |  
+                    (q_districts & q_saltovka_microdistricts & q_severnaya_saltovka_microdistricts & q_house_numbers) | 
+                    q_administrative_districts
+                )
+                ).distinct()
+
+            print('\t С ФИЛЬТРАЦИЕЙ: ',found_buildings)
             return found_buildings
         else:
-            print('\t NASHLO: ',NewBuilding.objects.all())
-            print('\tCount:', NewBuilding.objects.all())
+            print('\t ВСЕ ОБЬЕКТЫ: ',NewBuilding.objects.all())
+            # print('\tCount:', NewBuilding.objects.all())
             return  NewBuilding.objects.all()
 
     class Meta:
@@ -227,6 +267,7 @@ class FlatForSaleViewset(viewsets.ReadOnlyModelViewSet):
         house_numbers_query_list = self.request.query_params.getlist('house_number', '')
         saltovka_microdistricts_query_list = self.request.query_params.getlist('saltovka_microdistrict', '')
         severnaya_saltovka_microdistricts_query_list = self.request.query_params.getlist('severnaya_saltovka_microdistrict', '')
+
         if districts_query_list or streets_query_list or administrative_districts_query_list or house_numbers_query_list or saltovka_microdistricts_query_list or severnaya_saltovka_microdistricts_query_list:
             q_administrative_districts = Q()
             if administrative_districts_query_list:
@@ -282,7 +323,7 @@ class FlatForSaleViewset(viewsets.ReadOnlyModelViewSet):
             print('\t NASHLO: ',found_buildings)
             return found_buildings
         else:
-            print('\t NASHLO: ',FlatForSale.objects.all())
-            print('\tCount:', FlatForSale.objects.all())
+            # print('\t NASHLO: ',FlatForSale.objects.all())
+            # print('\tCount:', FlatForSale.objects.all())
             return FlatForSale.objects.all()
         # return  FlatForSale.objects.all()

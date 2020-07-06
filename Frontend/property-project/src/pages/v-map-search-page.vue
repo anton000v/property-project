@@ -1,10 +1,10 @@
 <template>
     <div>
-        <section class="pb-20 -mt-24">
+        <section class="pb-20 -mt-20">
             <div class="container mx-auto md:px-8">
-                <vBackButton />
+                <!-- <vBackButton /> -->
                 <vMapSearchKit/>
-                <vBuildingsCounter :countByBuildingsArr='true'/>
+                <vBuildingsCounter of="buildings" :countByBuildingsArr='true'/>
                 <div class="h-full">
                     <div class="m-auto px-10 xl:px-5">
                         <div class="">
@@ -15,6 +15,7 @@
                     <div class="pt-12" v-if="buildingsForList.length > 0">
                         <p class="px-2 md:px-0">Так же есть вот такие новострои, которые еще строятся. Они не имеют адресса и не могут быть отображены на карте:</p>
                         <!-- <div class="grid grid-cols-4"> -->
+
                             <vBuildingsList :certainBuildigns="buildingsForList"/>
                         <!-- </div> -->
                     </div>
@@ -26,7 +27,7 @@
 
 <script>
 import vMapSearchKit from '../components/v-map-search-kit'
-import vBackButton from '../components/v-back-button'
+// import vBackButton from '../components/v-back-button'
 import vSearchableMap from '../components/v-searchable-map'
 import { mapActions, mapGetters ,mapMutations } from 'vuex'
 // import vBuildingPreview from '../components/v-building-preview'
@@ -35,7 +36,7 @@ import vBuildingsList from '../components/v-buildings-list'
 export default {
     components:{
         vMapSearchKit,
-        vBackButton,
+        // vBackButton,
         vSearchableMap,
         // vBuildingPreview,
         vBuildingsCounter,

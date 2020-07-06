@@ -90,6 +90,19 @@ export const timeFromMetroBaseVariables = {
     sendParamName: 'time_from_metro',
 }
 
+export const floorBaseVariables = {
+    sendParamNameFrom: 'floor_from',
+    sendParamNameTo: 'floor_to'
+}
+export const roomsBaseVariables = {
+    sendParamNameFrom: 'rooms_from',
+    sendParamNameTo: 'rooms_to'
+}
+export const priceBaseVariables = {
+    sendParamNameFrom: 'price_from',
+    sendParamNameTo: 'price_to'
+}
+
 // saltovkaDBKey:'saltovka_db_value',
 // severnayaSaltovkaDBKey:'severnaya_saltovka_db_value',
 

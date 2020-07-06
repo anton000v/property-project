@@ -7,7 +7,7 @@ import vNotFoundPage from '../pages/v-not-found-page.vue'
 import vFlatPage from '../pages/v-flat-page.vue'
 import vBuildingsSearchPage from '../pages/v-search-buildings-page.vue'
 import vFlatsSearchPage from '../pages/v-search-flats-page.vue'
-
+import vMainPage from '../pages/v-main.page.vue'
 Vue.use(Router);
 
 export default new Router({
@@ -16,7 +16,7 @@ export default new Router({
         {
             path: '/',
             name: 'home',
-            component: vBuildingsSearchPage,
+            component: vMainPage,
             // children: [
             //   {
             //   path: '/buildings',

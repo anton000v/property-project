@@ -143,15 +143,19 @@
                                 </div>
                             </div>
                         </div>
-                            <div class="flex">
-                                <p class="p-4">
-                                    Перейдите на страницу новостроя, в котором находится эта квартира, чтобы подробно изучить его
-                                </p>
-                                <router-link :to="{name:'building-page', params:{slug:flat.building.slug}}">
-                                    <div class="ml-4 p-4 border bg-myHeaderColor text-white rounded-lg md:transition md:duration-500 md:transform md:hover:translate-x-2 md:hover:bg-myMint-400">
-                                        Перейти
-                                    </div>
-                                </router-link>
+                            <div class="flex flex-wrap p-8 md:p-16">
+                                <div class="w-full m-auto">
+                                    <p class="w-full text-center">
+                                        Полная информация о новострое, в котором находится эта квартира
+                                    </p>
+                                </div>
+                                <div class="w-1/2 md:w-1/3 m-auto pt-2">
+                                    <router-link :to="{name:'building-page', params:{slug:flat.building.slug}}">
+                                        <div class="p-4 text-center md:ml-4 md:p-4 border bg-myHeaderColor text-white rounded-lg md:transition md:duration-500 md:transform md:hover:translate-x-2 md:hover:bg-myMint-400">
+                                            Узнать
+                                        </div>
+                                    </router-link>
+                                </div>
                             </div>
                           <div id="building-on-map" class="mt-16 mb-16" v-if="flat.building.lat && flat.building.lng">
 
@@ -297,7 +301,7 @@
                                         <div v-if="actualFlatsForSale.length > 0" class="mt-8 relative">
                                             <vForSaleSlider :flatsIdForSale="actualFlatsForSale"/>
                                         </div>
-                                        <div v-else class="mt-16 mb-16 text-myHeaderColor">
+                                        <div v-else class="pl-4 md:pl-0 mt-8 md:mt-16 text-myHeaderColor">
                                             К сожалению, в данном доме сейчас продается только эта квартира.
                                         </div>
                                     </div>

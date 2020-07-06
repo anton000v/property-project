@@ -41,7 +41,7 @@ export default{
         certainBuildigns: {
             type: Array,
             default: null
-        }
+        },
     },
     data(){
         return {
@@ -62,12 +62,18 @@ export default{
             if(this.certainBuildigns){
                 return this.certainBuildigns
             }
+            // else if(this.isSaleOnlyActivated){
+            //     return this.allBuildings.filter(building => building.flats_for_sale.length > 0)
+            // }
             return this.allBuildings
         },
         count(){
             if(this.certainBuildigns){
                 return this.certainBuildigns.length
             }
+            // else if(this.isSaleOnlyActivated){
+            //     return this.allBuildings.filter(building => building.flats_for_sale.length > 0).length
+            // }
             return this.buildingsCount
         }
     },
@@ -80,8 +86,8 @@ export default{
     //     }
     // },
     // watch: {
-    //     buildingsCount: function(val) {
-    //         this.animateCounter(val)
+    //     isSaleOnlyActivated: function() {
+    //         this.certainBuildigns = this.allBuildings.filter(building => building.flats_for_sale.length > 0);
     //     }
     // },
     // mounted(){

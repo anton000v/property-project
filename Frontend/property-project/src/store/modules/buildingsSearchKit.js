@@ -185,6 +185,10 @@ export default {
         updateIsSevernayaSaltovkaDistrictChoosen(state, value){
             state.isSevernayaSaltovkaDistrictChoosen = Boolean(value)
         },
+        // updateSaleOnlyActivated(state,value){
+        //     console.log('\tVALUE:',value)
+        //     state.isForSaleOnlyActivated = Boolean(value)
+        // }
         // writeFindParamsToLocalStorage(state){
         //     localStorage.setItem('findParams', JSON.stringify(state.findParams));
         // },
@@ -203,7 +207,7 @@ export default {
         // findParamsAsString: {},
         isSaltovkaDistrictChoosen: false,
         isSevernayaSaltovkaDistrictChoosen: false,
-  
+        // isForSaleOnlyActivated: false
     },
     getters: {
         // selectedStreets(state){
@@ -236,6 +240,9 @@ export default {
         },
         isSevernayaSaltovkaDistrictChoosen(state){
             return state.isSevernayaSaltovkaDistrictChoosen
-        }
+        },
+        // isSaleOnlyActivated(state){
+        //     return state.isForSaleOnlyActivated
+        // }
     },
 }

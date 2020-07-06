@@ -12,7 +12,7 @@ class CustomPageNumber(PageNumberPagination):
         return super().paginate_queryset(queryset, request, view)
 
     def get_paginated_response(self, data):
-        print('\tPAGINATION: ', self.page.paginator.per_page)
+        # print('\tPAGINATION: ', self.page.paginator.per_page)
         return Response(OrderedDict([
             ('count', self.page.paginator.count),
             ('total_pages', self.page.paginator.num_pages),

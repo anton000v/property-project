@@ -3,6 +3,7 @@
         <section class="pb-20 -mt-20">
             <div class="container mx-auto md:px-8" v-if="loaded">
                 <!-- {{ this.activeFindParams }} -->
+                <!-- <vSwitchSearch/> -->
                 <BuildingsSearchKit />
                 <vBuildingsCounter of="flats"/>
                 <!-- <TransitionList> -->
@@ -28,6 +29,7 @@ import vBuildingsCounter from '../components/v-buildings-counter'
 import vPagination from '../components/v-pagination' 
 // import TransitionList from '../transitions/list'
 import { addHashToLocation } from '../utils.js'
+// import vSwitchSearch from '../components/v-swith-search'
 export default {
 
     data(){
@@ -41,6 +43,7 @@ export default {
         vBuildingsCounter,
         vPagination,
         FlatsList,
+        // vSwitchSearch
         // TransitionList
     },
     methods: {
