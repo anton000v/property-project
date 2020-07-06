@@ -17,7 +17,11 @@ export default {
         sendParamName: String,
         addAction : Function,
         // removeAction : Function,
-        removeKeyAction : Function
+        removeKeyAction : Function,
+        isForExtendedSearch:{
+            type: Boolean,
+            default: false
+        }
     },
     data() {
         return {
@@ -70,6 +74,10 @@ export default {
         if(this.sendParamName in this.activeFindParams){
             if(this.activeFindParams[this.sendParamName].length == 1){
                 this.value = this.activeFindParams[this.sendParamName][0]
+                if(this.isForExtendedSearch == true){
+                  // alert(1)
+                  this.$emit('activateExtendedSearch')
+                }
             }
             // else if(this.activeFindParams[this.sendParamName].length != 0){
             //     this.removeKeyAction()

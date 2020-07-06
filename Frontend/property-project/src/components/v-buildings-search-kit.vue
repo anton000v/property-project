@@ -96,6 +96,27 @@
                 </div>
               </div>
               <div class="w-full md:w-1/2 px-3 pt-3 md:pt-6">
+                <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                  Застройщики
+                </label>
+                <div name="field" class="w-full">
+                  <MultipleSelect 
+                    @selectClose="search"
+                    :dbValueKey="developersBaseVariables.dbValueKey"
+                    :fieldChoiceText="developersBaseVariables.choiceText" 
+                    :dictKey="developersBaseVariables.dictKey" 
+                    :apiAddress="developersBaseVariables.fullApiAddress" 
+                    :sendParamName="developersBaseVariables.sendParamName"
+                    :addAction="addFindParam"
+                    :removeAction="removeFindParam"
+                    :removeKeyAction="removeFindParamKey"
+                    placeholder="Выберите застройщиков" 
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-wrap -mx-3">
+              <div class="w-full md:w-1/2 px-3 pt-3 md:pt-6">
                 <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="inline-full-name">
                   Районы
                 </label>
@@ -119,6 +140,75 @@
                     placeholder="Выберите районы" 
                     />
                   </div>
+                </div>
+              </div>
+              <!-- <div class=""> -->
+                <div class="w-full md:w-1/2 px-3 pt-3 md:pt-6">
+                <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="inline-full-name">
+                  Районы
+                </label>
+                <div class="w-full">
+                  <div name="field" class="w-full">
+                    <MultipleSelect 
+                    @selectClose="search" 
+                    @select="checkToShowMicroDistricts"
+                    @remove="checkToHideMicroDistricts"
+                    @removeAll="setDefaultDistrictsChoosen"
+                    :dbValueKey="districtsBaseVariables.dbValueKey"
+                    :extraInformationField="districtsBaseVariables.extraInformationText"
+                    :fieldChoiceText="districtsBaseVariables.choiceText" 
+                    :dictKey="districtsBaseVariables.dictKey" 
+                    :sendParamName="districtsBaseVariables.sendParamName"
+                    :apiAddress="districtsBaseVariables.fullApiAddress" 
+                    :trackEveryUpdate="true"
+                    :addAction="addFindParam"
+                    :removeAction="removeFindParam"
+                    :removeKeyAction="removeFindParamKey"
+                    placeholder="Выберите микрорайон" 
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- </div> -->
+            </div>
+            <div class="flex flex-wrap -mx-3">
+              <div class="w-full md:w-2/4 px-3 pt-3 md:pt-6">
+                <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                  Улицы
+                </label>
+                <div name="field" class="w-full">
+                  <MultipleSelect 
+                  @selectClose="search"
+                  :dbValueKey="streetsBaseVariables.dbValueKey"
+                  :fieldChoiceText="streetsBaseVariables.choiceText" 
+                  :dictKey="streetsBaseVariables.dictKey" 
+                  :apiAddress="streetsBaseVariables.fullApiAddress" 
+                  :sendParamName="streetsBaseVariables.sendParamName"
+                  :addAction="addFindParam"
+                  :removeAction="removeFindParam"
+                  :removeKeyAction="removeFindParamKey"
+                  placeholder="Выберите улицы" 
+                  />
+                </div>
+              </div>
+              <div class="w-full md:w-2/4 px-3 pt-3 md:pt-6">
+                <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                  Метро
+                </label>
+                <div name="field" class="w-full">
+                  <MultipleSelect 
+                  @selectClose="search"
+                  :dbValueKey="metroBaseVariables.dbValueKey"
+                  :fieldChoiceText="metroBaseVariables.choiceText" 
+                  :dictKey="metroBaseVariables.dictKey" 
+                  :apiAddress="metroBaseVariables.fullApiAddress" 
+                  :sendParamName="metroBaseVariables.sendParamName"
+                  :extraInformationField="metroBaseVariables.extraInformationText"
+                  :addAction="addFindParam"
+                  :removeAction="removeFindParam"
+                  :removeKeyAction="removeFindParamKey"
+                  placeholder="Выберите метро" 
+                  />
                 </div>
               </div>
             </div>
@@ -175,7 +265,7 @@
               </div>
             </TransitionDownRide>
             <div class="flex flex-wrap -mx-3 ">
-              <div class="w-full md:w-2/4 px-3 pt-3 md:pt-6">
+              <!-- <div class="w-full md:w-2/4 px-3 pt-3 md:pt-6">
                 <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Улицы
                 </label>
@@ -193,7 +283,7 @@
                   placeholder="Выберите улицы" 
                   />
                 </div>
-              </div>
+              </div> -->
                <!-- <div class="w-full md:w-1/4 px-3 pt-3 md:pt-6">
                 <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Класс
@@ -215,7 +305,7 @@
               </div> -->
             </div>
             <div class="flex flex-wrap -mx-3 ">
-              <div class="w-full md:w-2/6 lg:2/5 px-3 pt-3 md:pt-6">
+              <!-- <div class="w-full md:w-2/6 lg:2/5 px-3 pt-3 md:pt-6">
                 <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Метро
                 </label>
@@ -234,8 +324,8 @@
                   placeholder="Выберите метро" 
                   />
                 </div>
-              </div>
-              <div class="w-full md:w-2/6 lg:1/5 px-3 pt-3 md:pt-6">
+              </div> -->
+              <!-- <div class="w-full md:w-2/6 lg:1/5 px-3 pt-3 md:pt-6">
                 <label class="block text-xs md:text-sm lg:text-base  font-bold text-gray-500  md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Время от метро
                 </label>
@@ -253,16 +343,13 @@
                         :removeKeyAction="removeFindParamKey"
                       />
                     </div>
-                    <!-- <div class="hidden text-xs lg:text-base lg:block col-span-2">
-                      Минут
-                    </div> -->
                     <div class="text-xs md:text-sm lg:text-base col-span-2">
                       мин.
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="w-full md:w-2/6 lg:2/5 px-3 pt-3 md:pt-6">
+              </div> -->
+              <!-- <div class="w-full md:w-2/6 lg:2/5 px-3 pt-3 md:pt-6">
                 <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Застройщики
                 </label>
@@ -280,7 +367,7 @@
                     placeholder="Выберите застройщиков" 
                   />
                 </div>
-              </div>
+              </div> -->
             </div>
             
 
@@ -319,15 +406,11 @@
                 </div>
               </div>
               <div class="w-full md:w-2/6 lg:1/5 px-3 pt-3 md:pt-6">
-              <!-- {{ floorBaseVariables }} -->
                 <label class="block text-xs md:text-sm lg:text-base  font-bold text-gray-500  md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
                   Этаж
                 </label>
                 <div class="w-4/5 md:w-full m-auto">    
                   <div class="grid grid-cols-5 md:grid-cols-6 justify-center items-center">
-                    <!-- <div class="col-span-1 text-xs md:text-sm lg:text-base">
-                      от
-                    </div> -->
                     <div class="col-span-2">
                       <vInputSearch
                         @valueChanged="search"
@@ -402,8 +485,10 @@
                   <toggle-button @change="updateSallableOnly" :sync="true" v-model="sallableOnlyActivated.value" color="#00A480"/>
                 </div>
               </div>
+              
               <div class="w-1/2 justify-center" :class="{'w-full':showFlats}">
                 <div class="text-gray-500 font-bold" :class="{'text-myMint-300' : isExtendedSearchActivated}">
+                  {{ isExtendedSearchActivated }}
                     Расширенный поиск
                 </div>
                 <div>
@@ -425,59 +510,115 @@
             </div>
             <div >
             <!-- <ExtendedSearchTransition> -->
-              <div v-show="isExtendedSearchActivated">
+              <div v-show="isExtendedSearchActivated" class="pt-3 md:pt-6">
                 <div class="flex flex-wrap -mx-3 mb-3 md:mb-6">
-                  <div class="w-full md:w-1/4 px-3 pt-3 md:pt-6">
-                  <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
-                    Номера домов
-                  </label>
-                  <div class="w-full">    
-                    <MultipleTaggingSelect
-                      @tagsChange="search"
-                      :addAction="addFindParam"
-                      :removeAction="removeFindParam"
-                      :sendParamName="houseNumberSendParamName"
-                      :removeKeyAction="removeFindParamKey"
-                      tagPlaceHolder="enter чтобы добавить к поиску"
-                      placeholder="№"
-                    />
-                  </div>
-                </div>
-                <div class="w-full md:w-1/4 px-3 pt-3 md:pt-6">
-                <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
-                  Класс
-                </label>
-                <div name="field" class="w-full">
-                    <MultipleSelect 
-                    @selectClose="search"
-                    :dbValueKey="theClassBaseVariables.dbValueKey"
-                    :fieldChoiceText="theClassBaseVariables.choiceText" 
-                    :dictKey="theClassBaseVariables.dictKey" 
-                    :apiAddress="theClassBaseVariables.fullApiAddress" 
-                    :sendParamName="theClassBaseVariables.sendParamName"
-                    :addAction="addFindParam"
-                    :removeAction="removeFindParam"
-                    :removeKeyAction="removeFindParamKey"
-                    placeholder="Эконом, комфорт..." 
-                    />
-                  </div>
-              </div>
-                  <!-- <div class="w-full md:w-1/2 px-3">
-                    <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
-                      Введите номера домов на выбранных улицах
+                  <div class="w-full md:w-1/4 px-3">
+                    <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                      Номера домов
                     </label>
                     <div class="w-full">    
                       <MultipleTaggingSelect
                         @tagsChange="search"
+                        @activateExtendedSearch="isExtendedSearchActivated=true"
                         :addAction="addFindParam"
                         :removeAction="removeFindParam"
                         :sendParamName="houseNumberSendParamName"
                         :removeKeyAction="removeFindParamKey"
+                        :isForExtendedSearch="true"
                         tagPlaceHolder="enter чтобы добавить к поиску"
-                        placeholder="Номера домов"
+                        placeholder="№"
                       />
                     </div>
-                  </div> -->
+                  </div>
+                  <div class="w-full md:w-1/4 px-3  border-l rounded">
+                    <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                      Класс
+                    </label>
+                    <div name="field" class="w-full">
+                        <MultipleSelect 
+                        @selectClose="search"
+                        @activateExtendedSearch="isExtendedSearchActivated=true"
+                        :dbValueKey="theClassBaseVariables.dbValueKey"
+                        :fieldChoiceText="theClassBaseVariables.choiceText" 
+                        :dictKey="theClassBaseVariables.dictKey" 
+                        :apiAddress="theClassBaseVariables.fullApiAddress" 
+                        :sendParamName="theClassBaseVariables.sendParamName"
+                        :addAction="addFindParam"
+                        :removeAction="removeFindParam"
+                        :removeKeyAction="removeFindParamKey"
+                        :isForExtendedSearch="true"
+                        placeholder="Выберите класс" 
+                        />
+                    </div>
+                  </div>
+                  <div class="w-full md:w-1/4 px-3  border-l rounded">
+                    <label class="block text-xs md:text-sm lg:text-base  font-bold text-gray-500  md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                      Этажность
+                    </label>
+                    <div class="w-4/5 md:w-full m-auto">    
+                      <div class="flex  justify-center items-center">
+                        <div class="">
+                          <vInputSearch
+                            @valueChanged="search"
+                            @activateExtendedSearch="isExtendedSearchActivated=true"
+                            :addAction="addFindParam"
+                            :removeAction="removeFindParam"
+                            :sendParamName="numberOfStoreysBaseVariables.sendParamNameFrom"
+                            :removeKeyAction="removeFindParamKey"
+                            :isForExtendedSearch="true"
+                          />
+                        </div>
+                        <div class="px-2 text-xs md:text-sm lg:text-base">
+                          -
+                        </div>
+                        <div class="">
+                          <vInputSearch
+                            @valueChanged="search"
+                            @activateExtendedSearch="isExtendedSearchActivated=true"
+                            :addAction="addFindParam"
+                            :removeAction="removeFindParam"
+                            :sendParamName="numberOfStoreysBaseVariables.sendParamNameTo"
+                            :removeKeyAction="removeFindParamKey"
+                            :isForExtendedSearch="true"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w-full md:w-1/4 px-3  border-l rounded">
+                    <label class="block text-xs md:text-sm lg:text-base  font-bold text-gray-500  md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                      Высота потолка
+                    </label>
+                    <div class="w-4/5 md:w-full m-auto">    
+                      <div class="flex  justify-center items-center">
+                        <div class="">
+                          <vInputSearch
+                            @valueChanged="search"
+                            @activateExtendedSearch="isExtendedSearchActivated=true"
+                            :addAction="addFindParam"
+                            :removeAction="removeFindParam"
+                            :sendParamName="roomHeightBaseVariables.sendParamNameFrom"
+                            :removeKeyAction="removeFindParamKey"
+                            :isForExtendedSearch="true"
+                          />
+                        </div>
+                        <div class="px-2 text-xs md:text-sm lg:text-base">
+                          -
+                        </div>
+                        <div class="">
+                          <vInputSearch
+                            @valueChanged="search"
+                            @activateExtendedSearch="isExtendedSearchActivated=true"
+                            :addAction="addFindParam"
+                            :removeAction="removeFindParam"
+                            :sendParamName="roomHeightBaseVariables.sendParamNameTo"
+                            :removeKeyAction="removeFindParamKey"
+                            :isForExtendedSearch="true"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             <!-- </ExtendedSearchTransition> -->
@@ -511,6 +652,8 @@ import {
   floorBaseVariables,
   roomsBaseVariables,
   priceBaseVariables,
+  numberOfStoreysBaseVariables,
+  roomHeightBaseVariables,
   } from '../variables.js';
 import { mapMutations, mapActions, mapGetters } from 'vuex'
 import HomeSearchIcon from 'vue-material-design-icons/HomeSearch';
@@ -532,6 +675,7 @@ export default{
         ToggleButton,
         vInputSearch,
         GoogleMapsIcon,
+        
         // ExtendedSearchTransition,
         // searchComponentTransition
     },
@@ -553,13 +697,15 @@ export default{
         floorBaseVariables:floorBaseVariables,
         roomsBaseVariables:roomsBaseVariables,
         priceBaseVariables:priceBaseVariables,
+        numberOfStoreysBaseVariables:numberOfStoreysBaseVariables,
+        roomHeightBaseVariables:roomHeightBaseVariables,
         dataReady: false,
         isExtendedSearchActivated: false,
 
         sallableOnlyActivated: {
           'key' : 'sallable_only',
           'value' : false
-        }
+        },
       }
    },
     // computed: {
@@ -674,10 +820,24 @@ export default{
             }
             this.search()
         },
+        // updateExtendedSearch(newValueDict){
+        //     // console.log('\tNEW VALUE: ', newValueDict)
+        //     if(newValueDict.value){
+        //       this.addFindParam({'key':extendedSearchActivatedBaseVariables.sendParamName,'value': true})
+        //     }
+        //     else{
+        //       this.removeFindParamKey(extendedSearchActivatedBaseVariables.sendParamName)
+        //     }
+        //     this.callAddHashToLocation()
+        // },
         setInitialData(){
           if(this.sallableOnlyActivated.key in this.activeFindParams){
             this.sallableOnlyActivated.value = true
           }
+          // if(extendedSearchActivatedBaseVariables.sendParamName in this.activeFindParams){
+          //   this.isExtendedSearchActivated = true
+          // }
+          this.callAddHashToLocation()
         },
         async prepareData(){
           // await this.updateBuildings()
@@ -730,14 +890,5 @@ export default{
 
 
 <style scoped>
-
-/* div { */
- 
-  /* transition:max-height 0.3s ease-out; 
-  max-height:auto; */
-/* } */
-/* #searchComponent.collapsed {
-  max-height: 0;
-} */
 
 </style>

@@ -54,6 +54,10 @@ export default {
         removeKeyAction:{
             type: Function
         },
+        isForExtendedSearch:{
+            type: Boolean,
+            default: false
+        }
         // initialDbData: {
         //     type: Array,
         //     default: () => undefined,
@@ -82,6 +86,10 @@ export default {
             this.value = this.activeFindParams[this.sendParamName]
             if(this.value.length > 0){
                 this.showClearAllButton = true
+                if(this.isForExtendedSearch == true){
+                  // alert(1)
+                  this.$emit('activateExtendedSearch')
+                }
             }
         }
     },

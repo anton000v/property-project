@@ -46,6 +46,26 @@ class NewBuildingFilter(filters.FilterSet):
         choices = choices.THE_CLASS_CHOICES,
         distinct = True
     )
+    number_of_storeys_from = filters.NumberFilter(
+        field_name = 'number_of_storeys',
+        lookup_expr = 'gte',
+        distinct = True
+    )
+    number_of_storeys_to = filters.NumberFilter(
+        field_name = 'number_of_storeys',
+        lookup_expr = 'lte',
+        distinct = True
+    )
+    room_height_from = filters.NumberFilter(
+        field_name = 'room_height',
+        lookup_expr = 'gte',
+        distinct = True
+    )
+    room_height_to = filters.NumberFilter(
+        field_name = 'room_height',
+        lookup_expr = 'lte',
+        distinct = True
+    )
     # developer = filters.ModelMultipleChoiceFilter(
     #     field_name = 'developer',
     #     to_field_name = 'id',
@@ -66,7 +86,7 @@ class NewBuildingFilter(filters.FilterSet):
                                             # coerce=strtobool)
     class Meta:
         model = NewBuilding
-        fields = ['developer', 'metro','time_from_metro', 'the_class']
+        fields = ['developer', 'metro','time_from_metro', 'the_class','number_of_storeys_from','number_of_storeys_to','room_height_from','room_height_to']
         # fields = {
         #     'street' : ['icontains']
         # }
@@ -128,9 +148,32 @@ class FlatForSaleFilter(filters.FilterSet):
         lookup_expr = 'lte',
         distinct = True
     )
+    number_of_storeys_from = filters.NumberFilter(
+        field_name = 'building__number_of_storeys',
+        lookup_expr = 'gte',
+        distinct = True
+    )
+    number_of_storeys_to = filters.NumberFilter(
+        field_name = 'building__number_of_storeys',
+        lookup_expr = 'lte',
+        distinct = True
+    )
+    room_height_from = filters.NumberFilter(
+        field_name = 'building__room_height',
+        lookup_expr = 'gte',
+        distinct = True
+    )
+    room_height_to = filters.NumberFilter(
+        field_name = 'building__room_height',
+        lookup_expr = 'lte',
+        distinct = True
+    )
     class Meta:
         model = FlatForSale
-        fields = ['developer', 'metro','time_from_metro', 'the_class','floor_from','floor_to','rooms_from','rooms_to','price_from','price_to']
+        fields = [
+            'developer', 'metro','time_from_metro', 'the_class','floor_from','floor_to','rooms_from','rooms_to','price_from','price_to',
+            'number_of_storeys_from','number_of_storeys_to','room_height_from','room_height_to',
+            ]
 
 class NewBuildingViewSet(viewsets.ReadOnlyModelViewSet):
     #list create retrieve update partial_update destroy

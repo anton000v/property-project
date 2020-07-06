@@ -102,7 +102,17 @@ export const priceBaseVariables = {
     sendParamNameFrom: 'price_from',
     sendParamNameTo: 'price_to'
 }
-
+export const numberOfStoreysBaseVariables = {
+    sendParamNameFrom: 'number_of_storeys_from',
+    sendParamNameTo: 'number_of_storeys_to'
+}
+export const roomHeightBaseVariables = {
+    sendParamNameFrom: 'room_height_from',
+    sendParamNameTo: 'room_height_to'
+}
+// export const extendedSearchActivatedBaseVariables = {
+//     sendParamName: 'extended',
+// }
 // saltovkaDBKey:'saltovka_db_value',
 // severnayaSaltovkaDBKey:'severnaya_saltovka_db_value',
 

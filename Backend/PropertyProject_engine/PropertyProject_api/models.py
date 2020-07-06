@@ -93,7 +93,7 @@ class NewBuilding(models.Model):
                                  verbose_name=u"Стены", null=True, blank=True)
     warming = models.CharField(max_length=2, choices=choices.THE_WARMING_CHOICES, default=choices.NOT_COMPLETED,
                                verbose_name=u"Утепление", null=True, blank=True)  #
-    room_height = models.PositiveSmallIntegerField(verbose_name=u"Высота помещений", default=1)  #
+    room_height = models.FloatField(verbose_name=u"Высота помещений", default=1)  #
     number_of_apartments_in_house = models.PositiveSmallIntegerField(verbose_name=u"Кол-во квартир в доме", default=1)  #
 
     # ----------------------------------------------------

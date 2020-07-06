@@ -97,6 +97,10 @@
       initialDbData:{
         type: Object,
         default: () => {},
+      },
+      isForExtendedSearch:{
+        type: Boolean,
+        default: false
       }
     },
     data () {
@@ -144,6 +148,10 @@
               this.setIntitialActiveValues()
               if(this.value.length > 0){
                 this.showClearAllButton = true
+                if(this.isForExtendedSearch == true){
+                  // alert(1)
+                  this.$emit('activateExtendedSearch')
+                }
               }
             }
         });
