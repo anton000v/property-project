@@ -478,7 +478,7 @@
             <div class="flex pt-3 pb-4">
               <div class="w-1/2" v-if="showBuildings">
                 <div class="text-gray-500 font-bold" :class="{'text-myMint-300' : sallableOnlyActivated.value}">
-                    Только с квартирами в продаже
+                    <span class="text-sm">Только с квартирами в продаже</span>
 
                 </div>
                 <div>
@@ -488,8 +488,7 @@
               
               <div class="w-1/2 justify-center" :class="{'w-full':showFlats}">
                 <div class="text-gray-500 font-bold" :class="{'text-myMint-300' : isExtendedSearchActivated}">
-                  {{ isExtendedSearchActivated }}
-                    Расширенный поиск
+                    <span class="text-sm">Расширенный поиск</span>
                 </div>
                 <div>
                   <toggle-button :sync="true" v-model="isExtendedSearchActivated" color="#00A480"/>

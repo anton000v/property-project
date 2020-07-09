@@ -161,7 +161,7 @@
             </TransitionSlowAppearance>
           </div>
           <div class="visible md:invisible ">
-            <router-link :to="{name:'building-page', params:{slug:flat.building.slug, id:flat.id}}">
+            <router-link :to="{name:'flat-page', params:{slug:flat.building.slug, id:flat.id}}">
               <div class="flex flex-wrap absolute bottom-0 w-full left-0 h-full cursor-pointer">
               </div>
             </router-link>
