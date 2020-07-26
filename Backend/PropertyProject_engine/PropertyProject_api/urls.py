@@ -22,7 +22,11 @@ urlpatterns = [
     path('api/get-saltovka-severnaya-saltovka-db-values/', views.APIGetSaltovkaSevernayaSaltovkaDBValues.as_view()),
     path('api/get-developers/', views.APIGetDevelopersChoices.as_view()),
     path('api/get-metro/', views.APIGetMetroChoices.as_view()),
-    path('api/get-classes/', views.APIGetClassChoices.as_view())
+    path('api/get-classes/', views.APIGetClassChoices.as_view()),
+    path('api/get-walls-types/', views.APIGetWallsTypesChoices.as_view()),
+    path('api/get-warming-types/', views.APIGetWarmingTypesChoices.as_view()),
+    path('api/get-heating-types/', views.APIGetHeatingTypesChoices.as_view()),
+    path('api/get-parking-types/', views.APIGetParkingTypesChoices.as_view()),
     ]
 if settings.DEBUG:
     urlpatterns += staticfiles_urlpatterns() + static(

@@ -134,7 +134,7 @@
                 <div class="flex-1  px-2 text-sm">
                     <span class="font-light"> S общ/жил/кух:  </span> 
                     <span class=" text-myHeaderColor">
-                      {{ (flat.living_area ? flat.living_area : 0) + (flat.kitchen_area ? flat.kitchen_area : 0)}}/{{flat.living_area ? flat.living_area : '-'}}/{{flat.kitchen_area ? flat.kitchen_area : '-'}}
+                      {{flat.total_area ? flat.total_area : '-'}}/{{flat.living_area ? flat.living_area : '-'}}/{{flat.kitchen_area ? flat.kitchen_area : '-'}}
                     </span>
                     <!-- <span class="font-bold text-myHeaderColor" v-if="flat.kitchen_area">{{ flat.living_area + flat.kitchen_area }}/{{ flat.living_area }}/{{ flat.kitchen_area }}</span>
                     <span class="font-bold text-myHeaderColor" v-else>{{ flat.living_area }}/{{ flat.living_area }}/-</span> -->
@@ -185,7 +185,7 @@
               <div v-if="flat.living_area != null" class="inline-flex items-center">
                 <RulerIcon class="text-myHeaderColor" :size="17" />
                 <div class="flex-1 sm:px-1 px-2 text-xs">
-                <span class="font-light">S общ/жил/кух: </span> {{ (flat.living_area ? flat.living_area : 0) + (flat.kitchen_area ? flat.kitchen_area : 0)}}/{{flat.living_area ? flat.living_area : '-'}}/{{flat.kitchen_area ? flat.kitchen_area : '-'}}
+                <span class="font-light">S общ/жил/кух: </span> {{ flat.total_area ? flat.total_area : '-'}}/{{flat.living_area ? flat.living_area : '-'}}/{{flat.kitchen_area ? flat.kitchen_area : '-'}}
                 </div>
               </div>
 

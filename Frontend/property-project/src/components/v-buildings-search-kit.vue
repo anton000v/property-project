@@ -619,6 +619,117 @@
                     </div>
                   </div>
                 </div>
+
+<div class="flex flex-wrap -mx-3 mb-3 md:mb-6">
+                  <div class="w-full md:w-1/4 px-3">
+                    <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                      Номера домов
+                    </label>
+                    <div class="w-full">    
+                      <MultipleTaggingSelect
+                        @tagsChange="search"
+                        @activateExtendedSearch="isExtendedSearchActivated=true"
+                        :addAction="addFindParam"
+                        :removeAction="removeFindParam"
+                        :sendParamName="houseNumberSendParamName"
+                        :removeKeyAction="removeFindParamKey"
+                        :isForExtendedSearch="true"
+                        tagPlaceHolder="enter чтобы добавить к поиску"
+                        placeholder="№"
+                      />
+                    </div>
+                  </div>
+                  <div class="w-full md:w-1/4 px-3  border-l rounded">
+                    <label class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                      Класс
+                    </label>
+                    <div name="field" class="w-full">
+                        <MultipleSelect 
+                        @selectClose="search"
+                        @activateExtendedSearch="isExtendedSearchActivated=true"
+                        :dbValueKey="theClassBaseVariables.dbValueKey"
+                        :fieldChoiceText="theClassBaseVariables.choiceText" 
+                        :dictKey="theClassBaseVariables.dictKey" 
+                        :apiAddress="theClassBaseVariables.fullApiAddress" 
+                        :sendParamName="theClassBaseVariables.sendParamName"
+                        :addAction="addFindParam"
+                        :removeAction="removeFindParam"
+                        :removeKeyAction="removeFindParamKey"
+                        :isForExtendedSearch="true"
+                        placeholder="Выберите класс" 
+                        />
+                    </div>
+                  </div>
+                  <div class="w-full md:w-1/4 px-3  border-l rounded">
+                    <label class="block text-xs md:text-sm lg:text-base  font-bold text-gray-500  md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                      Этажность
+                    </label>
+                    <div class="w-4/5 md:w-full m-auto">    
+                      <div class="flex  justify-center items-center">
+                        <div class="">
+                          <vInputSearch
+                            @valueChanged="search"
+                            @activateExtendedSearch="isExtendedSearchActivated=true"
+                            :addAction="addFindParam"
+                            :removeAction="removeFindParam"
+                            :sendParamName="numberOfStoreysBaseVariables.sendParamNameFrom"
+                            :removeKeyAction="removeFindParamKey"
+                            :isForExtendedSearch="true"
+                          />
+                        </div>
+                        <div class="px-2 text-xs md:text-sm lg:text-base">
+                          -
+                        </div>
+                        <div class="">
+                          <vInputSearch
+                            @valueChanged="search"
+                            @activateExtendedSearch="isExtendedSearchActivated=true"
+                            :addAction="addFindParam"
+                            :removeAction="removeFindParam"
+                            :sendParamName="numberOfStoreysBaseVariables.sendParamNameTo"
+                            :removeKeyAction="removeFindParamKey"
+                            :isForExtendedSearch="true"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w-full md:w-1/4 px-3  border-l rounded">
+                    <label class="block text-xs md:text-sm lg:text-base  font-bold text-gray-500  md:text-left mb-1 md:mb-0 pr-4" for="grid-last-name">
+                      Высота потолка
+                    </label>
+                    <div class="w-4/5 md:w-full m-auto">    
+                      <div class="flex  justify-center items-center">
+                        <div class="">
+                          <vInputSearch
+                            @valueChanged="search"
+                            @activateExtendedSearch="isExtendedSearchActivated=true"
+                            :addAction="addFindParam"
+                            :removeAction="removeFindParam"
+                            :sendParamName="roomHeightBaseVariables.sendParamNameFrom"
+                            :removeKeyAction="removeFindParamKey"
+                            :isForExtendedSearch="true"
+                          />
+                        </div>
+                        <div class="px-2 text-xs md:text-sm lg:text-base">
+                          -
+                        </div>
+                        <div class="">
+                          <vInputSearch
+                            @valueChanged="search"
+                            @activateExtendedSearch="isExtendedSearchActivated=true"
+                            :addAction="addFindParam"
+                            :removeAction="removeFindParam"
+                            :sendParamName="roomHeightBaseVariables.sendParamNameTo"
+                            :removeKeyAction="removeFindParamKey"
+                            :isForExtendedSearch="true"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             <!-- </ExtendedSearchTransition> -->
             </div>

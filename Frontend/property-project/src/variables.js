@@ -90,18 +90,6 @@ export const timeFromMetroBaseVariables = {
     sendParamName: 'time_from_metro',
 }
 
-export const floorBaseVariables = {
-    sendParamNameFrom: 'floor_from',
-    sendParamNameTo: 'floor_to'
-}
-export const roomsBaseVariables = {
-    sendParamNameFrom: 'rooms_from',
-    sendParamNameTo: 'rooms_to'
-}
-export const priceBaseVariables = {
-    sendParamNameFrom: 'price_from',
-    sendParamNameTo: 'price_to'
-}
 export const numberOfStoreysBaseVariables = {
     sendParamNameFrom: 'number_of_storeys_from',
     sendParamNameTo: 'number_of_storeys_to'
@@ -110,6 +98,48 @@ export const roomHeightBaseVariables = {
     sendParamNameFrom: 'room_height_from',
     sendParamNameTo: 'room_height_to'
 }
+export const wallsTypeBaseVariables = {
+    sendParamName : 'walls_type'
+}
+export const warmingBaseVariables = {
+    sendParamName : 'warming'
+}
+export const heatingBaseVariables = {
+    sendParamName : 'heating'
+}
+export const parkingBaseVariables = {
+    sendParamName : 'parking'
+}
+
+// For flats
+export const floorBaseVariables = {
+    sendParamNameFrom: 'floor_from',
+    sendParamNameTo: 'floor_to'
+}
+
+export const roomsBaseVariables = {
+    sendParamNameFrom: 'rooms_from',
+    sendParamNameTo: 'rooms_to'
+}
+export const priceBaseVariables = {
+    sendParamNameFrom: 'price_from',
+    sendParamNameTo: 'price_to'
+}
+export const totalAreaBaseVariables = {
+    sendParamNameFrom: 'total_area_from',
+    sendParamNameTo: 'total_area_to'
+}
+
+export const livingAreaBaseVariables = {
+    sendParamNameFrom: 'living_area_from',
+    sendParamNameTo: 'living_area_to'
+}
+
+export const kitchenAreaBaseVariables = {
+    sendParamNameFrom: 'kitchen_area_from',
+    sendParamNameTo: 'kitchen_area_to'
+}
+
 // export const extendedSearchActivatedBaseVariables = {
 //     sendParamName: 'extended',
 // }

@@ -77,7 +77,6 @@ class NewBuilding(models.Model):
                                       verbose_name='Номер корпуса',
                                       null=True, blank=True)
 
-
     location = models.CharField(max_length=200, verbose_name=u"Расположение", default=1, null=True, blank=True)  #
     # developer = models.CharField(max_length=100, verbose_name=u"Застройщик", default=1)  #
     developer = models.ForeignKey(Developer, on_delete=models.CASCADE, verbose_name = 'Застройщик', null=True, blank=True)
@@ -204,6 +203,7 @@ class WayFromMetro(models.Model):
 class FlatForSale(models.Model):
     building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name="flats_for_sale", to_field='slug', verbose_name="Дом")
     rooms = models.PositiveSmallIntegerField(default=1, verbose_name='Кол-во комнат')
+    total_area = models.FloatField(default=1, verbose_name='Общая площадь')
     living_area = models.FloatField(default=1, verbose_name='Жилая площадь')
     kitchen_area = models.FloatField(default=1, verbose_name='Кухонная площадь')
     floor = models.SmallIntegerField(default=1, verbose_name='Этаж')

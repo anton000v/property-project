@@ -92,8 +92,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div v-if="flat.kitchen_area" class="bg-gray-100 rounded-lg text-gray-700 text-base md:text-lg  text-center md:px-4 py-2 m-1 md:m-2">{{ flat.living_area + flat.kitchen_area }}/{{ flat.living_area }}/{{ flat.kitchen_area }} м<sup>2</sup> </div>
-                                                    <div v-else class="bg-gray-100 rounded-lg text-gray-700 text-base md:text-lg  text-center md:px-4 py-2 m-1 md:m-2">{{ flat.living_area }}/{{ flat.living_area }}/- м<sup>2</sup></div>
+                                                    <div class="bg-gray-100 rounded-lg text-gray-700 text-base md:text-lg  text-center md:px-4 py-2 m-1 md:m-2">{{flat.total_area ? flat.total_area : '-'}}/{{flat.living_area ? flat.living_area : '-'}}/{{flat.kitchen_area ? flat.kitchen_area : '-'}} м<sup>2</sup> </div>
                                                 </div>
                                                
                                             </div>

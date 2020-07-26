@@ -230,6 +230,45 @@ class APIGetClassChoices(APIView):
             raise Exception('Class choices is empty')
         return Response({'classes':class_choices})
 
+class APIGetWallsTypesChoices(APIView):
+    '''
+    Класс для получения вариантов выбора типа стен. Используется фронтендом. 
+    '''
+    def get(self, request):
+        walls_type_choices = [{ 'db_value':item[0], 'text_value': item[1] } for item in choices.THE_WALLS_TYPE_CHOICES[1:] ]
+        if(not walls_type_choices):
+            raise Exception('Walls type choices is empty')
+        return Response({'walls_types':walls_type_choices})
+
+class APIGetWarmingTypesChoices(APIView):
+    '''
+    Класс для получения варинтов выбора утепления. Используется фронтендом
+    '''
+    def get(self, request):
+        warming_types_choices = [{ 'db_value':item[0], 'text_value': item[1] } for item in choices.THE_WARMING_CHOICES[1:] ]
+        if(not warming_types_choices):
+            raise Exception('Warming types choices is empty')
+        return Response({'warming_types_choices':warming_types_choices})
+
+class APIGetHeatingTypesChoices(APIView):
+    '''
+    Класс для получения варинтов выбора отопления. Используется фронтендом
+    '''
+    def get(self, request):
+        heating_types_choices = [{ 'db_value':item[0], 'text_value': item[1] } for item in choices.THE_HEATING_CHOICES[1:] ]
+        if(not heating_types_choices):
+            raise Exception('Heating types choices is empty')
+        return Response({'heating_types_choices':heating_types_choices})
+
+class APIGetParkingTypesChoices(APIView):
+    '''
+    Класс для получения варинтов выбора парковки. Используется фронтендом
+    '''
+    def get(self, request):
+        parking_types_choices = [{ 'db_value':item[0], 'text_value': item[1] } for item in choices.THE_HEATING_CHOICES[1:] ]
+        if(not parking_types_choices):
+            raise Exception('Parking types choices is empty')
+        return Response({'parking_types_choices':parking_types_choices})
 
 # class APIGetBuilding(APIView):
 #     def get(self,request):
