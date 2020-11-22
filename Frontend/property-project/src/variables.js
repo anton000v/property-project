@@ -16,7 +16,13 @@ export const houseNumberSendParamName = 'house_number'
 //     sendParamName: 'street',
 // }
 
+export const buildingsBaseVariables = {
+    fullApiAddress: baseApiAddress + "buildings/"
+}
 
+export const flatsBaseVariables = {
+    fullApiAddress: baseApiAddress + "flats/"
+}
 
 export const streetsBaseVariables = {
     fullApiAddress: baseApiAddress + "get-streets/" ,

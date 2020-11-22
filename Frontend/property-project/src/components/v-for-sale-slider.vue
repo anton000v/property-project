@@ -85,11 +85,11 @@
       }
     },
     async mounted() {
-          const axios = require('axios');
+          // const axios = require('axios');
 
           this.flatsIdForSale.forEach(async (flat) => {
             
-            await axios.get(baseApiAddress+'flats/'+flat.id, {
+            await this.$http.get(baseApiAddress+'flats/'+flat.id, {
             // params: {
             //     slug:this.$route.params.slug
             //     }

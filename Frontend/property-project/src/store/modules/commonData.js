@@ -7,6 +7,9 @@ export default {
        updateShowFlatsOnly(state, show){
         state.showFlatsOnly = Boolean(show)
     },
+        updateApiToken(state, token){
+           state.apiToken = token
+        }
     //    changeLoadingState(state, value){
     //        state.loaded = Boolean(value)
     //    }
@@ -14,7 +17,7 @@ export default {
     state: {
         mainHeader: false,
         showFlatsOnly: false,
-        
+        apiToken: ''
         // loaded: true,
     },
     getters: {

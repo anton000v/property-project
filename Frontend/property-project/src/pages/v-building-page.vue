@@ -505,8 +505,8 @@ export default {
 
         async searchBuilding(){
             // const qs = require('qs');
-            const axios = require('axios');
-            await axios.get(baseApiAddress+'buildings/'+this.$route.params.slug, {
+            // const axios = require('axios');
+            await this.$http.get(baseApiAddress+'buildings/'+this.$route.params.slug, {
             // params: {
             //     slug:this.$route.params.slug
             //     }

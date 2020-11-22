@@ -120,14 +120,15 @@
     },
     mounted() {
       // alert(1)
-        const axios = require('axios');
+      //   const axios = require('axios');
         // console.log("NESTED KEYS:")
         // console.log(this.nestedKeys)
         // axios.get('http://127.0.0.1:8000/api/get-streets/').then(resp => {
         //         console.log('RESPONSE DATA: ')
         //         console.log(resp)
         // });
-        axios.get(this.apiAddress).then(resp => {
+
+        this.$http.get(this.apiAddress).then(resp => {
 
             if(this.nestedKeys.length == 0){
               // this.setActiveValues()

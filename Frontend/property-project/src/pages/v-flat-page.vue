@@ -474,8 +474,8 @@ export default {
 
         async searchFlats(){
             // const qs = require('qs');
-            const axios = require('axios');
-            await axios.get(baseApiAddress+'flats/'+this.$route.params.id, {
+            // const axios = require('axios');
+            await this.$http.get(baseApiAddress+'flats/'+this.$route.params.id, {
             // params: {
             //     slug:this.$route.params.slug
             //     }

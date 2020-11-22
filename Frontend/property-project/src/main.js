@@ -1,32 +1,27 @@
 import Vue from 'vue'
 import App from './App.vue'
-// import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-// import '@/assets/css/main.css'
 import './assets/css/main.css'
 import 'vue-search-select/dist/VueSearchSelect.css'
 import store from './store/index.js'
 import router from './router/router.js'
 import VModal from 'vue-js-modal'
 import VueScrollactive from 'vue-scrollactive';
+import Axios from 'axios'
 
+
+Vue.prototype.$http = Axios;
+const token = 'Token a94b0c7e4c76acfd71bc6e5ce8432a2b787811da'
+if (token) {
+  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+}
 
 Vue.use(VueScrollactive);
-// import VueTabs from 'vue-nav-tabs' 
 
 Vue.use(VModal)
-// Vue.use(VueTabs)
-// import 'bootstrap/dist/css/bootstrap.css'
-// import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-// import router from './router'
-
-// Install BootstrapVue
-// Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
-// Vue.use(IconsPlugin)
 
 Vue.config.productionTip = false
-// console.log(App);
+
 
 new Vue({
   store: store,

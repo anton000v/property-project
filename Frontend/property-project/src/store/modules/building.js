@@ -1,4 +1,6 @@
-// import { stringToInt } from '../../utils'
+import { buildingsBaseVariables } from '../../variables'
+
+
 export default {
     actions: {
         // async searchBuildings(ctx, query=''){
@@ -13,7 +15,7 @@ export default {
         async mapSearchBuildings(ctx, findParams={}){
 
             const qs = require('qs');
-            const axios = require('axios');
+            // const axios = require('axios');
             let mapSearchId = qs.stringify(findParams, {arrayFormat: 'repeat'})
             // ctx.commit('updateSearchId', searchId)
             if(mapSearchId.length == 0){
@@ -22,7 +24,7 @@ export default {
             else{
                 mapSearchId += '&no_page'
             }
-            axios.get('http://127.0.0.1:8000/api/buildings?'+ mapSearchId).then(resp => {
+            this._vm.$http.get(`${buildingsBaseVariables.fullApiAddress}?${mapSearchId}`).then(resp => {
                 const foundBuildings = resp.data
                 console.log('FOUND BUILDINGS')
                 console.log(foundBuildings)
@@ -35,9 +37,9 @@ export default {
 
         async searchBuildings(ctx, findParams={}){
             const qs = require('qs');
-            const axios = require('axios');
+            // const axios = require('axios');
             const searchId = qs.stringify(findParams, {arrayFormat: 'repeat'})
-            axios.get('http://127.0.0.1:8000/api/buildings?'+ searchId, 
+            this._vm.$http.get(`${buildingsBaseVariables.fullApiAddress}?${searchId}`,
             // {
             //  searchId,
             // paramsSerializer: params => {

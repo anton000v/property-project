@@ -1,11 +1,14 @@
+import { flatsBaseVariables } from '../../variables'
+
+
 export default {
     actions: {
 
         async searchFlats(ctx, findParams={}){
             const qs = require('qs');
-            const axios = require('axios');
+            // const axios = require('axios');
             const searchId = qs.stringify(findParams, {arrayFormat: 'repeat'})
-            axios.get('http://127.0.0.1:8000/api/flats?'+ searchId, 
+            this.$http.get(`${flatsBaseVariables}?${searchId}`,
             // {
             //  searchId,
             // paramsSerializer: params => {
