@@ -375,7 +375,7 @@ class FlatForSaleViewset(viewsets.ReadOnlyModelViewSet):
                 q_administrative_districts
             )
 
-            print('\t NASHLO: ', found_buildings)
+            print('\t Found: ', found_buildings)
             return found_buildings
         else:
             # print('\t NASHLO: ',FlatForSale.objects.all())

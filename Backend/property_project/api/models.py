@@ -72,6 +72,7 @@ class NewBuilding(models.Model):
                                       default=choices.NOT_COMPLETED,
                                       verbose_name="Микрорайон",
                                       null=True, blank=True)  # микрорайон
+
     houising_number = models.CharField(max_length=2, choices=choices.HOUSING_NUMBER_CHOICES,
                                        default=choices.NOT_DIVIDED,
                                        verbose_name='Номер корпуса',
@@ -205,6 +206,7 @@ class FlatForSale(models.Model):
     building = models.ForeignKey(NewBuilding, on_delete=models.CASCADE, related_name="flats_for_sale", to_field='slug',
                                  verbose_name="Дом")
     rooms = models.PositiveSmallIntegerField(default=1, verbose_name='Кол-во комнат')
+    total_area = models.FloatField(default=1, verbose_name='Общая площадь')
     living_area = models.FloatField(default=1, verbose_name='Жилая площадь')
     kitchen_area = models.FloatField(default=1, verbose_name='Кухонная площадь')
     floor = models.SmallIntegerField(default=1, verbose_name='Этаж')
