@@ -87,3 +87,6 @@ migrations/
 media/
 .env
 db.sqlite3
+
+
+.idea/
