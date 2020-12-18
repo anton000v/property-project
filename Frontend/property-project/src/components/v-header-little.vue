@@ -59,7 +59,7 @@ export default{
   data(){
     return {
       // djangoImagesPathInComponentsFolder:djangoImagesPathInComponentsFolder,
-      // testPath:"../../../../Backend/PropertyProject_engine/PropertyProject_api/media/126403.jpg",
+      // testPath:"../../../../Backend/PropertyProject_engine/api/media/126403.jpg",
     }
   },
 }

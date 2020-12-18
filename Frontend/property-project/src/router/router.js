@@ -17,35 +17,11 @@ export default new Router({
             path: '/',
             name: 'home',
             component: vMainPage,
-            // children: [
-            //   {
-            //   path: '/buildings',
-            //   name: 'search-buildings',
-            //   component: vSearchPage,
-            //   },
-            //   {
-            //     path: '/flats',
-            //     name: 'search-flats',
-            //     component: vSearchPage
-            //   }
-            // ]
         },
-        // {
-        //     path: '/buildings',
-        //     name: 'search-page',
-        //     component: vSearchPage,
-        //     // props: (route) => ({ findParams: route.query }),
-        //     // meta: {
-        //     //     showModal: false
-        //     // }
-        // },
         {
           path: '/buildings',
           name: 'search-buildings',
           component: vBuildingsSearchPage,
-          // children: [
-            
-          // ]
         },
         {
           path: '/flats',
@@ -66,13 +42,6 @@ export default new Router({
           path: '/map-search',
           name: 'map-search',
           component: vMapSearchPage,
-          // children: [
-          //   {
-          //   path: '/',
-          //   name: 'search-page',
-          //   component: vSearchPage,
-          //   }
-          // ]
         },
         { path: '*', name:'page-404', component: vNotFoundPage }
     ],
