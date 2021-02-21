@@ -63,19 +63,10 @@ migrate_auth:
 migrations_auth:
 	docker-compose exec python python manage.py makemigrations auth
 
-migrate_userauth:
-	docker-compose exec python python manage.py migrate user_auth
+migrations_api:
+	docker-compose exec python python manage.py makemigrations api
 
-migrations_userauth:
-	docker-compose exec python python manage.py makemigrations user_auth
-
-migrations_sync:
-	docker-compose exec python python manage.py makemigrations sync
-
-migrate_sync:
-	docker-compose exec python python manage.py migrate sync
-
-init_db: migrate migrate_userauth migrations_sync migrate migrate_sync migrations_userauth migrate_userauth migrations createcachetable migrate
+init_db: migrate migrations_api migrate
 
 showmigrations:
 	docker-compose exec python python manage.py showmigrations
@@ -83,10 +74,7 @@ showmigrations:
 test:
 	docker-compose exec python python manage.py test
 
-redis:
-	docker-compose exec redis redis-cli
-
-requirements:
+install_requirements:
 	docker-compose exec python pip install -r requirements.txt
 
 db_shell:
@@ -198,3 +186,19 @@ createcachetable:
 
 monitor_log_file:
 	tail -f -n 5 logs/log.log
+
+
+logic_create_frontend_user:
+	docker-compose exec python python manage.py create_frontend_user
+
+logic_fill_streets_todb:
+	docker-compose exec python python manage.py fill_streets_todb
+
+logic_fill_administrative_disctricts_todb:
+	docker-compose exec python python manage.py fill_administrative_districts_todb
+
+logic_main: logic_create_frontend_user logic_fill_streets_todb logic_fill_administrative_disctricts_todb
+
+
+
+

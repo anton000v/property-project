@@ -14,6 +14,7 @@ services:
           - 8080
         ports:
             - 8080:8080
+            - 8081:8081
 #        command: "python manage.py runserver 0.0.0.0:8000"
 #        env_file:
 #            - .env
@@ -21,3 +22,5 @@ services:
 #            - postgres
         stdin_open: true
         tty: true
+        environment:
+            - CHOKIDAR_USEPOLLING=true

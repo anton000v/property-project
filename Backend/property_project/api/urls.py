@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from . import views
 from .router import router
+from config.yasg import urlpatterns as swagger_urlpatterns
 
 app_name = "property project"
 # app_name will help us do a reverse look-up latter.
@@ -26,7 +27,10 @@ urlpatterns = [
     path('api/get-warming-types/', views.APIGetWarmingTypesChoices.as_view()),
     path('api/get-heating-types/', views.APIGetHeatingTypesChoices.as_view()),
     path('api/get-parking-types/', views.APIGetParkingTypesChoices.as_view()),
+    *swagger_urlpatterns
     ]
+
+
 if settings.DEBUG:
     urlpatterns += staticfiles_urlpatterns() + static(
         settings.MEDIA_URL, document_root=settings.MEDIA_ROOT

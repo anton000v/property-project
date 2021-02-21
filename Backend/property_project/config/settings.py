@@ -44,11 +44,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'api',
+
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
     'django_filters',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
@@ -181,3 +184,16 @@ FRONTEND_PASSWORD = os.getenv('FRONTEND_PASSWORD')
 
 SUPERUSER_USERNAME = os.getenv('SUPERUSER_USERNAME')
 SUPERUSER_PASSWORD = os.getenv('SUPERUSER_PASSWORD')
+
+SWAGGER_SETTINGS = {
+   'SECURITY_DEFINITIONS': {
+      # 'Basic': {
+      #       'type': 'basic'
+      # },
+      'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+      }
+   }
+}

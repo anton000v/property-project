@@ -27,3 +27,4 @@ sqlparse==0.3.1
 toml==0.10.0
 urllib3==1.25.8
 wrapt==1.12.1
+drf-yasg==1.20.0
