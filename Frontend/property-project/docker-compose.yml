@@ -7,7 +7,7 @@ services:
             context: .
             dockerfile: docker/vuejs/Dockerfile
         volumes:
-            - .:/srv/www/frontend/property-project
+            - .:/srv/www/code
 #        links:
 #          - vuejs:postgres
         expose:

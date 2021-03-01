@@ -10,7 +10,7 @@ services:
             context: .
             dockerfile: docker/python/Dockerfile
         volumes:
-            - .:/srv/www/code
+            - .:/srv/www/property-project
         links:
           - postgres:postgres
         expose:
