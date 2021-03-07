@@ -85,8 +85,10 @@ __pycache__/
 local_settings.py
 migrations/
 media/
-.env
 db.sqlite3
 
+.dev.env
+.env
+.prod.env
 
 .idea/

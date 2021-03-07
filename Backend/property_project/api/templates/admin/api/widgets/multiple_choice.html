@@ -1,8 +1,0 @@
-{% include "django/forms/widgets/multiple_input.html" %}
-{% load static %}
-
-  {% if widget.not_comleted_choice_value %}
-    <script type="text/javascript">
-      var parking_default_choice_value = "{{ widget.not_comleted_choice_value }}";
-    </script>
-  {% endif %}
