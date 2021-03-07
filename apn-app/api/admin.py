@@ -1,0 +1,190 @@
+from django.contrib import admin
+from django.contrib.auth.models import Group
+from . import models
+from .forms import NewBuildingForm, WayFromMetroForm, FlatForSaleForm
+
+admin.site.unregister(Group)
+admin.site.index_title = 'Панель администратора'
+admin.site.site_header = 'Новострои Харькова'
+admin.site.site_title = 'Новострои'
+
+
+class DeveloperAdmin(admin.ModelAdmin):
+    class Meta:
+        model = models.Developer
+
+
+class DistrictsModelAdmin(admin.ModelAdmin):
+    class Meta:
+        model = models.AdministrativeDistrict
+
+
+class StreetsModelAdmin(admin.ModelAdmin):
+    class Meta:
+        model = models.Street
+
+
+class BuildingImageTabularInline(admin.TabularInline):
+    model = models.BuildingImage
+    extra = 1
+    verbose_name = "Изображение"
+    verbose_name_plural = "Изображения"
+    # fields = ['image_tag']
+    readonly_fields = ['image_tag']
+    # def headshot_image(self, obj):
+    #     return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+    #         url = obj.headshot.url,
+    #         width=obj.headshot.width,
+    #         height=obj.headshot.height,
+    #         )
+    #     )
+
+
+class LayoutImageTabularInLine(admin.TabularInline):
+    model = models.LayoutImage
+    extra = 1
+    verbose_name = "Изображение планировки"
+    verbose_name_plural = "Изображения планировок"
+
+
+class WayFromMetroTabularInLine(admin.TabularInline):
+    model = models.WayFromMetro
+    form = WayFromMetroForm
+    extra = 1
+    verbose_name = "Расстояние от метро"
+    verbose_name_plural = "Расстояния от метро"
+
+
+class NewBuildingModelAdmin(admin.ModelAdmin):
+    fieldsets = (
+        (None, {
+            'fields': (
+                'name',
+                'street',
+                'house_number',
+                'house_letter',
+                'administrative_district',
+                'district',
+                'micro_district',
+                'houising_number',
+                'location',
+                'developer',
+                'the_class',
+                'number_of_storeys',
+                'number_of_buildings',
+                'number_of_sections_or_entrances',
+                'construction_technology',
+                'walls_type',
+                'warming',
+                'room_height',
+                'number_of_apartments_in_house',
+            )
+        }),
+        ('Типы квартир', {
+            'classes': ('grp-open',),
+            'fields': (
+                ('number_of_one_room', 'square_of_one_room'),
+                ('number_of_two_room', 'square_of_two_room'),
+                ('number_of_three_room', 'square_of_three_room'),
+                ('number_of_four_room', 'square_of_four_room'),),
+        }),
+        ('Информация о квартирах', {
+            'fields': (
+                'number_of_apartments_per_floor',
+                'commercial_premises',
+
+            ),
+        }),
+        ('Коммуникации', {
+            'fields': (
+                'heating',
+                'gasification',),
+        }),
+        ('Прочее', {
+            'fields': (
+                'elevator',
+                'parking',
+                'number_of_parking_spaces',
+                'price',
+                'completion_date',
+                'description'),
+        }),
+        ('Системная информация. Заполняется автоматически', {
+            'fields': (
+                'slug',
+                'lat',
+                'lng',
+            ),
+        }
+
+         )
+    )
+    inlines = [BuildingImageTabularInline, LayoutImageTabularInLine, WayFromMetroTabularInLine]
+    change_list_template = "admin/api/property_change_list.html"
+    form = NewBuildingForm
+
+    class Meta:
+        model = models.NewBuilding
+
+    class Media:
+        css = {
+            'all': ('admin/css/api/admin.css',
+                    "https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css",
+                    "admin/css/api/SearchableChoice.css",
+                    )
+        }
+
+        js = (
+            # "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js",
+            "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"
+            # "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
+            # "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js",
+        )
+
+
+class FlatForSaleImageTabularInline(admin.TabularInline):
+    model = models.FlatForSaleImage
+    extra = 1
+    verbose_name = "Изображения квартиры"
+    verbose_name_plural = "Изображения"
+
+
+class FlatForSaleLayoutTabularInline(admin.TabularInline):
+    model = models.FlatForSaleLayout
+    extra = 1
+    verbose_name = "Планировки квартиры"
+    verbose_name_plural = "Планировки"
+
+
+class FlatForSaleModelAdmin(admin.ModelAdmin):
+    form = FlatForSaleForm
+
+    class Meta:
+        model = models.FlatForSale
+
+    inlines = [FlatForSaleImageTabularInline, FlatForSaleLayoutTabularInline]
+
+    class Media:
+        css = {
+            'all': (
+                "https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css",
+                "admin/css/api/SearchableChoice.css",
+            )
+        }
+
+        js = (
+            # "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js",
+            "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"
+            # "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
+            # "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js",
+        )
+
+
+admin.site.register(models.NewBuilding, NewBuildingModelAdmin)
+admin.site.register(models.AdministrativeDistrict, DistrictsModelAdmin)
+admin.site.register(models.Street, StreetsModelAdmin)
+admin.site.register(models.Developer, DeveloperAdmin)
+admin.site.register(models.FlatForSale, FlatForSaleModelAdmin)
+# admin.site.register(models.Test,TestAdmin)
