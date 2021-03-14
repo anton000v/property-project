@@ -1,6 +1,6 @@
 # Configuration for dev
 
-version: '3'
+version: '3.4'
 
 services:
     apn-app:
@@ -17,7 +17,7 @@ services:
         ports:
             - 8000:8000
         env_file:
-            - .dev.env
+            - .env
         depends_on:
             - apn-postgres
         stdin_open: true
@@ -26,8 +26,6 @@ services:
     apn-postgres:
         image: postgres:13-alpine
         restart: always
-#        env_file:
-#            - .dev.env
         ports:
             - "5432:5432"
         environment:
@@ -36,24 +34,18 @@ services:
             POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
         volumes:
             - pgdata:/var/lib/postgresql/data
-            - ./logs:/srv/www/property-project/logs
+            - ./apn-app/logs:/srv/www/apn-app/logs
 
     apn-ui:
-        restart: always
         build:
-            context: ./apn-ui
-            dockerfile: docker/vuejs/Dockerfile
-        volumes:
-            - ./apn-ui/:/srv/www/code
-        expose:
-            - 8080
+          context: ./apn-ui
+          dockerfile: docker/vuejs/Dockerfile
+          target: 'develop-stage'
         ports:
-            - 8080:8080
-            - 8081:8081
-        stdin_open: true
-        tty: true
-        environment:
-            - CHOKIDAR_USEPOLLING=true
+        - '8080:8080'
+        volumes:
+        - ./apn-ui/:/app
+        command: /bin/sh -c "yarn serve"
 
 
 volumes:

@@ -1,11 +1,11 @@
 <template>
   <div
-      class="h-48 relative pt-16 pb-32 flex content-center items-center justify-center"
-      style="min-height: 50vh;"
+      class="h-96 relative pt-16 pb-32 flex content-center items-center justify-center"
+      style="min-height: 60vh;"
     >
       <div
         class="absolute top-0 w-full h-full bg-center bg-cover bg-myPageBackground md:bg-white"
-        :style="{ backgroundImage: 'url(' + require('@/assets/images/header-temp1.jpg') + ')' }">
+        :style="{ backgroundImage: 'url(' + require('@/assets/images/header-apn-1.png') + ')' }">
         
       
         <span
@@ -18,15 +18,16 @@
           <div class="px-4 ml-auto mr-auto">
             <div>
               <!-- <div class=" bg-gray-400"> -->
-                <p class="text-gray-200">- Хочешь?</p>
-                <p class="text-gray-200">- Хочу</p>
-                <h1 class="pt-6 text-white font-semibold text-4xl md:text-5xl text-center">
-                  <span class="bg-myPageBackground border rounded-l-lg p-4 text-myHeaderColor">Ок.</span><span class="p-4 text-myPageBackground border rounded-r-lg">Найдем</span>
-                  <!-- <img :src="require('@/assets/images/logo1.svg')" class="m-auto"> -->
-                </h1>
+<!--                <h1 class="pt-6 text-white font-semibold text-4xl md:text-5xl text-center">-->
+<!--                  <span class="bg-myPageBackground border rounded-l-lg p-4 text-myHeaderColor">Ок.</span><span class="p-4 text-myPageBackground border rounded-r-lg">Найдем</span>-->
+<!--                  &lt;!&ndash; <img :src="require('@/assets/images/logo1.svg')" class="m-auto"> &ndash;&gt;-->
+<!--                </h1>-->
+              <hi class="font-furore text-white text-6xl">
+                Автостопом<br>По<br>Новостроям
+              </hi>
               <!-- </div> -->
               <p class="mt-4 text-lg text-myPageBackground text-center">
-                Поиск новостроев Харькова. 
+                Наверное лучший поиск новостроев Харькова
               </p>
             </div>
           </div>

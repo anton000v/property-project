@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'Furore';
+    font-weight: 400;
+    src: url('../fonts/furore/Furore.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'Furore';
+    font-weight: 700;
+    src: url('../fonts/furore/Furore.otf') format('opentype');
+
+}
+
+@font-face {
+    font-family: 'Furore';
+    font-weight: 900;
+    src: url('../fonts/furore/Furore.otf') format('opentype');
+}

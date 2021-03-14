@@ -2,14 +2,12 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PATHLIB_BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 load_dotenv(dotenv_path=str(PATHLIB_BASE_DIR / '.env'))
 env_path = PATHLIB_BASE_DIR / '.env'
-print('EXISTS: ', env_path ,env_path.exists())
 
 # For russian language in admin interface
 # LANGUAGE_CODE = 'ru'
@@ -158,24 +156,51 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'api/media')
 
 # ----------- LOGGING:
+APN_LOG_CONSOLE_LEVEL = os.environ.get('APN_LOG_LEVEL')
+APN_LOG_FILE_LEVEL = os.environ.get('APN_LOG_FILE_LEVEL')
+APN_LOG_FILE_PATH = os.environ.get('APN_LOG_FILE_PATH')
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            'format': '[{asctime}] {message}',
+            'style': '{',
+        },
+        'file': {
+            'format': '{levelname} [{asctime}] {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
     'handlers': {
         'file': {
-            'level': 'INFO',
+            'level': APN_LOG_FILE_LEVEL,
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs/main.log'),
+            'filename': os.path.join(BASE_DIR, APN_LOG_FILE_PATH),
+        },
+        'console': {
+            'level': APN_LOG_CONSOLE_LEVEL,
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'console',
         },
     },
     'loggers': {
-        'api': {
-            'handlers': ['file'],
+        '': {
+            'handlers': ['file', 'console'],
             'level': 'INFO',
             'propagate': True,
         },
         'django': {
-            'handlers': ['file'],
+            'handlers': ['file', 'console'],
             'propagate': True,
             'level': 'INFO',
         },
@@ -191,14 +216,14 @@ SUPERUSER_USERNAME = os.getenv('SUPERUSER_USERNAME')
 SUPERUSER_PASSWORD = os.getenv('SUPERUSER_PASSWORD')
 
 SWAGGER_SETTINGS = {
-   'SECURITY_DEFINITIONS': {
-      # 'Basic': {
-      #       'type': 'basic'
-      # },
-      'Bearer': {
+    'SECURITY_DEFINITIONS': {
+        # 'Basic': {
+        #       'type': 'basic'
+        # },
+        'Bearer': {
             'type': 'apiKey',
             'name': 'Authorization',
             'in': 'header'
-      }
-   }
+        }
+    }
 }
