@@ -1,12 +1,14 @@
 <template>
   <div
-      class="h-96 relative pt-16 pb-32 flex content-center items-center justify-center"
+      class="relative pt-16 pb-32 flex content-center items-center justify-center"
       style="min-height: 60vh;"
     >
-      <div
-        class="absolute top-0 w-full h-full bg-center bg-cover bg-myPageBackground md:bg-white"
-        :style="{ backgroundImage: 'url(' + require('@/assets/images/header-apn-1.png') + ')' }">
-        
+      <div class="absolute top-0 w-full h-full bg-center bg-cover bg-myPageBackground md:bg-white"
+        >
+        <div 
+        ref="mainHeader"
+        class="absolute w-full h-full bg-cover"
+        :style="{ backgroundImage: 'url(' + require('@/assets/images/header-background.png') + ')'  }"></div>  
       
         <span
           id="blackOverlay"
@@ -29,6 +31,7 @@
               <p class="mt-4 text-lg text-myPageBackground text-center">
                 Наверное лучший поиск новостроев Харькова
               </p>
+
             </div>
           </div>
         </div>
@@ -60,14 +63,26 @@
 
 <script>
 // import { KinesisContainer, KinesisElement} from 'vue-kinesis'
+import {TimelineMax, Linear} from 'gsap'
 
-export default{
+export default {
   // props: ['Header'],
-  data(){
+  data() {
     return {
-      // djangoImagesPathInComponentsFolder:djangoImagesPathInComponentsFolder,
-      // testPath:"../../../../Backend/PropertyProject_engine/api/media/126403.jpg",
+      tween: new TimelineMax({repeat:-1})
     }
   },
+  mounted() {
+    this.tween
+      .to(this.$refs.mainHeader, 60, {
+        backgroundPosition: "-2935px 0px",
+        ease: Linear.easeNone
+      })
+    
+  },
+  methods: {
+    
+  }
 }
 </script>
+
