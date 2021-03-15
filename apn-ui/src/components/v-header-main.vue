@@ -17,14 +17,14 @@
       </div>
       <div class="container relative mx-auto ">
         <div class="items-center flex flex-wrap">
-          <div class="px-4 ml-auto mr-auto">
-            <div>
+          <div class="px-4 m-auto">
+            <div class="text-center">
               <!-- <div class=" bg-gray-400"> -->
 <!--                <h1 class="pt-6 text-white font-semibold text-4xl md:text-5xl text-center">-->
 <!--                  <span class="bg-myPageBackground border rounded-l-lg p-4 text-myHeaderColor">Ок.</span><span class="p-4 text-myPageBackground border rounded-r-lg">Найдем</span>-->
 <!--                  &lt;!&ndash; <img :src="require('@/assets/images/logo1.svg')" class="m-auto"> &ndash;&gt;-->
 <!--                </h1>-->
-              <hi class="font-furore text-white text-6xl">
+              <hi class="font-furore text-white text-center text-4xl md:text-6xl">
                 Автостопом<br>По<br>Новостроям
               </hi>
               <!-- </div> -->
