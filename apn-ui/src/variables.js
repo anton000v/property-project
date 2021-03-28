@@ -105,7 +105,11 @@ export const roomHeightBaseVariables = {
     sendParamNameTo: 'room_height_to'
 }
 export const wallsTypeBaseVariables = {
-    sendParamName : 'walls_type'
+    fullApiAddress: baseApiAddress + "get-walls-types/",
+    dictKey:'walls_types',
+    choiceText:'text_value',
+    dbValueKey:'db_value',
+    sendParamName: 'walls_type',
 }
 export const warmingBaseVariables = {
     sendParamName : 'warming'
@@ -145,6 +149,7 @@ export const kitchenAreaBaseVariables = {
     sendParamNameFrom: 'kitchen_area_from',
     sendParamNameTo: 'kitchen_area_to'
 }
+
 
 // export const extendedSearchActivatedBaseVariables = {
 //     sendParamName: 'extended',

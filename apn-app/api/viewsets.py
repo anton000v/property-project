@@ -69,6 +69,11 @@ class NewBuildingFilter(filters.FilterSet):
         distinct=True
     )
 
+    walls_type = filters.MultipleChoiceFilter(
+        choices=choices.THE_WALLS_TYPE_CHOICES,
+        distinct=True
+    )
+
     # developer = filters.ModelMultipleChoiceFilter(
     #     field_name = 'developer',
     #     to_field_name = 'id',
@@ -90,7 +95,7 @@ class NewBuildingFilter(filters.FilterSet):
     class Meta:
         model = NewBuilding
         fields = ['developer', 'metro', 'time_from_metro', 'the_class', 'number_of_storeys_from',
-                  'number_of_storeys_to', 'room_height_from', 'room_height_to']
+                  'number_of_storeys_to', 'room_height_from', 'room_height_to', 'walls_type']
         # fields = {
         #     'street' : ['icontains']
         # }
@@ -173,13 +178,17 @@ class FlatForSaleFilter(filters.FilterSet):
         lookup_expr='lte',
         distinct=True
     )
+    walls_type = filters.MultipleChoiceFilter(
+        choices=choices.THE_WALLS_TYPE_CHOICES,
+        distinct=True
+    )
 
     class Meta:
         model = FlatForSale
         fields = [
             'developer', 'metro', 'time_from_metro', 'the_class', 'floor_from', 'floor_to', 'rooms_from', 'rooms_to',
             'price_from', 'price_to',
-            'number_of_storeys_from', 'number_of_storeys_to', 'room_height_from', 'room_height_to',
+            'number_of_storeys_from', 'number_of_storeys_to', 'room_height_from', 'room_height_to', 'walls_type'
         ]
 
 
