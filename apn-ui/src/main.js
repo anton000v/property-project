@@ -7,13 +7,25 @@ import router from './router/router.js'
 import VModal from 'vue-js-modal'
 import VueScrollactive from 'vue-scrollactive';
 import Axios from 'axios'
+import {getAuthToken} from "./backend"
 
+// Env files support
+require('dotenv').config()
 
 Vue.prototype.$http = Axios;
-const token = 'Token a94b0c7e4c76acfd71bc6e5ce8432a2b787811da'
+
+// Set token for backend
+const token = getAuthToken();
 if (token) {
-  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+    let prepared_token = `Token ${token}`;
+    console.log("Prepared token: ", prepared_token);
+    Vue.prototype.$http.defaults.headers.common['Authorization'] = prepared_token
+} else {
+    console.log("Can't get an api token")
 }
+
+console.log(Vue.prototype.$http.defaults.headers.common);
+
 
 Vue.use(VueScrollactive);
 
@@ -24,8 +36,8 @@ Vue.config.productionTip = false
 
 
 new Vue({
-  store: store,
-  router:router,
-  // router,
-  render: h => h(App),
+    store: store,
+    router: router,
+    // router,
+    render: h => h(App),
 }).$mount('#app')

@@ -1,6 +1,9 @@
 from django.test import TestCase
-from PropertyProject_api import models
-from PropertyProject_api import choices
+
+from api import choices
+from api import models
+
+
 class YourTestClass(TestCase):
 
     @classmethod

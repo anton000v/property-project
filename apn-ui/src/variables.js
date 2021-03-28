@@ -1,12 +1,12 @@
-export const baseApiAddress = "http://127.0.0.1:8000/api/"
-// export const baseBackendAddress = 'http://127.0.0.1:8000'
+export const baseBackendAddress = 'http://127.0.0.1:8000/'
+export const baseApiAddress = baseBackendAddress + "api/"
 export const saltovkaDBValue = 'sal'
 export const severnayaSaltovkaDBValue = 'ses'
 
 export const saltovkaDBKey = 'saltovka_db_value'
 export const severnayaSaltovkaDBKey = 'severnaya_saltovka_db_value'
 export const houseNumberSendParamName = 'house_number'
-
+export const getApiTokenUrl = baseBackendAddress + 'api-token-auth/'
 
 // export const houseNumberBaseVariables = {
 //     fullApiAddress: baseApiAddress + "get-streets/" ,

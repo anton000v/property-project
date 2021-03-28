@@ -5,7 +5,7 @@ include .dev.env # Switch for dev/prod
 #BINARY_NAME=app
 
 DOCKER_COMPOSE_PATH := -f $(DOCKER_COMPOSE_FILE)
-
+PYTHON_CONTAINER := apn-app
 
 ps:
 	docker-compose $(DOCKER_COMPOSE_PATH) ps
@@ -36,50 +36,71 @@ showlogs:
 	docker-compose $(DOCKER_COMPOSE_PATH) logs -f --tail 100
 
 bash:
-	docker-compose $(DOCKER_COMPOSE_PATH) exec python bash
+	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) bash
 
 runserver:
-	docker-compose $(DOCKER_COMPOSE_PATH) exec python python manage.py runserver 0.0.0.0:8000
+	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) python manage.py runserver 0.0.0.0:8000
 
 collectstatic:
-	docker-compose $(DOCKER_COMPOSE_PATH) exec python python manage.py collectstatic
+	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) python manage.py collectstatic
 
 run: up runserver
 
 django_shell:
-	docker-compose $(DOCKER_COMPOSE_PATH) exec python python manage.py shell
-
-migrations:
-	docker-compose $(DOCKER_COMPOSE_PATH) exec python python manage.py makemigrations
-
-migrate:
-	docker-compose $(DOCKER_COMPOSE_PATH) exec python python manage.py migrate
-
-migrate_fake:
-	docker-compose $(DOCKER_COMPOSE_PATH) exec python python manage.py migrate --fake
-
-migrate_auth:
-	docker-compose $(DOCKER_COMPOSE_PATH) exec python python manage.py migrate auth
-
-migrations_auth:
-	docker-compose $(DOCKER_COMPOSE_PATH) exec python python manage.py makemigrations auth
+	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) python manage.py shell
 
 migrations_api:
-	docker-compose $(DOCKER_COMPOSE_PATH) exec python python manage.py makemigrations api
+	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) python manage.py makemigrations api
+
+migrations:
+	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) python manage.py makemigrations
+
+migrate:
+	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) python manage.py migrate
+
+migrate_fake:
+	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) python manage.py migrate --fake
+
+migrate_auth:
+	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) python manage.py migrate auth
+
+migrations_auth:
+	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) python manage.py makemigrations auth
+
+migrations_api:
+	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) python manage.py makemigrations api
 
 init_db: migrate migrations_api migrate
 
 showmigrations:
-	docker-compose $(DOCKER_COMPOSE_PATH) exec python python manage.py showmigrations
+	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) python manage.py showmigrations
 
 test:
-	docker-compose $(DOCKER_COMPOSE_PATH) exec python python manage.py test
+	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) python manage.py test
 
 install_requirements:
-	docker-compose $(DOCKER_COMPOSE_PATH) exec python pip install -r requirements.txt
+	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) pip install -r requirements.txt
 
 db_shell:
 	docker-compose $(DOCKER_COMPOSE_PATH) exec postgres psql -U $(POSTGRES_USER) ${POSTGRES_DB}
 
 showlogs:
 	docker-compose $(DOCKER_COMPOSE_PATH) logs -f --tail 100
+
+create_frontend_user:
+	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) python manage.py create_frontend_user
+
+createsuperuser:
+	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) python manage.py create_superuser
+
+fill_administrative_districts_todb:
+	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) python manage.py fill_administrative_districts_todb
+
+fill_streets_todb:
+	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) python manage.py fill_streets_todb
+
+main_app_configure: createsuperuser create_frontend_user fill_administrative_districts_todb fill_streets_todb
+
+
+
+

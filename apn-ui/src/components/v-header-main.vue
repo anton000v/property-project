@@ -73,6 +73,7 @@ export default {
     }
   },
   mounted() {
+    // Based on https://greensock.com/forums/topic/17160-moving-background/
     this.tween
       .to(this.$refs.mainHeader, 60, {
         backgroundPosition: "-2935px 0px",

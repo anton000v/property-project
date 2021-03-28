@@ -13,8 +13,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         try:
             user = User.objects.create_user(
-                username=settings.FRONTEND_USERNAME,
-                password=settings.FRONTEND_PASSWORD,
+                username=settings.VUE_APP_API_USERNAME,
+                password=settings.VUE_APP_API_PASS,
             )
             user.save()
             user.is_active = True

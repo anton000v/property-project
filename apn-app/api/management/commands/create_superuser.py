@@ -14,7 +14,7 @@ class Command(BaseCommand):
         try:
             user = User.objects.create_user(
                 username=settings.SUPERUSER_USERNAME,
-                password=settings.SUPERUSER_PASSWORD,
+                password=settings.SUPERUSER_PASS,
             )
             user.save()
             user.is_staff = user.is_active = user.is_superuser = True
