@@ -687,22 +687,22 @@
                   <label
                       class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4"
                       for="grid-last-name">
-                    Класс
+                    Утепление стен
                   </label>
                   <div name="field" class="w-full">
                     <MultipleSelect
                         @selectClose="search"
                         @activateExtendedSearch="isExtendedSearchActivated=true"
-                        :dbValueKey="theClassBaseVariables.dbValueKey"
-                        :fieldChoiceText="theClassBaseVariables.choiceText"
-                        :dictKey="theClassBaseVariables.dictKey"
-                        :apiAddress="theClassBaseVariables.fullApiAddress"
-                        :sendParamName="theClassBaseVariables.sendParamName"
+                        :dbValueKey="warmingBaseVariables.dbValueKey"
+                        :fieldChoiceText="warmingBaseVariables.choiceText"
+                        :dictKey="warmingBaseVariables.dictKey"
+                        :apiAddress="warmingBaseVariables.fullApiAddress"
+                        :sendParamName="warmingBaseVariables.sendParamName"
                         :addAction="addFindParam"
                         :removeAction="removeFindParam"
                         :removeKeyAction="removeFindParamKey"
                         :isForExtendedSearch="true"
-                        placeholder="Выберите класс"
+                        placeholder="Выберите утепление"
                     />
                   </div>
                 </div>
@@ -814,7 +814,9 @@ import {
   priceBaseVariables,
   numberOfStoreysBaseVariables,
   roomHeightBaseVariables,
-  wallsTypeBaseVariables
+  wallsTypeBaseVariables,
+  heatingBaseVariables,
+  warmingBaseVariables
 } from '../variables.js';
 import {mapMutations, mapActions, mapGetters} from 'vuex'
 import HomeSearchIcon from 'vue-material-design-icons/HomeSearch';
@@ -861,6 +863,8 @@ export default {
       numberOfStoreysBaseVariables: numberOfStoreysBaseVariables,
       roomHeightBaseVariables: roomHeightBaseVariables,
       wallsTypeBaseVariables: wallsTypeBaseVariables,
+      heatingBaseVariables: heatingBaseVariables,
+      warmingBaseVariables: warmingBaseVariables,
       dataReady: false,
       isExtendedSearchActivated: false,
 

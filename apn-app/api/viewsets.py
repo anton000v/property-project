@@ -21,10 +21,7 @@ from .serializers import (
 BOOLEAN_CHOICES = (('false', 'False'), ('true', 'True'),)
 
 
-class NewBuildingFilter(filters.FilterSet):
-    '''
-    Класс отвечающий за фильтрацию Новостроев
-    '''
+class BuildingFiltersMixin(filters.FilterSet):
     developer = filters.ModelMultipleChoiceFilter(
         field_name='developer',
         to_field_name='id',
@@ -74,60 +71,112 @@ class NewBuildingFilter(filters.FilterSet):
         distinct=True
     )
 
+    heating = filters.MultipleChoiceFilter(
+        choices=choices.THE_HEATING_CHOICES,
+        distinct=True
+    )
+
+    warming = filters.MultipleChoiceFilter(
+        choices=choices.THE_WARMING_CHOICES,
+        distinct=True
+    )
+
+
+class NewBuildingFilter(BuildingFiltersMixin, filters.FilterSet):
+    '''
+    Класс отвечающий за фильтрацию Новостроев
+    '''
+
     # developer = filters.ModelMultipleChoiceFilter(
-    #     field_name = 'developer',
-    #     to_field_name = 'id',
-    #     queryset = Developer.objects.all(),
-    # )
-    # street = NumberInFilter(field_name='street__id', lookup_expr='in')
-    # street = filters.ModelMultipleChoiceFilter(
-    #     field_name='street',
+    #     field_name='developer',
     #     to_field_name='id',
-    #     queryset=Street.objects.all(),
+    #     queryset=Developer.objects.all(),
+    #     distinct=True
     # )
-    # administrative_district = filters.ModelMultipleChoiceFilter(
-    #     field_name='administrative_district',
-    #     to_field_name='id',
-    #     queryset=AdministrativeDistrict.objects.all(),
+    # metro = filters.MultipleChoiceFilter(
+    #     field_name='ways_from_metro__metro',
+    #     # to_field_name = 'metro',
+    #     choices=choices.THE_METRO_CHOICES,
+    #     distinct=True
     # )
-    # flag = filters.TypedChoiceFilter(choices=BOOLEAN_CHOICES,)
-    # coerce=strtobool)
+    # time_from_metro = filters.NumberFilter(
+    #     field_name='ways_from_metro__time',
+    #     lookup_expr='lte',
+    #     distinct=True
+    # )
+    # the_class = filters.MultipleChoiceFilter(
+    #     # field_name = 'ways_from_metro__metro',
+    #     # to_field_name = 'metro',
+    #     choices=choices.THE_CLASS_CHOICES,
+    #     distinct=True
+    # )
+    # number_of_storeys_from = filters.NumberFilter(
+    #     field_name='number_of_storeys',
+    #     lookup_expr='gte',
+    #     distinct=True
+    # )
+    # number_of_storeys_to = filters.NumberFilter(
+    #     field_name='number_of_storeys',
+    #     lookup_expr='lte',
+    #     distinct=True
+    # )
+    # room_height_from = filters.NumberFilter(
+    #     field_name='room_height',
+    #     lookup_expr='gte',
+    #     distinct=True
+    # )
+    # room_height_to = filters.NumberFilter(
+    #     field_name='room_height',
+    #     lookup_expr='lte',
+    #     distinct=True
+    # )
+
+    # walls_type = filters.MultipleChoiceFilter(
+    #     choices=choices.THE_WALLS_TYPE_CHOICES,
+    #     distinct=True
+    # )
+    #
+    # heating = filters.MultipleChoiceFilter(
+    #     choices=choices.THE_HEATING_CHOICES,
+    #     distinct=True
+    # )
+
     class Meta:
         model = NewBuilding
         fields = ['developer', 'metro', 'time_from_metro', 'the_class', 'number_of_storeys_from',
-                  'number_of_storeys_to', 'room_height_from', 'room_height_to', 'walls_type']
+                  'number_of_storeys_to', 'room_height_from', 'room_height_to', 'walls_type', 'heating', 'warming']
         # fields = {
         #     'street' : ['icontains']
         # }
 
 
-class FlatForSaleFilter(filters.FilterSet):
+class FlatForSaleFilter(BuildingFiltersMixin, filters.FilterSet):
     '''
     Класс отвечающий за фильтрацию квартир
     '''
-    developer = filters.ModelMultipleChoiceFilter(
-        field_name='building__developer',
-        to_field_name='id',
-        queryset=Developer.objects.all(),
-        distinct=True
-    )
-    metro = filters.MultipleChoiceFilter(
-        field_name='building__ways_from_metro__metro',
-        # to_field_name = 'metro',
-        choices=choices.THE_METRO_CHOICES,
-        distinct=True
-    )
-    time_from_metro = filters.NumberFilter(
-        field_name='building__ways_from_metro__time',
-        lookup_expr='lte',
-        distinct=True
-    )
-    the_class = filters.MultipleChoiceFilter(
-        field_name='building__the_class',
-        # to_field_name = 'metro',
-        choices=choices.THE_CLASS_CHOICES,
-        distinct=True
-    )
+    # developer = filters.ModelMultipleChoiceFilter(
+    #     field_name='building__developer',
+    #     to_field_name='id',
+    #     queryset=Developer.objects.all(),
+    #     distinct=True
+    # )
+    # metro = filters.MultipleChoiceFilter(
+    #     field_name='building__ways_from_metro__metro',
+    #     # to_field_name = 'metro',
+    #     choices=choices.THE_METRO_CHOICES,
+    #     distinct=True
+    # )
+    # time_from_metro = filters.NumberFilter(
+    #     field_name='building__ways_from_metro__time',
+    #     lookup_expr='lte',
+    #     distinct=True
+    # )
+    # the_class = filters.MultipleChoiceFilter(
+    #     field_name='building__the_class',
+    #     # to_field_name = 'metro',
+    #     choices=choices.THE_CLASS_CHOICES,
+    #     distinct=True
+    # )
     floor_from = filters.NumberFilter(
         field_name='floor',
         lookup_expr='gte',
@@ -158,37 +207,43 @@ class FlatForSaleFilter(filters.FilterSet):
         lookup_expr='lte',
         distinct=True
     )
-    number_of_storeys_from = filters.NumberFilter(
-        field_name='building__number_of_storeys',
-        lookup_expr='gte',
-        distinct=True
-    )
-    number_of_storeys_to = filters.NumberFilter(
-        field_name='building__number_of_storeys',
-        lookup_expr='lte',
-        distinct=True
-    )
-    room_height_from = filters.NumberFilter(
-        field_name='building__room_height',
-        lookup_expr='gte',
-        distinct=True
-    )
-    room_height_to = filters.NumberFilter(
-        field_name='building__room_height',
-        lookup_expr='lte',
-        distinct=True
-    )
-    walls_type = filters.MultipleChoiceFilter(
-        choices=choices.THE_WALLS_TYPE_CHOICES,
-        distinct=True
-    )
+
+    # number_of_storeys_from = filters.NumberFilter(
+    #     field_name='building__number_of_storeys',
+    #     lookup_expr='gte',
+    #     distinct=True
+    # )
+    # number_of_storeys_to = filters.NumberFilter(
+    #     field_name='building__number_of_storeys',
+    #     lookup_expr='lte',
+    #     distinct=True
+    # )
+    # room_height_from = filters.NumberFilter(
+    #     field_name='building__room_height',
+    #     lookup_expr='gte',
+    #     distinct=True
+    # )
+    # room_height_to = filters.NumberFilter(
+    #     field_name='building__room_height',
+    #     lookup_expr='lte',
+    #     distinct=True
+    # )
+    # walls_type = filters.MultipleChoiceFilter(
+    #     choices=choices.THE_WALLS_TYPE_CHOICES,
+    #     distinct=True
+    # )
+    # heating = filters.MultipleChoiceFilter(
+    #     choices=choices.THE_HEATING_CHOICES,
+    #     distinct=True
+    # )
 
     class Meta:
         model = FlatForSale
         fields = [
             'developer', 'metro', 'time_from_metro', 'the_class', 'floor_from', 'floor_to', 'rooms_from', 'rooms_to',
             'price_from', 'price_to',
-            'number_of_storeys_from', 'number_of_storeys_to', 'room_height_from', 'room_height_to', 'walls_type'
+            'number_of_storeys_from', 'number_of_storeys_to', 'room_height_from', 'room_height_to', 'walls_type',
+            'heating', 'warming'
         ]
 
 

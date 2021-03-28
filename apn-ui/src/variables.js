@@ -112,10 +112,18 @@ export const wallsTypeBaseVariables = {
     sendParamName: 'walls_type',
 }
 export const warmingBaseVariables = {
+    fullApiAddress: baseApiAddress + "get-warming-types/",
+    dictKey:'warming_types',
+    choiceText:'text_value',
+    dbValueKey:'db_value',
     sendParamName : 'warming'
 }
 export const heatingBaseVariables = {
-    sendParamName : 'heating'
+    sendParamName : 'heating',
+    fullApiAddress: baseApiAddress + "get-heating-types/",
+    dictKey:'heating_types',
+    choiceText:'text_value',
+    dbValueKey:'db_value',
 }
 export const parkingBaseVariables = {
     sendParamName : 'parking'

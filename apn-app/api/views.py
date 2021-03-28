@@ -264,7 +264,7 @@ class APIGetWarmingTypesChoices(APIView):
                                  choices.THE_WARMING_CHOICES[1:]]
         if (not warming_types_choices):
             raise Exception('Warming types choices is empty')
-        return Response({'warming_types_choices': warming_types_choices})
+        return Response({'warming_types': warming_types_choices})
 
 
 class APIGetHeatingTypesChoices(APIView):
@@ -277,7 +277,7 @@ class APIGetHeatingTypesChoices(APIView):
                                  choices.THE_HEATING_CHOICES[1:]]
         if (not heating_types_choices):
             raise Exception('Heating types choices is empty')
-        return Response({'heating_types_choices': heating_types_choices})
+        return Response({'heating_types': heating_types_choices})
 
 
 class APIGetParkingTypesChoices(APIView):
@@ -290,4 +290,4 @@ class APIGetParkingTypesChoices(APIView):
                                  choices.THE_HEATING_CHOICES[1:]]
         if (not parking_types_choices):
             raise Exception('Parking types choices is empty')
-        return Response({'parking_types_choices': parking_types_choices})
+        return Response({'parking_types': parking_types_choices})
