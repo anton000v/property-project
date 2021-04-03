@@ -21,7 +21,7 @@ from .serializers import (
 BOOLEAN_CHOICES = (('false', 'False'), ('true', 'True'),)
 
 
-class BuildingFiltersMixin(filters.FilterSet):
+class BaseBuildingFilter(filters.FilterSet):
     developer = filters.ModelMultipleChoiceFilter(
         field_name='developer',
         to_field_name='id',
@@ -81,102 +81,37 @@ class BuildingFiltersMixin(filters.FilterSet):
         distinct=True
     )
 
+    parking = filters.MultipleChoiceFilter(
+        choices=choices.THE_PARKING_CHOICES,
+        distinct=True,
+        method='filter_parking_multiselect_field'
+    )
 
-class NewBuildingFilter(BuildingFiltersMixin, filters.FilterSet):
+    class Meta:
+        fields = ('developer', 'metro', 'time_from_metro', 'the_class', 'number_of_storeys_from',
+                  'number_of_storeys_to', 'room_height_from', 'room_height_to', 'walls_type', 'heating', 'warming', 'parking')
+
+    def filter_parking_multiselect_field(self, queryset, name, parkings):
+        q_parking = Q()
+        for parking in parkings:
+            q_parking |= Q(parking__contains=parking)
+        return queryset.filter(q_parking)
+
+
+class NewBuildingFilter(BaseBuildingFilter):
     '''
     Класс отвечающий за фильтрацию Новостроев
     '''
 
-    # developer = filters.ModelMultipleChoiceFilter(
-    #     field_name='developer',
-    #     to_field_name='id',
-    #     queryset=Developer.objects.all(),
-    #     distinct=True
-    # )
-    # metro = filters.MultipleChoiceFilter(
-    #     field_name='ways_from_metro__metro',
-    #     # to_field_name = 'metro',
-    #     choices=choices.THE_METRO_CHOICES,
-    #     distinct=True
-    # )
-    # time_from_metro = filters.NumberFilter(
-    #     field_name='ways_from_metro__time',
-    #     lookup_expr='lte',
-    #     distinct=True
-    # )
-    # the_class = filters.MultipleChoiceFilter(
-    #     # field_name = 'ways_from_metro__metro',
-    #     # to_field_name = 'metro',
-    #     choices=choices.THE_CLASS_CHOICES,
-    #     distinct=True
-    # )
-    # number_of_storeys_from = filters.NumberFilter(
-    #     field_name='number_of_storeys',
-    #     lookup_expr='gte',
-    #     distinct=True
-    # )
-    # number_of_storeys_to = filters.NumberFilter(
-    #     field_name='number_of_storeys',
-    #     lookup_expr='lte',
-    #     distinct=True
-    # )
-    # room_height_from = filters.NumberFilter(
-    #     field_name='room_height',
-    #     lookup_expr='gte',
-    #     distinct=True
-    # )
-    # room_height_to = filters.NumberFilter(
-    #     field_name='room_height',
-    #     lookup_expr='lte',
-    #     distinct=True
-    # )
-
-    # walls_type = filters.MultipleChoiceFilter(
-    #     choices=choices.THE_WALLS_TYPE_CHOICES,
-    #     distinct=True
-    # )
-    #
-    # heating = filters.MultipleChoiceFilter(
-    #     choices=choices.THE_HEATING_CHOICES,
-    #     distinct=True
-    # )
-
-    class Meta:
+    class Meta(BaseBuildingFilter.Meta):
         model = NewBuilding
-        fields = ['developer', 'metro', 'time_from_metro', 'the_class', 'number_of_storeys_from',
-                  'number_of_storeys_to', 'room_height_from', 'room_height_to', 'walls_type', 'heating', 'warming']
-        # fields = {
-        #     'street' : ['icontains']
-        # }
 
 
-class FlatForSaleFilter(BuildingFiltersMixin, filters.FilterSet):
+class FlatForSaleFilter(BaseBuildingFilter):
     '''
     Класс отвечающий за фильтрацию квартир
     '''
-    # developer = filters.ModelMultipleChoiceFilter(
-    #     field_name='building__developer',
-    #     to_field_name='id',
-    #     queryset=Developer.objects.all(),
-    #     distinct=True
-    # )
-    # metro = filters.MultipleChoiceFilter(
-    #     field_name='building__ways_from_metro__metro',
-    #     # to_field_name = 'metro',
-    #     choices=choices.THE_METRO_CHOICES,
-    #     distinct=True
-    # )
-    # time_from_metro = filters.NumberFilter(
-    #     field_name='building__ways_from_metro__time',
-    #     lookup_expr='lte',
-    #     distinct=True
-    # )
-    # the_class = filters.MultipleChoiceFilter(
-    #     field_name='building__the_class',
-    #     # to_field_name = 'metro',
-    #     choices=choices.THE_CLASS_CHOICES,
-    #     distinct=True
-    # )
+
     floor_from = filters.NumberFilter(
         field_name='floor',
         lookup_expr='gte',
@@ -208,43 +143,12 @@ class FlatForSaleFilter(BuildingFiltersMixin, filters.FilterSet):
         distinct=True
     )
 
-    # number_of_storeys_from = filters.NumberFilter(
-    #     field_name='building__number_of_storeys',
-    #     lookup_expr='gte',
-    #     distinct=True
-    # )
-    # number_of_storeys_to = filters.NumberFilter(
-    #     field_name='building__number_of_storeys',
-    #     lookup_expr='lte',
-    #     distinct=True
-    # )
-    # room_height_from = filters.NumberFilter(
-    #     field_name='building__room_height',
-    #     lookup_expr='gte',
-    #     distinct=True
-    # )
-    # room_height_to = filters.NumberFilter(
-    #     field_name='building__room_height',
-    #     lookup_expr='lte',
-    #     distinct=True
-    # )
-    # walls_type = filters.MultipleChoiceFilter(
-    #     choices=choices.THE_WALLS_TYPE_CHOICES,
-    #     distinct=True
-    # )
-    # heating = filters.MultipleChoiceFilter(
-    #     choices=choices.THE_HEATING_CHOICES,
-    #     distinct=True
-    # )
-
-    class Meta:
+    class Meta(BaseBuildingFilter.Meta):
         model = FlatForSale
-        fields = [
-            'developer', 'metro', 'time_from_metro', 'the_class', 'floor_from', 'floor_to', 'rooms_from', 'rooms_to',
+        fields = (
+            'floor_from', 'floor_to', 'rooms_from', 'rooms_to',
             'price_from', 'price_to',
-            'number_of_storeys_from', 'number_of_storeys_to', 'room_height_from', 'room_height_to', 'walls_type',
-            'heating', 'warming'
-        ]
+        ) + BaseBuildingFilter.Meta.fields
 
 
 class NewBuildingViewSet(viewsets.ReadOnlyModelViewSet):
@@ -263,7 +167,7 @@ class NewBuildingViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_serializer_class(self):
         '''
-        Метод, который возвращает класс сериализатора. 
+        Метод, который возвращает класс сериализатора.
         Переопределяем, чтобы для разных действий были разные сериализаторы
         '''
 

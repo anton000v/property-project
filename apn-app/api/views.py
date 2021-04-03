@@ -287,7 +287,7 @@ class APIGetParkingTypesChoices(APIView):
 
     def get(self, request):
         parking_types_choices = [{'db_value': item[0], 'text_value': item[1]} for item in
-                                 choices.THE_HEATING_CHOICES[1:]]
+                                 choices.THE_PARKING_CHOICES[1:]]
         if (not parking_types_choices):
             raise Exception('Parking types choices is empty')
         return Response({'parking_types': parking_types_choices})

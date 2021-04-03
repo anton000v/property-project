@@ -126,7 +126,11 @@ export const heatingBaseVariables = {
     dbValueKey:'db_value',
 }
 export const parkingBaseVariables = {
-    sendParamName : 'parking'
+    sendParamName : 'parking',
+    fullApiAddress: baseApiAddress + "get-parking-types/",
+    dictKey:'parking_types',
+    choiceText:'text_value',
+    dbValueKey:'db_value',
 }
 
 // For flats

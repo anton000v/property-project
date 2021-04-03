@@ -733,37 +733,26 @@
                 </div>
                 <div class="w-full md:w-1/4 px-3  border-l rounded">
                   <label
-                      class="block text-xs md:text-sm lg:text-base  font-bold text-gray-500  md:text-left mb-1 md:mb-0 pr-4"
+                      class="block text-xs md:text-sm lg:text-base text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4"
                       for="grid-last-name">
-                    Высота потолка
+                    Паркинг
                   </label>
-                  <div class="w-4/5 md:w-full m-auto">
-                    <div class="flex  justify-center items-center">
-                      <div class="">
-                        <vInputSearch
-                            @valueChanged="search"
-                            @activateExtendedSearch="isExtendedSearchActivated=true"
-                            :addAction="addFindParam"
-                            :removeAction="removeFindParam"
-                            :sendParamName="roomHeightBaseVariables.sendParamNameFrom"
-                            :removeKeyAction="removeFindParamKey"
-                            :isForExtendedSearch="true"
-                        />
-                      </div>
-                      <div class="px-2 text-xs md:text-sm lg:text-base">
-                        -
-                      </div>
-                      <div class="">
-                        <vInputSearch
-                            @valueChanged="search"
-                            @activateExtendedSearch="isExtendedSearchActivated=true"
-                            :addAction="addFindParam"
-                            :removeAction="removeFindParam"
-                            :sendParamName="roomHeightBaseVariables.sendParamNameTo"
-                            :removeKeyAction="removeFindParamKey"
-                            :isForExtendedSearch="true"
-                        />
-                      </div>
+                  <div name="field" class="w-full">
+                    <div class="">
+                      <MultipleSelect
+                          @selectClose="search"
+                          @activateExtendedSearch="isExtendedSearchActivated=true"
+                          :dbValueKey="parkingBaseVariables.dbValueKey"
+                          :fieldChoiceText="parkingBaseVariables.choiceText"
+                          :dictKey="parkingBaseVariables.dictKey"
+                          :apiAddress="parkingBaseVariables.fullApiAddress"
+                          :sendParamName="parkingBaseVariables.sendParamName"
+                          :addAction="addFindParam"
+                          :removeAction="removeFindParam"
+                          :removeKeyAction="removeFindParamKey"
+                          :isForExtendedSearch="true"
+                          placeholder="Выберите паркинг"
+                      />
                     </div>
                   </div>
                 </div>
@@ -805,7 +794,8 @@ import {
   roomHeightBaseVariables,
   wallsTypeBaseVariables,
   heatingBaseVariables,
-  warmingBaseVariables
+  warmingBaseVariables,
+  parkingBaseVariables
 } from '../variables.js';
 import {mapMutations, mapActions, mapGetters} from 'vuex'
 import HomeSearchIcon from 'vue-material-design-icons/HomeSearch';
@@ -854,6 +844,7 @@ export default {
       wallsTypeBaseVariables: wallsTypeBaseVariables,
       heatingBaseVariables: heatingBaseVariables,
       warmingBaseVariables: warmingBaseVariables,
+      parkingBaseVariables: parkingBaseVariables,
       dataReady: false,
       isExtendedSearchActivated: false,
 

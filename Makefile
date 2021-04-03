@@ -35,6 +35,9 @@ rebuild: down build up ps
 showlogs:
 	docker-compose $(DOCKER_COMPOSE_PATH) logs -f --tail 100
 
+show-python-logs:
+	docker-compose $(DOCKER_COMPOSE_PATH) logs -f --tail 100 $(PYTHON_CONTAINER)
+
 bash:
 	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) bash
 
