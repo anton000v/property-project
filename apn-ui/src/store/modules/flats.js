@@ -3,20 +3,11 @@ import { flatsBaseVariables } from '../../variables'
 
 export default {
     actions: {
-
         async searchFlats(ctx, findParams={}){
             const qs = require('qs');
-            // const axios = require('axios');
             const searchId = qs.stringify(findParams, {arrayFormat: 'repeat'})
-            this.$http.get(`${flatsBaseVariables}?${searchId}`,
-            // {
-            //  searchId,
-            // paramsSerializer: params => {
-            //     // console.log('Find params while searching: ')
-            //     // console.log(qs.stringify(params, {arrayFormat: 'repeat'}))  
-            //     return qs.stringify(params, {arrayFormat: 'repeat'})
-            // }
-            // }
+            console.log("HTTP OBJECT:", this.$http)
+            this._vm.$http.get(`${flatsBaseVariables.fullApiAddress}?${searchId}`,
             ).then(resp => {
                 const foundFlats = resp.data.results
                 const flatsCount = resp.data.count

@@ -22,6 +22,9 @@ BOOLEAN_CHOICES = (('false', 'False'), ('true', 'True'),)
 
 
 class BaseBuildingFilter(filters.FilterSet):
+    FIELD_NAME_PREFIX = ''  # Base field name prefix.
+    # We can override it to the child classes for adding prefix to all filterset's fields
+
     developer = filters.ModelMultipleChoiceFilter(
         field_name='developer',
         to_field_name='id',
@@ -40,8 +43,7 @@ class BaseBuildingFilter(filters.FilterSet):
         distinct=True
     )
     the_class = filters.MultipleChoiceFilter(
-        # field_name = 'ways_from_metro__metro',
-        # to_field_name = 'metro',
+        field_name='the_class',
         choices=choices.THE_CLASS_CHOICES,
         distinct=True
     )
@@ -67,21 +69,25 @@ class BaseBuildingFilter(filters.FilterSet):
     )
 
     walls_type = filters.MultipleChoiceFilter(
+        field_name='walls_type',
         choices=choices.THE_WALLS_TYPE_CHOICES,
         distinct=True
     )
 
     heating = filters.MultipleChoiceFilter(
+        field_name='heating',
         choices=choices.THE_HEATING_CHOICES,
         distinct=True
     )
 
     warming = filters.MultipleChoiceFilter(
+        field_name='warming',
         choices=choices.THE_WARMING_CHOICES,
         distinct=True
     )
 
     parking = filters.MultipleChoiceFilter(
+        field_name='parking',
         choices=choices.THE_PARKING_CHOICES,
         distinct=True,
         method='filter_parking_multiselect_field'
@@ -89,12 +95,29 @@ class BaseBuildingFilter(filters.FilterSet):
 
     class Meta:
         fields = ('developer', 'metro', 'time_from_metro', 'the_class', 'number_of_storeys_from',
-                  'number_of_storeys_to', 'room_height_from', 'room_height_to', 'walls_type', 'heating', 'warming', 'parking')
+                  'number_of_storeys_to', 'room_height_from', 'room_height_to', 'walls_type', 'heating', 'warming',
+                  'parking')
+
+    # TODO: change it maybe to metaclass. Prodblem in that the flat doesn't have an 'developer' field e.g., it has
+    # building__developer
+
+    def __init__(self, *args, **kwargs):
+        """ Add FIELD_NAME_PREFIX to all filterset's fields
+        Can be helpful for child fields that have another filter's 'field_name' attribute
+        """
+        if self.FIELD_NAME_PREFIX:
+            for field_meta in BaseBuildingFilter.Meta.fields:
+                current_field_name = BaseBuildingFilter.base_filters[field_meta].field_name
+                BaseBuildingFilter.base_filters[field_meta].field_name = self.FIELD_NAME_PREFIX + current_field_name
+        super().__init__(*args, **kwargs)
 
     def filter_parking_multiselect_field(self, queryset, name, parkings):
         q_parking = Q()
+        parking_field_name = self.base_filters['parking'].field_name + '__contains'
         for parking in parkings:
-            q_parking |= Q(parking__contains=parking)
+            # q_parking |= Q(parking__contains=parking)
+            q_parking |= Q(**{
+                parking_field_name: parking})  # This construction allow us use parking_field_name like dynamic lookup field name
         return queryset.filter(q_parking)
 
 
@@ -111,6 +134,8 @@ class FlatForSaleFilter(BaseBuildingFilter):
     '''
     Класс отвечающий за фильтрацию квартир
     '''
+
+    FIELD_NAME_PREFIX = 'building__'
 
     floor_from = filters.NumberFilter(
         field_name='floor',
@@ -146,9 +171,9 @@ class FlatForSaleFilter(BaseBuildingFilter):
     class Meta(BaseBuildingFilter.Meta):
         model = FlatForSale
         fields = (
-            'floor_from', 'floor_to', 'rooms_from', 'rooms_to',
-            'price_from', 'price_to',
-        ) + BaseBuildingFilter.Meta.fields
+                     'floor_from', 'floor_to', 'rooms_from', 'rooms_to',
+                     'price_from', 'price_to',
+                 ) + BaseBuildingFilter.Meta.fields
 
 
 class NewBuildingViewSet(viewsets.ReadOnlyModelViewSet):
