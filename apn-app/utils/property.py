@@ -17,6 +17,8 @@ class House:
         self.address_components = ''
         self.google_geometry = ''
 
+        assert self.key, "There are no google personal key"
+
     def send_request(self, letter):
         url = "https://maps.googleapis.com/maps/api/geocode/json"
         params = {'address': '{} {} {} {}{}'.format(self.country, self.city, self.street, self.house_number, letter),
