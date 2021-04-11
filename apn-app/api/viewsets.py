@@ -108,12 +108,14 @@ class BaseBuildingFilter(filters.FilterSet):
         if self.FIELD_NAME_PREFIX:
             for field_meta in BaseBuildingFilter.Meta.fields:
                 current_field_name = BaseBuildingFilter.base_filters[field_meta].field_name
-                BaseBuildingFilter.base_filters[field_meta].field_name = self.FIELD_NAME_PREFIX + current_field_name
+                if not current_field_name.startswith(self.FIELD_NAME_PREFIX):
+                    BaseBuildingFilter.base_filters[field_meta].field_name = self.FIELD_NAME_PREFIX + current_field_name
         super().__init__(*args, **kwargs)
 
     def filter_parking_multiselect_field(self, queryset, name, parkings):
         q_parking = Q()
         parking_field_name = self.base_filters['parking'].field_name + '__contains'
+
         for parking in parkings:
             # q_parking |= Q(parking__contains=parking)
             q_parking |= Q(**{
