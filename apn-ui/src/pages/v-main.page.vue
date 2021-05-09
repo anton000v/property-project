@@ -1,9 +1,7 @@
 <template>
   <div>
     <div>
-      <div class="text-center">
-        Краткая справочная информация должна быть тут
-      </div>
+      <vShortManual></vShortManual>
     </div>
     <div class="mt-20">
       <vSearchPage/>
@@ -13,10 +11,12 @@
 
 <script>
 import vSearchPage from '../pages/v-search-buildings-page'
+import vShortManual from '../components/v-short-manual'
 
 export default {
   components: {
-    vSearchPage
+    vSearchPage,
+    vShortManual
   }
 }
 </script>
