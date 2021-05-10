@@ -148,12 +148,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 
-# All settings common to all environments
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'api/static')
+# # All settings common to all environments
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'api/static')
+
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    STATIC_DIR,
+]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'api/media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # ----------- LOGGING:
 APN_LOG_CONSOLE_LEVEL = os.environ.get('APN_LOG_LEVEL')

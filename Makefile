@@ -6,6 +6,8 @@ include .dev.env # Switch for dev/prod
 
 DOCKER_COMPOSE_PATH := -f $(DOCKER_COMPOSE_FILE)
 PYTHON_CONTAINER := apn-app
+VUEJS_CONTAINER := apn-ui
+
 
 ps:
 	docker-compose $(DOCKER_COMPOSE_PATH) ps
@@ -104,6 +106,7 @@ fill_streets_todb:
 
 main_app_configure: createsuperuser create_frontend_user fill_administrative_districts_todb fill_streets_todb
 
-
+frontbuild:
+	docker-compose $(DOCKER_COMPOSE_PATH) exec $(VUEJS_CONTAINER) npm run build
 
 

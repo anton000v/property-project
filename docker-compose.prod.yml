@@ -1,0 +1,75 @@
+# Configuration for dev
+
+version: '3.4'
+
+services:
+    apn-server:
+        restart: always
+        image: nginx:1.17
+        expose:
+            - 8080
+        ports:
+            - "80:8080"
+            - "443:443"
+        command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+        volumes:
+            - ./apn-app/static:/srv/www/apn-app/static # Backend part
+            - ./apn-app/media:/srv/www/apn-app/media # Backend part
+            - ./apn-ui/dist:/srv/www/apn-ui/dist # Frontend part
+            - ./docker/nginx:/etc/nginx/conf.d
+        depends_on:
+            - python
+            - certbot
+
+    apn-app:
+        restart: always
+        build:
+            context: ./apn-app/
+            dockerfile: docker/python/Dockerfile
+        volumes:
+            - ./apn-app/:/srv/www/apn-app
+        links:
+          - apn-postgres:apn-postgres
+        expose:
+          - 8000
+        ports:
+            - 8000:8000
+        env_file:
+            - .env
+        depends_on:
+            - apn-postgres
+        stdin_open: true
+        tty: true
+
+    apn-postgres:
+        image: postgres:13-alpine
+        restart: always
+        ports:
+            - "5432:5432"
+        environment:
+            POSTGRES_DB: "${POSTGRES_DB}"
+            POSTGRES_USER: "${POSTGRES_USER}"
+            POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+            - ./apn-app/logs:/srv/www/apn-app/logs
+
+    apn-ui:
+        build:
+          context: ./apn-ui
+          dockerfile: docker/vuejs/Dockerfile
+          target: 'build-stage' # just build our dist/ code
+        ports:
+        - '8080:8080'
+        env_file:
+              - .env
+        volumes:
+        - ./apn-ui/:/app
+        command: /bin/sh -c "yarn serve"
+
+
+volumes:
+    pgdata:
+
+
+
