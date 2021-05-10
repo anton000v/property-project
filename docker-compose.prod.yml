@@ -18,8 +18,7 @@ services:
             - ./apn-ui/dist:/srv/www/apn-ui/dist # Frontend part
             - ./docker/nginx:/etc/nginx/conf.d
         depends_on:
-            - python
-            - certbot
+            - apn-app
 
     apn-app:
         restart: always
