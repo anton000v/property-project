@@ -40,6 +40,7 @@ services:
             - apn-postgres
         stdin_open: true
         tty: true
+        command: "gunicorn -c gunicorn.py config.wsgi"
 
     apn-postgres:
         image: postgres:13-alpine
