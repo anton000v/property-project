@@ -109,4 +109,10 @@ main_app_configure: createsuperuser create_frontend_user fill_administrative_dis
 frontbuild:
 	docker-compose $(DOCKER_COMPOSE_PATH) exec $(VUEJS_CONTAINER) npm run build
 
+letsenrypt_conf:
+	chmod +x docker/init-letsencrypt.sh
 
+letsenrypt:
+	sudo ./docker/init-letsencrypt.sh
+
+from_scratch: build up letsenrypt_conf letsenrypt
