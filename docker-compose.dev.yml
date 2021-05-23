@@ -48,7 +48,8 @@ services:
         volumes:
         - ./apn-ui/:/app
         command: /bin/sh -c "yarn serve"
-
+        stdin_open: true
+        tty: true
 
 volumes:
     pgdata:
