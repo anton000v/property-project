@@ -3,7 +3,7 @@
 version: '3.4'
 
 services:
-    apn-server:
+    nginx:
         restart: always
         image: nginx:1.17
         expose:
