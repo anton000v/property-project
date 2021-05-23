@@ -149,16 +149,16 @@ USE_TZ = True
 
 
 # # All settings common to all environments
-# STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'api/static')
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'app_static')
 
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATIC_DIR = os.path.join(BASE_DIR, 'api', 'static')
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'api', 'media')
 
 # ----------- LOGGING:
 APN_LOG_CONSOLE_LEVEL = os.environ.get('APN_LOG_LEVEL')
