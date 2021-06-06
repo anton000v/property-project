@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div>
-      <vShortManual></vShortManual>
-    </div>
+<!--    <div>-->
+<!--      <vShortManual></vShortManual>-->
+<!--    </div>-->
     <div class="mt-20">
       <vSearchPage/>
     </div>
@@ -11,12 +11,13 @@
 
 <script>
 import vSearchPage from '../pages/v-search-buildings-page'
-import vShortManual from '../components/v-short-manual'
+// import vShortManual from '../components/v-short-manual'
 
 export default {
+  // TODO: return vShortManual maybe with page helpers suggestions
   components: {
     vSearchPage,
-    vShortManual
+    // vShortManual
   }
 }
 </script>
