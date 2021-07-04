@@ -35,16 +35,12 @@ class MicroDistrictChoices(APIView):
 
 
 class AddressChecker(APIView):
-    '''
-    Класс для проверки правильности введенного адреса. Используется в админке.
-    '''
-
+    """ Validate an address """
     def get(self, request):
-        # print("Ajax request is accepted")
         if request.is_ajax():
-            street = request.GET.get('street', None)
-            house_number = request.GET.get('house_number', None)
-            house_letter = request.GET.get('house_letter', None)
+            street = request.GET.get('street')
+            house_number = request.GET.get('house_number')
+            house_letter = request.GET.get('house_letter')
             type = request.GET.get('type')
 
             if type == 'house_number':

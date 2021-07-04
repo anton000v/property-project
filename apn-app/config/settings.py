@@ -151,11 +151,12 @@ USE_TZ = True
 # # All settings common to all environments
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'app_static')
-
-STATIC_DIR = os.path.join(BASE_DIR, 'api', 'static')
-STATICFILES_DIRS = [
-    STATIC_DIR,
-]
+#
+# STATIC_DIR = os.path.join(BASE_DIR, 'api', 'static')
+# STATICFILES_DIRS = [
+#     STATIC_DIR,
+#     os.path.join(STATIC_DIR, 'admin')
+# ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'api', 'media')
