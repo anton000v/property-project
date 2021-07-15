@@ -106,7 +106,7 @@ class BaseBuildingFilter(filters.FilterSet):
         Can be helpful for child fields that have another filter's 'field_name' attribute
         """
         if self.FIELD_NAME_PREFIX:
-            for field_meta in self.Meta.fields:
+            for field_meta in BaseBuildingFilter.Meta.fields:
                 current_field_name = self.base_filters[field_meta].field_name
                 if not current_field_name.startswith(self.FIELD_NAME_PREFIX):
                     self.base_filters[field_meta].field_name = self.FIELD_NAME_PREFIX + current_field_name
