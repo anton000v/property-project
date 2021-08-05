@@ -31,6 +31,9 @@ up:
 
 rebuild: down build up ps
 
+showlogs:
+	docker-compose $(DOCKER_COMPOSE_PATH) logs -f --tail 100
+
 show-python-logs:
 	docker-compose $(DOCKER_COMPOSE_PATH) logs -f --tail 100 $(PYTHON_CONTAINER)
 
