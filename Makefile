@@ -66,6 +66,14 @@ migrate_auth:
 migrations_auth:
 	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) python manage.py makemigrations auth
 
+drop_all_tables:
+	docker-compose $(DOCKER_COMPOSE_PATH) exec postgres psql -U $(POSTGRES_USER) ${POSTGRES_DB} -c "DROP SCHEMA public CASCADE;"
+
+create_schema:
+	docker-compose $(DOCKER_COMPOSE_PATH) exec postgres psql -U $(POSTGRES_USER) ${POSTGRES_DB} -c "CREATE SCHEMA public;"
+
+clean_db: drop_all_tables create_schema
+
 init_db: migrate migrations_api migrate
 
 showmigrations:
