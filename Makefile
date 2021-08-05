@@ -23,9 +23,6 @@ stop:
 
 restart: stop start ps
 
-build_:
-	docker-compose $(DOCKER_COMPOSE_PATH) build --no-cache
-
 build:
 	docker-compose $(DOCKER_COMPOSE_PATH) build --no-cache
 
@@ -33,9 +30,6 @@ up:
 	docker-compose $(DOCKER_COMPOSE_PATH) up -d
 
 rebuild: down build up ps
-
-showlogs:
-	docker-compose $(DOCKER_COMPOSE_PATH) logs -f --tail 100
 
 show-python-logs:
 	docker-compose $(DOCKER_COMPOSE_PATH) logs -f --tail 100 $(PYTHON_CONTAINER)
@@ -72,9 +66,6 @@ migrate_auth:
 migrations_auth:
 	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) python manage.py makemigrations auth
 
-migrations_api:
-	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) python manage.py makemigrations api
-
 init_db: migrate migrations_api migrate
 
 showmigrations:
@@ -88,9 +79,6 @@ install_requirements:
 
 db_shell:
 	docker-compose $(DOCKER_COMPOSE_PATH) exec postgres psql -U $(POSTGRES_USER) ${POSTGRES_DB}
-
-showlogs:
-	docker-compose $(DOCKER_COMPOSE_PATH) logs -f --tail 100
 
 create_frontend_user:
 	docker-compose $(DOCKER_COMPOSE_PATH) exec $(PYTHON_CONTAINER) python manage.py create_frontend_user
@@ -115,4 +103,4 @@ letsenrypt_conf:
 letsenrypt:
 	sudo ./docker/init-letsencrypt.sh
 
-from_scratch: build up letsenrypt_conf letsenrypt
+from_scratch: letsenrypt_conf build letsenrypt up migrate collectstatic main_app_configure
