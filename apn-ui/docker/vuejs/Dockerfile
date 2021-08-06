@@ -6,8 +6,6 @@ RUN npm install @vue/cli-service
 RUN npm install 
 COPY . .
 
-# RUN cd node_modules && ls 
-
 # build stage
 FROM develop-stage as build-stage
 RUN yarn build
