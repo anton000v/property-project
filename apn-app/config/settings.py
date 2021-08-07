@@ -161,7 +161,10 @@ USE_TZ = True
 
 # # All settings common to all environments
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'app_static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'app_static')
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 #
 # STATIC_DIR = os.path.join(BASE_DIR, 'api', 'static')
 # STATICFILES_DIRS = [
