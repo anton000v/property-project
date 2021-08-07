@@ -70,13 +70,14 @@ services:
           context: ./apn-ui
           dockerfile: docker/vuejs/Dockerfile
           target: 'build-stage' # just build our dist/ code
-        ports:
-        - '8080:8080'
+        # ports:
+        # - '8080:8080'
         env_file:
-              - .env
+            - .env
         volumes:
-        - ./apn-ui/:/app
-        # command: /bin/sh -c "yarn serve"
+            - ./apn-ui/:/app
+            - node_modules:/app/node_modules
+        command: /bin/sh -c "yarn build"
 
 
 volumes:
