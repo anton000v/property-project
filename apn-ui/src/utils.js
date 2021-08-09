@@ -1,6 +1,6 @@
 export function addHashToLocation(paramsDict, currentPath) {
-    console.log('aaaaaaaaaaaaaaaaa')
-    console.log(currentPath)
+    // console.log('aaaaaaaaaaaaaaaaa')
+    // console.log(currentPath)
     const qs = require('qs');
     const q = qs.stringify(paramsDict, {arrayFormat: 'repeat'})
     if(q.length > 0){

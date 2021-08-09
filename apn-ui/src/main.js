@@ -18,13 +18,13 @@ Vue.prototype.$http = Axios;
 const token = getAuthToken();
 if (token) {
     let prepared_token = `Token ${token}`;
-    console.log("Prepared token: ", prepared_token);
+    // console.log("Prepared token: ", prepared_token);
     Vue.prototype.$http.defaults.headers.common['Authorization'] = prepared_token
 } else {
     console.log("Can't get an api token")
 }
 
-console.log(Vue.prototype.$http.defaults.headers.common);
+// console.log(Vue.prototype.$http.defaults.headers.common);
 
 
 Vue.use(VueScrollactive);

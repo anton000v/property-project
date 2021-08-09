@@ -1,4 +1,8 @@
-export const baseBackendAddress = 'http://127.0.0.1:8000/'
+// export const baseBackendAddress = 'http://127.0.0.1:8000/'
+export const isDebug = process.env.VUE_APP_DEBUG === 'true' ? true : false;
+console.log(isDebug);
+export const baseBackendAddress = isDebug ? process.env.VUE_APP_DEV_BACKEND_BASE_URL : process.env.VUE_APP_PROD_BACKEND_BASE_URL
+console.log(process.env);
 export const baseApiAddress = baseBackendAddress + "api/"
 export const saltovkaDBValue = 'sal'
 export const severnayaSaltovkaDBValue = 'ses'
