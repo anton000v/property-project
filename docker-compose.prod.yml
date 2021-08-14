@@ -16,7 +16,7 @@ services:
             - ./apn-app/static:/srv/www/apn-app/static # Backend part
             - ./apn-app/media:/srv/www/apn-app/media # Backend part
             # - ./apn-ui/dist:/srv/www/apn-ui # Frontend part
-            - ./apn-ui/dist:/usr/share/nginx/html
+            - ./apn-ui/dist:/srv/www/apn-ui/
             - ./docker/nginx:/etc/nginx/conf.d
             - ./docker/certbot/conf:/etc/letsencrypt
             - ./docker/certbot/www:/var/www/certbot

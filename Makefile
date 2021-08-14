@@ -114,4 +114,8 @@ letsenrypt_conf:
 letsenrypt:
 	sudo ./docker/init-letsencrypt.sh
 
-from_scratch: build letsenrypt_conf letsenrypt up migrate collectstatic main_app_configure
+build_vuejs:
+	docker-compose $(DOCKER_COMPOSE_PATH) exec $(VUEJS_CONTAINER) npm build
+	
+
+from_scratch: letsenrypt_conf build letsenrypt up migrate collectstatic main_app_configure
