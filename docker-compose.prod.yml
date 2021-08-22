@@ -77,7 +77,7 @@ services:
         volumes:
             - ./apn-ui/:/app
             - node_modules:/app/node_modules
-        entrypoint: ["while true; do sleep 1; done"]
+        entrypoint: ["/bin/sh", "-c", "while true; do sleep 1; done"]
 #        entrypoint: [ "/bin/sh", "-c", "yarn build"]
 
 volumes:
