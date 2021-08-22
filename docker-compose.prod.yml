@@ -77,8 +77,8 @@ services:
         volumes:
             - ./apn-ui/:/app
             - node_modules:/app/node_modules
-        command: /bin/sh -c "yarn build"
-
+        entrypoint: [ "/bin/sh", "-c", "yarn build"]
+]
 
 volumes:
     pgdata:
