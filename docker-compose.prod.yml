@@ -65,6 +65,7 @@ services:
             - pgdata:/var/lib/postgresql/data
             - ./apn-app/logs:/srv/www/apn-app/logs
 
+    # build ui to dist and exit
     apn-ui:
         build:
           context: ./apn-ui
@@ -76,13 +77,13 @@ services:
             - .env
         volumes:
             - ./apn-ui/:/app
-            - node_modules:/app/node_modules
+#            - node_modules:/app/node_modules
 #        entrypoint: ["/bin/sh", "-c", "while true; do sleep 1; done"]
-        command: "npm run build"
+#        command: "npm run build"
 
 volumes:
     pgdata:
-    node_modules:
+#    node_modules:
 
 
 

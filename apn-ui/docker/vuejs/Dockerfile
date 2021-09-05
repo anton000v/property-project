@@ -7,6 +7,7 @@ COPY . .
 
 # build stage
 FROM develop-stage as build-stage
+RUN npm run build
 # RUN yarn build
 
 # production stage (not used yet)
