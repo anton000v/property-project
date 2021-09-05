@@ -79,7 +79,7 @@ services:
             - ./apn-ui/:/app
 #            - node_modules:/app/node_modules
 #        entrypoint: ["/bin/sh", "-c", "while true; do sleep 1; done"]
-#        command: "npm run build"
+        command: "npm run build"
 
 volumes:
     pgdata:

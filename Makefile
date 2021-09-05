@@ -114,5 +114,4 @@ letsenrypt_conf:
 letsenrypt:
 	sudo ./docker/init-letsencrypt.sh
 
-
 from_scratch: letsenrypt_conf build letsenrypt up migrate collectstatic main_app_configure
