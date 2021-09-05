@@ -77,13 +77,13 @@ services:
             - .env
         volumes:
             - ./apn-ui/:/app
-#            - node_modules:/app/node_modules
+            - node_modules:/app/node_modules
         command: ["/bin/sh", "-c", "while true; do sleep 1; done"]
 #        command: "npm run build"
 
 volumes:
     pgdata:
-#    node_modules:
+    node_modules:
 
 
 
