@@ -2,12 +2,12 @@
 FROM node:lts-alpine as develop-stage
 WORKDIR /app
 COPY package*.json ./
+RUN npm install @vue/cli-service
 RUN npm install
 COPY . .
 
 # build stage
 FROM develop-stage as build-stage
-# RUN npm run build
 # RUN yarn build
 
 # production stage (not used yet)
