@@ -1,0 +1,26 @@
+name: DEPLOY TO STAGING
+
+on: [push]
+
+jobs:
+  build-ui:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@master
+      - name: Installing project dependencies
+      - run: cd apn-ui
+      - run: npm install
+
+      - name: Building the project
+      - run: npm run build
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v7
+        with:
+          message: 'auto build UI'
+#      - uses: w9jds/firebase-action@master
+#        with:
+#          args: deploy --only hosting
+#        env:
+#          FIREBASE_TOKEN: ${{ secrets.FirebaseDeploy }}
