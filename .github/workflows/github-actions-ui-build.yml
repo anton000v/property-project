@@ -6,18 +6,14 @@ jobs:
   build-ui:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout repo
-      uses: actions/checkout@master
-      uses: actions/setup-node@master
-
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@master
       - name: Installing project dependencies
-      run: cd apn-ui
-      run: npm install
-
+      - run: cd apn-ui
+      - run: npm install
       - name: Building the project
-      run: npm run build
-
+      - run: npm run build
       - name: Commit changes
-      uses: EndBug/add-and-commit@v7
-      with:
-        message: 'auto build UI'
+      - uses: EndBug/add-and-commit@v7
+        with:
+          message: 'auto build UI'
