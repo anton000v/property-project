@@ -114,4 +114,9 @@ letsenrypt_conf:
 letsenrypt:
 	sudo ./docker/init-letsencrypt.sh
 
-from_scratch: letsenrypt_conf build up frontbuild up letsenrypt migrate collectstatic main_app_configure
+nginx_force_recreate:
+	# because frontbuild doesn't reflect dist folder to the nginx (I don't know why) with nginx volume
+	# so, firstly make veuejs build and then force recreate nginx to refrect dist folder
+	docker-compose $(DOCKER_COMPOSE_PATH) up -d nginx --force-recreate
+
+from_scratch: letsenrypt_conf build up frontbuild nginx_force_recreate letsenrypt migrate collectstatic main_app_configure
