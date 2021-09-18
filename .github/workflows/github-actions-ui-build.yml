@@ -21,4 +21,4 @@ jobs:
         uses: EndBug/add-and-commit@v7
         with:
           message: 'auto build UI'
-          add: 'dist/'
+          add: 'apn-ui/dist/'
