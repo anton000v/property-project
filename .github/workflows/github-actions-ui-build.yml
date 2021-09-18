@@ -8,12 +8,12 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@master
-
+      working-directory: ./apn-ui
       - name: Installing project dependencies
-        run: cd apn-ui & npm install
+        run: npm install
 
       - name: Building the project
-        run: cd apn-ui & npm run build
+        run: npm run build
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v7
