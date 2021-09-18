@@ -19,8 +19,3 @@ jobs:
         uses: EndBug/add-and-commit@v7
         with:
           message: 'auto build UI'
-#      - uses: w9jds/firebase-action@master
-#        with:
-#          args: deploy --only hosting
-#        env:
-#          FIREBASE_TOKEN: ${{ secrets.FirebaseDeploy }}
