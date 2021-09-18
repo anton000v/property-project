@@ -1,6 +1,6 @@
 name: DEPLOY TO STAGING
 
-on: [push]
+on: [ push ]
 
 jobs:
   build-ui:
@@ -8,12 +8,17 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@master
+
+      - name: Go to UI folder
+        run: cd apn-ui
+
       - name: Installing project dependencies
-      - run: cd apn-ui
-      - run: npm install
+        run: npm install
+
       - name: Building the project
-      - run: npm run build
+        run: npm run build
+
       - name: Commit changes
-      - uses: EndBug/add-and-commit@v7
+        uses: EndBug/add-and-commit@v7
         with:
           message: 'auto build UI'
