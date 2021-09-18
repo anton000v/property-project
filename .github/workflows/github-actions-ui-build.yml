@@ -9,14 +9,11 @@ jobs:
       - uses: actions/checkout@master
       - uses: actions/setup-node@master
 
-      - name: Go to UI folder
-        run: cd apn-ui
-
       - name: Installing project dependencies
-        run: npm install
+        run: cd apn-ui & npm install
 
       - name: Building the project
-        run: npm run build
+        run: cd apn-ui & npm run build
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v7
