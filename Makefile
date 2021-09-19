@@ -1,8 +1,5 @@
 include .env # Common env file
-include .dev.env # Switch for dev/prod
-
-#PROJECT_NAME=Core
-#BINARY_NAME=app
+#include .dev.env # Switch for dev/prod
 
 DOCKER_COMPOSE_PATH := -f $(DOCKER_COMPOSE_FILE)
 PYTHON_CONTAINER := apn-app
