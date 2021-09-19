@@ -1,0 +1,38 @@
+name: Build UI and Deploy to DO
+
+on: [ push ]
+
+jobs:
+  build-ui:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@master
+
+      - name: Installing project dependencies
+        working-directory: ./apn-ui
+        run: npm install
+
+      - name: Building the project
+        working-directory: ./apn-ui
+        run: npm run build
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v7
+        with:
+          message: 'auto build UI'
+          add: 'apn-ui/dist/'
+
+      - name: deploy to DO
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host: ${{secrets.SSH_HOST}}
+          key: ${{secrets.SSH_PRIVATE_KEY}}
+          username: ${{secrets.SSH_USERNAME}}
+
+          script: |
+            sudo apt-get -y install make
+            mkdir property-project
+            cd property-project
+            git clone https://github.com/anton000v/property-project
+            make from_scratch

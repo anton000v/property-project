@@ -105,8 +105,8 @@ fill_streets_todb:
 
 main_app_configure: createsuperuser create_frontend_user fill_administrative_districts_todb fill_streets_todb
 
-frontbuild:
-	docker-compose $(DOCKER_COMPOSE_PATH) exec $(VUEJS_CONTAINER) npm run build
+#frontbuild:
+#	docker-compose $(DOCKER_COMPOSE_PATH) exec $(VUEJS_CONTAINER) npm run build
 
 letsenrypt_conf:
 	chmod +x docker/init-letsencrypt.sh
@@ -114,9 +114,11 @@ letsenrypt_conf:
 letsenrypt:
 	sudo ./docker/init-letsencrypt.sh
 
-nginx_force_recreate:
-	# because frontbuild doesn't reflect dist folder to the nginx (I don't know why) with nginx volume
-	# so, firstly make veuejs build and then force recreate nginx to refrect dist folder
-	docker-compose $(DOCKER_COMPOSE_PATH) up -d nginx --force-recreate
+#nginx_force_recreate:
+#	# because frontbuild doesn't reflect dist folder to the nginx (I don't know why) with nginx volume
+#	# so, firstly make veuejs build and then force recreate nginx to refrect dist folder
+#	docker-compose $(DOCKER_COMPOSE_PATH) up -d nginx --force-recreate
 
-from_scratch: letsenrypt_conf build up frontbuild nginx_force_recreate letsenrypt migrate collectstatic main_app_configure
+from_scratch: letsenrypt_conf build up letsenrypt migrate collectstatic main_app_configure
+
+
