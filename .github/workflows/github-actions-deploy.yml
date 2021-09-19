@@ -31,6 +31,7 @@ jobs:
           username: ${{secrets.SSH_USERNAME}}
 
           script: |
+            export DOCKER_COMPOSE_FILE=docker-compose.prod.yml  # set env var for prod compose file
             sudo apt-get -y install make
             cd property-project
             git stash
