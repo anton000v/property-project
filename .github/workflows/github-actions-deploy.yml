@@ -32,7 +32,8 @@ jobs:
 
           script: |
             sudo apt-get -y install make
-            mkdir property-project
             cd property-project
-            git clone https://github.com/anton000v/property-project
+            git stash
+            git pull origin master
+            git stash pop
             make from_scratch
