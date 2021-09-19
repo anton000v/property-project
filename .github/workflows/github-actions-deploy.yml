@@ -34,7 +34,5 @@ jobs:
             export DOCKER_COMPOSE_FILE=docker-compose.prod.yml  # set env var for prod compose file
             sudo apt-get -y install make
             cd property-project
-            git stash
             git pull origin master
-            git stash pop
             make from_scratch
