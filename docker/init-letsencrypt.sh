@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains=(asnovostroi.com.ua, api.asnovostroi.com.ua)
+domains=(asnovostroi.com.ua,api.asnovostroi.com.ua)
 rsa_key_size=4096
 data_path="./docker/certbot"
 email="antonovdanil.wrk@gmail.com" # Adding a valid address is strongly recommended
