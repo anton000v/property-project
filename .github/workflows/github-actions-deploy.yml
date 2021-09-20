@@ -35,4 +35,4 @@ jobs:
             sudo apt-get -y install make
             cd property-project
             git pull origin master
-            make from_scratch
+            make update_all

@@ -115,6 +115,8 @@ letsenrypt:
 #	# so, firstly make veuejs build and then force recreate nginx to refrect dist folder
 #	docker-compose $(DOCKER_COMPOSE_PATH) up -d nginx --force-recreate
 
+update_all: build up migrate collectstatic main_app_configure
+
 from_scratch: letsenrypt_conf build up letsenrypt migrate collectstatic main_app_configure
 
 
